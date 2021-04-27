@@ -21,7 +21,7 @@ const browserConfig = {
         exclude: /node_modules/,
         options: {
           presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-proposal-class-properties']
+          plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']
         }
       }
     ]
@@ -48,7 +48,7 @@ const nodeConfig = {
         exclude: /node_modules/,
         options: {
           presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-proposal-class-properties']
+          plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']
         }
       }
     ]
