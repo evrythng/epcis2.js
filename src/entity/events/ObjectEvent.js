@@ -5,12 +5,13 @@ export default class ObjectEvent {
   /**
    * You can either create an empty Object Event or provide an already existing Object event via
    * JSON
-   * @param {JSON} [JSONObjectEvent] - The JSON object event that will be used to create the
+   * @param {JSON} [JSONObjectEvent] - The JSON that will be used to create the
    * ObjectEvent entity
    */
   constructor (JSONObjectEvent) {
     // object event
     this.epcList = []
+    this.quantityList = []
 
     if (!arguments.length) {
       // create an empty ObjectEvent

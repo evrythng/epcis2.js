@@ -21,7 +21,7 @@ export default class ErrorDeclaration {
   /**
    * You can either create an empty ErrorDeclaration or provide an already existing Error
    * Declaration via JSON
-   * @param {JSON} [JSONErrorDeclaration] - The JSON Error Declaration that will be used to create the
+   * @param {JSON} [JSONErrorDeclaration] - The JSON that will be used to create the
    * ErrorDeclaration entity
    */
   constructor (JSONErrorDeclaration) {
