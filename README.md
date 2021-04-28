@@ -1,6 +1,10 @@
 # epcis2.js
 EPCIS 2.0 Javascript SDK
 
+### The dates
+
+If no time zone is provided, the SDK will take the time zone of the device where it is running.
+You can override it by overriding the `timeZoneOffset` property.
 
 ## Build and deploy
 
