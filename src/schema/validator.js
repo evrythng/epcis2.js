@@ -16,7 +16,7 @@ const validators = {
  * @returns {Array<string>} Any errors.
  */
 const validateSchema = (instance) => {
-  const test = validators['EPCISDocument'];
+  const test = validators.EPCISDocument
   if (!test(instance)) {
     const [{ dataPath, message }] = test.errors
     throw new Error(`${dataPath}: ${message}`)
