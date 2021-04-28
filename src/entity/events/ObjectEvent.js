@@ -9,6 +9,9 @@ export default class ObjectEvent {
    * ObjectEvent entity
    */
   constructor (JSONObjectEvent) {
+    // object event
+    this.epcList = []
+
     if (!arguments.length) {
       // create an empty ObjectEvent
 
@@ -19,8 +22,6 @@ export default class ObjectEvent {
       // this.eventID = ''
       // this.errorDeclaration = ''
 
-      // object event
-      this.epcList = []
     } else {
       // create an ObjectEvent from the JSON passed in parameters
       // todo: create from JSON
@@ -100,6 +101,14 @@ export default class ObjectEvent {
   }
 
   /**
+   * Clear the epc list
+   */
+  clearEPCList () {
+    this.epcList = []
+    return this
+  }
+
+  /**
    * Remove an epc to the "epcList" field
    * @param {String} epc - the epc to remove (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
    */
@@ -122,14 +131,18 @@ export default class ObjectEvent {
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
-    return {
-      isA: this.isA,
-      eventID: this.eventID,
-      eventTime: dateToString(this.eventTime, this.eventTimeZoneOffset),
-      eventTimeZoneOffset: this.eventTimeZoneOffset.toString(),
-      epcList: this.epcList,
-      recordTime: dateToString(this.recordTime, this.eventTimeZoneOffset)
-      // errorDeclaration: this.errorDeclaration.toJSON(),
-    }
+    const json = { isA: this.isA, epcList: this.epcList }
+
+    if (this.eventID) { json.eventID = this.eventID }
+
+    if (this.eventTime) { json.eventTime = dateToString(this.eventTime, this.eventTimeZoneOffset) }
+
+    if (this.eventTimeZoneOffset) { json.eventTimeZoneOffset = this.eventTimeZoneOffset.toString() }
+
+    if (this.recordTime) { json.recordTime = dateToString(this.recordTime, this.eventTimeZoneOffset) }
+
+    if (this.errorDeclaration) { json.errorDeclaration = this.errorDeclaration.toJSON() }
+
+    return json
   }
 }

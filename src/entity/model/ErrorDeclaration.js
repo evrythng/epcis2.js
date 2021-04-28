@@ -1,5 +1,5 @@
-import { dateToString, getDateFromStringOrDate } from '../../utils/utils';
-import TimeZoneOffset from './TimeZoneOffset';
+import { dateToString, getDateFromStringOrDate } from '../../utils/utils'
+import TimeZoneOffset from './TimeZoneOffset'
 
 /**
  * This class contains these fields :
@@ -15,8 +15,7 @@ import TimeZoneOffset from './TimeZoneOffset';
  *   default: null (will be set once the declarationTime is set)
  */
 export default class ErrorDeclaration {
-
-  //todo: add the possibility to add custom attributes
+  // todo: add the possibility to add custom attributes
   // e.g "example:vendorExtension": "Test1",
 
   /**
@@ -25,17 +24,15 @@ export default class ErrorDeclaration {
    * @param {JSON} [JSONErrorDeclaration] - The JSON Error Declaration that will be used to create the
    * ErrorDeclaration entity
    */
-  constructor(JSONErrorDeclaration) {
-
-    this.correctiveEventIDList = [];
+  constructor (JSONErrorDeclaration) {
+    this.correctiveEventIDList = []
 
     if (!arguments.length) {
       // create an empty ErrorDeclaration object
 
-      return;
     }
 
-    //todo: if json is provided
+    // todo: if json is provided
   }
 
   /**
@@ -46,11 +43,11 @@ export default class ErrorDeclaration {
    *     If this parameter isn't provided, it will be set to the time zone of the device
    */
   setDeclarationTime (time, timeZoneOffset) {
-    this.declarationTime = getDateFromStringOrDate(time);
+    this.declarationTime = getDateFromStringOrDate(time)
     if (!timeZoneOffset) {
-      this.timeZoneOffset = new TimeZoneOffset(this.declarationTime.getTimezoneOffset()/60);
+      this.timeZoneOffset = new TimeZoneOffset(this.declarationTime.getTimezoneOffset() / 60)
     } else {
-      this.timeZoneOffset = timeZoneOffset;
+      this.timeZoneOffset = timeZoneOffset
     }
     return this
   }
@@ -59,9 +56,9 @@ export default class ErrorDeclaration {
    * Set the reason property
    * @param {String} reason - the reason (e.g 'urn:epcglobal:cbv:er:incorrect_data')
    */
-  setReason(reason) {
-    this.reason = reason;
-    return this;
+  setReason (reason) {
+    this.reason = reason
+    return this
   }
 
   /**
@@ -87,7 +84,7 @@ export default class ErrorDeclaration {
    * Clear the correctiveEventID list
    */
   clearCorrectiveEventIDList () {
-    this.correctiveEventIDList = [];
+    this.correctiveEventIDList = []
     return this
   }
 
@@ -124,22 +121,17 @@ export default class ErrorDeclaration {
   /**
    * Return a JSON object corresponding to the ErrorDeclaration object
    */
-  toJSON() {
+  toJSON () {
+    const json = {}
 
-    let json = {};
+    if (this.declarationTime) { json.declarationTime = dateToString(this.declarationTime, this.timeZoneOffset) }
 
-    if (this.declarationTime)
-      json.declarationTime = dateToString(this.declarationTime, this.timeZoneOffset);
+    if (this.reason) { json.reason = this.reason }
 
-    if (this.reason)
-      json.reason = this.reason;
+    if (this.correctiveEventIDList.length > 0) { json.correctiveEventIDs = this.correctiveEventIDList }
 
-    if (this.correctiveEventIDList.length > 0)
-      json.correctiveEventIDs = this.correctiveEventIDList;
+    // todo: support custom fields: "example:vendorExtension": "Test1"
 
-    //todo: support custom fields: "example:vendorExtension": "Test1"
-
-    return json;
+    return json
   }
-
 }

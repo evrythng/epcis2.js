@@ -15,7 +15,15 @@ const JSONObjectEvent = {
   bizTransactionList: [{
     type: 'urn:epcglobal:cbv:btt:po',
     bizTransaction: 'http://transaction.acme.com/po/12345678'
-  }]
+  }],
+  errorDeclaration: {
+    declarationTime: '2020-01-15T00:00:00+01:00',
+    reason: 'urn:epcglobal:cbv:er:incorrect_data',
+    'example:vendorExtension': 'Test1',
+    correctiveEventIDs: [
+      'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
+    ]
+  }
 }
 const epc1 = JSONObjectEvent.epcList[0]
 const epc2 = JSONObjectEvent.epcList[1]
@@ -81,6 +89,12 @@ describe('unit tests for the ObjectEvent class', () => {
     // trying again but removing the whole list
     o.addEPC(epc2)
     o.removeEPCList([epc2, epc3])
+    expect(o.epcList.toString()).to.be.equal([].toString())
+  })
+  it('should clear the epc list', async () => {
+    const o = new ObjectEvent()
+    o.addEPCList([...JSONObjectEvent.epcList, epc3])
+    o.clearEPCList()
     expect(o.epcList.toString()).to.be.equal([].toString())
   })
   it('should set automatically time zone offset', async () => {
