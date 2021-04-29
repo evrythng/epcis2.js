@@ -1,39 +1,44 @@
-import { dateToString, getDateFromStringOrDate } from '../../utils/utils'
-import TimeZoneOffset from '../model/TimeZoneOffset'
+import ErrorDeclaration from '../model/ErrorDeclaration';
+import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils';
 
 export default class ObjectEvent {
   /**
-   * You can either create an empty Object Event or provide an already existing Object event via
-   * JSON
-   * @param {JSON} [JSONObjectEvent] - The JSON that will be used to create the
-   * ObjectEvent entity
+   * You can either create an empty Object Event or provide an already existing Object event via Map
+   * @param {{}} [objectEvent] - The Map that will be used to create the ObjectEvent entity
    */
-  constructor (JSONObjectEvent) {
+  constructor (objectEvent) {
     // object event
+    this.isA = 'ObjectEvent'
     this.epcList = []
-    this.quantityList = []
+    this.quantityList = [];
+
+    //todo: if timezone offset in setup, save here
 
     if (!arguments.length) {
-      // create an empty ObjectEvent
-
-      // general object fields
-      // this.eventTime = ''
-      // this.recordTime = ''
-      // this.eventTimeZoneOffset = ''
-      // this.eventID = ''
-      // this.errorDeclaration = ''
-
-    } else {
-      // create an ObjectEvent from the JSON passed in parameters
-      // todo: create from JSON
+      return;
     }
 
-    this.isA = 'ObjectEvent'
+    for (const prop in objectEvent) {
+      if (objectEvent.hasOwnProperty(prop)) {
+        switch (prop) {
+          case 'errorDeclaration':
+            this.setErrorDeclaration(objectEvent[prop]);
+            break;
+          case 'epcList':
+            this.addEPCList(objectEvent[prop]);
+            break;
+          default:
+            this[prop] = objectEvent[prop];
+        }
+      }
+    }
+
   }
 
   /**
    * Set the eventTime property
-   * @param {String} id
+   * @param {string} id
+   * @return {ObjectEvent} - the objectEvent instance
    */
   setEventID (id) {
     this.eventID = id
@@ -42,40 +47,47 @@ export default class ObjectEvent {
 
   /**
    * Set the eventTime property
-   * Set the eventTimeZoneOffset property if it isn't defined yet
-   * @param {String|Date} time
+   * @param {string} time - a string corresponding to the time
+   *      If a timezone offset is provided in the string (e.g '2005-04-03T20:33:31.116-06:00')
+   *      and the timeZoneOffset field isn't defined, the timeZoneOffset field will be set with
+   *      the extracted offset (here: '-06:00')
+   * @return {ObjectEvent} - the objectEvent instance
    */
   setEventTime (time) {
-    this.eventTime = getDateFromStringOrDate(time)
+    this.eventTime = time;
     if (!this.eventTimeZoneOffset) {
-      this.setEventTimeZoneOffset(this.eventTime.getTimezoneOffset() / 60)
+      const offset = getTheTimeZoneOffsetFromDateString(time);
+      if (offset)
+        this.setEventTimeZoneOffset(offset);
     }
     return this
   }
 
   /**
-   * Set the recordTime property
-   * @param {String|Date} time
+   * @param {number|string} offset - the time zone offset
+   * (e.g "+02:30" or "-06:00" if it is a string)
+   * (e.g -6 or 2.5 if it is a number)
+   * @return {ObjectEvent} - the objectEvent instance
    */
-  setRecordTime (time) {
-    this.recordTime = getDateFromStringOrDate(time)
-    return this
+  setEventTimeZoneOffset(offset) {
+    this.eventTimeZoneOffset = getTimeZoneOffsetFromStringOrNumber(offset);
+    return this;
   }
 
   /**
-   * Set the eventTimeZoneOffset property
-   * @param {number|String} value - the time zone offset value
-   *    e.g 6 or -2.5 if it is a number
-   *    e.g "+06:00" or "-02:30" if it is a String
+   * Set the recordTime property
+   * @param {string} time - a string corresponding to the time
+   * @return {ObjectEvent} - the objectEvent instance
    */
-  setEventTimeZoneOffset (value) {
-    this.eventTimeZoneOffset = new TimeZoneOffset(value)
+  setRecordTime (time) {
+    this.recordTime = time
     return this
   }
 
   /**
    * Set the errorDeclaration property
    * @param {ErrorDeclaration} errorDeclaration
+   * @return {ObjectEvent} - the objectEvent instance
    */
   setErrorDeclaration (errorDeclaration) {
     this.errorDeclaration = errorDeclaration
@@ -84,7 +96,8 @@ export default class ObjectEvent {
 
   /**
    * Add the epc to the "epcList" field
-   * @param {String} epc - the epc to add (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
+   * @param {string} epc - the epc to add (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
+   * @return {ObjectEvent} - the objectEvent instance
    */
   addEPC (epc) {
     this.epcList.push(epc)
@@ -93,8 +106,9 @@ export default class ObjectEvent {
 
   /**
    * Add each epc to the "epcList" field
-   * @param {Array<String>} epcList - the epcs to add
+   * @param {Array<string>} epcList - the epcs to add
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
+   * @return {ObjectEvent} - the objectEvent instance
    */
   addEPCList (epcList) {
     epcList.forEach(epc => this.addEPC(epc))
@@ -103,6 +117,7 @@ export default class ObjectEvent {
 
   /**
    * Clear the epc list
+   * @return {ObjectEvent} - the objectEvent instance
    */
   clearEPCList () {
     this.epcList = []
@@ -111,7 +126,8 @@ export default class ObjectEvent {
 
   /**
    * Remove an epc to the "epcList" field
-   * @param {String} epc - the epc to remove (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
+   * @param {string} epc - the epc to remove (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
+   * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPC (epc) {
     this.epcList = this.epcList.filter(elem => elem !== epc)
@@ -120,8 +136,9 @@ export default class ObjectEvent {
 
   /**
    * Remove each epc to the "epcList" field
-   * @param {Array<String>} epcList - the epcs to remove
+   * @param {Array<string>} epcList - the epcs to remove
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
+   * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPCList (epcList) {
     epcList.forEach(epc => this.removeEPC(epc))
@@ -132,18 +149,18 @@ export default class ObjectEvent {
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
-    const json = { isA: this.isA, epcList: this.epcList }
+    let json = {};
 
-    if (this.eventID) { json.eventID = this.eventID }
+    for (let prop in this) {
+      if (this.hasOwnProperty(prop)) {
+        if (this[prop] instanceof ErrorDeclaration) {
+          json[prop] = this[prop].toJSON();
+        } else {
+          json[prop] = this[prop];
+        }
+      }
+    }
 
-    if (this.eventTime) { json.eventTime = dateToString(this.eventTime, this.eventTimeZoneOffset) }
-
-    if (this.eventTimeZoneOffset) { json.eventTimeZoneOffset = this.eventTimeZoneOffset.toString() }
-
-    if (this.recordTime) { json.recordTime = dateToString(this.recordTime, this.eventTimeZoneOffset) }
-
-    if (this.errorDeclaration) { json.errorDeclaration = this.errorDeclaration.toJSON() }
-
-    return json
+    return json;
   }
 }

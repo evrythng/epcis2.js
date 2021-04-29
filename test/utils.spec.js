@@ -1,28 +1,11 @@
 import { expect } from 'chai'
-import { dateToString, getDateFromStringOrDate, isAValidDate, numberToTwoCharString } from '../src/utils/utils'
-import TimeZoneOffset from '../src/entity/model/TimeZoneOffset'
+import {
+  getTheTimeZoneOffsetFromDateString,
+  getTimeZoneOffsetFromStringOrNumber,
+  numberToTwoCharString, offsetToString,
+} from '../src/utils/utils';
 
 describe('unit tests for util functions', () => {
-  describe('getDateFromStringOrDate function', () => {
-    it('should return the date', async () => {
-      const date = new Date(Date.now())
-      expect(getDateFromStringOrDate(date).toISOString()).to.be.equal(date.toISOString())
-    })
-    it('should convert the ISO string to a date', async () => {
-      const date = new Date(Date.now())
-      expect(getDateFromStringOrDate(date.toISOString()).toISOString()).to.be.equal(date.toISOString())
-    })
-    it('should not convert an invalid date object', async () => {
-      const date = new Date('invalid date')
-      expect(() => getDateFromStringOrDate(date)).to.throw('A Date or a String shall be provided')
-    })
-    it('should not accept another type', async () => {
-      expect(() => getDateFromStringOrDate(10)).to.throw('A Date or a String shall be provided')
-    })
-    it('should not an invalid String', async () => {
-      expect(() => getDateFromStringOrDate('invalid string')).to.throw("The string provided doesn't have the good format")
-    })
-  })
   describe('numberToTwoCharString function', () => {
     it('should return a string corresponding to the number', async () => {
       const num = 9
@@ -39,21 +22,21 @@ describe('unit tests for util functions', () => {
       expect(() => numberToTwoCharString(num2)).to.throw('The number has to be between 0 and 99')
     })
   })
-  describe('isAValidDate function', () => {
-    it('should validate a valid date', async () => {
-      const date = new Date(Date.now())
-      expect(isAValidDate(date)).to.be.equal(true)
+  describe('timezone functions', () => {
+    it('should not accept invalid parameter in the constructor', async () => {
+      expect(() => getTimeZoneOffsetFromStringOrNumber('TEST')).to.throw('The TimeZoneOffset is invalid')
+      expect(() => getTimeZoneOffsetFromStringOrNumber('123:08')).to.throw('The first character of the offset shall be a \'+\' or a \'-\'')
+      expect(() => getTimeZoneOffsetFromStringOrNumber('+1u:08')).to.throw('The hours and minutes shall be numbers in the string')
+      expect(() => getTimeZoneOffsetFromStringOrNumber('+10:08')).to.not.throw()
+      expect(() => getTimeZoneOffsetFromStringOrNumber(new Date(Date.now()))).to.throw('The parameter provided in the constructor should be a number or a string')
     })
-    it('should not validate a invalid date', async () => {
-      const date = new Date('invalid')
-      expect(isAValidDate(date)).to.be.equal(false)
+    it('should return the corresponding string of a time zone offset', async () => {
+      const offset = getTheTimeZoneOffsetFromDateString('2005-04-03T20:33:31.116-06:00');
+      expect(offset).to.be.equal('-06:00');
     })
-  })
-  describe('dateToString function', () => {
-    it('should return the original date', async () => {
-      const strDate = '2005-04-03T20:33:31.116-06:00'
-      const date = new Date(strDate)
-      expect(dateToString(date, new TimeZoneOffset(-6))).to.be.equal(strDate)
+    it('offset to string', async () => {
+      expect(offsetToString(-6, 30)).to.be.equal('-06:30');
+      expect(offsetToString(5,30)).to.be.equal('+05:30');
     })
   })
 })

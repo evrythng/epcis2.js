@@ -1,59 +1,8 @@
-/**
- *
- * @param {String|Date} date - it can be either a String (e.g "2005-04-03T20:33:31.116000-06:00")
- * or a Date object
- *
- * @return {Date} the date instance created from the date passed in parameter
- */
-import TimeZoneOffset from '../entity/model/TimeZoneOffset'
-
-export const getDateFromStringOrDate = (date) => {
-  if ((typeof date) === 'string') {
-    const dateFromString = new Date(Date.parse(date))
-    if (isAValidDate(dateFromString)) {
-      return dateFromString
-    }
-    throw new Error("The string provided doesn't have the good format")
-  }
-  if (isAValidDate(date)) {
-    return date
-  }
-  throw new Error('A Date or a String shall be provided')
-}
-
-/**
- * @param {Date} date
- * @param {TimeZoneOffset} [timeZoneOffset] - the time zone offset of the date
- * @return {String} - A string corresponding to the Date in the format used in the EPCIS standard
- */
-export const dateToString = (date, timeZoneOffset = null) => {
-  let offset
-
-  if (!timeZoneOffset) {
-    offset = date.getTimezoneOffset()
-  } else {
-    offset = timeZoneOffset.toMinutes()
-  }
-
-  // include the offset in the date
-  const nDate = new Date(date.getTime() + offset * 60000)
-  // remove the 'Z' + show that the offset has been included
-  return nDate.toISOString().substring(0, nDate.toISOString().length - 1) + (new TimeZoneOffset(+offset / 60)).toString()
-}
-
-/**
- *
- * @param {Date} date
- * @return {boolean} true if it is a valid date - false otherwise
- */
-export const isAValidDate = (date) => {
-  return (Object.prototype.toString.call(date) === '[object Date]' && date.toString() !== 'Invalid Date')
-}
 
 /**
  *
  * @param {number} number - the number to convert (e.g 1 or 74)
- * @return {String} the number to convert (e.g "01" or "74")
+ * @return {string} the number to convert (e.g "01" or "74")
  */
 export const numberToTwoCharString = (number) => {
   if (number > 99 || number < 0) {
@@ -63,4 +12,85 @@ export const numberToTwoCharString = (number) => {
   if (number > 9) { return number.toString() }
 
   return '0' + number.toString()
+}
+
+/**
+ * Returns the offset of the date passed in parameter
+ * For example:
+ *    - '2005-04-03T20:33:31.116-06:00' contains an offset ('-06:00')
+ *    - '2005-04-03T20:33:31.116' doesn't contain an offset
+ * @param {string} date - the date
+ * @return {string|null} the timezone offset (e.g ('+02:00')) - null otherwise
+ */
+export const getTheTimeZoneOffsetFromDateString = (date) => {
+  if (!((typeof date) === 'string')) {
+    throw new Error('The parameter has to be a string');
+  }
+  if (date.length < 7) {
+    return null;
+  }
+  const potentialOffset = date.substring(date.length - 6, date.length);
+  try {
+    return getTimeZoneOffsetFromStringOrNumber(potentialOffset);
+  } catch (e) {
+    return null;
+  }
+};
+
+/**
+ * Return a string corresponding to the offset passed in parameter
+ * @param {number|string} offset - the time zone offset
+ * (e.g "+02:30" or "-06:00" if it is a string)
+ * (e.g -6 or 2.5 if it is a number)
+ * @return {string} a string corresponding to the offset (e.g "+02:00")
+ */
+export const getTimeZoneOffsetFromStringOrNumber = (offset) => {
+  if ((typeof offset) === 'string') {
+    let [strHours, strMinutes] = offset.split(':');
+
+    if (offset.length !== 6 || strHours.length !== 3 || strMinutes.length !== 2) {
+      throw new Error('The TimeZoneOffset is invalid');
+    }
+
+    let sign = 0;
+
+    if (strHours.charAt(0) === '+') {
+      sign = 1;
+    } else if (strHours.charAt(0) === '-') {
+      sign = -1;
+    } else {
+      throw new Error('The first character of the offset shall be a \'+\' or a \'-\'');
+    }
+
+    strHours = strHours.substring(1);
+
+    if (isNaN(strHours) || isNaN(strMinutes)) {
+      throw new Error('The hours and minutes shall be numbers in the string');
+    }
+
+    const hours = sign * parseInt(strHours);
+    const minutes = parseInt(strMinutes);
+    return offsetToString(hours, minutes);
+  }
+
+  if ((typeof offset) === 'number') {
+    const hours = Math.floor(offset);
+    const minutes = (offset - Math.floor(offset)) * 60;
+    return offsetToString(hours, minutes);
+  }
+
+  throw new Error('The parameter provided in the constructor should be a number or a string');
+}
+
+/**
+ *
+ * @param {number} hours
+ * @param {number} minutes
+ * @return {string} - a string corresponding to the offset (e.g "+02:00")
+ */
+export const offsetToString = (hours, minutes) => {
+  if (hours >= 0) {
+    return `+${numberToTwoCharString(hours)}:${numberToTwoCharString(minutes)}`;
+  }
+  return `-${numberToTwoCharString(-1 * hours)}:${numberToTwoCharString(minutes)}`;
 }
