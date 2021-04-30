@@ -17,6 +17,7 @@ const JSONObjectEvent = {
     type: 'urn:epcglobal:cbv:btt:po',
     bizTransaction: 'http://transaction.acme.com/po/12345678',
   }],
+  "example:myField": "Example of a vendor/user extension",
   errorDeclaration: {
     declarationTime: '2020-01-15T00:00:00.000+01:00',
     reason: 'urn:epcglobal:cbv:er:incorrect_data',
@@ -41,7 +42,8 @@ describe('unit tests for the ObjectEvent class', () => {
       .addEPCList(JSONObjectEvent.epcList)
       .setEventTime(JSONObjectEvent.eventTime)
       .setRecordTime(JSONObjectEvent.recordTime)
-      .setErrorDeclaration(new ErrorDeclaration(JSONObjectEvent.errorDeclaration));
+      .setErrorDeclaration(new ErrorDeclaration(JSONObjectEvent.errorDeclaration))
+      .addCustomField("example:myField", JSONObjectEvent["example:myField"]);
 
     const json = o.toJSON();
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString());
@@ -49,6 +51,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime);
     expect(json.eventTimeZoneOffset).to.be.equal(JSONObjectEvent.eventTimeZoneOffset);
     expect(json.recordTime).to.be.equal(JSONObjectEvent.recordTime);
+    expect(json["example:myField"]).to.be.equal(JSONObjectEvent["example:myField"]);
     expect(json.errorDeclaration.declarationTime).to.be.equal(JSONObjectEvent.errorDeclaration.declarationTime);
     expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason);
     expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString());
@@ -63,6 +66,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime);
     expect(json.eventTimeZoneOffset).to.be.equal(JSONObjectEvent.eventTimeZoneOffset);
     expect(json.recordTime).to.be.equal(JSONObjectEvent.recordTime);
+    expect(json["example:myField"]).to.be.equal(JSONObjectEvent["example:myField"]);
     expect(json.errorDeclaration.declarationTime).to.be.equal(JSONObjectEvent.errorDeclaration.declarationTime);
     expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason);
     expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString());
@@ -116,4 +120,16 @@ describe('unit tests for the ObjectEvent class', () => {
     o.clearEPCList();
     expect(o.epcList.toString()).to.be.equal([].toString());
   });
+  it('should add a custom field', async () => {
+    const objectEvent = new ObjectEvent();
+    objectEvent.addCustomField('key', 'value')
+    expect(objectEvent.toJSON().key).to.be.equal(('value'));
+  })
+  it('should remove a custom field', async () => {
+    const objectEvent = new ObjectEvent();
+    objectEvent.addCustomField('key', 'value')
+    objectEvent.addEPC(epc1)
+    objectEvent.removeCustomField('key', 'value')
+    expect(objectEvent.toJSON().toString()).to.be.equal({epcList: [epc1]}.toString());
+  })
 });
