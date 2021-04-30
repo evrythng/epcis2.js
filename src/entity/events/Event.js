@@ -6,9 +6,25 @@ import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber
  * @class Event
  */
 export default class Event {
-  constructor () {
+  /**
+   * You can either create an empty Event or provide an already existing event via Map
+   * @param {{}} [event] - The Map that will be used to create the Event entity
+   * Only the errorDeclaration will be set here from the JSON passed in param, the other fields are
+   * set in the extended classes
+   */
+  constructor (event) {
     if (new.target === Event) {
       throw new Error("Abstract classes can't be instantiated.")
+    }
+
+    for (const prop in event) {
+      if (event.hasOwnProperty(prop)) {
+        switch (prop) {
+          case 'errorDeclaration':
+            this.setErrorDeclaration(event[prop])
+            break
+        }
+      }
     }
   }
 

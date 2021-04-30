@@ -7,7 +7,7 @@ export default class ObjectEvent extends Event {
    * @param {{}} [objectEvent] - The Map that will be used to create the ObjectEvent entity
    */
   constructor (objectEvent) {
-    super()
+    super(objectEvent)
     // object event
     this.isA = 'ObjectEvent'
     this.epcList = []
@@ -22,9 +22,6 @@ export default class ObjectEvent extends Event {
     for (const prop in objectEvent) {
       if (objectEvent.hasOwnProperty(prop)) {
         switch (prop) {
-          case 'errorDeclaration':
-            this.setErrorDeclaration(objectEvent[prop])
-            break
           case 'epcList':
             this.addEPCList(objectEvent[prop])
             break
