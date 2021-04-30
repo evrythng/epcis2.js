@@ -1,4 +1,5 @@
 import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils'
+import settings from '../../settings'
 
 /**
  * Abstract class Event
@@ -15,6 +16,10 @@ export default class Event {
   constructor (event) {
     if (new.target === Event) {
       throw new Error("Abstract classes can't be instantiated.")
+    }
+
+    if (settings.eventTimeZoneOffset !== '') {
+      this.setEventTimeZoneOffset(settings.eventTimeZoneOffset)
     }
 
     for (const prop in event) {

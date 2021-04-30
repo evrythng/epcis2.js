@@ -2,6 +2,8 @@ import ObjectEvent from '../src/entity/events/ObjectEvent'
 import { expect } from 'chai'
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
 import QuantityElement from '../src/entity/model/QuantityElement'
+import setup from '../src/setup'
+import { defaultSettings } from '../src/settings'
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -38,9 +40,23 @@ const epc2 = JSONObjectEvent.epcList[1]
 const epc3 = 'urn:epc:id:sgtin:0614141.107346.2019'
 
 describe('unit tests for the ObjectEvent class', () => {
+  beforeEach((done) => {
+    setup(defaultSettings)
+    done()
+  })
   it('should use default values', async () => {
     const o = new ObjectEvent()
     expect(o.isA).to.be.equal('ObjectEvent')
+  })
+  it('should not use eventTimeZoneOffset from settings if it is not overridden', async () => {
+    setup({})
+    const o = new ObjectEvent()
+    expect(o.eventTimeZoneOffset).to.be.equal(undefined)
+  })
+  it('should use eventTimeZoneOffset from settings if it is overridden', async () => {
+    setup({ eventTimeZoneOffset: '+02:00' })
+    const o = new ObjectEvent()
+    expect(o.eventTimeZoneOffset).to.be.equal('+02:00')
   })
   it('setters should set the variables correctly', async () => {
     const o = new ObjectEvent()

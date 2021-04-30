@@ -14,7 +14,7 @@
  *
  * @type {Settings}
  */
-const defaultSettings = {
+export const defaultSettings = {
   endpoint: 'https://epcis.evrythng.io/v2_0/',
   headers: {
     'content-type': 'application/json'

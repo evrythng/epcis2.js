@@ -13,8 +13,6 @@ export default class ObjectEvent extends Event {
     this.epcList = []
     this.quantityList = []
 
-    // todo: if timezone offset in setup, save here
-
     if (!arguments.length) {
       return
     }
