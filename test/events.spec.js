@@ -1,6 +1,7 @@
 import ObjectEvent from '../src/entity/events/ObjectEvent';
 import { expect } from 'chai';
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';
+import QuantityElement from '../src/entity/model/QuantityElement';
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -18,6 +19,11 @@ const JSONObjectEvent = {
     bizTransaction: 'http://transaction.acme.com/po/12345678',
   }],
   "example:myField": "Example of a vendor/user extension",
+  quantityList: [
+    {"epcClass":"urn:epc:class:lgtin:4012345.012345.998877","quantity":200,"uom":"KGM"},
+    {"epcClass":"urn:epc:class:lgtin:4012345.012345.998878","quantity":201,"uom":"KGM"},
+    {"epcClass":"urn:epc:class:lgtin:4012345.012345.998879","quantity":202,"uom":"KGM"},
+  ],
   errorDeclaration: {
     declarationTime: '2020-01-15T00:00:00.000+01:00',
     reason: 'urn:epcglobal:cbv:er:incorrect_data',
@@ -132,4 +138,50 @@ describe('unit tests for the ObjectEvent class', () => {
     objectEvent.removeCustomField('key', 'value')
     expect(objectEvent.toJSON().toString()).to.be.equal({epcList: [epc1]}.toString());
   })
+
+  const quantity1 = new QuantityElement(JSONObjectEvent.quantityList[0]);
+  const quantity2 = new QuantityElement(JSONObjectEvent.quantityList[1]);
+  const quantity3 = new QuantityElement(JSONObjectEvent.quantityList[2]);
+
+  it('should add and remove quantity', async () => {
+    const o = new ObjectEvent();
+    o.addQuantity(quantity1);
+    expect(o.quantityList.toString()).to.be.equal([quantity1].toString());
+    o.addQuantity(quantity2);
+    expect(o.quantityList.toString()).to.be.equal([quantity1, quantity2].toString());
+    o.removeQuantity(quantity1);
+    expect(o.quantityList.toString()).to.be.equal([quantity2].toString());
+    o.removeQuantity(quantity2);
+    expect(o.quantityList.toString()).to.be.equal([].toString());
+  });
+  it('should add a quantity list', async () => {
+    const o = new ObjectEvent();
+    o.addQuantityList([quantity1, quantity2]);
+    expect(o.quantityList.toString()).to.be.equal([quantity1, quantity2].toString());
+    o.removeQuantity(quantity1);
+    o.removeQuantity(quantity2);
+
+    // trying again but with a non-empty list
+    o.addQuantity(quantity3);
+    expect(o.quantityList.toString()).to.be.equal([quantity3].toString());
+    o.addQuantityList([quantity1, quantity2]);
+    expect(o.quantityList.toString()).to.be.equal([quantity3, quantity1, quantity2].toString());
+  });
+  it('should remove a quantity list', async () => {
+    const o = new ObjectEvent();
+    o.addQuantityList([quantity1, quantity2, quantity3]);
+    o.removeQuantityList([quantity1, quantity2]);
+    expect(o.quantityList.toString()).to.be.equal([quantity3].toString());
+
+    // trying again but removing the whole list
+    o.addQuantity(quantity2);
+    o.removeQuantityList([quantity2, quantity3]);
+    expect(o.quantityList.toString()).to.be.equal([].toString());
+  });
+  it('should clear the quantity list', async () => {
+    const o = new ObjectEvent();
+    o.addQuantityList([quantity1, quantity2]);
+    o.clearQuantityList();
+    expect(o.quantityList.toString()).to.be.equal([].toString());
+  });
 });

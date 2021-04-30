@@ -27,6 +27,9 @@ export default class ObjectEvent {
           case 'epcList':
             this.addEPCList(objectEvent[prop]);
             break;
+          case 'quantityList':
+            this.addQuantityList(objectEvent[prop]);
+            break;
           default:
             this[prop] = objectEvent[prop];
         }
@@ -125,7 +128,7 @@ export default class ObjectEvent {
   }
 
   /**
-   * Remove an epc to the "epcList" field
+   * Remove an epc from the "epcList" field
    * @param {string} epc - the epc to remove (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
    * @return {ObjectEvent} - the objectEvent instance
    */
@@ -135,7 +138,7 @@ export default class ObjectEvent {
   }
 
   /**
-   * Remove each epc to the "epcList" field
+   * Remove each epc from the "epcList" field
    * @param {Array<string>} epcList - the epcs to remove
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
    * @return {ObjectEvent} - the objectEvent instance
@@ -163,6 +166,55 @@ export default class ObjectEvent {
   removeCustomField(key, value) {
     delete this[key];
     return this;
+  }
+
+  /**
+   * Add the quantity to the "quantityList" field
+   * @param {QuantityElement} quantity - the quantity to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addQuantity (quantity) {
+    this.quantityList.push(quantity)
+    return this
+  }
+
+  /**
+   * Add each quantity to the "quantityList" field
+   * @param {Array<QuantityElement>} quantityList - the quantities to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addQuantityList (quantityList) {
+    quantityList.forEach(quantity => this.addQuantity(quantity))
+    return this
+  }
+
+  /**
+   * Clear the quantity list
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  clearQuantityList () {
+    this.quantityList = []
+    return this
+  }
+
+  /**
+   * Remove a quantity from the "quantityList" field
+   * @param {QuantityElement} quantity - the quantity to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeQuantity (quantity) {
+    this.quantityList = this.quantityList.filter(elem => elem !== quantity)
+    return this
+  }
+
+  /**
+   * Remove each quantity from the "quantityList" field
+   * @param {Array<QuantityElement>} quantityList - the quantities to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeQuantityList (quantityList) {
+    quantityList.forEach(quantity => this.removeQuantity(quantity))
+    return this
   }
 
   /**
