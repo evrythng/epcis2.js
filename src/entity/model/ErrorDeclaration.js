@@ -89,7 +89,7 @@ export default class ErrorDeclaration {
   }
 
   /**
-   * Remove a correctiveEventID to the "correctiveEventIDs" field
+   * Remove a correctiveEventID from the "correctiveEventIDs" field
    * @param {string} correctiveEventID - the correctiveEventID to remove (e.g urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8)
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
@@ -99,7 +99,7 @@ export default class ErrorDeclaration {
   }
 
   /**
-   * Remove each correctiveEventID to the "correctiveEventIDs" field
+   * Remove each correctiveEventID from the "correctiveEventIDs" field
    * @param {Array<string>} correctiveEventIDList - the correctiveEventIDs to remove
    * (e.g [urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8, urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a7])
    * @return {ErrorDeclaration} - the errorDeclaration instance
