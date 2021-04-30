@@ -22,18 +22,18 @@ export default class ErrorDeclaration {
    * @param {{}} [errorDeclaration] - The Map that will be used to create the ErrorDeclaration
    * entity
    */
-  constructor(errorDeclaration) {
-    this.correctiveEventIDs = [];
+  constructor (errorDeclaration) {
+    this.correctiveEventIDs = []
 
     if (!arguments.length) {
       // create an empty ErrorDeclaration object
 
-      return;
+      return
     }
 
     for (const prop in errorDeclaration) {
       if (errorDeclaration.hasOwnProperty(prop)) {
-        this[prop] = errorDeclaration[prop];
+        this[prop] = errorDeclaration[prop]
       }
     }
   }
@@ -43,9 +43,9 @@ export default class ErrorDeclaration {
    * @param {string} time - a string corresponding to the time
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  setDeclarationTime(time) {
-    this.declarationTime = time;
-    return this;
+  setDeclarationTime (time) {
+    this.declarationTime = time
+    return this
   }
 
   /**
@@ -53,9 +53,9 @@ export default class ErrorDeclaration {
    * @param {string} reason - the reason (e.g 'urn:epcglobal:cbv:er:incorrect_data')
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  setReason(reason) {
-    this.reason = reason;
-    return this;
+  setReason (reason) {
+    this.reason = reason
+    return this
   }
 
   /**
@@ -63,9 +63,9 @@ export default class ErrorDeclaration {
    * @param {string} correctiveEventID - the correctiveEventID to add (e.g urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8)
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  addCorrectiveEventID(correctiveEventID) {
-    this.correctiveEventIDs.push(correctiveEventID);
-    return this;
+  addCorrectiveEventID (correctiveEventID) {
+    this.correctiveEventIDs.push(correctiveEventID)
+    return this
   }
 
   /**
@@ -74,18 +74,18 @@ export default class ErrorDeclaration {
    * (e.g [urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8, urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a7])
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  addCorrectiveEventIDList(correctiveEventIDList) {
-    correctiveEventIDList.forEach(correctiveEventID => this.addCorrectiveEventID(correctiveEventID));
-    return this;
+  addCorrectiveEventIDList (correctiveEventIDList) {
+    correctiveEventIDList.forEach(correctiveEventID => this.addCorrectiveEventID(correctiveEventID))
+    return this
   }
 
   /**
    * Clear the correctiveEventID list
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  clearCorrectiveEventIDList() {
-    this.correctiveEventIDs = [];
-    return this;
+  clearCorrectiveEventIDList () {
+    this.correctiveEventIDs = []
+    return this
   }
 
   /**
@@ -93,9 +93,9 @@ export default class ErrorDeclaration {
    * @param {string} correctiveEventID - the correctiveEventID to remove (e.g urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8)
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  removeCorrectiveEventID(correctiveEventID) {
-    this.correctiveEventIDs = this.correctiveEventIDs.filter(elem => elem !== correctiveEventID);
-    return this;
+  removeCorrectiveEventID (correctiveEventID) {
+    this.correctiveEventIDs = this.correctiveEventIDs.filter(elem => elem !== correctiveEventID)
+    return this
   }
 
   /**
@@ -104,9 +104,9 @@ export default class ErrorDeclaration {
    * (e.g [urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8, urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a7])
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  removeCorrectiveEventIDList(correctiveEventIDList) {
-    correctiveEventIDList.forEach(correctiveEventID => this.removeCorrectiveEventID(correctiveEventID));
-    return this;
+  removeCorrectiveEventIDList (correctiveEventIDList) {
+    correctiveEventIDList.forEach(correctiveEventID => this.removeCorrectiveEventID(correctiveEventID))
+    return this
   }
 
   /**
@@ -114,9 +114,9 @@ export default class ErrorDeclaration {
    * @param {string} value
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  addCustomField(key, value) {
-    this[key] = value;
-    return this;
+  addCustomField (key, value) {
+    this[key] = value
+    return this
   }
 
   /**
@@ -124,23 +124,23 @@ export default class ErrorDeclaration {
    * @param {string} value
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
-  removeCustomField(key, value) {
-    delete this[key];
-    return this;
+  removeCustomField (key, value) {
+    delete this[key]
+    return this
   }
 
   /**
    * @return {{}} - a JSON object corresponding to the ErrorDeclaration object
    */
-  toJSON() {
-    let json = {};
+  toJSON () {
+    const json = {}
 
-    for (let prop in this) {
+    for (const prop in this) {
       if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop];
+        json[prop] = this[prop]
       }
     }
 
-    return json;
+    return json
   }
 }

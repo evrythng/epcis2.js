@@ -2,8 +2,8 @@ import { expect } from 'chai'
 import {
   getTheTimeZoneOffsetFromDateString,
   getTimeZoneOffsetFromStringOrNumber,
-  numberToTwoCharString, offsetToString,
-} from '../src/utils/utils';
+  numberToTwoCharString, offsetToString
+} from '../src/utils/utils'
 
 describe('unit tests for util functions', () => {
   describe('numberToTwoCharString function', () => {
@@ -31,12 +31,12 @@ describe('unit tests for util functions', () => {
       expect(() => getTimeZoneOffsetFromStringOrNumber(new Date(Date.now()))).to.throw('The parameter provided in the constructor should be a number or a string')
     })
     it('should return the corresponding string of a time zone offset', async () => {
-      const offset = getTheTimeZoneOffsetFromDateString('2005-04-03T20:33:31.116-06:00');
-      expect(offset).to.be.equal('-06:00');
+      const offset = getTheTimeZoneOffsetFromDateString('2005-04-03T20:33:31.116-06:00')
+      expect(offset).to.be.equal('-06:00')
     })
     it('offset to string', async () => {
-      expect(offsetToString(-6, 30)).to.be.equal('-06:30');
-      expect(offsetToString(5,30)).to.be.equal('+05:30');
+      expect(offsetToString(-6, 30)).to.be.equal('-06:30')
+      expect(offsetToString(5, 30)).to.be.equal('+05:30')
     })
   })
 })

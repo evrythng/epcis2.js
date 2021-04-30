@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
-import QuantityElement from '../src/entity/model/QuantityElement';
+import QuantityElement from '../src/entity/model/QuantityElement'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -8,7 +8,7 @@ const correctiveEventID2 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a7'
 const correctiveEventID3 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a6'
 const reason = 'urn:epcglobal:cbv:er:incorrect_data'
 
-const JSONQuantityElement = {"epcClass":"urn:epc:class:lgtin:4012345.012345.998877","quantity":200,"uom":"KGM"};
+const JSONQuantityElement = { epcClass: 'urn:epc:class:lgtin:4012345.012345.998877', quantity: 200, uom: 'KGM' }
 
 describe('unit tests for model Objects', () => {
   describe('ErrorDeclaration.js', () => {
@@ -29,10 +29,10 @@ describe('unit tests for model Objects', () => {
       const errorDeclarationJSON = {
         declarationTime: anotherDate,
         correctiveEventIDs: [correctiveEventID1, correctiveEventID2, correctiveEventID3],
-        reason: reason,
+        reason: reason
       }
 
-      const errorDeclaration = new ErrorDeclaration(errorDeclarationJSON);
+      const errorDeclaration = new ErrorDeclaration(errorDeclarationJSON)
 
       const json = errorDeclaration.toJSON()
       expect(json.reason).to.be.equal(reason)
@@ -81,16 +81,16 @@ describe('unit tests for model Objects', () => {
     it('should add a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration()
       errorDeclaration.addCustomField('key', 'value')
-      expect(errorDeclaration.toJSON().key).to.be.equal(('value'));
+      expect(errorDeclaration.toJSON().key).to.be.equal(('value'))
     })
     it('should remove a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration()
       errorDeclaration.addCustomField('key', 'value')
       errorDeclaration.setReason(reason)
       errorDeclaration.removeCustomField('key', 'value')
-      expect(errorDeclaration.toJSON().toString()).to.be.equal({reason: reason, correctiveEventIDs: []}.toString());
+      expect(errorDeclaration.toJSON().toString()).to.be.equal({ reason: reason, correctiveEventIDs: [] }.toString())
     })
-  });
+  })
   describe('QuantityElement.js', () => {
     it('should create a valid QuantityElement object from setters', async () => {
       const quantityElement = new QuantityElement()
@@ -105,12 +105,12 @@ describe('unit tests for model Objects', () => {
       expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
     })
     it('should create a valid QuantityElement object from JSON', async () => {
-      const quantityElement = new QuantityElement(JSONQuantityElement);
+      const quantityElement = new QuantityElement(JSONQuantityElement)
 
       const json = quantityElement.toJSON()
       expect(json.quantity).to.be.equal(JSONQuantityElement.quantity)
       expect(json.uom).to.be.equal(JSONQuantityElement.uom)
       expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
     })
-  });
+  })
 })

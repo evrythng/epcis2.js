@@ -4,18 +4,17 @@ export default class QuantityElement {
    * Element via Map
    * @param {{}} [quantityElement] - The Map that will be used to create the QuantityElement entity
    */
-  constructor(quantityElement) {
+  constructor (quantityElement) {
     if (!arguments.length) {
       // create an empty QuantityElement object
-      return;
+      return
     }
 
     for (const prop in quantityElement) {
       if (quantityElement.hasOwnProperty(prop)) {
-        this[prop] = quantityElement[prop];
+        this[prop] = quantityElement[prop]
       }
     }
-
   }
 
   /**
@@ -23,9 +22,9 @@ export default class QuantityElement {
    * @param {string} epcClass
    * @return {QuantityElement} - the quantityElement instance
    */
-  setEpcClass(epcClass) {
-    this.epcClass = epcClass;
-    return this;
+  setEpcClass (epcClass) {
+    this.epcClass = epcClass
+    return this
   }
 
   /**
@@ -33,9 +32,9 @@ export default class QuantityElement {
    * @param {string} uom (pattern: "^[A-Z0-9]{2,3}$")
    * @return {QuantityElement} - the quantityElement instance
    */
-  setUom(uom) {
-    this.uom = uom;
-    return this;
+  setUom (uom) {
+    this.uom = uom
+    return this
   }
 
   /**
@@ -43,23 +42,23 @@ export default class QuantityElement {
    * @param {number} quantity (pattern: "^[A-Z0-9]{2,3}$")
    * @return {QuantityElement} - the quantityElement instance
    */
-  setQuantity(quantity) {
-    this.quantity = quantity;
-    return this;
+  setQuantity (quantity) {
+    this.quantity = quantity
+    return this
   }
 
   /**
    * Return a JSON object corresponding to the QuantityElement object
    */
-  toJSON() {
-    let json = {};
+  toJSON () {
+    const json = {}
 
-    for (let prop in this) {
+    for (const prop in this) {
       if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop];
+        json[prop] = this[prop]
       }
     }
 
-    return json;
+    return json
   }
 }

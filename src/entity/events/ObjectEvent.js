@@ -1,5 +1,5 @@
-import ErrorDeclaration from '../model/ErrorDeclaration';
-import Event from './Event';
+import ErrorDeclaration from '../model/ErrorDeclaration'
+import Event from './Event'
 
 export default class ObjectEvent extends Event {
   /**
@@ -7,36 +7,35 @@ export default class ObjectEvent extends Event {
    * @param {{}} [objectEvent] - The Map that will be used to create the ObjectEvent entity
    */
   constructor (objectEvent) {
-    super();
+    super()
     // object event
     this.isA = 'ObjectEvent'
     this.epcList = []
-    this.quantityList = [];
+    this.quantityList = []
 
-    //todo: if timezone offset in setup, save here
+    // todo: if timezone offset in setup, save here
 
     if (!arguments.length) {
-      return;
+      return
     }
 
     for (const prop in objectEvent) {
       if (objectEvent.hasOwnProperty(prop)) {
         switch (prop) {
           case 'errorDeclaration':
-            this.setErrorDeclaration(objectEvent[prop]);
-            break;
+            this.setErrorDeclaration(objectEvent[prop])
+            break
           case 'epcList':
-            this.addEPCList(objectEvent[prop]);
-            break;
+            this.addEPCList(objectEvent[prop])
+            break
           case 'quantityList':
-            this.addQuantityList(objectEvent[prop]);
-            break;
+            this.addQuantityList(objectEvent[prop])
+            break
           default:
-            this[prop] = objectEvent[prop];
+            this[prop] = objectEvent[prop]
         }
       }
     }
-
   }
 
   /**
@@ -95,9 +94,9 @@ export default class ObjectEvent extends Event {
    * @param {string} value
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addCustomField(key, value) {
-    this[key] = value;
-    return this;
+  addCustomField (key, value) {
+    this[key] = value
+    return this
   }
 
   /**
@@ -105,9 +104,9 @@ export default class ObjectEvent extends Event {
    * @param {string} value
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeCustomField(key, value) {
-    delete this[key];
-    return this;
+  removeCustomField (key, value) {
+    delete this[key]
+    return this
   }
 
   /**
@@ -163,18 +162,18 @@ export default class ObjectEvent extends Event {
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
-    let json = {};
+    const json = {}
 
-    for (let prop in this) {
+    for (const prop in this) {
       if (this.hasOwnProperty(prop)) {
         if (this[prop] instanceof ErrorDeclaration) {
-          json[prop] = this[prop].toJSON();
+          json[prop] = this[prop].toJSON()
         } else {
-          json[prop] = this[prop];
+          json[prop] = this[prop]
         }
       }
     }
 
-    return json;
+    return json
   }
 }

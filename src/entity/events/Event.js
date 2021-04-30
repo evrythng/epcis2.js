@@ -1,4 +1,4 @@
-import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils';
+import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils'
 
 /**
  * Abstract class Event
@@ -6,9 +6,9 @@ import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber
  * @class Event
  */
 export default class Event {
-  constructor() {
-    if (new.target === Event){
-      throw new Error("Abstract classes can't be instantiated.");
+  constructor () {
+    if (new.target === Event) {
+      throw new Error("Abstract classes can't be instantiated.")
     }
   }
 
@@ -31,11 +31,10 @@ export default class Event {
    * @return {Event} - the event instance
    */
   setEventTime (time) {
-    this.eventTime = time;
+    this.eventTime = time
     if (!this.eventTimeZoneOffset) {
-      const offset = getTheTimeZoneOffsetFromDateString(time);
-      if (offset)
-        this.setEventTimeZoneOffset(offset);
+      const offset = getTheTimeZoneOffsetFromDateString(time)
+      if (offset) { this.setEventTimeZoneOffset(offset) }
     }
     return this
   }
@@ -46,9 +45,9 @@ export default class Event {
    * (e.g -6 or 2.5 if it is a number)
    * @return {Event} - the event instance
    */
-  setEventTimeZoneOffset(offset) {
-    this.eventTimeZoneOffset = getTimeZoneOffsetFromStringOrNumber(offset);
-    return this;
+  setEventTimeZoneOffset (offset) {
+    this.eventTimeZoneOffset = getTimeZoneOffsetFromStringOrNumber(offset)
+    return this
   }
 
   /**
