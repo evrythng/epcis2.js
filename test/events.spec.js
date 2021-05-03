@@ -13,6 +13,7 @@ const JSONObjectEvent = {
   action: 'OBSERVE',
   bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
   disposition: 'urn:epcglobal:cbv:disp:in_transit',
+  bizLocation: { id: 'urn:epc:id:sgln:9529999.99999.0' },
   epcList: ['urn:epc:id:sgtin:0614141.107346.2017', 'urn:epc:id:sgtin:0614141.107346.2018'],
   eventTime: '2005-04-03T20:33:31.116-06:00',
   recordTime: '2020-04-04T20:33:31.116-06:00',
@@ -77,6 +78,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setBizStep(JSONObjectEvent.bizStep)
       .setPersistentDisposition(new PersistentDisposition(JSONObjectEvent.persistentDisposition))
       .setReadPoint(JSONObjectEvent.readPoint.id)
+      .setBizLocation(JSONObjectEvent.bizLocation.id)
 
     const json = o.toJSON()
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
@@ -117,7 +119,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
     expect(json.quantityList.toString()).to.be.equal(JSONObjectEvent.quantityList.toString())
-    expect(json.readPoint.id).to.be.equal(JSONObjectEvent.readPoint.id)
+    expect(json.bizLocation.id).to.be.equal(JSONObjectEvent.bizLocation.id)
   })
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent()
@@ -242,5 +244,13 @@ describe('unit tests for the ObjectEvent class', () => {
     o2.setReadPoint(new ReadPoint({ id: 'readPointID' }))
     expect(o.readPoint.id).to.be.equal('readPointID')
     expect(o2.readPoint.id).to.be.equal('readPointID')
+  })
+  it('should set the bizLocation with ID or BizLocation instance', async () => {
+    const o = new ObjectEvent()
+    const o2 = new ObjectEvent()
+    o.setBizLocation('id')
+    o2.setBizLocation(new ReadPoint({ id: 'id' }))
+    expect(o.bizLocation.id).to.be.equal('id')
+    expect(o2.bizLocation.id).to.be.equal('id')
   })
 })

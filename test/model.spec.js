@@ -4,6 +4,7 @@ import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
 import QuantityElement from '../src/entity/model/QuantityElement'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 import ReadPoint from '../src/entity/model/ReadPoint'
+import BizLocation from '../src/entity/model/BizLocation'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -131,9 +132,25 @@ describe('unit tests for model Objects', () => {
       expect(json.id).to.be.equal('id')
     })
     it('should create a valid ReadPoint object from JSON', async () => {
-      const quantityElement = new QuantityElement({ id: 'id' })
+      const readPoint = new ReadPoint({ id: 'id' })
 
-      const json = quantityElement.toJSON()
+      const json = readPoint.toJSON()
+      expect(json.id).to.be.equal('id')
+    })
+  })
+  describe('BizLocation.js', () => {
+    it('should create a valid BizLocation object from setters', async () => {
+      const bizLocation = new BizLocation()
+      bizLocation
+        .setId('id')
+
+      const json = bizLocation.toJSON()
+      expect(json.id).to.be.equal('id')
+    })
+    it('should create a valid ReadPoint object from JSON', async () => {
+      const bizLocation = new BizLocation({ id: 'id' })
+
+      const json = bizLocation.toJSON()
       expect(json.id).to.be.equal('id')
     })
   })

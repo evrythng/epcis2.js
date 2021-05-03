@@ -3,6 +3,7 @@ import Event from './Event'
 import PersistentDisposition from '../model/PersistentDisposition'
 import QuantityElement from '../model/QuantityElement'
 import ReadPoint from '../model/ReadPoint'
+import BizLocation from '../model/BizLocation'
 
 export default class ObjectEvent extends Event {
   /**
@@ -29,6 +30,9 @@ export default class ObjectEvent extends Event {
           case 'readPoint':
             this.setReadPoint(new ReadPoint(objectEvent[prop]))
             break
+          case 'bizLocation':
+            this.setBizLocation(new BizLocation(objectEvent[prop]))
+            break
           default:
             this[prop] = objectEvent[prop]
         }
@@ -42,7 +46,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addEPC (epc) {
-    if (!this.epcList) { this.epcList = [] }
+    if (!this.epcList) {
+      this.epcList = []
+    }
     this.epcList.push(epc)
     return this
   }
@@ -54,7 +60,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addEPCList (epcList) {
-    if (!this.epcList) { this.epcList = [] }
+    if (!this.epcList) {
+      this.epcList = []
+    }
     epcList.forEach(epc => this.addEPC(epc))
     return this
   }
@@ -74,7 +82,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPC (epc) {
-    if (!this.epcList) { this.epcList = [] }
+    if (!this.epcList) {
+      this.epcList = []
+    }
     this.epcList = this.epcList.filter(elem => elem !== epc)
     return this
   }
@@ -86,7 +96,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPCList (epcList) {
-    if (!this.epcList) { this.epcList = [] }
+    if (!this.epcList) {
+      this.epcList = []
+    }
     epcList.forEach(epc => this.removeEPC(epc))
     return this
   }
@@ -117,7 +129,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addQuantity (quantity) {
-    if (!this.quantityList) { this.quantityList = [] }
+    if (!this.quantityList) {
+      this.quantityList = []
+    }
     this.quantityList.push(quantity)
     return this
   }
@@ -128,7 +142,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addQuantityList (quantityList) {
-    if (!this.quantityList) { this.quantityList = [] }
+    if (!this.quantityList) {
+      this.quantityList = []
+    }
     quantityList.forEach(quantity => this.addQuantity(quantity))
     return this
   }
@@ -148,7 +164,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeQuantity (quantity) {
-    if (!this.quantityList) { this.quantityList = [] }
+    if (!this.quantityList) {
+      this.quantityList = []
+    }
     this.quantityList = this.quantityList.filter(elem => elem !== quantity)
     return this
   }
@@ -159,7 +177,9 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeQuantityList (quantityList) {
-    if (!this.quantityList) { this.quantityList = [] }
+    if (!this.quantityList) {
+      this.quantityList = []
+    }
     quantityList.forEach(quantity => this.removeQuantity(quantity))
     return this
   }
@@ -206,7 +226,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Set the readPoint property
-   * @param {string|ReadPoint} readPoint id
+   * @param {string|ReadPoint} readPoint id or readPoint instance
    * @return {ObjectEvent} - the objectEvent instance
    */
   setReadPoint (readPoint) {
@@ -220,6 +240,21 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Set the bizLocation property
+   * @param {string|BizLocation} bizLocation instance or bizLocation id
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  setBizLocation (bizLocation) {
+    if ((typeof bizLocation) === 'string') { // the param is the id of the bizLocation
+      this.bizLocation = new BizLocation().setId(bizLocation)
+      return this
+    }
+    // the param is the BizLocation instance
+    this.bizLocation = bizLocation
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
@@ -229,7 +264,8 @@ export default class ObjectEvent extends Event {
       if (this.hasOwnProperty(prop)) {
         if ((this[prop] instanceof ErrorDeclaration)
           || (this[prop] instanceof PersistentDisposition)
-          || (this[prop] instanceof ReadPoint)) {
+          || (this[prop] instanceof ReadPoint)
+          || (this[prop] instanceof BizLocation)) {
           json[prop] = this[prop].toJSON()
         } else if (prop === 'quantityList') {
           json[prop] = []
