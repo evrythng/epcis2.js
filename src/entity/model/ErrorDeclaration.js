@@ -13,8 +13,6 @@
  */
 
 export default class ErrorDeclaration {
-  // todo: add the possibility to add custom attributes
-  // e.g "example:vendorExtension": "Test1",
 
   /**
    * You can either create an empty ErrorDeclaration or provide an already existing Error
