@@ -29,6 +29,22 @@ value to the setup function.
     
     Now, the `eventTimeZoneOffset` will be `'-02:00'` by default.
 
+### The custom fields
+
+For each object, you can add custom fields. You have two ways to do it:
+- by providing them in the constructor
+```js
+let readPoint = new ReadPoint({'id': 'myID', 'customField': 'value'});
+```
+- by adding them later
+```js
+let readPoint = new ReadPoint({'id': 'myID'});
+readPoint.addCustomField('customField', 'value')
+
+// you can also remove it
+readPoint.removeCustomField('customField')
+```
+
 ### The lists
 
 Each time you have a list object (e.g epcList in an ObjectEvent), the list won't be sent in the request by default.
@@ -50,8 +66,18 @@ be sent even if it is empty. You can override this and choose to not send the em
 
 ## Build and deploy
 
+### Build
+
 To build the sdk, you need node >= `v12.0.0`
 
 You need to run: `npm run build`.
 
 Then, you can test the library with: `node example/index.js`
+
+### Deploy
+
+Before deploying, make sure to run the linter:
+`npm run lint`
+
+And make sure to run the unit tests:
+`npm run test`
