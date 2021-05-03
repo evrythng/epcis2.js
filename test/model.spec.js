@@ -6,6 +6,7 @@ import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 import ReadPoint from '../src/entity/model/ReadPoint'
 import BizLocation from '../src/entity/model/BizLocation'
 import BizTransactionElement from '../src/entity/model/BizTransactionElement'
+import SourceElement from '../src/entity/model/SourceElement'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -14,9 +15,13 @@ const correctiveEventID3 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a6'
 const reason = 'urn:epcglobal:cbv:er:incorrect_data'
 
 const JSONQuantityElement = { epcClass: 'urn:epc:class:lgtin:4012345.012345.998877', quantity: 200, uom: 'KGM' }
-const JSONBizTransaction = {
+const JSONBizTransactionElement = {
   type: 'urn:epcglobal:cbv:btt:po',
   bizTransaction: 'http://transaction.acme.com/po/12345678'
+}
+const JSONSourceElement = {
+  type: 'urn:epcglobal:cbv:sdt:owning_party',
+  source: 'urn:epc:id:pgln:9520001.11111'
 }
 
 describe('unit tests for model Objects', () => {
@@ -163,19 +168,38 @@ describe('unit tests for model Objects', () => {
     it('should create a valid BizTransactionElement object from setters', async () => {
       const bizTransaction = new BizTransactionElement()
       bizTransaction
-        .setType(JSONBizTransaction.type)
-        .setBizTransaction(JSONBizTransaction.bizTransaction)
+        .setType(JSONBizTransactionElement.type)
+        .setBizTransaction(JSONBizTransactionElement.bizTransaction)
 
       const json = bizTransaction.toJSON()
-      expect(json.type).to.be.equal(JSONBizTransaction.type)
-      expect(json.bizTransaction).to.be.equal(JSONBizTransaction.bizTransaction)
+      expect(json.type).to.be.equal(JSONBizTransactionElement.type)
+      expect(json.bizTransaction).to.be.equal(JSONBizTransactionElement.bizTransaction)
     })
     it('should create a valid BizTransactionElement object from JSON', async () => {
-      const bizTransaction = new BizTransactionElement(JSONBizTransaction)
+      const bizTransaction = new BizTransactionElement(JSONBizTransactionElement)
 
       const json = bizTransaction.toJSON()
-      expect(json.type).to.be.equal(JSONBizTransaction.type)
-      expect(json.bizTransaction).to.be.equal(JSONBizTransaction.bizTransaction)
+      expect(json.type).to.be.equal(JSONBizTransactionElement.type)
+      expect(json.bizTransaction).to.be.equal(JSONBizTransactionElement.bizTransaction)
+    })
+  })
+  describe('SourceElement.js', () => {
+    it('should create a valid SourceElement object from setters', async () => {
+      const sourceElement = new SourceElement()
+      sourceElement
+        .setType(JSONSourceElement.type)
+        .setSource(JSONSourceElement.source)
+
+      const json = sourceElement.toJSON()
+      expect(json.type).to.be.equal(JSONSourceElement.type)
+      expect(json.source).to.be.equal(JSONSourceElement.source)
+    })
+    it('should create a valid SourceElement object from JSON', async () => {
+      const sourceElement = new SourceElement(JSONSourceElement)
+
+      const json = sourceElement.toJSON()
+      expect(json.type).to.be.equal(JSONSourceElement.type)
+      expect(json.source).to.be.equal(JSONSourceElement.source)
     })
   })
   describe('PersistentDisposition.js', () => {

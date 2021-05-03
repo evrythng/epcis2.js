@@ -320,6 +320,67 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Add the source to the "sourceList" field
+   * @param {SourceElement} source - the source to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addSource (source) {
+    if (!this.sourceList) {
+      this.sourceList = []
+    }
+    this.sourceList.push(source)
+    return this
+  }
+
+  /**
+   * Add each sourceElement to the "sourceList" field
+   * @param {Array<SourceElement>} sourceList - the sourceElements to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addSourceList (sourceList) {
+    if (!this.sourceList) {
+      this.sourceList = []
+    }
+    sourceList.forEach(sourceElement => this.addSource(sourceElement))
+    return this
+  }
+
+  /**
+   * Clear the source list
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  clearSourceList () {
+    delete this.sourceList
+    return this
+  }
+
+  /**
+   * Remove a source from the "sourceList" field
+   * @param {SourceElement} source - the source to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeSource (source) {
+    if (!this.sourceList) {
+      this.sourceList = []
+    }
+    this.sourceList = this.sourceList.filter(elem => elem !== source)
+    return this
+  }
+
+  /**
+   * Remove each source from the "sourceList" field
+   * @param {Array<SourceElement>} sourceList - the sources to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeSourceList (sourceList) {
+    if (!this.sourceList) {
+      this.sourceList = []
+    }
+    sourceList.forEach(sourceElement => this.removeSource(sourceElement))
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
@@ -332,7 +393,7 @@ export default class ObjectEvent extends Event {
           || (this[prop] instanceof ReadPoint)
           || (this[prop] instanceof BizLocation)) {
           json[prop] = this[prop].toJSON()
-        } else if (prop === 'quantityList' || prop === 'bizTransactionList') {
+        } else if (prop === 'quantityList' || prop === 'bizTransactionList' || prop === 'sourceList') {
           json[prop] = []
           this[prop].forEach(e => json[prop].push(e))
         } else {
