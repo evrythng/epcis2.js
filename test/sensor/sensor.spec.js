@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import SensorMetadata from '../../src/entity/model/sensor/SensorMetadata'
 import SensorReportElement from '../../src/entity/model/sensor/SensorReportElement'
-import SensorElement from '../../src/entity/model/sensor/SensorElement';
+import SensorElement from '../../src/entity/model/sensor/SensorElement'
 
 const JSONSensorMetadata = {
   time: '2019-04-02T14:05:00.000+01:00',
@@ -40,13 +40,13 @@ const JSONSensorReportElement = {
   bizRules: 'https://example.org/gdti/4012345000054987'
 }
 const JSONSensorElement = {
-  "sensorMetadata" : {"time":"2019-07-19T14:00:00.000+01:00", "deviceID":"urn:epc:id:giai:4000001.111", "deviceMetadata":"https://id.gs1.org/giai/4000001111", "rawData":"https://example.org/giai/401234599999", "dataProcessingMethod":"https://example.com/gdti/4012345000054987", "bizRules":"https://example.org/gdti/4012345000054987"},
-  "sensorReport" : [
-    { "type": "gs1:MT-Humidity", "value":12.1, "uom":"A93"},
-    { "type": "gs1:MT-Molar_concentration" , "chemicalSubstance":"https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N", "value":0.18, "uom":"C35"},
-    { "type": "gs1:MT-Molar_concentration" , "microorganism":"https://www.ncbi.nlm.nih.gov/taxonomy/1126011", "value":0.05, "uom":"C35"}
+  sensorMetadata: { time: '2019-07-19T14:00:00.000+01:00', deviceID: 'urn:epc:id:giai:4000001.111', deviceMetadata: 'https://id.gs1.org/giai/4000001111', rawData: 'https://example.org/giai/401234599999', dataProcessingMethod: 'https://example.com/gdti/4012345000054987', bizRules: 'https://example.org/gdti/4012345000054987' },
+  sensorReport: [
+    { type: 'gs1:MT-Humidity', value: 12.1, uom: 'A93' },
+    { type: 'gs1:MT-Molar_concentration', chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N', value: 0.18, uom: 'C35' },
+    { type: 'gs1:MT-Molar_concentration', microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011', value: 0.05, uom: 'C35' }
   ]
-};
+}
 
 describe('unit tests for sensor relative Objects', () => {
   describe('SensorMetadata.js', () => {

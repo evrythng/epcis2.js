@@ -7,7 +7,7 @@ import BizLocation from '../model/BizLocation'
 import BizTransactionElement from '../model/BizTransactionElement'
 import SourceElement from '../model/SourceElement'
 import DestinationElement from '../model/DestinationElement'
-import SensorElement from '../model/sensor/SensorElement';
+import SensorElement from '../model/sensor/SensorElement'
 
 export default class ObjectEvent extends Event {
   /**
@@ -116,26 +116,6 @@ export default class ObjectEvent extends Event {
       this.epcList = []
     }
     epcList.forEach(epc => this.removeEPC(epc))
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {ObjectEvent} - the objectEvent instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {ObjectEvent} - the objectEvent instance
-   */
-  removeCustomField (key, value) {
-    delete this[key]
     return this
   }
 

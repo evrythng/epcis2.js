@@ -91,4 +91,24 @@ export default class Event {
     this.errorDeclaration = errorDeclaration
     return this
   }
+
+  /**
+   * @param {string} key
+   * @param {string} value
+   * @return {Event} - the objectEvent instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @param {string} value
+   * @return {Event} - the objectEvent instance
+   */
+  removeCustomField (key, value) {
+    delete this[key]
+    return this
+  }
 }
