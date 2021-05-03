@@ -6,6 +6,7 @@ import setup from '../src/setup'
 import { defaultSettings } from '../src/settings'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 import ReadPoint from '../src/entity/model/ReadPoint'
+import BizLocation from '../src/entity/model/BizLocation'
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -249,7 +250,7 @@ describe('unit tests for the ObjectEvent class', () => {
     const o = new ObjectEvent()
     const o2 = new ObjectEvent()
     o.setBizLocation('id')
-    o2.setBizLocation(new ReadPoint({ id: 'id' }))
+    o2.setBizLocation(new BizLocation({ id: 'id' }))
     expect(o.bizLocation.id).to.be.equal('id')
     expect(o2.bizLocation.id).to.be.equal('id')
   })
