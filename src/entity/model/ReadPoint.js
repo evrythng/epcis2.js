@@ -28,7 +28,7 @@ export default class ReadPoint {
   }
 
   /**
-   * Return a JSON object corresponding to the QuantityElement object
+   * Return a JSON object corresponding to the ReadPoint object
    */
   toJSON () {
     const json = {}
