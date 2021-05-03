@@ -5,7 +5,8 @@ import QuantityElement from '../model/QuantityElement'
 import ReadPoint from '../model/ReadPoint'
 import BizLocation from '../model/BizLocation'
 import BizTransactionElement from '../model/BizTransactionElement'
-import SourceElement from '../model/SourceElement';
+import SourceElement from '../model/SourceElement'
+import DestinationElement from '../model/DestinationElement'
 
 export default class ObjectEvent extends Event {
   /**
@@ -34,6 +35,9 @@ export default class ObjectEvent extends Event {
             break
           case 'sourceList':
             objectEvent[prop].forEach(source => this.addSource(new SourceElement(source)))
+            break
+          case 'destinationList':
+            objectEvent[prop].forEach(destination => this.addDestination(new DestinationElement(destination)))
             break
           case 'readPoint':
             this.setReadPoint(new ReadPoint(objectEvent[prop]))
@@ -385,6 +389,67 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Add the destination to the "destinationList" field
+   * @param {DestinationElement} destination - the destination to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addDestination (destination) {
+    if (!this.destinationList) {
+      this.destinationList = []
+    }
+    this.destinationList.push(destination)
+    return this
+  }
+
+  /**
+   * Add each destinationElement to the "destinationList" field
+   * @param {Array<DestinationElement>} destinationList - the destinationElements to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addDestinationList (destinationList) {
+    if (!this.destinationList) {
+      this.destinationList = []
+    }
+    destinationList.forEach(destinationElement => this.addDestination(destinationElement))
+    return this
+  }
+
+  /**
+   * Clear the destination list
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  clearDestinationList () {
+    delete this.destinationList
+    return this
+  }
+
+  /**
+   * Remove a destination from the "destinationList" field
+   * @param {DestinationElement} destination - the destination to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeDestination (destination) {
+    if (!this.destinationList) {
+      this.destinationList = []
+    }
+    this.destinationList = this.destinationList.filter(elem => elem !== destination)
+    return this
+  }
+
+  /**
+   * Remove each destination from the "destinationList" field
+   * @param {Array<DestinationElement>} destinationList - the destinations to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeDestinationList (destinationList) {
+    if (!this.destinationList) {
+      this.destinationList = []
+    }
+    destinationList.forEach(destinationElement => this.removeDestination(destinationElement))
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
@@ -397,7 +462,7 @@ export default class ObjectEvent extends Event {
           || (this[prop] instanceof ReadPoint)
           || (this[prop] instanceof BizLocation)) {
           json[prop] = this[prop].toJSON()
-        } else if (prop === 'quantityList' || prop === 'bizTransactionList' || prop === 'sourceList') {
+        } else if (prop === 'quantityList' || prop === 'bizTransactionList' || prop === 'sourceList' || prop === 'destinationList') {
           json[prop] = []
           this[prop].forEach(e => json[prop].push(e))
         } else {

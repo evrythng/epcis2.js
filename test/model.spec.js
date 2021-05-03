@@ -7,6 +7,7 @@ import ReadPoint from '../src/entity/model/ReadPoint'
 import BizLocation from '../src/entity/model/BizLocation'
 import BizTransactionElement from '../src/entity/model/BizTransactionElement'
 import SourceElement from '../src/entity/model/SourceElement'
+import DestinationElement from '../src/entity/model/DestinationElement'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -22,6 +23,10 @@ const JSONBizTransactionElement = {
 const JSONSourceElement = {
   type: 'urn:epcglobal:cbv:sdt:owning_party',
   source: 'urn:epc:id:pgln:9520001.11111'
+}
+const JSONDestinationElement = {
+  type: 'urn:epcglobal:cbv:sdt:owning_party',
+  destination: 'urn:epc:id:pgln:9520999.99999'
 }
 
 describe('unit tests for model Objects', () => {
@@ -200,6 +205,25 @@ describe('unit tests for model Objects', () => {
       const json = sourceElement.toJSON()
       expect(json.type).to.be.equal(JSONSourceElement.type)
       expect(json.source).to.be.equal(JSONSourceElement.source)
+    })
+  })
+  describe('DestinationElement.js', () => {
+    it('should create a valid DestinationElement object from setters', async () => {
+      const destinationElement = new DestinationElement()
+      destinationElement
+        .setType(JSONDestinationElement.type)
+        .setDestination(JSONDestinationElement.destination)
+
+      const json = destinationElement.toJSON()
+      expect(json.type).to.be.equal(JSONDestinationElement.type)
+      expect(json.destination).to.be.equal(JSONDestinationElement.destination)
+    })
+    it('should create a valid DestinationElement object from JSON', async () => {
+      const destinationElement = new DestinationElement(JSONDestinationElement)
+
+      const json = destinationElement.toJSON()
+      expect(json.type).to.be.equal(JSONDestinationElement.type)
+      expect(json.destination).to.be.equal(JSONDestinationElement.destination)
     })
   })
   describe('PersistentDisposition.js', () => {

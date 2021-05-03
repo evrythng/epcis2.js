@@ -9,6 +9,7 @@ import ReadPoint from '../src/entity/model/ReadPoint'
 import BizLocation from '../src/entity/model/BizLocation'
 import BizTransactionElement from '../src/entity/model/BizTransactionElement'
 import SourceElement from '../src/entity/model/SourceElement'
+import DestinationElement from '../src/entity/model/DestinationElement'
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -30,6 +31,9 @@ const JSONObjectEvent = {
     type: 'urn:epcglobal:cbv:btt:po',
     bizTransaction: 'http://transaction.acme.com/po/12345679'
   }],
+  destinationList: [
+    { type: 'urn:epcglobal:cbv:sdt:owning_party', destination: 'urn:epc:id:pgln:9520999.99999' }
+  ],
   'example:myField': 'Example of a vendor/user extension',
   quantityList: [
     { epcClass: 'urn:epc:class:lgtin:4012345.012345.998877', quantity: 200, uom: 'KGM' },
@@ -136,7 +140,8 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.bizLocation.id).to.be.equal(JSONObjectEvent.bizLocation.id)
     expect(json.sourceList.toString()).to.be.equal(JSONObjectEvent.sourceList.toString())
     expect(json.bizTransactionList.toString()).to.be.equal(JSONObjectEvent.bizTransactionList.toString())
-  });
+    expect(json.destinationList.toString()).to.be.equal(JSONObjectEvent.destinationList.toString())
+  })
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent()
     const o2 = new ObjectEvent()
@@ -349,6 +354,45 @@ describe('unit tests for the ObjectEvent class', () => {
       const o = new ObjectEvent()
       const json = o.toJSON()
       expect(json.sourceList).to.be.equal(undefined)
+    })
+  })
+  describe('destinationList field', () => {
+    const destination1 = new DestinationElement(JSONObjectEvent.destinationList[0])
+    const destination2 = new DestinationElement(JSONObjectEvent.destinationList[1])
+
+    it('should add and remove destination', async () => {
+      const o = new ObjectEvent()
+      o.addDestination(destination1)
+      expect(o.destinationList.toString()).to.be.equal([destination1].toString())
+      o.addDestination(destination2)
+      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString())
+      o.removeDestination(destination1)
+      expect(o.destinationList.toString()).to.be.equal([destination2].toString())
+      o.removeDestination(destination2)
+      expect(o.destinationList.toString()).to.be.equal([].toString())
+    })
+    it('should add a destination list', async () => {
+      const o = new ObjectEvent()
+      o.addDestinationList([destination1, destination2])
+      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString())
+    })
+    it('should remove a destination list', async () => {
+      const o = new ObjectEvent()
+      o.addDestinationList([destination1, destination2])
+      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString())
+      o.removeDestinationList([destination1, destination2])
+      expect(o.destinationList.toString()).to.be.equal([].toString())
+    })
+    it('should clear the destination list', async () => {
+      const o = new ObjectEvent()
+      o.addDestinationList([destination1, destination2])
+      o.clearDestinationList()
+      expect(o.quantityList).to.be.equal(undefined)
+    })
+    it('should not add the destination list to JSON if it is not defined', async () => {
+      const o = new ObjectEvent()
+      const json = o.toJSON()
+      expect(json.destinationList).to.be.equal(undefined)
     })
   })
 })
