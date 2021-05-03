@@ -27,7 +27,7 @@ export default class ObjectEvent extends Event {
           case 'persistentDisposition':
             this.setPersistentDisposition(new PersistentDisposition(objectEvent[prop]))
             break
-          case 'quantityElement':
+          case 'quantityList':
             objectEvent[prop].forEach(quantityElement => this.addQuantity(new QuantityElement(quantityElement)))
             break
           case 'bizTransactionList':
@@ -464,7 +464,7 @@ export default class ObjectEvent extends Event {
           json[prop] = this[prop].toJSON()
         } else if (prop === 'quantityList' || prop === 'bizTransactionList' || prop === 'sourceList' || prop === 'destinationList') {
           json[prop] = []
-          this[prop].forEach(e => json[prop].push(e))
+          this[prop].forEach(e => json[prop].push(e.toJSON()))
         } else {
           json[prop] = this[prop]
         }
