@@ -95,7 +95,7 @@ export default class Event {
   /**
    * @param {string} key
    * @param {string} value
-   * @return {Event} - the objectEvent instance
+   * @return {Event} - the event instance
    */
   addCustomField (key, value) {
     this[key] = value
@@ -105,7 +105,7 @@ export default class Event {
   /**
    * @param {string} key
    * @param {string} value
-   * @return {Event} - the objectEvent instance
+   * @return {Event} - the event instance
    */
   removeCustomField (key, value) {
     delete this[key]
