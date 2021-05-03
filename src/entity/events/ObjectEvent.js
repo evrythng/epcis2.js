@@ -5,6 +5,7 @@ import QuantityElement from '../model/QuantityElement'
 import ReadPoint from '../model/ReadPoint'
 import BizLocation from '../model/BizLocation'
 import BizTransactionElement from '../model/BizTransactionElement'
+import SourceElement from '../model/SourceElement';
 
 export default class ObjectEvent extends Event {
   /**
@@ -30,6 +31,9 @@ export default class ObjectEvent extends Event {
             break
           case 'bizTransactionList':
             objectEvent[prop].forEach(bizTransaction => this.addBizTransaction(new BizTransactionElement(bizTransaction)))
+            break
+          case 'sourceList':
+            objectEvent[prop].forEach(source => this.addSource(new SourceElement(source)))
             break
           case 'readPoint':
             this.setReadPoint(new ReadPoint(objectEvent[prop]))

@@ -134,7 +134,9 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
     expect(json.quantityList.toString()).to.be.equal(JSONObjectEvent.quantityList.toString())
     expect(json.bizLocation.id).to.be.equal(JSONObjectEvent.bizLocation.id)
-  })
+    expect(json.sourceList.toString()).to.be.equal(JSONObjectEvent.sourceList.toString())
+    expect(json.bizTransactionList.toString()).to.be.equal(JSONObjectEvent.bizTransactionList.toString())
+  });
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent()
     const o2 = new ObjectEvent()
