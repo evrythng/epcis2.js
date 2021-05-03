@@ -20,8 +20,6 @@ export default class ErrorDeclaration {
    * entity
    */
   constructor (errorDeclaration) {
-    this.correctiveEventIDs = []
-
     if (!arguments.length) {
       // create an empty ErrorDeclaration object
 
@@ -61,6 +59,7 @@ export default class ErrorDeclaration {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   addCorrectiveEventID (correctiveEventID) {
+    if (!this.correctiveEventIDs) { this.correctiveEventIDs = [] }
     this.correctiveEventIDs.push(correctiveEventID)
     return this
   }
@@ -72,6 +71,7 @@ export default class ErrorDeclaration {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   addCorrectiveEventIDList (correctiveEventIDList) {
+    if (!this.correctiveEventIDs) { this.correctiveEventIDs = [] }
     correctiveEventIDList.forEach(correctiveEventID => this.addCorrectiveEventID(correctiveEventID))
     return this
   }
@@ -81,7 +81,7 @@ export default class ErrorDeclaration {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   clearCorrectiveEventIDList () {
-    this.correctiveEventIDs = []
+    delete this.correctiveEventIDs
     return this
   }
 
@@ -91,6 +91,7 @@ export default class ErrorDeclaration {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   removeCorrectiveEventID (correctiveEventID) {
+    if (!this.correctiveEventIDs) { this.correctiveEventIDs = [] }
     this.correctiveEventIDs = this.correctiveEventIDs.filter(elem => elem !== correctiveEventID)
     return this
   }
@@ -102,6 +103,7 @@ export default class ErrorDeclaration {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   removeCorrectiveEventIDList (correctiveEventIDList) {
+    if (!this.correctiveEventIDs) { this.correctiveEventIDs = [] }
     correctiveEventIDList.forEach(correctiveEventID => this.removeCorrectiveEventID(correctiveEventID))
     return this
   }

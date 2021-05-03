@@ -1,7 +1,7 @@
 # epcis2.js
 EPCIS 2.0 Javascript SDK
 
-## The setup function
+### The setup function
 
 You can override the default settings by providing them to the setup function. For example, you can set a default 
 endpoint that will be use for each EPCIS request if none endpoint is provided.
@@ -10,7 +10,7 @@ endpoint that will be use for each EPCIS request if none endpoint is provided.
 setup({endpoint: 'example.com'});
 ```
 
-## The eventTimeZoneOffset property
+### The eventTimeZoneOffset property
 
 You have multiple ways to set the `eventTimeZoneOffset` property of an event (e.g an ObjectEvent).
 
@@ -28,6 +28,25 @@ value to the setup function.
     ```
     
     Now, the `eventTimeZoneOffset` will be `'-02:00'` by default.
+
+### The lists
+
+Each time you have a list object (e.g epcList in an ObjectEvent), the list won't be sent in the request by default.
+If you add an element to the list, the list will be sent. If you add some elements, and then remove then, the list will
+be sent even if it is empty. You can override this and choose to not send the empty list by clearing the list. 
+
+```js
+    const o = new ObjectEvent();
+    const json = o.toJSON(); // { isA: 'ObjectEvent' } -> the epcList isn't sent
+
+    const o = new ObjectEvent().addEPC('...');
+    const json = o.toJSON(); //{ isA: 'ObjectEvent', epcList: [ '...' ] } -> the epcList is sent
+
+    const o = new ObjectEvent().addEPC('...').removeEPC('...');
+    const json = o.toJSON(); //{ isA: 'ObjectEvent', epcList: [] } -> the epcList is sent as an emptyString
+    o.clearEPCList();
+    const json = o.toJSON(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
+```
 
 ## Build and deploy
 

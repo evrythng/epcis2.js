@@ -5,6 +5,7 @@ import QuantityElement from '../src/entity/model/QuantityElement'
 import setup from '../src/setup'
 import { defaultSettings } from '../src/settings'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
+import ReadPoint from '../src/entity/model/ReadPoint'
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -75,6 +76,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setDisposition(JSONObjectEvent.disposition)
       .setBizStep(JSONObjectEvent.bizStep)
       .setPersistentDisposition(new PersistentDisposition(JSONObjectEvent.persistentDisposition))
+      .setReadPoint(JSONObjectEvent.readPoint.id)
 
     const json = o.toJSON()
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
@@ -92,6 +94,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.bizStep).to.be.equal(JSONObjectEvent.bizStep)
     expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString())
     expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
+    expect(json.readPoint.id).to.be.equal(JSONObjectEvent.readPoint.id)
   })
   it('should create an ObjectEvent from json', async () => {
     const o = new ObjectEvent(JSONObjectEvent)
@@ -114,6 +117,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
     expect(json.quantityList.toString()).to.be.equal(JSONObjectEvent.quantityList.toString())
+    expect(json.readPoint.id).to.be.equal(JSONObjectEvent.readPoint.id)
   })
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent()
@@ -161,7 +165,12 @@ describe('unit tests for the ObjectEvent class', () => {
     const o = new ObjectEvent()
     o.addEPCList([...JSONObjectEvent.epcList, epc3])
     o.clearEPCList()
-    expect(o.epcList.toString()).to.be.equal([].toString())
+    expect(o.epcList).to.be.equal(undefined)
+  })
+  it('should not add the epc list to JSON if it is not defined', async () => {
+    const o = new ObjectEvent()
+    const json = o.toJSON()
+    expect(json.epcList).to.be.equal(undefined)
   })
   it('should add a custom field', async () => {
     const objectEvent = new ObjectEvent()
@@ -219,6 +228,19 @@ describe('unit tests for the ObjectEvent class', () => {
     const o = new ObjectEvent()
     o.addQuantityList([quantity1, quantity2])
     o.clearQuantityList()
-    expect(o.quantityList.toString()).to.be.equal([].toString())
+    expect(o.quantityList).to.be.equal(undefined)
+  })
+  it('should not add the quantity list to JSON if it is not defined', async () => {
+    const o = new ObjectEvent()
+    const json = o.toJSON()
+    expect(json.quantityList).to.be.equal(undefined)
+  })
+  it('should set the readPoint with ID or ReadPoint instance', async () => {
+    const o = new ObjectEvent()
+    const o2 = new ObjectEvent()
+    o.setReadPoint('readPointID')
+    o2.setReadPoint(new ReadPoint({ id: 'readPointID' }))
+    expect(o.readPoint.id).to.be.equal('readPointID')
+    expect(o2.readPoint.id).to.be.equal('readPointID')
   })
 })

@@ -6,9 +6,6 @@ export default class PersistentDisposition {
    * PersistentDisposition entity
    */
   constructor (persistentDisposition) {
-    this.set = []
-    this.unset = []
-
     if (!arguments.length) {
       // create an empty ErrorDeclaration object
 
@@ -28,6 +25,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addSet (set) {
+    if (!this.set) { this.set = [] }
     this.set.push(set)
     return this
   }
@@ -38,6 +36,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addSetList (setList) {
+    if (!this.set) { this.set = [] }
     setList.forEach(set => this.addSet(set))
     return this
   }
@@ -47,7 +46,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   clearSetList () {
-    this.set = []
+    delete this.set
     return this
   }
 
@@ -57,6 +56,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   removeSet (set) {
+    if (!this.set) { this.set = [] }
     this.set = this.set.filter(elem => elem !== set)
     return this
   }
@@ -67,6 +67,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   removeSetList (setList) {
+    if (!this.set) { this.set = [] }
     setList.forEach(set => this.removeSet(set))
     return this
   }
@@ -77,6 +78,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addUnset (unset) {
+    if (!this.unset) { this.unset = [] }
     this.unset.push(unset)
     return this
   }
@@ -87,6 +89,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addUnsetList (unsetList) {
+    if (!this.unset) { this.unset = [] }
     unsetList.forEach(unset => this.addUnset(unset))
     return this
   }
@@ -96,7 +99,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   clearUnsetList () {
-    this.unset = []
+    delete this.unset
     return this
   }
 
@@ -106,6 +109,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   removeUnset (unset) {
+    if (!this.unset) { this.unset = [] }
     this.unset = this.unset.filter(elem => elem !== unset)
     return this
   }
@@ -116,6 +120,7 @@ export default class PersistentDisposition {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   removeUnsetList (unsetList) {
+    if (!this.unset) { this.unset = [] }
     unsetList.forEach(unset => this.removeUnset(unset))
     return this
   }

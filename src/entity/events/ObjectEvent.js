@@ -2,6 +2,7 @@ import ErrorDeclaration from '../model/ErrorDeclaration'
 import Event from './Event'
 import PersistentDisposition from '../model/PersistentDisposition'
 import QuantityElement from '../model/QuantityElement'
+import ReadPoint from '../model/ReadPoint'
 
 export default class ObjectEvent extends Event {
   /**
@@ -11,8 +12,6 @@ export default class ObjectEvent extends Event {
   constructor (objectEvent) {
     super(objectEvent)
     this.isA = 'ObjectEvent'
-    this.epcList = []
-    this.quantityList = []
 
     if (!arguments.length) {
       return
@@ -27,6 +26,9 @@ export default class ObjectEvent extends Event {
           case 'quantityElement':
             objectEvent[prop].forEach(quantityElement => this.addQuantity(new QuantityElement(quantityElement)))
             break
+          case 'readPoint':
+            this.setReadPoint(new ReadPoint(objectEvent[prop]))
+            break
           default:
             this[prop] = objectEvent[prop]
         }
@@ -40,6 +42,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addEPC (epc) {
+    if (!this.epcList) { this.epcList = [] }
     this.epcList.push(epc)
     return this
   }
@@ -51,6 +54,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addEPCList (epcList) {
+    if (!this.epcList) { this.epcList = [] }
     epcList.forEach(epc => this.addEPC(epc))
     return this
   }
@@ -60,7 +64,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   clearEPCList () {
-    this.epcList = []
+    delete this.epcList
     return this
   }
 
@@ -70,6 +74,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPC (epc) {
+    if (!this.epcList) { this.epcList = [] }
     this.epcList = this.epcList.filter(elem => elem !== epc)
     return this
   }
@@ -81,6 +86,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPCList (epcList) {
+    if (!this.epcList) { this.epcList = [] }
     epcList.forEach(epc => this.removeEPC(epc))
     return this
   }
@@ -111,6 +117,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addQuantity (quantity) {
+    if (!this.quantityList) { this.quantityList = [] }
     this.quantityList.push(quantity)
     return this
   }
@@ -121,6 +128,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   addQuantityList (quantityList) {
+    if (!this.quantityList) { this.quantityList = [] }
     quantityList.forEach(quantity => this.addQuantity(quantity))
     return this
   }
@@ -130,7 +138,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   clearQuantityList () {
-    this.quantityList = []
+    delete this.quantityList
     return this
   }
 
@@ -140,6 +148,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeQuantity (quantity) {
+    if (!this.quantityList) { this.quantityList = [] }
     this.quantityList = this.quantityList.filter(elem => elem !== quantity)
     return this
   }
@@ -150,6 +159,7 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeQuantityList (quantityList) {
+    if (!this.quantityList) { this.quantityList = [] }
     quantityList.forEach(quantity => this.removeQuantity(quantity))
     return this
   }
@@ -195,6 +205,21 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Set the readPoint property
+   * @param {string|ReadPoint} readPoint id
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  setReadPoint (readPoint) {
+    if ((typeof readPoint) === 'string') { // the param is the id of the readPoint
+      this.readPoint = new ReadPoint().setId(readPoint)
+      return this
+    }
+    // the param is the ReadPoint instance
+    this.readPoint = readPoint
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
@@ -202,8 +227,13 @@ export default class ObjectEvent extends Event {
 
     for (const prop in this) {
       if (this.hasOwnProperty(prop)) {
-        if (this[prop] instanceof ErrorDeclaration) {
+        if ((this[prop] instanceof ErrorDeclaration)
+          || (this[prop] instanceof PersistentDisposition)
+          || (this[prop] instanceof ReadPoint)) {
           json[prop] = this[prop].toJSON()
+        } else if (prop === 'quantityList') {
+          json[prop] = []
+          this[prop].forEach(quantity => json[prop].push(quantity))
         } else {
           json[prop] = this[prop]
         }

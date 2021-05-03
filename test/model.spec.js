@@ -3,6 +3,7 @@ import { dispositions } from '../src/cbv/cbv'
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
 import QuantityElement from '../src/entity/model/QuantityElement'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
+import ReadPoint from '../src/entity/model/ReadPoint'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -78,7 +79,12 @@ describe('unit tests for model Objects', () => {
       const errorDeclaration = new ErrorDeclaration()
       errorDeclaration.addCorrectiveEventIDList([correctiveEventID1, correctiveEventID2, correctiveEventID3])
       errorDeclaration.clearCorrectiveEventIDList()
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal([].toString())
+      expect(errorDeclaration.correctiveEventIDs).to.be.equal(undefined)
+    })
+    it('should not add the correctiveEventID list to JSON if it is not defined', async () => {
+      const errorDeclaration = new ErrorDeclaration()
+      const json = errorDeclaration.toJSON()
+      expect(json.correctiveEventIDs).to.be.equal(undefined)
     })
     it('should add a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration()
@@ -113,6 +119,22 @@ describe('unit tests for model Objects', () => {
       expect(json.quantity).to.be.equal(JSONQuantityElement.quantity)
       expect(json.uom).to.be.equal(JSONQuantityElement.uom)
       expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
+    })
+  })
+  describe('ReadPoint.js', () => {
+    it('should create a valid ReadPoint object from setters', async () => {
+      const readPoint = new ReadPoint()
+      readPoint
+        .setId('id')
+
+      const json = readPoint.toJSON()
+      expect(json.id).to.be.equal('id')
+    })
+    it('should create a valid ReadPoint object from JSON', async () => {
+      const quantityElement = new QuantityElement({ id: 'id' })
+
+      const json = quantityElement.toJSON()
+      expect(json.id).to.be.equal('id')
     })
   })
   describe('PersistentDisposition.js', () => {
@@ -154,7 +176,12 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.addSetList(set)
       expect(persistentDisposition.set.toString()).to.be.equal(set.toString())
       persistentDisposition.clearSetList()
-      expect(persistentDisposition.set.toString()).to.be.equal([].toString())
+      expect(persistentDisposition.set).to.be.equal(undefined)
+    })
+    it('should not add the correctiveEventID list to JSON if it is not defined', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      const json = persistentDisposition.toJSON()
+      expect(json.set).to.be.equal(undefined)
     })
     it('should add and remove unset', async () => {
       const persistentDisposition = new PersistentDisposition()
@@ -179,7 +206,12 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.addUnsetList(unset)
       expect(persistentDisposition.unset.toString()).to.be.equal(unset.toString())
       persistentDisposition.clearUnsetList()
-      expect(persistentDisposition.unset.toString()).to.be.equal([].toString())
+      expect(persistentDisposition.unset).to.be.equal(undefined)
+    })
+    it('should not add the correctiveEventID list to JSON if it is not defined', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      const json = persistentDisposition.toJSON()
+      expect(json.unset).to.be.equal(undefined)
     })
   })
 })
