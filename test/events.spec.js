@@ -7,6 +7,7 @@ import { defaultSettings } from '../src/settings'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 import ReadPoint from '../src/entity/model/ReadPoint'
 import BizLocation from '../src/entity/model/BizLocation'
+import BizTransaction from '../src/entity/model/BizTransaction'
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -23,6 +24,10 @@ const JSONObjectEvent = {
   bizTransactionList: [{
     type: 'urn:epcglobal:cbv:btt:po',
     bizTransaction: 'http://transaction.acme.com/po/12345678'
+  },
+  {
+    type: 'urn:epcglobal:cbv:btt:po',
+    bizTransaction: 'http://transaction.acme.com/po/12345679'
   }],
   'example:myField': 'Example of a vendor/user extension',
   quantityList: [
@@ -253,5 +258,43 @@ describe('unit tests for the ObjectEvent class', () => {
     o2.setBizLocation(new BizLocation({ id: 'id' }))
     expect(o.bizLocation.id).to.be.equal('id')
     expect(o2.bizLocation.id).to.be.equal('id')
+  })
+
+  const bizTransaction1 = new BizTransaction(JSONObjectEvent.bizTransactionList[0])
+  const bizTransaction2 = new BizTransaction(JSONObjectEvent.bizTransactionList[1])
+
+  it('should add and remove bizTransaction', async () => {
+    const o = new ObjectEvent()
+    o.addBizTransaction(bizTransaction1)
+    expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1].toString())
+    o.addBizTransaction(bizTransaction2)
+    expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString())
+    o.removeBizTransaction(bizTransaction1)
+    expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction2].toString())
+    o.removeBizTransaction(bizTransaction2)
+    expect(o.bizTransactionList.toString()).to.be.equal([].toString())
+  })
+  it('should add a bizTransaction list', async () => {
+    const o = new ObjectEvent()
+    o.addBizTransactionList([bizTransaction1, bizTransaction2])
+    expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString())
+  })
+  it('should remove a bizTransaction list', async () => {
+    const o = new ObjectEvent()
+    o.addBizTransactionList([bizTransaction1, bizTransaction2])
+    expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString())
+    o.removeBizTransactionList([bizTransaction1, bizTransaction2])
+    expect(o.bizTransactionList.toString()).to.be.equal([].toString())
+  })
+  it('should clear the bizTransaction list', async () => {
+    const o = new ObjectEvent()
+    o.addBizTransactionList([bizTransaction1, bizTransaction2])
+    o.clearBizTransactionList()
+    expect(o.quantityList).to.be.equal(undefined)
+  })
+  it('should not add the bizTransaction list to JSON if it is not defined', async () => {
+    const o = new ObjectEvent()
+    const json = o.toJSON()
+    expect(json.bizTransactionList).to.be.equal(undefined)
   })
 })

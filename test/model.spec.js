@@ -5,6 +5,7 @@ import QuantityElement from '../src/entity/model/QuantityElement'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 import ReadPoint from '../src/entity/model/ReadPoint'
 import BizLocation from '../src/entity/model/BizLocation'
+import BizTransaction from '../src/entity/model/BizTransaction'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -13,6 +14,10 @@ const correctiveEventID3 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a6'
 const reason = 'urn:epcglobal:cbv:er:incorrect_data'
 
 const JSONQuantityElement = { epcClass: 'urn:epc:class:lgtin:4012345.012345.998877', quantity: 200, uom: 'KGM' }
+const JSONBizTransaction = {
+  type: 'urn:epcglobal:cbv:btt:po',
+  bizTransaction: 'http://transaction.acme.com/po/12345678'
+}
 
 describe('unit tests for model Objects', () => {
   describe('ErrorDeclaration.js', () => {
@@ -147,11 +152,30 @@ describe('unit tests for model Objects', () => {
       const json = bizLocation.toJSON()
       expect(json.id).to.be.equal('id')
     })
-    it('should create a valid ReadPoint object from JSON', async () => {
+    it('should create a valid BizLocation object from JSON', async () => {
       const bizLocation = new BizLocation({ id: 'id' })
 
       const json = bizLocation.toJSON()
       expect(json.id).to.be.equal('id')
+    })
+  })
+  describe('BizTransaction.js', () => {
+    it('should create a valid BizTransaction object from setters', async () => {
+      const bizTransaction = new BizTransaction()
+      bizTransaction
+        .setType(JSONBizTransaction.type)
+        .setBizTransaction(JSONBizTransaction.bizTransaction)
+
+      const json = bizTransaction.toJSON()
+      expect(json.type).to.be.equal(JSONBizTransaction.type)
+      expect(json.bizTransaction).to.be.equal(JSONBizTransaction.bizTransaction)
+    })
+    it('should create a valid BizTransaction object from JSON', async () => {
+      const bizTransaction = new BizTransaction(JSONBizTransaction)
+
+      const json = bizTransaction.toJSON()
+      expect(json.type).to.be.equal(JSONBizTransaction.type)
+      expect(json.bizTransaction).to.be.equal(JSONBizTransaction.bizTransaction)
     })
   })
   describe('PersistentDisposition.js', () => {

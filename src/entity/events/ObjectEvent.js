@@ -4,6 +4,7 @@ import PersistentDisposition from '../model/PersistentDisposition'
 import QuantityElement from '../model/QuantityElement'
 import ReadPoint from '../model/ReadPoint'
 import BizLocation from '../model/BizLocation'
+import BizTransaction from '../model/BizTransaction'
 
 export default class ObjectEvent extends Event {
   /**
@@ -26,6 +27,9 @@ export default class ObjectEvent extends Event {
             break
           case 'quantityElement':
             objectEvent[prop].forEach(quantityElement => this.addQuantity(new QuantityElement(quantityElement)))
+            break
+          case 'bizTransactionList':
+            objectEvent[prop].forEach(bizTransaction => this.addBizTransaction(new BizTransaction(bizTransaction)))
             break
           case 'readPoint':
             this.setReadPoint(new ReadPoint(objectEvent[prop]))
@@ -255,6 +259,67 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Add the bizTransaction to the "bizTransactionList" field
+   * @param {BizTransaction} bizTransaction - the bizTransaction to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addBizTransaction (bizTransaction) {
+    if (!this.bizTransactionList) {
+      this.bizTransactionList = []
+    }
+    this.bizTransactionList.push(bizTransaction)
+    return this
+  }
+
+  /**
+   * Add each bizTransaction to the "bizTransactionList" field
+   * @param {Array<BizTransaction>} bizTransactionList - the bizTransactions to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addBizTransactionList (bizTransactionList) {
+    if (!this.bizTransactionList) {
+      this.bizTransactionList = []
+    }
+    bizTransactionList.forEach(bizTransaction => this.addBizTransaction(bizTransaction))
+    return this
+  }
+
+  /**
+   * Clear the bizTransaction list
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  clearBizTransactionList () {
+    delete this.bizTransactionList
+    return this
+  }
+
+  /**
+   * Remove a bizTransaction from the "bizTransactionList" field
+   * @param {BizTransaction} bizTransaction - the bizTransaction to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeBizTransaction (bizTransaction) {
+    if (!this.bizTransactionList) {
+      this.bizTransactionList = []
+    }
+    this.bizTransactionList = this.bizTransactionList.filter(elem => elem !== bizTransaction)
+    return this
+  }
+
+  /**
+   * Remove each bizTransaction from the "bizTransactionList" field
+   * @param {Array<BizTransaction>} bizTransactionList - the bizTransactions to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeBizTransactionList (bizTransactionList) {
+    if (!this.bizTransactionList) {
+      this.bizTransactionList = []
+    }
+    bizTransactionList.forEach(bizTransaction => this.removeBizTransaction(bizTransaction))
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
@@ -267,9 +332,9 @@ export default class ObjectEvent extends Event {
           || (this[prop] instanceof ReadPoint)
           || (this[prop] instanceof BizLocation)) {
           json[prop] = this[prop].toJSON()
-        } else if (prop === 'quantityList') {
+        } else if (prop === 'quantityList' || prop === 'bizTransactionList') {
           json[prop] = []
-          this[prop].forEach(quantity => json[prop].push(quantity))
+          this[prop].forEach(e => json[prop].push(e))
         } else {
           json[prop] = this[prop]
         }
