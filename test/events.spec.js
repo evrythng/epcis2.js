@@ -1,16 +1,84 @@
-import ObjectEvent from '../src/entity/events/ObjectEvent'
-import { expect } from 'chai'
-import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
-import QuantityElement from '../src/entity/model/QuantityElement'
-import setup from '../src/setup'
-import { defaultSettings } from '../src/settings'
-import PersistentDisposition from '../src/entity/model/PersistentDisposition'
-import ReadPoint from '../src/entity/model/ReadPoint'
-import BizLocation from '../src/entity/model/BizLocation'
-import BizTransactionElement from '../src/entity/model/BizTransactionElement'
-import SourceElement from '../src/entity/model/SourceElement'
-import DestinationElement from '../src/entity/model/DestinationElement'
+import ObjectEvent from '../src/entity/events/ObjectEvent';
+import { expect } from 'chai';
+import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';
+import QuantityElement from '../src/entity/model/QuantityElement';
+import setup from '../src/setup';
+import { defaultSettings } from '../src/settings';
+import PersistentDisposition from '../src/entity/model/PersistentDisposition';
+import ReadPoint from '../src/entity/model/ReadPoint';
+import BizLocation from '../src/entity/model/BizLocation';
+import BizTransactionElement from '../src/entity/model/BizTransactionElement';
+import SourceElement from '../src/entity/model/SourceElement';
+import DestinationElement from '../src/entity/model/DestinationElement';
+import SensorElement from '../src/entity/model/sensor/SensorElement';
 
+const sensorElementList = [
+  {
+    'sensorMetadata': {
+      'time': '2019-07-19T14:00:00.000+01:00',
+      'deviceID': 'urn:epc:id:giai:4000001.111',
+      'deviceMetadata': 'https://id.gs1.org/giai/4000001111',
+      'rawData': 'https://example.org/giai/401234599999',
+      'dataProcessingMethod': 'https://example.com/gdti/4012345000054987',
+      'bizRules': 'https://example.org/gdti/4012345000054987',
+    },
+    'sensorReport': [
+      { 'type': 'gs1:MT-Humidity', 'value': 12.1, 'uom': 'A93' },
+      {
+        'type': 'gs1:MT-Molar_concentration',
+        'chemicalSubstance': 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
+        'value': 0.18,
+        'uom': 'C35',
+      },
+      {
+        'type': 'gs1:MT-Molar_concentration',
+        'microorganism': 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
+        'value': 0.05,
+        'uom': 'C35',
+      },
+    ],
+  },
+  {
+    'sensorMetadata': {
+      'startTime': '2019-04-01T15:00:00.000+01:00',
+      'endTime': '2019-04-02T14:59:59.999+01:00',
+      'example:someFurtherMetaData': 'someText',
+    },
+    'sensorReport': [
+      {
+        'type': 'gs1:MT-Temperature',
+        'minValue': 12.4,
+        'maxValue': 13.8,
+        'meanValue': 13.2,
+        'sDev': 0.41,
+        'uom': 'CEL',
+        'percRank': 50,
+        'percValue': 12.7,
+        'example:cv': '123',
+      },
+      { 'type': 'example:someSensorProperty', 'stringValue': 'someSensorOutput' },
+    ],
+    'example:furtherSensorData': [
+      { 'example:measure1': '123.5' },
+      { 'example:measure2': '0.987' },
+    ],
+  },
+  {
+    'sensorReport': [
+      {
+        'type': 'gs1:MT-Temperature',
+        'uom': 'CEL',
+        'time': '2019-07-19T14:00:00.000+01:00',
+        'deviceID': 'urn:epc:id:giai:4000001.111',
+        'deviceMetadata': 'https://id.gs1.org/giai/4000001111',
+        'rawData': 'https://example.org/giai/401234599999',
+        'dataProcessingMethod': 'https://example.com/gdti/4012345000054987',
+        'bizRules': 'https://example.org/gdti/4012345000054987',
+      },
+      { 'type': 'example:someSensorProperty', 'stringValue': 'someSensorOutput' },
+    ],
+  },
+];
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
   isA: 'ObjectEvent',
@@ -25,66 +93,67 @@ const JSONObjectEvent = {
   readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
   bizTransactionList: [{
     type: 'urn:epcglobal:cbv:btt:po',
-    bizTransaction: 'http://transaction.acme.com/po/12345678'
+    bizTransaction: 'http://transaction.acme.com/po/12345678',
   },
-  {
-    type: 'urn:epcglobal:cbv:btt:po',
-    bizTransaction: 'http://transaction.acme.com/po/12345679'
-  }],
+    {
+      type: 'urn:epcglobal:cbv:btt:po',
+      bizTransaction: 'http://transaction.acme.com/po/12345679',
+    }],
   destinationList: [
-    { type: 'urn:epcglobal:cbv:sdt:owning_party', destination: 'urn:epc:id:pgln:9520999.99999' }
+    { type: 'urn:epcglobal:cbv:sdt:owning_party', destination: 'urn:epc:id:pgln:9520999.99999' },
   ],
   'example:myField': 'Example of a vendor/user extension',
   quantityList: [
     { epcClass: 'urn:epc:class:lgtin:4012345.012345.998877', quantity: 200, uom: 'KGM' },
     { epcClass: 'urn:epc:class:lgtin:4012345.012345.998878', quantity: 201, uom: 'KGM' },
-    { epcClass: 'urn:epc:class:lgtin:4012345.012345.998879', quantity: 202, uom: 'KGM' }
+    { epcClass: 'urn:epc:class:lgtin:4012345.012345.998879', quantity: 202, uom: 'KGM' },
   ],
+  sensorElementList: sensorElementList,
   errorDeclaration: {
     declarationTime: '2020-01-15T00:00:00.000+01:00',
     reason: 'urn:epcglobal:cbv:er:incorrect_data',
     'example:vendorExtension': 'Test1',
     correctiveEventIDs: [
-      'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
-    ]
+      'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8',
+    ],
   },
   sourceList: [
     { type: 'urn:epcglobal:cbv:sdt:owning_party', source: 'urn:epc:id:pgln:9520001.11111' },
-    { type: 'urn:epcglobal:cbv:sdt:owning_party', source: 'urn:epc:id:pgln:9520001.11112' }
+    { type: 'urn:epcglobal:cbv:sdt:owning_party', source: 'urn:epc:id:pgln:9520001.11112' },
   ],
   persistentDisposition: {
     set: ['urn:epcglobal:cbv:disp:completeness_inferred'],
-    unset: ['urn:epcglobal:cbv:disp:completeness_verified']
-  }
-}
-const epc1 = JSONObjectEvent.epcList[0]
-const epc2 = JSONObjectEvent.epcList[1]
-const epc3 = 'urn:epc:id:sgtin:0614141.107346.2019'
+    unset: ['urn:epcglobal:cbv:disp:completeness_verified'],
+  },
+};
+const epc1 = JSONObjectEvent.epcList[0];
+const epc2 = JSONObjectEvent.epcList[1];
+const epc3 = 'urn:epc:id:sgtin:0614141.107346.2019';
 
 describe('unit tests for the ObjectEvent class', () => {
   describe('setup function and ObjectEvent class', () => {
     afterEach((done) => {
-      setup(defaultSettings)
-      done()
-    })
+      setup(defaultSettings);
+      done();
+    });
     it('should use default values', async () => {
-      const o = new ObjectEvent()
-      expect(o.isA).to.be.equal('ObjectEvent')
-    })
+      const o = new ObjectEvent();
+      expect(o.isA).to.be.equal('ObjectEvent');
+    });
     it('should not use eventTimeZoneOffset from settings if it is not overridden', async () => {
-      setup({})
-      const o = new ObjectEvent()
-      expect(o.eventTimeZoneOffset).to.be.equal(undefined)
-    })
+      setup({});
+      const o = new ObjectEvent();
+      expect(o.eventTimeZoneOffset).to.be.equal(undefined);
+    });
     it('should use eventTimeZoneOffset from settings if it is overridden', async () => {
-      setup({ eventTimeZoneOffset: '+02:00' })
-      const o = new ObjectEvent()
-      expect(o.eventTimeZoneOffset).to.be.equal('+02:00')
-    })
-  })
+      setup({ eventTimeZoneOffset: '+02:00' });
+      const o = new ObjectEvent();
+      expect(o.eventTimeZoneOffset).to.be.equal('+02:00');
+    });
+  });
 
   it('setters should set the variables correctly', async () => {
-    const o = new ObjectEvent()
+    const o = new ObjectEvent();
     o.setEventID(JSONObjectEvent.eventID)
       .addEPCList(JSONObjectEvent.epcList)
       .setEventTime(JSONObjectEvent.eventTime)
@@ -96,303 +165,349 @@ describe('unit tests for the ObjectEvent class', () => {
       .setBizStep(JSONObjectEvent.bizStep)
       .setPersistentDisposition(new PersistentDisposition(JSONObjectEvent.persistentDisposition))
       .setReadPoint(JSONObjectEvent.readPoint.id)
-      .setBizLocation(JSONObjectEvent.bizLocation.id)
+      .setBizLocation(JSONObjectEvent.bizLocation.id);
 
-    const json = o.toJSON()
-    expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
-    expect(json.eventID).to.be.equal(JSONObjectEvent.eventID)
-    expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime)
-    expect(json.eventTimeZoneOffset).to.be.equal(JSONObjectEvent.eventTimeZoneOffset)
-    expect(json.recordTime).to.be.equal(JSONObjectEvent.recordTime)
-    expect(json['example:myField']).to.be.equal(JSONObjectEvent['example:myField'])
-    expect(json.errorDeclaration.declarationTime).to.be.equal(JSONObjectEvent.errorDeclaration.declarationTime)
-    expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason)
-    expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString())
-    expect(json.errorDeclaration['example:vendorExtension']).to.be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension'])
-    expect(json.action).to.be.equal(JSONObjectEvent.action)
-    expect(json.disposition).to.be.equal(JSONObjectEvent.disposition)
-    expect(json.bizStep).to.be.equal(JSONObjectEvent.bizStep)
-    expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString())
-    expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
-    expect(json.readPoint.id).to.be.equal(JSONObjectEvent.readPoint.id)
-  })
+    const json = o.toJSON();
+    expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString());
+    expect(json.eventID).to.be.equal(JSONObjectEvent.eventID);
+    expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime);
+    expect(json.eventTimeZoneOffset).to.be.equal(JSONObjectEvent.eventTimeZoneOffset);
+    expect(json.recordTime).to.be.equal(JSONObjectEvent.recordTime);
+    expect(json['example:myField']).to.be.equal(JSONObjectEvent['example:myField']);
+    expect(json.errorDeclaration.declarationTime).to.be.equal(JSONObjectEvent.errorDeclaration.declarationTime);
+    expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason);
+    expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString());
+    expect(json.errorDeclaration['example:vendorExtension']).to.be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension']);
+    expect(json.action).to.be.equal(JSONObjectEvent.action);
+    expect(json.disposition).to.be.equal(JSONObjectEvent.disposition);
+    expect(json.bizStep).to.be.equal(JSONObjectEvent.bizStep);
+    expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString());
+    expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString());
+    expect(json.readPoint.id).to.be.equal(JSONObjectEvent.readPoint.id);
+  });
   it('should create an ObjectEvent from json', async () => {
-    const o = new ObjectEvent(JSONObjectEvent)
+    const o = new ObjectEvent(JSONObjectEvent);
 
-    const json = o.toJSON()
-    expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
-    expect(json.eventID).to.be.equal(JSONObjectEvent.eventID)
-    expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime)
-    expect(json.eventTimeZoneOffset).to.be.equal(JSONObjectEvent.eventTimeZoneOffset)
-    expect(json.recordTime).to.be.equal(JSONObjectEvent.recordTime)
-    expect(json['example:myField']).to.be.equal(JSONObjectEvent['example:myField'])
-    expect(json.errorDeclaration.declarationTime).to.be.equal(JSONObjectEvent.errorDeclaration.declarationTime)
-    expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason)
-    expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString())
-    expect(json.errorDeclaration['example:vendorExtension']).to.be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension'])
-    expect(json.action).to.be.equal(JSONObjectEvent.action)
-    expect(json.bizStep).to.be.equal(JSONObjectEvent.bizStep)
-    expect(json.disposition).to.be.equal(JSONObjectEvent.disposition)
-    expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString())
-    expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
-    expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
-    expect(json.quantityList.toString()).to.be.equal(JSONObjectEvent.quantityList.toString())
-    expect(json.bizLocation.id).to.be.equal(JSONObjectEvent.bizLocation.id)
-    expect(json.sourceList.toString()).to.be.equal(JSONObjectEvent.sourceList.toString())
-    expect(json.bizTransactionList.toString()).to.be.equal(JSONObjectEvent.bizTransactionList.toString())
-    expect(json.destinationList.toString()).to.be.equal(JSONObjectEvent.destinationList.toString())
-  })
+    const json = o.toJSON();
+    expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString());
+    expect(json.eventID).to.be.equal(JSONObjectEvent.eventID);
+    expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime);
+    expect(json.eventTimeZoneOffset).to.be.equal(JSONObjectEvent.eventTimeZoneOffset);
+    expect(json.recordTime).to.be.equal(JSONObjectEvent.recordTime);
+    expect(json['example:myField']).to.be.equal(JSONObjectEvent['example:myField']);
+    expect(json.errorDeclaration.declarationTime).to.be.equal(JSONObjectEvent.errorDeclaration.declarationTime);
+    expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason);
+    expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString());
+    expect(json.errorDeclaration['example:vendorExtension']).to.be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension']);
+    expect(json.action).to.be.equal(JSONObjectEvent.action);
+    expect(json.bizStep).to.be.equal(JSONObjectEvent.bizStep);
+    expect(json.disposition).to.be.equal(JSONObjectEvent.disposition);
+    expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString());
+    expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString());
+    expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString());
+    expect(json.quantityList.length).to.be.equal(JSONObjectEvent.quantityList.length);
+    expect(json.quantityList[0].quantity).to.be.equal(JSONObjectEvent.quantityList[0].quantity);
+    expect(json.bizLocation.id).to.be.equal(JSONObjectEvent.bizLocation.id);
+    expect(json.sourceList.length).to.be.equal(JSONObjectEvent.sourceList.length);
+    expect(json.sourceList[0].source).to.be.equal(JSONObjectEvent.sourceList[0].source);
+    expect(json.bizTransactionList.length).to.be.equal(JSONObjectEvent.bizTransactionList.length);
+    expect(json.bizTransactionList[0].bizTransaction).to.be.equal(JSONObjectEvent.bizTransactionList[0].bizTransaction);
+    expect(json.destinationList.length).to.be.equal(JSONObjectEvent.destinationList.length);
+    expect(json.destinationList[0].destination).to.be.equal(JSONObjectEvent.destinationList[0].destination);
+    expect(json.sensorElementList.length).to.be.equal(JSONObjectEvent.sensorElementList.length);
+    expect(json.sensorElementList[0].sensorMetadata.bizRules).to.be.equal(JSONObjectEvent.sensorElementList[0].sensorMetadata.bizRules);
+    expect(json.sensorElementList[1].sensorReport[0].minValue).to.be.equal(JSONObjectEvent.sensorElementList[1].sensorReport[0].minValue);
+  });
   it('should be able to set the time zone offset from number or string', async () => {
-    const o1 = new ObjectEvent()
-    const o2 = new ObjectEvent()
-    o1.setEventTimeZoneOffset('-06:00')
-    o2.setEventTimeZoneOffset(-6)
-    expect(o1.toJSON().eventTimeZoneOffset).to.be.equal(o2.toJSON().eventTimeZoneOffset)
-  })
+    const o1 = new ObjectEvent();
+    const o2 = new ObjectEvent();
+    o1.setEventTimeZoneOffset('-06:00');
+    o2.setEventTimeZoneOffset(-6);
+    expect(o1.toJSON().eventTimeZoneOffset).to.be.equal(o2.toJSON().eventTimeZoneOffset);
+  });
   it('should add a custom field', async () => {
-    const objectEvent = new ObjectEvent()
-    objectEvent.addCustomField('key', 'value')
-    expect(objectEvent.toJSON().key).to.be.equal(('value'))
-  })
+    const objectEvent = new ObjectEvent();
+    objectEvent.addCustomField('key', 'value');
+    expect(objectEvent.toJSON().key).to.be.equal(('value'));
+  });
   it('should remove a custom field', async () => {
-    const objectEvent = new ObjectEvent()
-    objectEvent.addCustomField('key', 'value')
-    objectEvent.addEPC(epc1)
-    objectEvent.removeCustomField('key', 'value')
-    expect(objectEvent.toJSON().toString()).to.be.equal({ epcList: [epc1] }.toString())
-  })
+    const objectEvent = new ObjectEvent();
+    objectEvent.addCustomField('key', 'value');
+    objectEvent.addEPC(epc1);
+    objectEvent.removeCustomField('key', 'value');
+    expect(objectEvent.toJSON().toString()).to.be.equal({ epcList: [epc1] }.toString());
+  });
   it('should set the readPoint with ID or ReadPoint instance', async () => {
-    const o = new ObjectEvent()
-    const o2 = new ObjectEvent()
-    o.setReadPoint('readPointID')
-    o2.setReadPoint(new ReadPoint({ id: 'readPointID' }))
-    expect(o.readPoint.id).to.be.equal('readPointID')
-    expect(o2.readPoint.id).to.be.equal('readPointID')
-  })
+    const o = new ObjectEvent();
+    const o2 = new ObjectEvent();
+    o.setReadPoint('readPointID');
+    o2.setReadPoint(new ReadPoint({ id: 'readPointID' }));
+    expect(o.readPoint.id).to.be.equal('readPointID');
+    expect(o2.readPoint.id).to.be.equal('readPointID');
+  });
   it('should set the bizLocation with ID or BizLocation instance', async () => {
-    const o = new ObjectEvent()
-    const o2 = new ObjectEvent()
-    o.setBizLocation('id')
-    o2.setBizLocation(new BizLocation({ id: 'id' }))
-    expect(o.bizLocation.id).to.be.equal('id')
-    expect(o2.bizLocation.id).to.be.equal('id')
-  })
+    const o = new ObjectEvent();
+    const o2 = new ObjectEvent();
+    o.setBizLocation('id');
+    o2.setBizLocation(new BizLocation({ id: 'id' }));
+    expect(o.bizLocation.id).to.be.equal('id');
+    expect(o2.bizLocation.id).to.be.equal('id');
+  });
 
   describe('epcList field', () => {
     it('should add and remove epc', async () => {
-      const o = new ObjectEvent()
-      o.addEPC(epc1)
-      expect(o.epcList.toString()).to.be.equal([epc1].toString())
-      o.addEPC(epc2)
-      expect(o.epcList.toString()).to.be.equal([epc1, epc2].toString())
-      o.removeEPC(epc1)
-      expect(o.epcList.toString()).to.be.equal([epc2].toString())
-      o.removeEPC(epc2)
-      expect(o.epcList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addEPC(epc1);
+      expect(o.epcList.toString()).to.be.equal([epc1].toString());
+      o.addEPC(epc2);
+      expect(o.epcList.toString()).to.be.equal([epc1, epc2].toString());
+      o.removeEPC(epc1);
+      expect(o.epcList.toString()).to.be.equal([epc2].toString());
+      o.removeEPC(epc2);
+      expect(o.epcList.toString()).to.be.equal([].toString());
+    });
     it('should add an epc list', async () => {
-      const o = new ObjectEvent()
-      o.addEPCList(JSONObjectEvent.epcList)
-      expect(o.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
-      o.removeEPC(epc1)
-      o.removeEPC(epc2)
+      const o = new ObjectEvent();
+      o.addEPCList(JSONObjectEvent.epcList);
+      expect(o.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString());
+      o.removeEPC(epc1);
+      o.removeEPC(epc2);
 
       // trying again but with a non-empty list
-      o.addEPC(epc3)
-      expect(o.epcList.toString()).to.be.equal([epc3].toString())
-      o.addEPCList(JSONObjectEvent.epcList)
-      expect(o.epcList.toString()).to.be.equal([epc3, epc1, epc2].toString())
-    })
+      o.addEPC(epc3);
+      expect(o.epcList.toString()).to.be.equal([epc3].toString());
+      o.addEPCList(JSONObjectEvent.epcList);
+      expect(o.epcList.toString()).to.be.equal([epc3, epc1, epc2].toString());
+    });
     it('should remove an epc list', async () => {
-      const o = new ObjectEvent()
-      o.addEPCList([...JSONObjectEvent.epcList, epc3])
-      o.removeEPCList(JSONObjectEvent.epcList)
-      expect(o.epcList.toString()).to.be.equal([epc3].toString())
+      const o = new ObjectEvent();
+      o.addEPCList([...JSONObjectEvent.epcList, epc3]);
+      o.removeEPCList(JSONObjectEvent.epcList);
+      expect(o.epcList.toString()).to.be.equal([epc3].toString());
 
       // trying again but removing the whole list
-      o.addEPC(epc2)
-      o.removeEPCList([epc2, epc3])
-      expect(o.epcList.toString()).to.be.equal([].toString())
-    })
+      o.addEPC(epc2);
+      o.removeEPCList([epc2, epc3]);
+      expect(o.epcList.toString()).to.be.equal([].toString());
+    });
     it('should clear the epc list', async () => {
-      const o = new ObjectEvent()
-      o.addEPCList([...JSONObjectEvent.epcList, epc3])
-      o.clearEPCList()
-      expect(o.epcList).to.be.equal(undefined)
-    })
+      const o = new ObjectEvent();
+      o.addEPCList([...JSONObjectEvent.epcList, epc3]);
+      o.clearEPCList();
+      expect(o.epcList).to.be.equal(undefined);
+    });
     it('should not add the epc list to JSON if it is not defined', async () => {
-      const o = new ObjectEvent()
-      const json = o.toJSON()
-      expect(json.epcList).to.be.equal(undefined)
-    })
-  })
+      const o = new ObjectEvent();
+      const json = o.toJSON();
+      expect(json.epcList).to.be.equal(undefined);
+    });
+  });
   describe('quantityList field', () => {
-    const quantity1 = new QuantityElement(JSONObjectEvent.quantityList[0])
-    const quantity2 = new QuantityElement(JSONObjectEvent.quantityList[1])
-    const quantity3 = new QuantityElement(JSONObjectEvent.quantityList[2])
+    const quantity1 = new QuantityElement(JSONObjectEvent.quantityList[0]);
+    const quantity2 = new QuantityElement(JSONObjectEvent.quantityList[1]);
+    const quantity3 = new QuantityElement(JSONObjectEvent.quantityList[2]);
 
     it('should add and remove quantity', async () => {
-      const o = new ObjectEvent()
-      o.addQuantity(quantity1)
-      expect(o.quantityList.toString()).to.be.equal([quantity1].toString())
-      o.addQuantity(quantity2)
-      expect(o.quantityList.toString()).to.be.equal([quantity1, quantity2].toString())
-      o.removeQuantity(quantity1)
-      expect(o.quantityList.toString()).to.be.equal([quantity2].toString())
-      o.removeQuantity(quantity2)
-      expect(o.quantityList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addQuantity(quantity1);
+      expect(o.quantityList.toString()).to.be.equal([quantity1].toString());
+      o.addQuantity(quantity2);
+      expect(o.quantityList.toString()).to.be.equal([quantity1, quantity2].toString());
+      o.removeQuantity(quantity1);
+      expect(o.quantityList.toString()).to.be.equal([quantity2].toString());
+      o.removeQuantity(quantity2);
+      expect(o.quantityList.toString()).to.be.equal([].toString());
+    });
     it('should add a quantity list', async () => {
-      const o = new ObjectEvent()
-      o.addQuantityList([quantity1, quantity2])
-      expect(o.quantityList.toString()).to.be.equal([quantity1, quantity2].toString())
-      o.removeQuantity(quantity1)
-      o.removeQuantity(quantity2)
+      const o = new ObjectEvent();
+      o.addQuantityList([quantity1, quantity2]);
+      expect(o.quantityList.toString()).to.be.equal([quantity1, quantity2].toString());
+      o.removeQuantity(quantity1);
+      o.removeQuantity(quantity2);
 
       // trying again but with a non-empty list
-      o.addQuantity(quantity3)
-      expect(o.quantityList.toString()).to.be.equal([quantity3].toString())
-      o.addQuantityList([quantity1, quantity2])
-      expect(o.quantityList.toString()).to.be.equal([quantity3, quantity1, quantity2].toString())
-    })
+      o.addQuantity(quantity3);
+      expect(o.quantityList.toString()).to.be.equal([quantity3].toString());
+      o.addQuantityList([quantity1, quantity2]);
+      expect(o.quantityList.toString()).to.be.equal([quantity3, quantity1, quantity2].toString());
+    });
     it('should remove a quantity list', async () => {
-      const o = new ObjectEvent()
-      o.addQuantityList([quantity1, quantity2, quantity3])
-      o.removeQuantityList([quantity1, quantity2])
-      expect(o.quantityList.toString()).to.be.equal([quantity3].toString())
+      const o = new ObjectEvent();
+      o.addQuantityList([quantity1, quantity2, quantity3]);
+      o.removeQuantityList([quantity1, quantity2]);
+      expect(o.quantityList.toString()).to.be.equal([quantity3].toString());
 
       // trying again but removing the whole list
-      o.addQuantity(quantity2)
-      o.removeQuantityList([quantity2, quantity3])
-      expect(o.quantityList.toString()).to.be.equal([].toString())
-    })
+      o.addQuantity(quantity2);
+      o.removeQuantityList([quantity2, quantity3]);
+      expect(o.quantityList.toString()).to.be.equal([].toString());
+    });
     it('should clear the quantity list', async () => {
-      const o = new ObjectEvent()
-      o.addQuantityList([quantity1, quantity2])
-      o.clearQuantityList()
-      expect(o.quantityList).to.be.equal(undefined)
-    })
+      const o = new ObjectEvent();
+      o.addQuantityList([quantity1, quantity2]);
+      o.clearQuantityList();
+      expect(o.quantityList).to.be.equal(undefined);
+    });
     it('should not add the quantity list to JSON if it is not defined', async () => {
-      const o = new ObjectEvent()
-      const json = o.toJSON()
-      expect(json.quantityList).to.be.equal(undefined)
-    })
-  })
+      const o = new ObjectEvent();
+      const json = o.toJSON();
+      expect(json.quantityList).to.be.equal(undefined);
+    });
+  });
   describe('bizTransactionList field', () => {
-    const bizTransaction1 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[0])
-    const bizTransaction2 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[1])
+    const bizTransaction1 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[0]);
+    const bizTransaction2 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[1]);
 
     it('should add and remove bizTransaction', async () => {
-      const o = new ObjectEvent()
-      o.addBizTransaction(bizTransaction1)
-      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1].toString())
-      o.addBizTransaction(bizTransaction2)
-      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString())
-      o.removeBizTransaction(bizTransaction1)
-      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction2].toString())
-      o.removeBizTransaction(bizTransaction2)
-      expect(o.bizTransactionList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addBizTransaction(bizTransaction1);
+      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1].toString());
+      o.addBizTransaction(bizTransaction2);
+      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString());
+      o.removeBizTransaction(bizTransaction1);
+      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction2].toString());
+      o.removeBizTransaction(bizTransaction2);
+      expect(o.bizTransactionList.toString()).to.be.equal([].toString());
+    });
     it('should add a bizTransaction list', async () => {
-      const o = new ObjectEvent()
-      o.addBizTransactionList([bizTransaction1, bizTransaction2])
-      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString())
-    })
+      const o = new ObjectEvent();
+      o.addBizTransactionList([bizTransaction1, bizTransaction2]);
+      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString());
+    });
     it('should remove a bizTransaction list', async () => {
-      const o = new ObjectEvent()
-      o.addBizTransactionList([bizTransaction1, bizTransaction2])
-      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString())
-      o.removeBizTransactionList([bizTransaction1, bizTransaction2])
-      expect(o.bizTransactionList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addBizTransactionList([bizTransaction1, bizTransaction2]);
+      expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1, bizTransaction2].toString());
+      o.removeBizTransactionList([bizTransaction1, bizTransaction2]);
+      expect(o.bizTransactionList.toString()).to.be.equal([].toString());
+    });
     it('should clear the bizTransaction list', async () => {
-      const o = new ObjectEvent()
-      o.addBizTransactionList([bizTransaction1, bizTransaction2])
-      o.clearBizTransactionList()
-      expect(o.quantityList).to.be.equal(undefined)
-    })
+      const o = new ObjectEvent();
+      o.addBizTransactionList([bizTransaction1, bizTransaction2]);
+      o.clearBizTransactionList();
+      expect(o.bizTransactionList).to.be.equal(undefined);
+    });
     it('should not add the bizTransaction list to JSON if it is not defined', async () => {
-      const o = new ObjectEvent()
-      const json = o.toJSON()
-      expect(json.bizTransactionList).to.be.equal(undefined)
-    })
-  })
+      const o = new ObjectEvent();
+      const json = o.toJSON();
+      expect(json.bizTransactionList).to.be.equal(undefined);
+    });
+  });
   describe('sourceList field', () => {
-    const source1 = new SourceElement(JSONObjectEvent.sourceList[0])
-    const source2 = new SourceElement(JSONObjectEvent.sourceList[1])
+    const source1 = new SourceElement(JSONObjectEvent.sourceList[0]);
+    const source2 = new SourceElement(JSONObjectEvent.sourceList[1]);
 
     it('should add and remove source', async () => {
-      const o = new ObjectEvent()
-      o.addSource(source1)
-      expect(o.sourceList.toString()).to.be.equal([source1].toString())
-      o.addSource(source2)
-      expect(o.sourceList.toString()).to.be.equal([source1, source2].toString())
-      o.removeSource(source1)
-      expect(o.sourceList.toString()).to.be.equal([source2].toString())
-      o.removeSource(source2)
-      expect(o.sourceList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addSource(source1);
+      expect(o.sourceList.toString()).to.be.equal([source1].toString());
+      o.addSource(source2);
+      expect(o.sourceList.toString()).to.be.equal([source1, source2].toString());
+      o.removeSource(source1);
+      expect(o.sourceList.toString()).to.be.equal([source2].toString());
+      o.removeSource(source2);
+      expect(o.sourceList.toString()).to.be.equal([].toString());
+    });
     it('should add a source list', async () => {
-      const o = new ObjectEvent()
-      o.addSourceList([source1, source2])
-      expect(o.sourceList.toString()).to.be.equal([source1, source2].toString())
-    })
+      const o = new ObjectEvent();
+      o.addSourceList([source1, source2]);
+      expect(o.sourceList.toString()).to.be.equal([source1, source2].toString());
+    });
     it('should remove a source list', async () => {
-      const o = new ObjectEvent()
-      o.addSourceList([source1, source2])
-      expect(o.sourceList.toString()).to.be.equal([source1, source2].toString())
-      o.removeSourceList([source1, source2])
-      expect(o.sourceList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addSourceList([source1, source2]);
+      expect(o.sourceList.toString()).to.be.equal([source1, source2].toString());
+      o.removeSourceList([source1, source2]);
+      expect(o.sourceList.toString()).to.be.equal([].toString());
+    });
     it('should clear the source list', async () => {
-      const o = new ObjectEvent()
-      o.addSourceList([source1, source2])
-      o.clearSourceList()
-      expect(o.quantityList).to.be.equal(undefined)
-    })
+      const o = new ObjectEvent();
+      o.addSourceList([source1, source2]);
+      o.clearSourceList();
+      expect(o.sourceList).to.be.equal(undefined);
+    });
     it('should not add the source list to JSON if it is not defined', async () => {
-      const o = new ObjectEvent()
-      const json = o.toJSON()
-      expect(json.sourceList).to.be.equal(undefined)
-    })
-  })
+      const o = new ObjectEvent();
+      const json = o.toJSON();
+      expect(json.sourceList).to.be.equal(undefined);
+    });
+  });
   describe('destinationList field', () => {
-    const destination1 = new DestinationElement(JSONObjectEvent.destinationList[0])
-    const destination2 = new DestinationElement(JSONObjectEvent.destinationList[1])
+    const destination1 = new DestinationElement(JSONObjectEvent.destinationList[0]);
+    const destination2 = new DestinationElement(JSONObjectEvent.destinationList[1]);
 
     it('should add and remove destination', async () => {
-      const o = new ObjectEvent()
-      o.addDestination(destination1)
-      expect(o.destinationList.toString()).to.be.equal([destination1].toString())
-      o.addDestination(destination2)
-      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString())
-      o.removeDestination(destination1)
-      expect(o.destinationList.toString()).to.be.equal([destination2].toString())
-      o.removeDestination(destination2)
-      expect(o.destinationList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addDestination(destination1);
+      expect(o.destinationList.toString()).to.be.equal([destination1].toString());
+      o.addDestination(destination2);
+      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString());
+      o.removeDestination(destination1);
+      expect(o.destinationList.toString()).to.be.equal([destination2].toString());
+      o.removeDestination(destination2);
+      expect(o.destinationList.toString()).to.be.equal([].toString());
+    });
     it('should add a destination list', async () => {
-      const o = new ObjectEvent()
-      o.addDestinationList([destination1, destination2])
-      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString())
-    })
+      const o = new ObjectEvent();
+      o.addDestinationList([destination1, destination2]);
+      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString());
+    });
     it('should remove a destination list', async () => {
-      const o = new ObjectEvent()
-      o.addDestinationList([destination1, destination2])
-      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString())
-      o.removeDestinationList([destination1, destination2])
-      expect(o.destinationList.toString()).to.be.equal([].toString())
-    })
+      const o = new ObjectEvent();
+      o.addDestinationList([destination1, destination2]);
+      expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString());
+      o.removeDestinationList([destination1, destination2]);
+      expect(o.destinationList.toString()).to.be.equal([].toString());
+    });
     it('should clear the destination list', async () => {
-      const o = new ObjectEvent()
-      o.addDestinationList([destination1, destination2])
-      o.clearDestinationList()
-      expect(o.quantityList).to.be.equal(undefined)
-    })
+      const o = new ObjectEvent();
+      o.addDestinationList([destination1, destination2]);
+      o.clearDestinationList();
+      expect(o.destinationList).to.be.equal(undefined);
+    });
     it('should not add the destination list to JSON if it is not defined', async () => {
-      const o = new ObjectEvent()
-      const json = o.toJSON()
-      expect(json.destinationList).to.be.equal(undefined)
-    })
-  })
-})
+      const o = new ObjectEvent();
+      const json = o.toJSON();
+      expect(json.destinationList).to.be.equal(undefined);
+    });
+  });
+  describe('sensorElementList field', () => {
+    const sensorElement1 = new SensorElement(JSONObjectEvent.destinationList[0]);
+    const sensorElement2 = new SensorElement(JSONObjectEvent.destinationList[1]);
+
+    it('should add and remove sensorElement', async () => {
+      const o = new ObjectEvent();
+      o.addSensorElement(sensorElement1);
+      expect(o.sensorElementList.toString()).to.be.equal([sensorElement1].toString());
+      o.addSensorElement(sensorElement2);
+      expect(o.sensorElementList.toString()).to.be.equal([sensorElement1, sensorElement2].toString());
+      o.removeSensorElement(sensorElement1);
+      expect(o.sensorElementList.toString()).to.be.equal([sensorElement2].toString());
+      o.removeSensorElement(sensorElement2);
+      expect(o.sensorElementList.toString()).to.be.equal([].toString());
+    });
+    it('should add a sensorElement list', async () => {
+      const o = new ObjectEvent();
+      o.addSensorElementList([sensorElement1, sensorElement2]);
+      expect(o.sensorElementList.toString()).to.be.equal([sensorElement1, sensorElement2].toString());
+    });
+    it('should remove a sensorElement list', async () => {
+      const o = new ObjectEvent();
+      o.addSensorElementList([sensorElement1, sensorElement2]);
+      expect(o.sensorElementList.toString()).to.be.equal([sensorElement1, sensorElement2].toString());
+      o.removeSensorElementList([sensorElement1, sensorElement2]);
+      expect(o.sensorElementList.toString()).to.be.equal([].toString());
+    });
+    it('should clear the sensorElement list', async () => {
+      const o = new ObjectEvent();
+      o.addSensorElementList([sensorElement1, sensorElement2]);
+      o.clearSensorElementList();
+      expect(o.sensorElementList).to.be.equal(undefined);
+    });
+    it('should not add the sensorElement list to JSON if it is not defined', async () => {
+      const o = new ObjectEvent();
+      const json = o.toJSON();
+      expect(json.sensorElementList).to.be.equal(undefined);
+    });
+  });
+});

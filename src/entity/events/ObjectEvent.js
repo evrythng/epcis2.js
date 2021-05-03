@@ -7,6 +7,7 @@ import BizLocation from '../model/BizLocation'
 import BizTransactionElement from '../model/BizTransactionElement'
 import SourceElement from '../model/SourceElement'
 import DestinationElement from '../model/DestinationElement'
+import SensorElement from '../model/sensor/SensorElement';
 
 export default class ObjectEvent extends Event {
   /**
@@ -38,6 +39,9 @@ export default class ObjectEvent extends Event {
             break
           case 'destinationList':
             objectEvent[prop].forEach(destination => this.addDestination(new DestinationElement(destination)))
+            break
+          case 'sensorElementList':
+            objectEvent[prop].forEach(sensorElement => this.addSensorElement(new SensorElement(sensorElement)))
             break
           case 'readPoint':
             this.setReadPoint(new ReadPoint(objectEvent[prop]))
@@ -450,6 +454,67 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Add the sensorElement to the "sensorElementList" field
+   * @param {SensorElement} sensorElement - the sensorElement to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addSensorElement (sensorElement) {
+    if (!this.sensorElementList) {
+      this.sensorElementList = []
+    }
+    this.sensorElementList.push(sensorElement)
+    return this
+  }
+
+  /**
+   * Add each sensorElementElement to the "sensorElementList" field
+   * @param {Array<SensorElement>} sensorElementList - the sensorElementElements to add
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  addSensorElementList (sensorElementList) {
+    if (!this.sensorElementList) {
+      this.sensorElementList = []
+    }
+    sensorElementList.forEach(sensorElementElement => this.addSensorElement(sensorElementElement))
+    return this
+  }
+
+  /**
+   * Clear the sensorElement list
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  clearSensorElementList () {
+    delete this.sensorElementList
+    return this
+  }
+
+  /**
+   * Remove a sensorElement from the "sensorElementList" field
+   * @param {SensorElement} sensorElement - the sensorElement to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeSensorElement (sensorElement) {
+    if (!this.sensorElementList) {
+      this.sensorElementList = []
+    }
+    this.sensorElementList = this.sensorElementList.filter(elem => elem !== sensorElement)
+    return this
+  }
+
+  /**
+   * Remove each sensorElement from the "sensorElementList" field
+   * @param {Array<SensorElement>} sensorElementList - the sensorElements to remove
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  removeSensorElementList (sensorElementList) {
+    if (!this.sensorElementList) {
+      this.sensorElementList = []
+    }
+    sensorElementList.forEach(sensorElementElement => this.removeSensorElement(sensorElementElement))
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {
@@ -462,7 +527,11 @@ export default class ObjectEvent extends Event {
           || (this[prop] instanceof ReadPoint)
           || (this[prop] instanceof BizLocation)) {
           json[prop] = this[prop].toJSON()
-        } else if (prop === 'quantityList' || prop === 'bizTransactionList' || prop === 'sourceList' || prop === 'destinationList') {
+        } else if (prop === 'quantityList'
+          || prop === 'bizTransactionList'
+          || prop === 'sourceList'
+          || prop === 'destinationList'
+          || prop === 'sensorElementList') {
           json[prop] = []
           this[prop].forEach(e => json[prop].push(e.toJSON()))
         } else {
