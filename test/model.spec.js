@@ -1,6 +1,8 @@
 import { expect } from 'chai'
+import { dispositions } from '../src/cbv/cbv'
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
 import QuantityElement from '../src/entity/model/QuantityElement'
+import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -111,6 +113,73 @@ describe('unit tests for model Objects', () => {
       expect(json.quantity).to.be.equal(JSONQuantityElement.quantity)
       expect(json.uom).to.be.equal(JSONQuantityElement.uom)
       expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
+    })
+  })
+  describe('PersistentDisposition.js', () => {
+    const set = [dispositions.active, dispositions.unavailable]
+    const unset = [dispositions.completeness_inferred, dispositions.unknown]
+
+    it('should create a valid PersistentDisposition object from JSON', async () => {
+      const persistentDispositionJSON = {
+        set: set,
+        unset: unset
+      }
+
+      const persistentDisposition = new PersistentDisposition(persistentDispositionJSON)
+
+      const json = persistentDisposition.toJSON()
+      expect(json.set.toString()).to.be.equal(persistentDispositionJSON.set.toString())
+      expect(json.unset.toString()).to.be.equal(persistentDispositionJSON.unset.toString())
+    })
+    it('should add and remove set', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      persistentDisposition.addSet(set[0])
+      expect(persistentDisposition.set.toString()).to.be.equal([set[0]].toString())
+      persistentDisposition.addSet(set[1])
+      expect(persistentDisposition.set.toString()).to.be.equal([set[0], set[1]].toString())
+      persistentDisposition.removeSet(set[0])
+      expect(persistentDisposition.set.toString()).to.be.equal([set[1]].toString())
+      persistentDisposition.removeSet(set[1])
+      expect(persistentDisposition.set.toString()).to.be.equal([].toString())
+    })
+    it('should add and remove a set List', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      persistentDisposition.addSetList(set)
+      expect(persistentDisposition.set.toString()).to.be.equal(set.toString())
+      persistentDisposition.removeSetList(set)
+      expect(persistentDisposition.set.toString()).to.be.equal([].toString())
+    })
+    it('should clear the set List', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      persistentDisposition.addSetList(set)
+      expect(persistentDisposition.set.toString()).to.be.equal(set.toString())
+      persistentDisposition.clearSetList()
+      expect(persistentDisposition.set.toString()).to.be.equal([].toString())
+    })
+    it('should add and remove unset', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      persistentDisposition.addUnset(unset[0])
+      expect(persistentDisposition.unset.toString()).to.be.equal([unset[0]].toString())
+      persistentDisposition.addUnset(unset[1])
+      expect(persistentDisposition.unset.toString()).to.be.equal([unset[0], unset[1]].toString())
+      persistentDisposition.removeUnset(unset[0])
+      expect(persistentDisposition.unset.toString()).to.be.equal([unset[1]].toString())
+      persistentDisposition.removeUnset(unset[1])
+      expect(persistentDisposition.unset.toString()).to.be.equal([].toString())
+    })
+    it('should add and remove an unset List', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      persistentDisposition.addUnsetList(unset)
+      expect(persistentDisposition.unset.toString()).to.be.equal(unset.toString())
+      persistentDisposition.removeUnsetList(unset)
+      expect(persistentDisposition.unset.toString()).to.be.equal([].toString())
+    })
+    it('should clear the unset List', async () => {
+      const persistentDisposition = new PersistentDisposition()
+      persistentDisposition.addUnsetList(unset)
+      expect(persistentDisposition.unset.toString()).to.be.equal(unset.toString())
+      persistentDisposition.clearUnsetList()
+      expect(persistentDisposition.unset.toString()).to.be.equal([].toString())
     })
   })
 })

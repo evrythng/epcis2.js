@@ -13,7 +13,6 @@
  */
 
 export default class ErrorDeclaration {
-
   /**
    * You can either create an empty ErrorDeclaration or provide an already existing Error
    * Declaration via Map

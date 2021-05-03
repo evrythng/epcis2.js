@@ -1,5 +1,7 @@
 import ErrorDeclaration from '../model/ErrorDeclaration'
 import Event from './Event'
+import PersistentDisposition from '../model/PersistentDisposition'
+import QuantityElement from '../model/QuantityElement'
 
 export default class ObjectEvent extends Event {
   /**
@@ -8,7 +10,6 @@ export default class ObjectEvent extends Event {
    */
   constructor (objectEvent) {
     super(objectEvent)
-    // object event
     this.isA = 'ObjectEvent'
     this.epcList = []
     this.quantityList = []
@@ -20,11 +21,11 @@ export default class ObjectEvent extends Event {
     for (const prop in objectEvent) {
       if (objectEvent.hasOwnProperty(prop)) {
         switch (prop) {
-          case 'epcList':
-            this.addEPCList(objectEvent[prop])
+          case 'persistentDisposition':
+            this.setPersistentDisposition(new PersistentDisposition(objectEvent[prop]))
             break
-          case 'quantityList':
-            this.addQuantityList(objectEvent[prop])
+          case 'quantityElement':
+            objectEvent[prop].forEach(quantityElement => this.addQuantity(new QuantityElement(quantityElement)))
             break
           default:
             this[prop] = objectEvent[prop]
@@ -150,6 +151,46 @@ export default class ObjectEvent extends Event {
    */
   removeQuantityList (quantityList) {
     quantityList.forEach(quantity => this.removeQuantity(quantity))
+    return this
+  }
+
+  /**
+   * Set the action property
+   * @param {string} action - string from {"OBSERVE", "ADD", "DELETE"}
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  setAction (action) {
+    this.action = action
+    return this
+  }
+
+  /**
+   * Set the bizStep property
+   * @param {string} bizStep - e.g bizsteps.accepting
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  setBizStep (bizStep) {
+    this.bizStep = bizStep
+    return this
+  }
+
+  /**
+   * Set the disposition property
+   * @param {string} disposition - e.g dispositions.in_transit
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  setDisposition (disposition) {
+    this.disposition = disposition
+    return this
+  }
+
+  /**
+   * Set the persistentDisposition property
+   * @param {PersistentDisposition} persistentDisposition
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  setPersistentDisposition (persistentDisposition) {
+    this.persistentDisposition = persistentDisposition
     return this
   }
 

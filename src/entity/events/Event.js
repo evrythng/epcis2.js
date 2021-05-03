@@ -1,5 +1,6 @@
 import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils'
 import settings from '../../settings'
+import ErrorDeclaration from '../model/ErrorDeclaration'
 
 /**
  * Abstract class Event
@@ -26,7 +27,7 @@ export default class Event {
       if (event.hasOwnProperty(prop)) {
         switch (prop) {
           case 'errorDeclaration':
-            this.setErrorDeclaration(event[prop])
+            this.setErrorDeclaration(new ErrorDeclaration(event[prop]))
             break
         }
       }

@@ -4,6 +4,7 @@ import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
 import QuantityElement from '../src/entity/model/QuantityElement'
 import setup from '../src/setup'
 import { defaultSettings } from '../src/settings'
+import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -33,6 +34,10 @@ const JSONObjectEvent = {
     correctiveEventIDs: [
       'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
     ]
+  },
+  persistentDisposition: {
+    set: ['urn:epcglobal:cbv:disp:completeness_inferred'],
+    unset: ['urn:epcglobal:cbv:disp:completeness_verified']
   }
 }
 const epc1 = JSONObjectEvent.epcList[0]
@@ -66,6 +71,10 @@ describe('unit tests for the ObjectEvent class', () => {
       .setRecordTime(JSONObjectEvent.recordTime)
       .setErrorDeclaration(new ErrorDeclaration(JSONObjectEvent.errorDeclaration))
       .addCustomField('example:myField', JSONObjectEvent['example:myField'])
+      .setAction(JSONObjectEvent.action)
+      .setDisposition(JSONObjectEvent.disposition)
+      .setBizStep(JSONObjectEvent.bizStep)
+      .setPersistentDisposition(new PersistentDisposition(JSONObjectEvent.persistentDisposition))
 
     const json = o.toJSON()
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
@@ -78,6 +87,11 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason)
     expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString())
     expect(json.errorDeclaration['example:vendorExtension']).to.be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension'])
+    expect(json.action).to.be.equal(JSONObjectEvent.action)
+    expect(json.disposition).to.be.equal(JSONObjectEvent.disposition)
+    expect(json.bizStep).to.be.equal(JSONObjectEvent.bizStep)
+    expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString())
+    expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
   })
   it('should create an ObjectEvent from json', async () => {
     const o = new ObjectEvent(JSONObjectEvent)
@@ -93,6 +107,13 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.errorDeclaration.reason).to.be.equal(JSONObjectEvent.errorDeclaration.reason)
     expect(json.errorDeclaration.correctiveEventIDs.toString()).to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString())
     expect(json.errorDeclaration['example:vendorExtension']).to.be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension'])
+    expect(json.action).to.be.equal(JSONObjectEvent.action)
+    expect(json.bizStep).to.be.equal(JSONObjectEvent.bizStep)
+    expect(json.disposition).to.be.equal(JSONObjectEvent.disposition)
+    expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString())
+    expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
+    expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
+    expect(json.quantityList.toString()).to.be.equal(JSONObjectEvent.quantityList.toString())
   })
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent()
