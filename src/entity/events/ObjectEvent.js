@@ -4,7 +4,7 @@ import PersistentDisposition from '../model/PersistentDisposition'
 import QuantityElement from '../model/QuantityElement'
 import ReadPoint from '../model/ReadPoint'
 import BizLocation from '../model/BizLocation'
-import BizTransaction from '../model/BizTransaction'
+import BizTransactionElement from '../model/BizTransactionElement'
 
 export default class ObjectEvent extends Event {
   /**
@@ -29,7 +29,7 @@ export default class ObjectEvent extends Event {
             objectEvent[prop].forEach(quantityElement => this.addQuantity(new QuantityElement(quantityElement)))
             break
           case 'bizTransactionList':
-            objectEvent[prop].forEach(bizTransaction => this.addBizTransaction(new BizTransaction(bizTransaction)))
+            objectEvent[prop].forEach(bizTransaction => this.addBizTransaction(new BizTransactionElement(bizTransaction)))
             break
           case 'readPoint':
             this.setReadPoint(new ReadPoint(objectEvent[prop]))
@@ -260,7 +260,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Add the bizTransaction to the "bizTransactionList" field
-   * @param {BizTransaction} bizTransaction - the bizTransaction to add
+   * @param {BizTransactionElement} bizTransaction - the bizTransaction to add
    * @return {ObjectEvent} - the objectEvent instance
    */
   addBizTransaction (bizTransaction) {
@@ -273,7 +273,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Add each bizTransaction to the "bizTransactionList" field
-   * @param {Array<BizTransaction>} bizTransactionList - the bizTransactions to add
+   * @param {Array<BizTransactionElement>} bizTransactionList - the bizTransactions to add
    * @return {ObjectEvent} - the objectEvent instance
    */
   addBizTransactionList (bizTransactionList) {
@@ -295,7 +295,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Remove a bizTransaction from the "bizTransactionList" field
-   * @param {BizTransaction} bizTransaction - the bizTransaction to remove
+   * @param {BizTransactionElement} bizTransaction - the bizTransaction to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeBizTransaction (bizTransaction) {
@@ -308,7 +308,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Remove each bizTransaction from the "bizTransactionList" field
-   * @param {Array<BizTransaction>} bizTransactionList - the bizTransactions to remove
+   * @param {Array<BizTransactionElement>} bizTransactionList - the bizTransactions to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeBizTransactionList (bizTransactionList) {

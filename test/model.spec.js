@@ -5,7 +5,7 @@ import QuantityElement from '../src/entity/model/QuantityElement'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 import ReadPoint from '../src/entity/model/ReadPoint'
 import BizLocation from '../src/entity/model/BizLocation'
-import BizTransaction from '../src/entity/model/BizTransaction'
+import BizTransactionElement from '../src/entity/model/BizTransactionElement'
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00'
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'
@@ -159,9 +159,9 @@ describe('unit tests for model Objects', () => {
       expect(json.id).to.be.equal('id')
     })
   })
-  describe('BizTransaction.js', () => {
-    it('should create a valid BizTransaction object from setters', async () => {
-      const bizTransaction = new BizTransaction()
+  describe('BizTransactionElement.js', () => {
+    it('should create a valid BizTransactionElement object from setters', async () => {
+      const bizTransaction = new BizTransactionElement()
       bizTransaction
         .setType(JSONBizTransaction.type)
         .setBizTransaction(JSONBizTransaction.bizTransaction)
@@ -170,8 +170,8 @@ describe('unit tests for model Objects', () => {
       expect(json.type).to.be.equal(JSONBizTransaction.type)
       expect(json.bizTransaction).to.be.equal(JSONBizTransaction.bizTransaction)
     })
-    it('should create a valid BizTransaction object from JSON', async () => {
-      const bizTransaction = new BizTransaction(JSONBizTransaction)
+    it('should create a valid BizTransactionElement object from JSON', async () => {
+      const bizTransaction = new BizTransactionElement(JSONBizTransaction)
 
       const json = bizTransaction.toJSON()
       expect(json.type).to.be.equal(JSONBizTransaction.type)

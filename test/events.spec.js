@@ -7,7 +7,7 @@ import { defaultSettings } from '../src/settings'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
 import ReadPoint from '../src/entity/model/ReadPoint'
 import BizLocation from '../src/entity/model/BizLocation'
-import BizTransaction from '../src/entity/model/BizTransaction'
+import BizTransactionElement from '../src/entity/model/BizTransactionElement'
 
 const JSONObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
@@ -260,8 +260,8 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(o2.bizLocation.id).to.be.equal('id')
   })
 
-  const bizTransaction1 = new BizTransaction(JSONObjectEvent.bizTransactionList[0])
-  const bizTransaction2 = new BizTransaction(JSONObjectEvent.bizTransactionList[1])
+  const bizTransaction1 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[0])
+  const bizTransaction2 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[1])
 
   it('should add and remove bizTransaction', async () => {
     const o = new ObjectEvent()

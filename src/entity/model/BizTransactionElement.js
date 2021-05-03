@@ -1,12 +1,12 @@
-export default class BizTransaction {
+export default class BizTransactionElement {
   /**
-   * You can either create an empty BizTransaction or provide an already existing BizTransaction via
+   * You can either create an empty BizTransactionElement or provide an already existing BizTransactionElement via
    * Map
-   * @param {{}} [bizTransaction] - The Map that will be used to create the BizTransaction entity
+   * @param {{}} [bizTransaction] - The Map that will be used to create the BizTransactionElement entity
    */
   constructor (bizTransaction) {
     if (!arguments.length) {
-      // create an empty BizTransaction object
+      // create an empty BizTransactionElement object
       return
     }
 
@@ -20,7 +20,7 @@ export default class BizTransaction {
   /**
    * Set the bizTransaction property
    * @param {string} bizTransaction
-   * @return {BizTransaction} - the bizTransaction instance
+   * @return {BizTransactionElement} - the bizTransaction instance
    */
   setBizTransaction (bizTransaction) {
     this.bizTransaction = bizTransaction
@@ -30,7 +30,7 @@ export default class BizTransaction {
   /**
    * Set the type property
    * @param {string} type
-   * @return {BizTransaction} - the bizTransaction instance
+   * @return {BizTransactionElement} - the bizTransaction instance
    */
   setType (type) {
     this.type = type
@@ -38,7 +38,7 @@ export default class BizTransaction {
   }
 
   /**
-   * Return a JSON object corresponding to the BizTransaction object
+   * Return a JSON object corresponding to the BizTransactionElement object
    */
   toJSON () {
     const json = {}
