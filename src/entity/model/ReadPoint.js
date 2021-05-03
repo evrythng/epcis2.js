@@ -28,6 +28,25 @@ export default class ReadPoint {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {ReadPoint} - the readPoint instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {ReadPoint} - the readPoint instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ReadPoint object
    */
   toJSON () {

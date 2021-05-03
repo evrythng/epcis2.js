@@ -104,10 +104,9 @@ export default class Event {
 
   /**
    * @param {string} key
-   * @param {string} value
    * @return {Event} - the event instance
    */
-  removeCustomField (key, value) {
+  removeCustomField (key) {
     delete this[key]
     return this
   }

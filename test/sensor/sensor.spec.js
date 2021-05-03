@@ -84,6 +84,13 @@ describe('unit tests for sensor relative Objects', () => {
       expect(json.dataProcessingMethod).to.be.equal(JSONSensorMetadata.dataProcessingMethod)
       expect(json.bizRules).to.be.equal(JSONSensorMetadata.bizRules)
     })
+    it('should add and remove custom fields', async () => {
+      const obj = new SensorMetadata()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
+    })
   })
   describe('SensorReportElement.js', () => {
     it('should create a valid SensorReportElement object from setters', async () => {
@@ -160,6 +167,13 @@ describe('unit tests for sensor relative Objects', () => {
       expect(json.percValue).to.be.equal(JSONSensorReportElement.percValue)
       expect(json.uom).to.be.equal(JSONSensorReportElement.uom)
     })
+    it('should add and remove custom fields', async () => {
+      const obj = new SensorReportElement()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
+    })
   })
   describe('SensorElement.js', () => {
     it('should create a valid SensorElement object from setters', async () => {
@@ -191,6 +205,13 @@ describe('unit tests for sensor relative Objects', () => {
       expect(json.sensorReport[2].microorganism).to.be.equal(JSONSensorElement.sensorReport[2].microorganism)
       expect(json.sensorReport[2].value).to.be.equal(JSONSensorElement.sensorReport[2].value)
       expect(json.sensorReport[2].uom).to.be.equal(JSONSensorElement.sensorReport[2].uom)
+    })
+    it('should add and remove custom fields', async () => {
+      const obj = new SensorElement()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
 })

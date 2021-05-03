@@ -38,6 +38,25 @@ export default class BizTransactionElement {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {BizTransactionElement} - the bizTransaction instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {BizTransactionElement} - the bizTransaction instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the BizTransactionElement object
    */
   toJSON () {

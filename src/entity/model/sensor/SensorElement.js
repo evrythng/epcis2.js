@@ -98,6 +98,25 @@ export default class SensorElement {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {SensorElement} - the objectEvent instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {SensorElement} - the objectEvent instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the SensorElement object
    */
   toJSON () {

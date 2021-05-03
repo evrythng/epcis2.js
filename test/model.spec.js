@@ -136,6 +136,13 @@ describe('unit tests for model Objects', () => {
       expect(json.uom).to.be.equal(JSONQuantityElement.uom)
       expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
     })
+    it('should add and remove custom fields', async () => {
+      const obj = new QuantityElement()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
+    })
   })
   describe('ReadPoint.js', () => {
     it('should create a valid ReadPoint object from setters', async () => {
@@ -152,6 +159,13 @@ describe('unit tests for model Objects', () => {
       const json = readPoint.toJSON()
       expect(json.id).to.be.equal('id')
     })
+    it('should add and remove custom fields', async () => {
+      const obj = new ReadPoint()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
+    })
   })
   describe('BizLocation.js', () => {
     it('should create a valid BizLocation object from setters', async () => {
@@ -167,6 +181,13 @@ describe('unit tests for model Objects', () => {
 
       const json = bizLocation.toJSON()
       expect(json.id).to.be.equal('id')
+    })
+    it('should add and remove custom fields', async () => {
+      const obj = new BizLocation()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
   describe('BizTransactionElement.js', () => {
@@ -187,6 +208,13 @@ describe('unit tests for model Objects', () => {
       expect(json.type).to.be.equal(JSONBizTransactionElement.type)
       expect(json.bizTransaction).to.be.equal(JSONBizTransactionElement.bizTransaction)
     })
+    it('should add and remove custom fields', async () => {
+      const obj = new BizTransactionElement()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
+    })
   })
   describe('SourceElement.js', () => {
     it('should create a valid SourceElement object from setters', async () => {
@@ -206,6 +234,13 @@ describe('unit tests for model Objects', () => {
       expect(json.type).to.be.equal(JSONSourceElement.type)
       expect(json.source).to.be.equal(JSONSourceElement.source)
     })
+    it('should add and remove custom fields', async () => {
+      const obj = new SourceElement()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
+    })
   })
   describe('DestinationElement.js', () => {
     it('should create a valid DestinationElement object from setters', async () => {
@@ -224,6 +259,13 @@ describe('unit tests for model Objects', () => {
       const json = destinationElement.toJSON()
       expect(json.type).to.be.equal(JSONDestinationElement.type)
       expect(json.destination).to.be.equal(JSONDestinationElement.destination)
+    })
+    it('should add and remove custom fields', async () => {
+      const obj = new DestinationElement()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
   describe('PersistentDisposition.js', () => {
@@ -301,6 +343,13 @@ describe('unit tests for model Objects', () => {
       const persistentDisposition = new PersistentDisposition()
       const json = persistentDisposition.toJSON()
       expect(json.unset).to.be.equal(undefined)
+    })
+    it('should add and remove custom fields', async () => {
+      const obj = new PersistentDisposition()
+      obj.addCustomField('key', 'value')
+      expect(obj.toJSON().key).to.be.equal('value')
+      obj.removeCustomField('key')
+      expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
 })

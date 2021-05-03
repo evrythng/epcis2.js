@@ -98,6 +98,25 @@ export default class SensorMetadata {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {SensorMetadata} - the sensorMetadata instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {SensorMetadata} - the sensorMetadata instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the SensorMetadata object
    */
   toJSON () {

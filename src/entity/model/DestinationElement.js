@@ -38,6 +38,25 @@ export default class DestinationElement {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {DestinationElement} - the destination instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {DestinationElement} - the destination instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the DestinationElement object
    */
   toJSON () {

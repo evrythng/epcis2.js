@@ -126,6 +126,25 @@ export default class PersistentDisposition {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {PersistentDisposition} - the persistentDisposition instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {PersistentDisposition} - the persistentDisposition instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * @return {{}} - a JSON object corresponding to the PersistentDisposition object
    */
   toJSON () {

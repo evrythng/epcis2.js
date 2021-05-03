@@ -28,6 +28,25 @@ export default class BizLocation {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {BizLocation} - the bizLocation instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {BizLocation} - the bizLocation instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the BizLocation object
    */
   toJSON () {

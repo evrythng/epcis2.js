@@ -228,6 +228,25 @@ export default class SensorReportElement {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {SensorReportElement} - the sensorReport instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {SensorReportElement} - the sensorReport instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the SensorReportElement object
    */
   toJSON () {

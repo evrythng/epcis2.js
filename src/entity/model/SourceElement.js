@@ -38,6 +38,25 @@ export default class SourceElement {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {SourceElement} - the source instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {SourceElement} - the source instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the SourceElement object
    */
   toJSON () {

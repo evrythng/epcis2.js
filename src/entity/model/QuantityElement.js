@@ -48,6 +48,25 @@ export default class QuantityElement {
   }
 
   /**
+   * @param {string} key
+   * @param {string} value
+   * @return {QuantityElement} - the quantityElement instance
+   */
+  addCustomField (key, value) {
+    this[key] = value
+    return this
+  }
+
+  /**
+   * @param {string} key
+   * @return {QuantityElement} - the quantityElement instance
+   */
+  removeCustomField (key) {
+    delete this[key]
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the QuantityElement object
    */
   toJSON () {
