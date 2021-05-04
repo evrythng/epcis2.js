@@ -64,4 +64,11 @@ export default class Entity {
 
     return json
   }
+
+  /**
+   * @returns {string} - a string corresponding to the Entity object
+   */
+  toString () {
+    return JSON.stringify(this.toJSON())
+  }
 }
