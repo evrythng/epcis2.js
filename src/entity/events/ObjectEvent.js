@@ -1,4 +1,3 @@
-import ErrorDeclaration from '../model/ErrorDeclaration'
 import Event from './Event'
 import PersistentDisposition from '../model/PersistentDisposition'
 import QuantityElement from '../model/QuantityElement'
@@ -509,34 +508,5 @@ export default class ObjectEvent extends Event {
   setIlmd (ilmd) {
     this.ilmd = ilmd
     return this
-  }
-
-  /**
-   * Return a JSON object corresponding to the ObjectEvent object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        if ((this[prop] instanceof ErrorDeclaration)
-          || (this[prop] instanceof PersistentDisposition)
-          || (this[prop] instanceof ReadPoint)
-          || (this[prop] instanceof BizLocation)) {
-          json[prop] = this[prop].toJSON()
-        } else if (prop === 'quantityList'
-          || prop === 'bizTransactionList'
-          || prop === 'sourceList'
-          || prop === 'destinationList'
-          || prop === 'sensorElementList') {
-          json[prop] = []
-          this[prop].forEach(e => json[prop].push(e.toJSON()))
-        } else {
-          json[prop] = this[prop]
-        }
-      }
-    }
-
-    return json
   }
 }

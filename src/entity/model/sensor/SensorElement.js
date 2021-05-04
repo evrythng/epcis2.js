@@ -102,26 +102,4 @@ export default class SensorElement extends Entity {
     sensorReportList.forEach(sensorReportElement => this.removeSensorReport(sensorReportElement))
     return this
   }
-
-  /**
-   * Return a JSON object corresponding to the SensorElement object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        if (prop === 'sensorReport') {
-          json[prop] = []
-          this[prop].forEach(e => json[prop].push(e.toJSON()))
-        } else if (prop === 'sensorMetadata') {
-          json[prop] = this[prop].toJSON()
-        } else {
-          json[prop] = this[prop]
-        }
-      }
-    }
-
-    return json
-  }
 }

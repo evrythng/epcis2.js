@@ -1,4 +1,3 @@
-
 /**
  *
  * @param {number} number - the number to convert (e.g 1 or 74)
@@ -9,7 +8,9 @@ export const numberToTwoCharString = (number) => {
     throw new Error('The number has to be between 0 and 99')
   }
 
-  if (number > 9) { return number.toString() }
+  if (number > 9) {
+    return number.toString()
+  }
 
   return '0' + number.toString()
 }
@@ -93,4 +94,18 @@ export const offsetToString = (hours, minutes) => {
     return `+${numberToTwoCharString(hours)}:${numberToTwoCharString(minutes)}`
   }
   return `-${numberToTwoCharString(-1 * hours)}:${numberToTwoCharString(minutes)}`
+}
+
+/**
+ * Returns a JSON corresponding to the parameter
+ * @param {any} obj
+ * @return {{}} - a json if the object passed in param has a toJSON function defined - the object
+ * passed in param otherwise
+ */
+export const objectToJSON = (obj) => {
+  if (typeof obj.toJSON === 'function') {
+    return obj.toJSON()
+  } else {
+    return obj
+  }
 }

@@ -1,3 +1,5 @@
+import { objectToJSON } from '../utils/utils'
+
 export default class Entity {
   /**
    * You can either create an empty Entity or provide an already existing Entity via Map
@@ -47,7 +49,16 @@ export default class Entity {
 
     for (const prop in this) {
       if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop]
+        if (typeof this[prop].push === 'function') {
+          if (!this[prop].length) {
+            json[prop] = []
+          } else {
+            json[prop] = []
+            this[prop].forEach((e) => json[prop].push(objectToJSON(e)))
+          }
+        } else {
+          json[prop] = objectToJSON(this[prop])
+        }
       }
     }
 
