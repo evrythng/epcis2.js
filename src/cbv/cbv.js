@@ -1,4 +1,4 @@
-export const bizsteps = {
+export const bizSteps = {
   accepting: 'urn:epcglobal:cbv:bizstep:accepting',
   arriving: 'urn:epcglobal:cbv:bizstep:arriving',
   assembling: 'urn:epcglobal:cbv:bizstep:assembling',
@@ -177,4 +177,10 @@ export const sensorMeasurementTypes = {
 export const alarmTypes = {
   Alarm_condition: 'gs1:AT-Alarm_condition',
   Error_condition: 'gs1:AT-Error_condition'
+}
+
+export const actionTypes = {
+  observe: 'OBSERVE',
+  add: 'ADD',
+  delete: 'DELETE'
 }
