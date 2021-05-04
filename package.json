@@ -59,6 +59,9 @@
     ".nyc_output",
     "dist"
   ],
+  "babel": {
+    "presets" : ["@babel/preset-env"]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/evrythng/epcis2.js"
