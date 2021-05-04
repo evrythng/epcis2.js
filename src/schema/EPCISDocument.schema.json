@@ -1,5 +1,5 @@
 {
-  "description": "Based on: https://github.com/gs1/EPCIS/blob/master/JSON/EPCIS-JSON-Schema.json",
+  "$id": "https://ns.gs1.org/epcis-schema.json",
   "definitions": {
     "uri": {
       "type": "string",
@@ -306,7 +306,7 @@
         },
         "eventTimeZoneOffset": {
           "type": "string",
-          "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+          "pattern": "^(\\+|\\-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
         },
         "eventID": {
           "$ref": "#/definitions/eventID"
@@ -392,10 +392,8 @@
         {
           "anyOf": [
             {
-              "type": "object",
               "properties": {
                 "epcList": {
-                  "type": "array",
                   "minItems": 0
                 }
               },
@@ -404,10 +402,8 @@
               ]
             },
             {
-              "type": "object",
               "properties": {
                 "quantityList": {
-                  "type": "array",
                   "minItems": 1
                 }
               },
@@ -418,10 +414,8 @@
             {
               "allOf": [
                 {
-                  "type": "object",
                   "properties": {
                     "sensorElementList": {
-                      "type": "array",
                       "minItems": 1
                     }
                   },
@@ -430,10 +424,8 @@
                   ]
                 },
                 {
-                  "type": "object",
                   "properties": {
                     "readPoint": {
-                      "type": "array",
                       "minItems": 1
                     }
                   },
@@ -448,34 +440,28 @@
         {
           "anyOf": [
             {
-              "type": "object",
               "properties": {
                 "ilmd": {
                   "not": {}
                 },
                 "action": {
-                  "type": "string",
                   "pattern": "^OBSERVE$"
                 }
               }
             },
             {
-              "type": "object",
               "properties": {
                 "ilmd": {
                   "not": {}
                 },
                 "action": {
-                  "type":  "string",
                   "pattern": "^DELETE$"
                 }
               }
             },
             {
-              "type": "object",
               "properties": {
                 "action": {
-                  "type":  "string",
                   "pattern": "^ADD$"
                 }
               }
@@ -562,10 +548,8 @@
         {
           "anyOf": [
             {
-              "type": "object",
               "properties": {
                 "childEPCs": {
-                  "type": "array",
                   "minItems": 1
                 }
               },
@@ -574,10 +558,8 @@
               ]
             },
             {
-              "type": "object",
               "properties": {
                 "childQuantityList": {
-                  "type": "array",
                   "minItems": 1
                 }
               },
@@ -586,10 +568,8 @@
               ]
             },
             {
-              "type": "object",
               "properties": {
                 "action": {
-                  "type": "string",
                   "pattern": "^DELETE$"
                 }
               }
@@ -677,10 +657,8 @@
         {
           "anyOf": [
             {
-              "type": "object",
               "properties": {
                 "childEPCs": {
-                  "type": "array",
                   "minItems": 1
                 }
               },
@@ -689,10 +667,8 @@
               ]
             },
             {
-              "type": "object",
               "properties": {
                 "childQuantityList": {
-                  "type": "array",
                   "minItems": 1
                 }
               },
@@ -701,10 +677,8 @@
               ]
             },
             {
-              "type": "object",
               "properties": {
                 "action": {
-                  "type": "string",
                   "pattern": "^DELETE$"
                 }
               }
@@ -793,10 +767,8 @@
         {
           "anyOf": [
             {
-              "type": "object",
               "properties": {
                 "epcList": {
-                  "type": "array",
                   "minItems": 0
                 }
               },
@@ -805,10 +777,8 @@
               ]
             },
             {
-              "type": "object",
               "properties": {
                 "quantityList": {
-                  "type": "array",
                   "minItems": 1
                 }
               },
@@ -817,10 +787,8 @@
               ]
             },
             {
-              "type": "object",
               "properties": {
                 "action": {
-                  "type": "string",
                   "pattern": "^DELETE$"
                 }
               }
@@ -910,10 +878,8 @@
                 {
                   "anyOf": [
                     {
-                      "type": "object",
                       "properties": {
                         "inputEPCList": {
-                          "type": "array",
                           "minItems": 1
                         }
                       },
@@ -922,10 +888,8 @@
                       ]
                     },
                     {
-                      "type": "object",
                       "properties": {
                         "inputQuantityList": {
-                          "type": "array",
                           "minItems": 1
                         }
                       },
@@ -938,10 +902,8 @@
                 {
                   "anyOf": [
                     {
-                      "type": "object",
                       "properties": {
                         "outputEPCList": {
-                          "type": "array",
                           "minItems": 1
                         }
                       },
@@ -950,10 +912,8 @@
                       ]
                     },
                     {
-                      "type": "object",
                       "properties": {
                         "outputQuantityList": {
-                          "type": "array",
                           "minItems": 1
                         }
                       },
@@ -966,13 +926,10 @@
               ]
             },
             {
-              "type": "object",
               "anyOf": [
                 {
-                  "type": "object",
                   "properties": {
                     "inputEPCList": {
-                      "type": "array",
                       "minItems": 1
                     }
                   },
@@ -981,10 +938,8 @@
                   ]
                 },
                 {
-                  "type": "object",
                   "properties": {
                     "inputQuantityList": {
-                      "type": "array",
                       "minItems": 1
                     }
                   },
@@ -993,10 +948,8 @@
                   ]
                 },
                 {
-                  "type": "object",
                   "properties": {
                     "outputEPCList": {
-                      "type": "array",
                       "minItems": 1
                     }
                   },
@@ -1005,10 +958,8 @@
                   ]
                 },
                 {
-                  "type": "object",
                   "properties": {
                     "outputQuantityList": {
-                      "type": "array",
                       "minItems": 1
                     }
                   },
@@ -1026,25 +977,69 @@
       ]
     },
     "onlyValidEvent": {
-      "type": "object",
       "required": [
         "isA"
       ],
-      "anyOf": [
+      "allOf": [
         {
-          "$ref": "#/definitions/objectEvent"
+          "if": {
+            "properties": {
+              "isA": {
+                "const": "ObjectEvent"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/objectEvent"
+          }
         },
         {
-          "$ref": "#/definitions/aggregationEvent"
+          "if": {
+            "properties": {
+              "isA": {
+                "const": "AggregationEvent"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/aggregationEvent"
+          }
         },
         {
-          "$ref": "#/definitions/transactionEvent"
+          "if": {
+            "properties": {
+              "isA": {
+                "const": "TransactionEvent"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/transactionEvent"
+          }
         },
         {
-          "$ref": "#/definitions/transformationEvent"
+          "if": {
+            "properties": {
+              "isA": {
+                "const": "TransformationEvent"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/transformationEvent"
+          }
         },
         {
-          "$ref": "#/definitions/associationEvent"
+          "if": {
+            "properties": {
+              "isA": {
+                "const": "AssociationEvent"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/associationEvent"
+          }
         }
       ],
       "properties": {
@@ -1203,7 +1198,7 @@
       "properties": {
         "isA": {
           "type": "string",
-          "enum": ["EPCISDocument"]
+          "const": "EPCISDocument"
         },
         "@context": {
           "anyOf": [
@@ -1232,42 +1227,24 @@
           ]
         },
         "schemaVersion": {
-          "type": "number"
+          "type": "string"
         },
         "creationDate": {
           "type": "string",
           "format": "date-time"
         },
-        "format": {
-          "type": "string"
-        },
         "epcisHeader": {
           "$ref": "#/definitions/epcisHeader"
         },
         "epcisBody": {
-          "oneOf": [
-            {
-              "type": "object",
-              "properties": {
-                "eventList": {
-                  "$ref": "#/definitions/eventList"
-                }
-              },
-              "required": [
-                "eventList"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/definitions/onlyValidEvent"
-                }
-              },
-              "required": [
-                "event"
-              ]
+          "type": "object",
+          "properties": {
+            "eventList": {
+              "$ref": "#/definitions/eventList"
             }
+          },
+          "required": [
+            "eventList"
           ]
         }
       },
@@ -1282,7 +1259,7 @@
       "properties": {
         "isA": {
           "type": "string",
-          "enum": ["EPCISQueryDocument"]
+          "const": "EPCISQueryDocument"
         },
         "@context": {
           "anyOf": [
@@ -1291,7 +1268,7 @@
               "format": "uri"
             },
             {
-              "type": "object"
+              "format": "object"
             },
             {
               "type": "array",
@@ -1317,77 +1294,6 @@
       "required": [
         "epcisBody"
       ]
-    },
-    "epcisMasterDataDocument": {
-      "type": "object",
-      "required": [
-        "epcisBody",
-        "epcisHeader"
-      ],
-      "properties": {
-        "@context": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uri"
-              },
-              {
-                "type": "object"
-              }
-            ]
-          }
-        },
-        "isA": {
-          "type": "string",
-          "enum": ["EPCISMasterDataDocument"]
-        },
-        "schemaVersion": {
-          "type": "number"
-        },
-        "format": {
-          "type": "string",
-          "enum": ["application/ld+json"]
-        },
-        "creationDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "epcisBody": {
-          "type": "object",
-          "properties": {
-            "eventList": {
-              "type": "array",
-              "uniqueItems": true,
-              "items": {
-                "$ref": "#/definitions/eventList"
-              }
-            }
-          },
-          "required": [
-            "eventList"
-          ]
-        },
-        "epcisHeader": {
-          "type": "object",
-          "properties": {
-            "epcisMasterData": {
-              "type": "object",
-              "properties": {
-                "vocabularyList": {
-                  "type": "array",
-                  "description": "Is not currently fully defined in the schema: https://github.com/gs1/EPCIS/blob/master/REST%20Bindings/openapi.yaml#L3842",
-                  "uniqueItems": true,
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "required": [
@@ -1396,18 +1302,33 @@
   "properties": {
     "isA": {
       "type": "string",
-      "pattern": "^EPCISDocument|EPCISQueryDocument|EPCISMasterDataDocument$"
+      "pattern": "^EPCISDocument|EPCISQueryDocument$"
     }
   },
-  "anyOf": [
+  "allOf": [
     {
-      "$ref": "#/definitions/epcisDocument"
+      "if": {
+        "properties": {
+          "isA": {
+            "const": "EPCISDocument"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/definitions/epcisDocument"
+      }
     },
     {
-      "$ref": "#/definitions/epcisQueryDocument"
-    },
-    {
-      "$ref": "#/definitions/epcisMasterDataDocument"
+      "if": {
+        "properties": {
+          "isA": {
+            "const": "EPCISQueryDocument"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/definitions/epcisQueryDocument"
+      }
     }
   ]
 }
