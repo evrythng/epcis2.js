@@ -1,0 +1,57 @@
+{
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "example": "http://ns.example.com/epcis/"
+    }
+  ],
+  "id": "_:document1",
+  "isA": "EPCISDocument",
+  "schemaVersion": 2,
+  "creationDate": "2013-06-04T14:59:02.099+02:00",
+  "format": "application/ld+json",
+  "epcisBody": {
+    "eventList": [
+      {
+        "isA": "TransformationEvent",
+        "eventTime": "2013-10-31T14:58:56.591Z",
+        "eventTimeZoneOffset": "+02:00",
+        "inputEPCList": [
+          "urn:epc:id:sgtin:4012345.011122.25",
+          "urn:epc:id:sgtin:4000001.065432.99886655"
+        ],
+        "inputQuantityList": [
+          {
+            "epcClass": "urn:epc:class:lgtin:4012345.011111.4444",
+            "quantity": 10,
+            "uom": "KGM"
+          },
+          {
+            "epcClass": "urn:epc:class:lgtin:0614141.077777.987",
+            "quantity": 30
+          },
+          {
+            "epcClass": "urn:epc:idpat:sgtin:4012345.066666.*",
+            "quantity": 220
+          }
+        ],
+        "outputEPCList": [
+          "urn:epc:id:sgtin:4012345.077889.25",
+          "urn:epc:id:sgtin:4012345.077889.26",
+          "urn:epc:id:sgtin:4012345.077889.27",
+          "urn:epc:id:sgtin:4012345.077889.28"
+        ],
+        "bizStep": "urn:epcglobal:cbv:bizstep:commissioning",
+        "disposition": "urn:epcglobal:cbv:disp:in_progress",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00001.0"
+        },
+        "ilmd": {
+          "example:bestBeforeDate": "2014-12-10",
+          "example:batch": "XYZ"
+        },
+        "example:myField": "Example of a vendor/user extension"
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "example": "http://ns.example.com/epcis/"
+    }
+  ],
+  "id": "_:document1",
+  "isA": "EPCISDocument",
+  "schemaVersion": 2,
+  "creationDate": "2019-11-01T14:00:00.000+01:00",
+  "format": "application/ld+json",
+  "epcisBody": {
+    "eventList": [
+      {
+        "isA": "AssociationEvent",
+        "eventTime": "2019-11-01T14:00:00.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "parentID": "urn:epc:id:grai:4012345.55555.987",
+        "childEPCs": [
+          "urn:epc:id:giai:4000001.12345"
+        ],
+        "action": "ADD",
+        "bizStep": "urn:epcglobal:cbv:bizstep:assembling",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00001.0"
+        }
+      }
+    ]
+  }
+}
