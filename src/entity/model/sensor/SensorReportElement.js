@@ -1,22 +1,6 @@
-export default class SensorReportElement {
-  /**
-   * You can either create an empty SensorReportElement or provide an already existing SensorReportElement
-   * via Map
-   * @param {{}} [sensorReport] - The Map that will be used to create the SensorReportElement entity
-   */
-  constructor (sensorReport) {
-    if (!arguments.length) {
-      // create an empty SensorReportElement object
-      return
-    }
+import Entity from '../../Entity'
 
-    for (const prop in sensorReport) {
-      if (sensorReport.hasOwnProperty(prop)) {
-        this[prop] = sensorReport[prop]
-      }
-    }
-  }
-
+export default class SensorReportElement extends Entity {
   /**
    * Set the type property
    * @param {string} type
@@ -225,39 +209,5 @@ export default class SensorReportElement {
   setUom (uom) {
     this.uom = uom
     return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {SensorReportElement} - the sensorReport instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @return {SensorReportElement} - the sensorReport instance
-   */
-  removeCustomField (key) {
-    delete this[key]
-    return this
-  }
-
-  /**
-   * Return a JSON object corresponding to the SensorReportElement object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop]
-      }
-    }
-
-    return json
   }
 }

@@ -1,13 +1,14 @@
 import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils'
 import settings from '../../settings'
 import ErrorDeclaration from '../model/ErrorDeclaration'
+import Entity from '../Entity'
 
 /**
  * Abstract class Event
  *
  * @class Event
  */
-export default class Event {
+export default class Event extends Entity {
   /**
    * You can either create an empty Event or provide an already existing event via Map
    * @param {{}} [event] - The Map that will be used to create the Event entity
@@ -15,6 +16,7 @@ export default class Event {
    * set in the extended classes
    */
   constructor (event) {
+    super(event)
     if (new.target === Event) {
       throw new Error("Abstract classes can't be instantiated.")
     }
@@ -89,25 +91,6 @@ export default class Event {
    */
   setErrorDeclaration (errorDeclaration) {
     this.errorDeclaration = errorDeclaration
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {Event} - the event instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @return {Event} - the event instance
-   */
-  removeCustomField (key) {
-    delete this[key]
     return this
   }
 }

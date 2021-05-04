@@ -1,22 +1,6 @@
-export default class QuantityElement {
-  /**
-   * You can either create an empty QuantityElement or provide an already existing Quantity
-   * Element via Map
-   * @param {{}} [quantityElement] - The Map that will be used to create the QuantityElement entity
-   */
-  constructor (quantityElement) {
-    if (!arguments.length) {
-      // create an empty QuantityElement object
-      return
-    }
+import Entity from '../Entity'
 
-    for (const prop in quantityElement) {
-      if (quantityElement.hasOwnProperty(prop)) {
-        this[prop] = quantityElement[prop]
-      }
-    }
-  }
-
+export default class QuantityElement extends Entity {
   /**
    * Set the epcClass property
    * @param {string} epcClass
@@ -45,39 +29,5 @@ export default class QuantityElement {
   setQuantity (quantity) {
     this.quantity = quantity
     return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {QuantityElement} - the quantityElement instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @return {QuantityElement} - the quantityElement instance
-   */
-  removeCustomField (key) {
-    delete this[key]
-    return this
-  }
-
-  /**
-   * Return a JSON object corresponding to the QuantityElement object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop]
-      }
-    }
-
-    return json
   }
 }

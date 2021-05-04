@@ -1,22 +1,6 @@
-export default class SensorMetadata {
-  /**
-   * You can either create an empty SensorMetadata or provide an already existing SensorMetadata
-   * via Map
-   * @param {{}} [sensorMetadata] - The Map that will be used to create the SensorMetadata entity
-   */
-  constructor (sensorMetadata) {
-    if (!arguments.length) {
-      // create an empty SensorMetadata object
-      return
-    }
+import Entity from '../../Entity'
 
-    for (const prop in sensorMetadata) {
-      if (sensorMetadata.hasOwnProperty(prop)) {
-        this[prop] = sensorMetadata[prop]
-      }
-    }
-  }
-
+export default class SensorMetadata extends Entity {
   /**
    * Set the time property
    * @param {string} time
@@ -95,39 +79,5 @@ export default class SensorMetadata {
   setBizRules (bizRules) {
     this.bizRules = bizRules
     return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {SensorMetadata} - the sensorMetadata instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @return {SensorMetadata} - the sensorMetadata instance
-   */
-  removeCustomField (key) {
-    delete this[key]
-    return this
-  }
-
-  /**
-   * Return a JSON object corresponding to the SensorMetadata object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop]
-      }
-    }
-
-    return json
   }
 }

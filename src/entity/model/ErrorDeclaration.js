@@ -11,28 +11,9 @@
  * - {TimeZoneOffset} timeZoneOffset - the offset of the declaration Time
  *   default: null (will be set once the declarationTime is set)
  */
+import Entity from '../Entity'
 
-export default class ErrorDeclaration {
-  /**
-   * You can either create an empty ErrorDeclaration or provide an already existing Error
-   * Declaration via Map
-   * @param {{}} [errorDeclaration] - The Map that will be used to create the ErrorDeclaration
-   * entity
-   */
-  constructor (errorDeclaration) {
-    if (!arguments.length) {
-      // create an empty ErrorDeclaration object
-
-      return
-    }
-
-    for (const prop in errorDeclaration) {
-      if (errorDeclaration.hasOwnProperty(prop)) {
-        this[prop] = errorDeclaration[prop]
-      }
-    }
-  }
-
+export default class ErrorDeclaration extends Entity {
   /**
    * Set the declarationTime property
    * @param {string} time - a string corresponding to the time
@@ -106,40 +87,5 @@ export default class ErrorDeclaration {
     if (!this.correctiveEventIDs) { this.correctiveEventIDs = [] }
     correctiveEventIDList.forEach(correctiveEventID => this.removeCorrectiveEventID(correctiveEventID))
     return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {ErrorDeclaration} - the errorDeclaration instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {ErrorDeclaration} - the errorDeclaration instance
-   */
-  removeCustomField (key, value) {
-    delete this[key]
-    return this
-  }
-
-  /**
-   * @return {{}} - a JSON object corresponding to the ErrorDeclaration object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop]
-      }
-    }
-
-    return json
   }
 }

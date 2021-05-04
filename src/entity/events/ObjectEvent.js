@@ -22,6 +22,13 @@ export default class ObjectEvent extends Event {
       return
     }
 
+    this.clearSourceList()
+    this.clearBizTransactionList()
+    this.clearDestinationList()
+    this.clearQuantityList()
+    this.clearSensorElementList()
+    this.clearEPCList()
+
     for (const prop in objectEvent) {
       if (objectEvent.hasOwnProperty(prop)) {
         switch (prop) {

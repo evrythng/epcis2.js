@@ -1,22 +1,6 @@
-export default class SourceElement {
-  /**
-   * You can either create an empty SourceElement or provide an already existing SourceElement via
-   * Map
-   * @param {{}} [source] - The Map that will be used to create the SourceElement entity
-   */
-  constructor (source) {
-    if (!arguments.length) {
-      // create an empty SourceElement object
-      return
-    }
+import Entity from '../Entity'
 
-    for (const prop in source) {
-      if (source.hasOwnProperty(prop)) {
-        this[prop] = source[prop]
-      }
-    }
-  }
-
+export default class SourceElement extends Entity {
   /**
    * Set the source property
    * @param {string} source
@@ -35,39 +19,5 @@ export default class SourceElement {
   setType (type) {
     this.type = type
     return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {SourceElement} - the source instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @return {SourceElement} - the source instance
-   */
-  removeCustomField (key) {
-    delete this[key]
-    return this
-  }
-
-  /**
-   * Return a JSON object corresponding to the SourceElement object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop]
-      }
-    }
-
-    return json
   }
 }

@@ -1,26 +1,32 @@
 import SensorMetadata from './SensorMetadata'
 import SensorReportElement from './SensorReportElement'
+import Entity from '../../Entity'
 
-export default class SensorElement {
+export default class SensorElement extends Entity {
   /**
    * You can either create an empty SensorElement or provide an already existing SensorElement via
    * Map
    * @param {{}} [sensor] - The Map that will be used to create the SensorElement entity
    */
   constructor (sensor) {
+    super(sensor)
+
     if (!arguments.length) {
       // create an empty SensorElement object
       return
     }
 
+    this.clearSensorReportList()
+
     for (const prop in sensor) {
       if (sensor.hasOwnProperty(prop)) {
-        if (prop === 'sensorMetadata') {
-          this.setSensorMetadata(new SensorMetadata(sensor[prop]))
-        } else if (prop === 'sensorReport') {
-          sensor[prop].forEach(sensorReport => this.addSensorReport(new SensorReportElement(sensorReport)))
-        } else {
-          this[prop] = sensor[prop]
+        switch (prop) {
+          case 'sensorMetadata':
+            this.setSensorMetadata(new SensorMetadata(sensor[prop]))
+            break
+          case 'sensorReport':
+            sensor[prop].forEach(sensorReport => this.addSensorReport(new SensorReportElement(sensorReport)))
+            break
         }
       }
     }
@@ -94,25 +100,6 @@ export default class SensorElement {
       this.sensorReport = []
     }
     sensorReportList.forEach(sensorReportElement => this.removeSensorReport(sensorReportElement))
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {SensorElement} - the objectEvent instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @return {SensorElement} - the objectEvent instance
-   */
-  removeCustomField (key) {
-    delete this[key]
     return this
   }
 

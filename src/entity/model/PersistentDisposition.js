@@ -1,24 +1,6 @@
-export default class PersistentDisposition {
-  /**
-   * You can either create an empty PersistentDisposition or provide an already existing
-   * PersistentDisposition via Map
-   * @param {{}} [persistentDisposition] - The Map that will be used to create the
-   * PersistentDisposition entity
-   */
-  constructor (persistentDisposition) {
-    if (!arguments.length) {
-      // create an empty ErrorDeclaration object
+import Entity from '../Entity'
 
-      return
-    }
-
-    for (const prop in persistentDisposition) {
-      if (persistentDisposition.hasOwnProperty(prop)) {
-        this[prop] = persistentDisposition[prop]
-      }
-    }
-  }
-
+export default class PersistentDisposition extends Entity {
   /**
    * Add the set to the "set" field
    * @param {string} set - the set to add
@@ -123,39 +105,5 @@ export default class PersistentDisposition {
     if (!this.unset) { this.unset = [] }
     unsetList.forEach(unset => this.removeUnset(unset))
     return this
-  }
-
-  /**
-   * @param {string} key
-   * @param {string} value
-   * @return {PersistentDisposition} - the persistentDisposition instance
-   */
-  addCustomField (key, value) {
-    this[key] = value
-    return this
-  }
-
-  /**
-   * @param {string} key
-   * @return {PersistentDisposition} - the persistentDisposition instance
-   */
-  removeCustomField (key) {
-    delete this[key]
-    return this
-  }
-
-  /**
-   * @return {{}} - a JSON object corresponding to the PersistentDisposition object
-   */
-  toJSON () {
-    const json = {}
-
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        json[prop] = this[prop]
-      }
-    }
-
-    return json
   }
 }
