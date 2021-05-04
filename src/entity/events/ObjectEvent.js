@@ -495,6 +495,16 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Set the ilmd property
+   * @param {{}} ilmd object
+   * @return {ObjectEvent} - the objectEvent instance
+   */
+  setIlmd (ilmd) {
+    this.ilmd = ilmd
+    return this
+  }
+
+  /**
    * Return a JSON object corresponding to the ObjectEvent object
    */
   toJSON () {

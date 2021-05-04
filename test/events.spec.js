@@ -124,7 +124,8 @@ const JSONObjectEvent = {
   persistentDisposition: {
     set: ['urn:epcglobal:cbv:disp:completeness_inferred'],
     unset: ['urn:epcglobal:cbv:disp:completeness_verified']
-  }
+  },
+  ilmd: { 'example:bestBeforeDate': '2014-12-10', 'example:batch': 'XYZ' }
 }
 const epc1 = JSONObjectEvent.epcList[0]
 const epc2 = JSONObjectEvent.epcList[1]
@@ -166,6 +167,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setPersistentDisposition(new PersistentDisposition(JSONObjectEvent.persistentDisposition))
       .setReadPoint(JSONObjectEvent.readPoint.id)
       .setBizLocation(JSONObjectEvent.bizLocation.id)
+      .setIlmd(JSONObjectEvent.ilmd)
 
     const json = o.toJSON()
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
@@ -184,6 +186,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.persistentDisposition.unset.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.unset.toString())
     expect(json.persistentDisposition.set.toString()).to.be.equal(JSONObjectEvent.persistentDisposition.set.toString())
     expect(json.readPoint.id).to.be.equal(JSONObjectEvent.readPoint.id)
+    expect(json.ilmd['example:bestBeforeDate']).to.be.equal(JSONObjectEvent.ilmd['example:bestBeforeDate'])
   })
   it('should create an ObjectEvent from json', async () => {
     const o = new ObjectEvent(JSONObjectEvent)
@@ -217,6 +220,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(json.sensorElementList.length).to.be.equal(JSONObjectEvent.sensorElementList.length)
     expect(json.sensorElementList[0].sensorMetadata.bizRules).to.be.equal(JSONObjectEvent.sensorElementList[0].sensorMetadata.bizRules)
     expect(json.sensorElementList[1].sensorReport[0].minValue).to.be.equal(JSONObjectEvent.sensorElementList[1].sensorReport[0].minValue)
+    expect(json.ilmd['example:bestBeforeDate']).to.be.equal(JSONObjectEvent.ilmd['example:bestBeforeDate'])
   })
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent()
