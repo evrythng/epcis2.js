@@ -1,13 +1,15 @@
 /**
- * Settings can be applied globally or for individual requests.
+ * Settings can be applied globally or for individual request.
  * Available options are provided below:
  *
  * @typedef {Object} Settings
- * @property {string} endpoint - Url of the requests
+ * @property {string} endpoint - Url of the request
  * @property {Object} headers - Headers to send with request
  * @property {string} eventTimeZoneOffset - The default eventTimeZoneOffset that will be set in
- * events
- */
+ * @property {number} timeout - Timeout for request
+ * @property {string} method - HTTP Method of request
+ * @property {string} body - body of request
+ * */
 
 /**
  * Default settings.
@@ -19,7 +21,9 @@ export const defaultSettings = {
   headers: {
     'content-type': 'application/json'
   },
-  eventTimeZoneOffset: ''
+  eventTimeZoneOffset: '',
+  timeout: 0,
+  method: 'GET'
 }
 
 // Initialize settings with defaults.
