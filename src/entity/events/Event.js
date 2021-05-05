@@ -21,7 +21,7 @@ export default class Event extends Entity {
       throw new Error('Abstract classes can\'t be instantiated.');
     }
 
-    if (settings.eventTimeZoneOffset !== '') {
+    if (settings.eventTimeZoneOffset !== undefined) {
       this.setEventTimeZoneOffset(settings.eventTimeZoneOffset);
     }
 

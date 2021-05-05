@@ -4,7 +4,7 @@ import setup from '../src/setup';
 describe('unit tests for setup.js', () => {
   it('should use default settings', async () => {
     const settings = setup({});
-    expect(settings.eventTimeZoneOffset).to.be.equal('');
+    expect(settings.eventTimeZoneOffset).to.be.equal(undefined);
     expect(settings.endpoint).to.be.equal('https://epcis.evrythng.io/v2_0/');
     expect(settings.headers.toString()).to.be.equal({
       'content-type': 'application/json',

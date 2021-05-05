@@ -21,7 +21,7 @@ export const defaultSettings = {
   headers: {
     'content-type': 'application/json',
   },
-  eventTimeZoneOffset: '',
+  eventTimeZoneOffset: undefined,
   timeout: 0,
   method: 'GET',
 };
