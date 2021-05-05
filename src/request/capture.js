@@ -12,7 +12,7 @@ import request from './request';
  * @returns {Promise} - Response promise
  */
 const capture = (epcisDocument, customOptions = {}, callback) => {
-  let captureOptions = {};
+  const captureOptions = {};
   Object.assign(captureOptions, customOptions);
   captureOptions.method = 'POST';
   captureOptions.body = JSON.stringify(epcisDocument.toObject());
