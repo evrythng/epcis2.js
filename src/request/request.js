@@ -75,5 +75,5 @@ function makeFetch(path, options) {
 export default function request(path, customOptions = {}) {
   const initialOptions = mergeInitialOptions(customOptions);
 
-  return makeFetch(path, initialOptions)
+  return makeFetch(path, initialOptions);
 }
