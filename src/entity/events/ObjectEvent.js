@@ -569,7 +569,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Set the ilmd property
-   * @param {Object} ilmd object
+   * @param {Ilmd} ilmd object
    * @return {ObjectEvent} - the objectEvent instance
    */
   setIlmd(ilmd) {
@@ -579,7 +579,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Getter for the ilmd property
-   * @return {Object} - the ilmd
+   * @return {Ilmd} - the ilmd
    */
   getIlmd() {
     return this.ilmd;

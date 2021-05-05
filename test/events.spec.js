@@ -11,6 +11,7 @@ import BizTransactionElement from '../src/entity/model/BizTransactionElement';
 import SourceElement from '../src/entity/model/SourceElement';
 import DestinationElement from '../src/entity/model/DestinationElement';
 import SensorElement from '../src/entity/model/sensor/SensorElement';
+import Ilmd from '../src/entity/model/Ilmd';
 
 const sensorElementList = [
   {
@@ -167,7 +168,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setPersistentDisposition(new PersistentDisposition(JSONObjectEvent.persistentDisposition))
       .setReadPoint(JSONObjectEvent.readPoint.id)
       .setBizLocation(JSONObjectEvent.bizLocation.id)
-      .setIlmd(JSONObjectEvent.ilmd);
+      .setIlmd(new Ilmd(JSONObjectEvent.ilmd));
 
     expect(obj.getEPCList().toString()).to.be.equal(JSONObjectEvent.epcList.toString());
     expect(obj.getEventID()).to.be.equal(JSONObjectEvent.eventID);
