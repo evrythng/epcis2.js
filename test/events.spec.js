@@ -160,7 +160,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setEventTime(JSONObjectEvent.eventTime)
       .setRecordTime(JSONObjectEvent.recordTime)
       .setErrorDeclaration(new ErrorDeclaration(JSONObjectEvent.errorDeclaration))
-      .addCustomField('example:myField', JSONObjectEvent['example:myField'])
+      .addExtension('example:myField', JSONObjectEvent['example:myField'])
       .setAction(JSONObjectEvent.action)
       .setDisposition(JSONObjectEvent.disposition)
       .setBizStep(JSONObjectEvent.bizStep)
@@ -231,14 +231,14 @@ describe('unit tests for the ObjectEvent class', () => {
   })
   it('should add a custom field', async () => {
     const objectEvent = new ObjectEvent()
-    objectEvent.addCustomField('key', 'value')
+    objectEvent.addExtension('key', 'value')
     expect(objectEvent.toJSON().key).to.be.equal(('value'))
   })
   it('should remove a custom field', async () => {
     const objectEvent = new ObjectEvent()
-    objectEvent.addCustomField('key', 'value')
+    objectEvent.addExtension('key', 'value')
     objectEvent.addEPC(epc1)
-    objectEvent.removeCustomField('key', 'value')
+    objectEvent.removeExtension('key', 'value')
     expect(objectEvent.toJSON().toString()).to.be.equal({ epcList: [epc1] }.toString())
   })
   it('should set the readPoint with ID or ReadPoint instance', async () => {

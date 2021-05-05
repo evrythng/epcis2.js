@@ -1,6 +1,8 @@
 # epcis2.js
 EPCIS 2.0 Javascript SDK
 
+The goal of this SDK is to easily create and send a customizable EPCISDocument.
+
 ### The setup function
 
 You can override the default settings by providing them to the setup function. For example, you can set a default 
@@ -29,20 +31,20 @@ value to the setup function.
     
     Now, the `eventTimeZoneOffset` will be `'-02:00'` by default.
 
-### The custom fields
+### The extensions
 
-For each object, you can add custom fields. You have two ways to do it:
+For each object, you can add extensions. You have two ways to do it:
 - by providing them in the constructor
 ```js
-let readPoint = new ReadPoint({'id': 'myID', 'customField': 'value'});
+let readPoint = new ReadPoint({'id': 'myID', 'extension': 'value'});
 ```
 - by adding them later
 ```js
 let readPoint = new ReadPoint({'id': 'myID'});
-readPoint.addCustomField('customField', 'value')
+readPoint.addExtension('extension', 'value')
 
 // you can also remove it
-readPoint.removeCustomField('customField')
+readPoint.removeExtension('extension')
 ```
 
 ### The lists

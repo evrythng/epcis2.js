@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { dispositions } from '../src/cbv/cbv'
+import { dispositions } from '../src'
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration'
 import QuantityElement from '../src/entity/model/QuantityElement'
 import PersistentDisposition from '../src/entity/model/PersistentDisposition'
@@ -104,14 +104,14 @@ describe('unit tests for model Objects', () => {
     })
     it('should add a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration()
-      errorDeclaration.addCustomField('key', 'value')
+      errorDeclaration.addExtension('key', 'value')
       expect(errorDeclaration.toJSON().key).to.be.equal(('value'))
     })
     it('should remove a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration()
-      errorDeclaration.addCustomField('key', 'value')
+      errorDeclaration.addExtension('key', 'value')
       errorDeclaration.setReason(reason)
-      errorDeclaration.removeCustomField('key', 'value')
+      errorDeclaration.removeExtension('key', 'value')
       expect(errorDeclaration.toJSON().toString()).to.be.equal({ reason: reason, correctiveEventIDs: [] }.toString())
     })
   })
@@ -138,9 +138,9 @@ describe('unit tests for model Objects', () => {
     })
     it('should add and remove custom fields', async () => {
       const obj = new QuantityElement()
-      obj.addCustomField('key', 'value')
+      obj.addExtension('key', 'value')
       expect(obj.toJSON().key).to.be.equal('value')
-      obj.removeCustomField('key')
+      obj.removeExtension('key')
       expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
@@ -161,9 +161,9 @@ describe('unit tests for model Objects', () => {
     })
     it('should add and remove custom fields', async () => {
       const obj = new ReadPoint()
-      obj.addCustomField('key', 'value')
+      obj.addExtension('key', 'value')
       expect(obj.toJSON().key).to.be.equal('value')
-      obj.removeCustomField('key')
+      obj.removeExtension('key')
       expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
@@ -184,9 +184,9 @@ describe('unit tests for model Objects', () => {
     })
     it('should add and remove custom fields', async () => {
       const obj = new BizLocation()
-      obj.addCustomField('key', 'value')
+      obj.addExtension('key', 'value')
       expect(obj.toJSON().key).to.be.equal('value')
-      obj.removeCustomField('key')
+      obj.removeExtension('key')
       expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
@@ -210,9 +210,9 @@ describe('unit tests for model Objects', () => {
     })
     it('should add and remove custom fields', async () => {
       const obj = new BizTransactionElement()
-      obj.addCustomField('key', 'value')
+      obj.addExtension('key', 'value')
       expect(obj.toJSON().key).to.be.equal('value')
-      obj.removeCustomField('key')
+      obj.removeExtension('key')
       expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
@@ -236,9 +236,9 @@ describe('unit tests for model Objects', () => {
     })
     it('should add and remove custom fields', async () => {
       const obj = new SourceElement()
-      obj.addCustomField('key', 'value')
+      obj.addExtension('key', 'value')
       expect(obj.toJSON().key).to.be.equal('value')
-      obj.removeCustomField('key')
+      obj.removeExtension('key')
       expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
@@ -262,9 +262,9 @@ describe('unit tests for model Objects', () => {
     })
     it('should add and remove custom fields', async () => {
       const obj = new DestinationElement()
-      obj.addCustomField('key', 'value')
+      obj.addExtension('key', 'value')
       expect(obj.toJSON().key).to.be.equal('value')
-      obj.removeCustomField('key')
+      obj.removeExtension('key')
       expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })
@@ -346,9 +346,9 @@ describe('unit tests for model Objects', () => {
     })
     it('should add and remove custom fields', async () => {
       const obj = new PersistentDisposition()
-      obj.addCustomField('key', 'value')
+      obj.addExtension('key', 'value')
       expect(obj.toJSON().key).to.be.equal('value')
-      obj.removeCustomField('key')
+      obj.removeExtension('key')
       expect(obj.toJSON().key).to.be.equal(undefined)
     })
   })

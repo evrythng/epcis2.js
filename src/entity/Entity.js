@@ -27,7 +27,7 @@ export default class Entity {
    * @param {string} value
    * @return {Entity} - the entity instance
    */
-  addCustomField (key, value) {
+  addExtension (key, value) {
     this[key] = value
     return this
   }
@@ -36,7 +36,7 @@ export default class Entity {
    * @param {string} key
    * @return {Entity} - the entity instance
    */
-  removeCustomField (key) {
+  removeExtension (key) {
     delete this[key]
     return this
   }
