@@ -74,7 +74,7 @@ export default class SensorElement extends Entity {
     if (!this.sensorReport) {
       this.sensorReport = [];
     }
-    sensorReportList.forEach((sensorReportElement) => this.addSensorReport(sensorReportElement));
+    this.sensorReport = [...this.sensorReport, ...sensorReportList];
     return this;
   }
 

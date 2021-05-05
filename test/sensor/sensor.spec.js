@@ -39,6 +39,32 @@ const JSONSensorReportElement = {
   dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
   bizRules: 'https://example.org/gdti/4012345000054987',
 };
+const JSONSensorReportElement2 = {
+  type: 'gs1:MT-Humidity',
+  value: 26.0,
+  uom: 'CEL',
+  'ex:feature': 'ex:ambiance',
+  minValue: 12.4,
+  maxValue: 13.8,
+  microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
+  chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
+  component: 'componentValue',
+  deviceID: 'urn:epc:id:giai:4000001.111',
+  deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+  rawData: 'https://example.org/giai/401234599999',
+  time: '2019-04-02T14:05:00.000+01:00',
+  meanValue: 13.2,
+  sDev: 0.41,
+  percRank: 50,
+  percValue: 12.7,
+  'example:cv': '123',
+  hexBinaryValue: 'F0F0F0',
+  stringValue: 'SomeString',
+  booleanValue: true,
+  uriValue: 'https://example.org/example/someSectorSpecificValue',
+  dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
+  bizRules: 'https://example.org/gdti/4012345000054987',
+};
 const JSONSensorElement = {
   sensorMetadata: {
     time: '2019-07-19T14:00:00.000+01:00', deviceID: 'urn:epc:id:giai:4000001.111', deviceMetadata: 'https://id.gs1.org/giai/4000001111', rawData: 'https://example.org/giai/401234599999', dataProcessingMethod: 'https://example.com/gdti/4012345000054987', bizRules: 'https://example.org/gdti/4012345000054987',
@@ -236,7 +262,7 @@ describe('unit tests for sensor relative Objects', () => {
     });
     describe('sensorReport field', () => {
       const s1 = new SensorReportElement(JSONSensorReportElement);
-      const s2 = new SensorReportElement(JSONSensorReportElement);
+      const s2 = new SensorReportElement(JSONSensorReportElement2);
 
       it('should add and remove sensorReport', async () => {
         const obj = new SensorElement();

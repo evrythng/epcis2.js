@@ -19,7 +19,7 @@ export default class PersistentDisposition extends Entity {
    */
   addSetList(setList) {
     if (!this.set) { this.set = []; }
-    setList.forEach((set) => this.addSet(set));
+    this.set = [...this.set, ...setList];
     return this;
   }
 
@@ -80,7 +80,7 @@ export default class PersistentDisposition extends Entity {
    */
   addUnsetList(unsetList) {
     if (!this.unset) { this.unset = []; }
-    unsetList.forEach((unset) => this.addUnset(unset));
+    this.unset = [...this.unset, ...unsetList];
     return this;
   }
 

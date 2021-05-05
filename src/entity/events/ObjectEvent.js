@@ -89,7 +89,7 @@ export default class ObjectEvent extends Event {
     if (!this.epcList) {
       this.epcList = [];
     }
-    epcList.forEach((epc) => this.addEPC(epc));
+    this.epcList = [...this.epcList, ...epcList];
     return this;
   }
 
@@ -159,7 +159,7 @@ export default class ObjectEvent extends Event {
     if (!this.quantityList) {
       this.quantityList = [];
     }
-    quantityList.forEach((quantity) => this.addQuantity(quantity));
+    this.quantityList = [...this.quantityList, ...quantityList];
     return this;
   }
 
@@ -346,8 +346,7 @@ export default class ObjectEvent extends Event {
     if (!this.bizTransactionList) {
       this.bizTransactionList = [];
     }
-    bizTransactionList
-      .forEach((bizTransaction) => this.addBizTransaction(bizTransaction));
+    this.bizTransactionList = [...this.bizTransactionList, ...bizTransactionList];
     return this;
   }
 
@@ -417,7 +416,7 @@ export default class ObjectEvent extends Event {
     if (!this.sourceList) {
       this.sourceList = [];
     }
-    sourceList.forEach((sourceElement) => this.addSource(sourceElement));
+    this.sourceList = [...this.sourceList, ...sourceList];
     return this;
   }
 
@@ -486,8 +485,7 @@ export default class ObjectEvent extends Event {
     if (!this.destinationList) {
       this.destinationList = [];
     }
-    destinationList
-      .forEach((destinationElement) => this.addDestination(destinationElement));
+    this.destinationList = [...this.destinationList, ...destinationList];
     return this;
   }
 
@@ -557,8 +555,7 @@ export default class ObjectEvent extends Event {
     if (!this.sensorElementList) {
       this.sensorElementList = [];
     }
-    sensorElementList
-      .forEach((sensorElementElement) => this.addSensorElement(sensorElementElement));
+    this.sensorElementList = [...this.sensorElementList, ...sensorElementList];
     return this;
   }
 

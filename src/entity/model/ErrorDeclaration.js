@@ -71,8 +71,7 @@ export default class ErrorDeclaration extends Entity {
    */
   addCorrectiveEventIDList(correctiveEventIDList) {
     if (!this.correctiveEventIDs) { this.correctiveEventIDs = []; }
-    correctiveEventIDList.forEach((correctiveEventID) => this
-      .addCorrectiveEventID(correctiveEventID));
+    this.correctiveEventIDs = [...this.correctiveEventIDs, ...correctiveEventIDList];
     return this;
   }
 
