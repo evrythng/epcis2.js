@@ -1103,9 +1103,6 @@
     "attribute": {
       "type": "object",
       "properties": {
-        "id": {
-          "$ref": "#/definitions/uri"
-        },
         "attribute": {
           "anyOf": [
             {
