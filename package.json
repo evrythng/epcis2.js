@@ -11,9 +11,9 @@
     "format": "./node_modules/.bin/prettier --write '**/*.{js,json,md,yaml,yml}'",
     "release": "wnpm-release",
     "build": "rm dist/*; webpack --config webpack.config.js --mode production",
-    "build-dev": "rm dist/*; webpack --config webpack.config.js --mode development",
+    "build:dev": "rm dist/*; webpack --config webpack.config.js --mode development",
     "test": "./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/**/*.spec.js'",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build && npm test"
   },
   "husky": {
     "hooks": {
@@ -36,7 +36,7 @@
       "mocha": true
     },
     "extends": [
-      "standard"
+      "airbnb"
     ],
     "parserOptions": {
       "ecmaVersion": 12
@@ -84,10 +84,14 @@
     "babel-register": "^6.26.0",
     "chai": "^4.3.4",
     "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "fetch-mock": "^9.11.0",
     "husky": "^6.0.0",
     "mocha": "^8.3.2",
