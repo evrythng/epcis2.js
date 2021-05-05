@@ -25,8 +25,7 @@ export function prepare() {
  * @param {Function} done - Jasmine done callback
  */
 export async function tearDown(done) {
-  delay(100).then(() => {
-    fetchMock.restore();
-    done();
-  });
+  await delay(100);
+  fetchMock.restore();
+  done();
 }
