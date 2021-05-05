@@ -7,8 +7,6 @@
  * @property {Object} headers - Headers to send with request
  * @property {string} eventTimeZoneOffset - The default eventTimeZoneOffset that will be set in
  * @property {number} timeout - Timeout for request
- * @property {string} method - HTTP Method of request
- * @property {string} body - body of request
  * */
 
 /**
@@ -22,8 +20,7 @@ export const defaultSettings = {
     'content-type': 'application/json',
   },
   eventTimeZoneOffset: undefined,
-  timeout: 0,
-  method: 'GET',
+  timeout: undefined,
 };
 
 // Initialize settings with defaults.
