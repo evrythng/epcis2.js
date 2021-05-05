@@ -44,7 +44,7 @@ export default class Entity {
   /**
    * Return a JSON object corresponding to the SourceElement object
    */
-  toJSON () {
+  toObject () {
     const json = {}
 
     for (const prop in this) {
@@ -69,6 +69,6 @@ export default class Entity {
    * @returns {string} - a string corresponding to the Entity object
    */
   toString () {
-    return JSON.stringify(this.toJSON())
+    return JSON.stringify(this.toObject())
   }
 }

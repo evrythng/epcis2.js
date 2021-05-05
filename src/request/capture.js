@@ -13,7 +13,7 @@ import request from './request'
  */
 const capture = (epcisDocument, customOptions = {}, callback) => {
   customOptions.method = 'POST'
-  customOptions.body = JSON.stringify(epcisDocument.toJSON())
+  customOptions.body = JSON.stringify(epcisDocument.toObject())
   return request('capture', customOptions, callback)
 }
 

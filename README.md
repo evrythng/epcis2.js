@@ -55,15 +55,15 @@ be sent even if it is empty. You can override this and choose to not send the em
 
 ```js
     const o = new ObjectEvent();
-    const json = o.toJSON(); // { isA: 'ObjectEvent' } -> the epcList isn't sent
+    const object = o.toObject(); // { isA: 'ObjectEvent' } -> the epcList isn't sent
 
     const o = new ObjectEvent().addEPC('...');
-    const json = o.toJSON(); //{ isA: 'ObjectEvent', epcList: [ '...' ] } -> the epcList is sent
+    const object = o.toObject(); //{ isA: 'ObjectEvent', epcList: [ '...' ] } -> the epcList is sent
 
     const o = new ObjectEvent().addEPC('...').removeEPC('...');
-    const json = o.toJSON(); //{ isA: 'ObjectEvent', epcList: [] } -> the epcList is sent as an emptyString
+    const object = o.toObject(); //{ isA: 'ObjectEvent', epcList: [] } -> the epcList is sent as an empty array
     o.clearEPCList();
-    const json = o.toJSON(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
+    const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
 
 ## Build and deploy

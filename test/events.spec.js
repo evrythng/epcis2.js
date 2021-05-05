@@ -169,7 +169,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setBizLocation(JSONObjectEvent.bizLocation.id)
       .setIlmd(JSONObjectEvent.ilmd)
 
-    const json = o.toJSON()
+    const json = o.toObject()
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
     expect(json.eventID).to.be.equal(JSONObjectEvent.eventID)
     expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime)
@@ -191,7 +191,7 @@ describe('unit tests for the ObjectEvent class', () => {
   it('should create an ObjectEvent from json', async () => {
     const o = new ObjectEvent(JSONObjectEvent)
 
-    const json = o.toJSON()
+    const json = o.toObject()
     expect(json.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString())
     expect(json.eventID).to.be.equal(JSONObjectEvent.eventID)
     expect(json.eventTime).to.be.equal(JSONObjectEvent.eventTime)
@@ -227,19 +227,19 @@ describe('unit tests for the ObjectEvent class', () => {
     const o2 = new ObjectEvent()
     o1.setEventTimeZoneOffset('-06:00')
     o2.setEventTimeZoneOffset(-6)
-    expect(o1.toJSON().eventTimeZoneOffset).to.be.equal(o2.toJSON().eventTimeZoneOffset)
+    expect(o1.toObject().eventTimeZoneOffset).to.be.equal(o2.toObject().eventTimeZoneOffset)
   })
   it('should add a custom field', async () => {
     const objectEvent = new ObjectEvent()
     objectEvent.addExtension('key', 'value')
-    expect(objectEvent.toJSON().key).to.be.equal(('value'))
+    expect(objectEvent.toObject().key).to.be.equal(('value'))
   })
   it('should remove a custom field', async () => {
     const objectEvent = new ObjectEvent()
     objectEvent.addExtension('key', 'value')
     objectEvent.addEPC(epc1)
     objectEvent.removeExtension('key', 'value')
-    expect(objectEvent.toJSON().toString()).to.be.equal({ epcList: [epc1] }.toString())
+    expect(objectEvent.toObject().toString()).to.be.equal({ epcList: [epc1] }.toString())
   })
   it('should set the readPoint with ID or ReadPoint instance', async () => {
     const o = new ObjectEvent()
@@ -302,7 +302,7 @@ describe('unit tests for the ObjectEvent class', () => {
     })
     it('should not add the epc list to JSON if it is not defined', async () => {
       const o = new ObjectEvent()
-      const json = o.toJSON()
+      const json = o.toObject()
       expect(json.epcList).to.be.equal(undefined)
     })
   })
@@ -354,7 +354,7 @@ describe('unit tests for the ObjectEvent class', () => {
     })
     it('should not add the quantity list to JSON if it is not defined', async () => {
       const o = new ObjectEvent()
-      const json = o.toJSON()
+      const json = o.toObject()
       expect(json.quantityList).to.be.equal(undefined)
     })
   })
@@ -393,7 +393,7 @@ describe('unit tests for the ObjectEvent class', () => {
     })
     it('should not add the bizTransaction list to JSON if it is not defined', async () => {
       const o = new ObjectEvent()
-      const json = o.toJSON()
+      const json = o.toObject()
       expect(json.bizTransactionList).to.be.equal(undefined)
     })
   })
@@ -432,7 +432,7 @@ describe('unit tests for the ObjectEvent class', () => {
     })
     it('should not add the source list to JSON if it is not defined', async () => {
       const o = new ObjectEvent()
-      const json = o.toJSON()
+      const json = o.toObject()
       expect(json.sourceList).to.be.equal(undefined)
     })
   })
@@ -471,7 +471,7 @@ describe('unit tests for the ObjectEvent class', () => {
     })
     it('should not add the destination list to JSON if it is not defined', async () => {
       const o = new ObjectEvent()
-      const json = o.toJSON()
+      const json = o.toObject()
       expect(json.destinationList).to.be.equal(undefined)
     })
   })
@@ -510,7 +510,7 @@ describe('unit tests for the ObjectEvent class', () => {
     })
     it('should not add the sensorElement list to JSON if it is not defined', async () => {
       const o = new ObjectEvent()
-      const json = o.toJSON()
+      const json = o.toObject()
       expect(json.sensorElementList).to.be.equal(undefined)
     })
   })

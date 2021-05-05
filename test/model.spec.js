@@ -39,7 +39,7 @@ describe('unit tests for model Objects', () => {
         .addCorrectiveEventID(correctiveEventID1)
         .addCorrectiveEventID(correctiveEventID2)
 
-      const json = errorDeclaration.toJSON()
+      const json = errorDeclaration.toObject()
       expect(json.reason).to.be.equal(reason)
       expect(json.declarationTime).to.be.equal(anotherDate)
       expect(json.correctiveEventIDs.toString()).to.be.equal([correctiveEventID1, correctiveEventID2].toString())
@@ -53,7 +53,7 @@ describe('unit tests for model Objects', () => {
 
       const errorDeclaration = new ErrorDeclaration(errorDeclarationJSON)
 
-      const json = errorDeclaration.toJSON()
+      const json = errorDeclaration.toObject()
       expect(json.reason).to.be.equal(reason)
       expect(json.declarationTime).to.be.equal(anotherDate)
       expect(json.correctiveEventIDs.toString()).to.be.equal([correctiveEventID1, correctiveEventID2, correctiveEventID3].toString())
@@ -63,7 +63,7 @@ describe('unit tests for model Objects', () => {
       errorDeclaration
         .setDeclarationTime(anotherDate)
 
-      const json = errorDeclaration.toJSON()
+      const json = errorDeclaration.toObject()
       expect(json.declarationTime).to.be.equal(anotherDate)
     })
     it('should add and remove correctiveEventIDs', async () => {
@@ -99,20 +99,20 @@ describe('unit tests for model Objects', () => {
     })
     it('should not add the correctiveEventID list to JSON if it is not defined', async () => {
       const errorDeclaration = new ErrorDeclaration()
-      const json = errorDeclaration.toJSON()
+      const json = errorDeclaration.toObject()
       expect(json.correctiveEventIDs).to.be.equal(undefined)
     })
     it('should add a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration()
       errorDeclaration.addExtension('key', 'value')
-      expect(errorDeclaration.toJSON().key).to.be.equal(('value'))
+      expect(errorDeclaration.toObject().key).to.be.equal(('value'))
     })
     it('should remove a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration()
       errorDeclaration.addExtension('key', 'value')
       errorDeclaration.setReason(reason)
       errorDeclaration.removeExtension('key', 'value')
-      expect(errorDeclaration.toJSON().toString()).to.be.equal({ reason: reason, correctiveEventIDs: [] }.toString())
+      expect(errorDeclaration.toObject().toString()).to.be.equal({ reason: reason, correctiveEventIDs: [] }.toString())
     })
   })
   describe('QuantityElement.js', () => {
@@ -123,7 +123,7 @@ describe('unit tests for model Objects', () => {
         .setEpcClass(JSONQuantityElement.epcClass)
         .setUom(JSONQuantityElement.uom)
 
-      const json = quantityElement.toJSON()
+      const json = quantityElement.toObject()
       expect(json.quantity).to.be.equal(JSONQuantityElement.quantity)
       expect(json.uom).to.be.equal(JSONQuantityElement.uom)
       expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
@@ -131,7 +131,7 @@ describe('unit tests for model Objects', () => {
     it('should create a valid QuantityElement object from JSON', async () => {
       const quantityElement = new QuantityElement(JSONQuantityElement)
 
-      const json = quantityElement.toJSON()
+      const json = quantityElement.toObject()
       expect(json.quantity).to.be.equal(JSONQuantityElement.quantity)
       expect(json.uom).to.be.equal(JSONQuantityElement.uom)
       expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
@@ -139,9 +139,9 @@ describe('unit tests for model Objects', () => {
     it('should add and remove custom fields', async () => {
       const obj = new QuantityElement()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('ReadPoint.js', () => {
@@ -150,21 +150,21 @@ describe('unit tests for model Objects', () => {
       readPoint
         .setId('id')
 
-      const json = readPoint.toJSON()
+      const json = readPoint.toObject()
       expect(json.id).to.be.equal('id')
     })
     it('should create a valid ReadPoint object from JSON', async () => {
       const readPoint = new ReadPoint({ id: 'id' })
 
-      const json = readPoint.toJSON()
+      const json = readPoint.toObject()
       expect(json.id).to.be.equal('id')
     })
     it('should add and remove custom fields', async () => {
       const obj = new ReadPoint()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('BizLocation.js', () => {
@@ -173,21 +173,21 @@ describe('unit tests for model Objects', () => {
       bizLocation
         .setId('id')
 
-      const json = bizLocation.toJSON()
+      const json = bizLocation.toObject()
       expect(json.id).to.be.equal('id')
     })
     it('should create a valid BizLocation object from JSON', async () => {
       const bizLocation = new BizLocation({ id: 'id' })
 
-      const json = bizLocation.toJSON()
+      const json = bizLocation.toObject()
       expect(json.id).to.be.equal('id')
     })
     it('should add and remove custom fields', async () => {
       const obj = new BizLocation()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('BizTransactionElement.js', () => {
@@ -197,23 +197,23 @@ describe('unit tests for model Objects', () => {
         .setType(JSONBizTransactionElement.type)
         .setBizTransaction(JSONBizTransactionElement.bizTransaction)
 
-      const json = bizTransaction.toJSON()
+      const json = bizTransaction.toObject()
       expect(json.type).to.be.equal(JSONBizTransactionElement.type)
       expect(json.bizTransaction).to.be.equal(JSONBizTransactionElement.bizTransaction)
     })
     it('should create a valid BizTransactionElement object from JSON', async () => {
       const bizTransaction = new BizTransactionElement(JSONBizTransactionElement)
 
-      const json = bizTransaction.toJSON()
+      const json = bizTransaction.toObject()
       expect(json.type).to.be.equal(JSONBizTransactionElement.type)
       expect(json.bizTransaction).to.be.equal(JSONBizTransactionElement.bizTransaction)
     })
     it('should add and remove custom fields', async () => {
       const obj = new BizTransactionElement()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('SourceElement.js', () => {
@@ -223,23 +223,23 @@ describe('unit tests for model Objects', () => {
         .setType(JSONSourceElement.type)
         .setSource(JSONSourceElement.source)
 
-      const json = sourceElement.toJSON()
+      const json = sourceElement.toObject()
       expect(json.type).to.be.equal(JSONSourceElement.type)
       expect(json.source).to.be.equal(JSONSourceElement.source)
     })
     it('should create a valid SourceElement object from JSON', async () => {
       const sourceElement = new SourceElement(JSONSourceElement)
 
-      const json = sourceElement.toJSON()
+      const json = sourceElement.toObject()
       expect(json.type).to.be.equal(JSONSourceElement.type)
       expect(json.source).to.be.equal(JSONSourceElement.source)
     })
     it('should add and remove custom fields', async () => {
       const obj = new SourceElement()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('DestinationElement.js', () => {
@@ -249,23 +249,23 @@ describe('unit tests for model Objects', () => {
         .setType(JSONDestinationElement.type)
         .setDestination(JSONDestinationElement.destination)
 
-      const json = destinationElement.toJSON()
+      const json = destinationElement.toObject()
       expect(json.type).to.be.equal(JSONDestinationElement.type)
       expect(json.destination).to.be.equal(JSONDestinationElement.destination)
     })
     it('should create a valid DestinationElement object from JSON', async () => {
       const destinationElement = new DestinationElement(JSONDestinationElement)
 
-      const json = destinationElement.toJSON()
+      const json = destinationElement.toObject()
       expect(json.type).to.be.equal(JSONDestinationElement.type)
       expect(json.destination).to.be.equal(JSONDestinationElement.destination)
     })
     it('should add and remove custom fields', async () => {
       const obj = new DestinationElement()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('PersistentDisposition.js', () => {
@@ -280,7 +280,7 @@ describe('unit tests for model Objects', () => {
 
       const persistentDisposition = new PersistentDisposition(persistentDispositionJSON)
 
-      const json = persistentDisposition.toJSON()
+      const json = persistentDisposition.toObject()
       expect(json.set.toString()).to.be.equal(persistentDispositionJSON.set.toString())
       expect(json.unset.toString()).to.be.equal(persistentDispositionJSON.unset.toString())
     })
@@ -311,7 +311,7 @@ describe('unit tests for model Objects', () => {
     })
     it('should not add the correctiveEventID list to JSON if it is not defined', async () => {
       const persistentDisposition = new PersistentDisposition()
-      const json = persistentDisposition.toJSON()
+      const json = persistentDisposition.toObject()
       expect(json.set).to.be.equal(undefined)
     })
     it('should add and remove unset', async () => {
@@ -341,15 +341,15 @@ describe('unit tests for model Objects', () => {
     })
     it('should not add the correctiveEventID list to JSON if it is not defined', async () => {
       const persistentDisposition = new PersistentDisposition()
-      const json = persistentDisposition.toJSON()
+      const json = persistentDisposition.toObject()
       expect(json.unset).to.be.equal(undefined)
     })
     it('should add and remove custom fields', async () => {
       const obj = new PersistentDisposition()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
 })

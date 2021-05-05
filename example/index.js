@@ -17,7 +17,7 @@ objectEvent
 console.log(objectEvent.bizStep) // urn:epcglobal:cbv:bizstep:inspecting
 console.log(objectEvent.action) // OBSERVE
 
-console.log(objectEvent.toJSON())
+console.log(objectEvent.toObject())
 /* output:
 {
   isA: 'ObjectEvent',

@@ -62,7 +62,7 @@ describe('unit tests for sensor relative Objects', () => {
         .setDataProcessingMethod(JSONSensorMetadata.dataProcessingMethod)
         .setBizRules(JSONSensorMetadata.bizRules)
 
-      const json = sensorMetadata.toJSON()
+      const json = sensorMetadata.toObject()
       expect(json.time).to.be.equal(JSONSensorMetadata.time)
       expect(json.deviceID).to.be.equal(JSONSensorMetadata.deviceID)
       expect(json.deviceMetadata).to.be.equal(JSONSensorMetadata.deviceMetadata)
@@ -74,7 +74,7 @@ describe('unit tests for sensor relative Objects', () => {
     })
     it('should create a valid SensorMetadata object from JSON', async () => {
       const sensorMetadata = new SensorMetadata(JSONSensorMetadata)
-      const json = sensorMetadata.toJSON()
+      const json = sensorMetadata.toObject()
       expect(json.time).to.be.equal(JSONSensorMetadata.time)
       expect(json.deviceID).to.be.equal(JSONSensorMetadata.deviceID)
       expect(json.deviceMetadata).to.be.equal(JSONSensorMetadata.deviceMetadata)
@@ -87,9 +87,9 @@ describe('unit tests for sensor relative Objects', () => {
     it('should add and remove custom fields', async () => {
       const obj = new SensorMetadata()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('SensorReportElement.js', () => {
@@ -118,7 +118,7 @@ describe('unit tests for sensor relative Objects', () => {
         .setPercValue(JSONSensorReportElement.percValue)
         .setUom(JSONSensorReportElement.uom)
 
-      const json = sensorReport.toJSON()
+      const json = sensorReport.toObject()
       expect(json.type).to.be.equal(JSONSensorReportElement.type)
       expect(json.deviceID).to.be.equal(JSONSensorReportElement.deviceID)
       expect(json.deviceMetadata).to.be.equal(JSONSensorReportElement.deviceMetadata)
@@ -144,7 +144,7 @@ describe('unit tests for sensor relative Objects', () => {
     it('should create a valid SensorReportElement object from JSON', async () => {
       const sensorReport = new SensorReportElement(JSONSensorReportElement)
 
-      const json = sensorReport.toJSON()
+      const json = sensorReport.toObject()
       expect(json.type).to.be.equal(JSONSensorReportElement.type)
       expect(json.deviceID).to.be.equal(JSONSensorReportElement.deviceID)
       expect(json.deviceMetadata).to.be.equal(JSONSensorReportElement.deviceMetadata)
@@ -170,9 +170,9 @@ describe('unit tests for sensor relative Objects', () => {
     it('should add and remove custom fields', async () => {
       const obj = new SensorReportElement()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
   describe('SensorElement.js', () => {
@@ -181,7 +181,7 @@ describe('unit tests for sensor relative Objects', () => {
       sensorElement
         .setSensorMetadata(new SensorMetadata(JSONSensorElement.sensorMetadata))
 
-      const json = sensorElement.toJSON()
+      const json = sensorElement.toObject()
       expect(json.sensorMetadata.time).to.be.equal(JSONSensorElement.sensorMetadata.time)
       expect(json.sensorMetadata.deviceID).to.be.equal(JSONSensorElement.sensorMetadata.deviceID)
       expect(json.sensorMetadata.rawData).to.be.equal(JSONSensorElement.sensorMetadata.rawData)
@@ -190,7 +190,7 @@ describe('unit tests for sensor relative Objects', () => {
     })
     it('should create a valid SensorElement object from JSON', async () => {
       const sensorElement = new SensorElement(JSONSensorElement)
-      const json = sensorElement.toJSON()
+      const json = sensorElement.toObject()
       expect(json.sensorMetadata.time).to.be.equal(JSONSensorElement.sensorMetadata.time)
       expect(json.sensorMetadata.deviceID).to.be.equal(JSONSensorElement.sensorMetadata.deviceID)
       expect(json.sensorMetadata.rawData).to.be.equal(JSONSensorElement.sensorMetadata.rawData)
@@ -209,9 +209,9 @@ describe('unit tests for sensor relative Objects', () => {
     it('should add and remove custom fields', async () => {
       const obj = new SensorElement()
       obj.addExtension('key', 'value')
-      expect(obj.toJSON().key).to.be.equal('value')
+      expect(obj.toObject().key).to.be.equal('value')
       obj.removeExtension('key')
-      expect(obj.toJSON().key).to.be.equal(undefined)
+      expect(obj.toObject().key).to.be.equal(undefined)
     })
   })
 })

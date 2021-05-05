@@ -99,12 +99,12 @@ export const offsetToString = (hours, minutes) => {
 /**
  * Returns a JSON corresponding to the parameter
  * @param {any} obj
- * @return {{}} - a json if the object passed in param has a toJSON function defined - the object
+ * @return {{}} - a json if the object passed in param has a toObject function defined - the object
  * passed in param otherwise
  */
 export const objectToJSON = (obj) => {
-  if (typeof obj.toJSON === 'function') {
-    return obj.toJSON()
+  if (typeof obj.toObject === 'function') {
+    return obj.toObject()
   } else {
     return obj
   }
