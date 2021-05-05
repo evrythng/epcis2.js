@@ -11,7 +11,7 @@ import SensorElement from '../model/sensor/SensorElement';
 export default class ObjectEvent extends Event {
   /**
    * You can either create an empty Object Event or provide an already existing Object event via Map
-   * @param {{}} [objectEvent] - The Map that will be used to create the ObjectEvent entity
+   * @param {Object} [objectEvent] - The Map that will be used to create the ObjectEvent entity
    */
   constructor(objectEvent) {
     super(objectEvent);
@@ -607,7 +607,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Set the ilmd property
-   * @param {{}} ilmd object
+   * @param {Object} ilmd object
    * @return {ObjectEvent} - the objectEvent instance
    */
   setIlmd(ilmd) {
@@ -617,7 +617,7 @@ export default class ObjectEvent extends Event {
 
   /**
    * Getter for the ilmd property
-   * @return {{}} - the ilmd
+   * @return {Object} - the ilmd
    */
   getIlmd() {
     return this.ilmd;

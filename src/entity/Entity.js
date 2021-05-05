@@ -3,7 +3,7 @@ import { objectToJSON } from '../utils/utils';
 export default class Entity {
   /**
    * You can either create an empty Entity or provide an already existing Entity via Map
-   * @param {{}} [entity] - The Map that will be used to create the entity
+   * @param {Object} [entity] - The Map that will be used to create the entity
    */
   constructor(entity) {
     if (new.target === Entity) {

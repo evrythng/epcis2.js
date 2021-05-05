@@ -11,7 +11,7 @@ import Entity from '../Entity';
 export default class Event extends Entity {
   /**
    * You can either create an empty Event or provide an already existing event via Map
-   * @param {{}} [event] - The Map that will be used to create the Event entity
+   * @param {Object} [event] - The Map that will be used to create the Event entity
    * Only the errorDeclaration will be set here from the JSON passed in param, the other fields are
    * set in the extended classes
    */
