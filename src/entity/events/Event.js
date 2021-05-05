@@ -31,13 +31,7 @@ export default class Event extends Entity {
     }
 
     Object.entries(event).forEach(([key, value]) => {
-      switch (key) {
-        case 'errorDeclaration':
-          this.setErrorDeclaration(new ErrorDeclaration(value));
-          break;
-        default:
-          break;
-      }
+      if (key === 'errorDeclaration') this.setErrorDeclaration(new ErrorDeclaration(value));
     });
   }
 
