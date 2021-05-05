@@ -93,9 +93,6 @@ export default class SensorElement extends Entity {
    * @return {SensorElement} - the objectEvent instance
    */
   removeSensorReport(sensorReport) {
-    if (!this.sensorReport) {
-      this.sensorReport = [];
-    }
     this.sensorReport = this.sensorReport.filter((elem) => elem !== sensorReport);
     return this;
   }
@@ -106,9 +103,6 @@ export default class SensorElement extends Entity {
    * @return {SensorElement} - the objectEvent instance
    */
   removeSensorReportList(sensorReportList) {
-    if (!this.sensorReport) {
-      this.sensorReport = [];
-    }
     sensorReportList.forEach((sensorReportElement) => this.removeSensorReport(sensorReportElement));
     return this;
   }

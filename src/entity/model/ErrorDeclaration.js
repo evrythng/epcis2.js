@@ -91,7 +91,6 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   removeCorrectiveEventID(correctiveEventID) {
-    if (!this.correctiveEventIDs) { this.correctiveEventIDs = []; }
     this.correctiveEventIDs = this.correctiveEventIDs
       .filter((elem) => elem !== correctiveEventID);
     return this;
@@ -105,7 +104,6 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   removeCorrectiveEventIDList(correctiveEventIDList) {
-    if (!this.correctiveEventIDs) { this.correctiveEventIDs = []; }
     correctiveEventIDList.forEach((correctiveEventID) => this
       .removeCorrectiveEventID(correctiveEventID));
     return this;

@@ -108,9 +108,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPC(epc) {
-    if (!this.epcList) {
-      this.epcList = [];
-    }
     this.epcList = this.epcList.filter((elem) => elem !== epc);
     return this;
   }
@@ -122,9 +119,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeEPCList(epcList) {
-    if (!this.epcList) {
-      this.epcList = [];
-    }
     epcList.forEach((epc) => this.removeEPC(epc));
     return this;
   }
@@ -178,9 +172,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeQuantity(quantity) {
-    if (!this.quantityList) {
-      this.quantityList = [];
-    }
     this.quantityList = this.quantityList.filter((elem) => elem !== quantity);
     return this;
   }
@@ -191,9 +182,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeQuantityList(quantityList) {
-    if (!this.quantityList) {
-      this.quantityList = [];
-    }
     quantityList.forEach((quantity) => this.removeQuantity(quantity));
     return this;
   }
@@ -365,9 +353,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeBizTransaction(bizTransaction) {
-    if (!this.bizTransactionList) {
-      this.bizTransactionList = [];
-    }
     this.bizTransactionList = this.bizTransactionList.filter((elem) => elem !== bizTransaction);
     return this;
   }
@@ -378,9 +363,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeBizTransactionList(bizTransactionList) {
-    if (!this.bizTransactionList) {
-      this.bizTransactionList = [];
-    }
     bizTransactionList
       .forEach((bizTransaction) => this.removeBizTransaction(bizTransaction));
     return this;
@@ -435,9 +417,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeSource(source) {
-    if (!this.sourceList) {
-      this.sourceList = [];
-    }
     this.sourceList = this.sourceList.filter((elem) => elem !== source);
     return this;
   }
@@ -448,9 +427,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeSourceList(sourceList) {
-    if (!this.sourceList) {
-      this.sourceList = [];
-    }
     sourceList.forEach((sourceElement) => this.removeSource(sourceElement));
     return this;
   }
@@ -504,9 +480,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeDestination(destination) {
-    if (!this.destinationList) {
-      this.destinationList = [];
-    }
     this.destinationList = this.destinationList.filter((elem) => elem !== destination);
     return this;
   }
@@ -517,9 +490,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeDestinationList(destinationList) {
-    if (!this.destinationList) {
-      this.destinationList = [];
-    }
     destinationList
       .forEach((destinationElement) => this.removeDestination(destinationElement));
     return this;
@@ -574,9 +544,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeSensorElement(sensorElement) {
-    if (!this.sensorElementList) {
-      this.sensorElementList = [];
-    }
     this.sensorElementList = this.sensorElementList.filter((elem) => elem !== sensorElement);
     return this;
   }
@@ -587,9 +554,6 @@ export default class ObjectEvent extends Event {
    * @return {ObjectEvent} - the objectEvent instance
    */
   removeSensorElementList(sensorElementList) {
-    if (!this.sensorElementList) {
-      this.sensorElementList = [];
-    }
     sensorElementList
       .forEach((sensorElementElement) => this.removeSensorElement(sensorElementElement));
     return this;
