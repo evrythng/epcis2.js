@@ -1,3 +1,7 @@
+/**
+ * An object containing all the possible bizSteps
+ * More info here: https://www.gs1.org/standards/epcis
+ */
 export const bizSteps = {
   accepting: 'urn:epcglobal:cbv:bizstep:accepting',
   arriving: 'urn:epcglobal:cbv:bizstep:arriving',
@@ -42,6 +46,10 @@ export const bizSteps = {
   void_shipping: 'urn:epcglobal:cbv:bizstep:void_shipping',
 };
 
+/**
+ * An object containing all the possible dispositions
+ * More info here: https://www.gs1.org/standards/epcis
+ */
 export const dispositions = {
   active: 'urn:epcglobal:cbv:disp:active',
   available: 'urn:epcglobal:cbv:disp:available',
@@ -77,6 +85,10 @@ export const dispositions = {
   unknown: 'urn:epcglobal:cbv:disp:unknown',
 };
 
+/**
+ * An object containing all the possible businessTransactionTypes
+ * More info here: https://www.gs1.org/standards/epcis
+ */
 export const businessTransactionTypes = {
   bol: 'urn:epcglobal:cbv:btt:bol',
   cert: 'urn:epcglobal:cbv:btt:cert',
@@ -93,17 +105,29 @@ export const businessTransactionTypes = {
   upevt: 'urn:epcglobal:cbv:btt:upevt',
 };
 
-export const SourceDestinationTypes = {
+/**
+ * An object containing all the possible sourceDestinationTypes
+ * More info here: https://www.gs1.org/standards/epcis
+ */
+export const sourceDestinationTypes = {
   owning_party: 'urn:epcglobal:cbv:sdt:owning_party',
   possessing_party: 'urn:epcglobal:cbv:sdt:possessing_party',
   location: 'urn:epcglobal:cbv:sdt:location',
 };
 
+/**
+ * An object containing all the possible errorReasonIdentifiers
+ * More info here: https://www.gs1.org/standards/epcis
+ */
 export const errorReasonIdentifiers = {
   did_not_occur: 'urn:epcglobal:cbv:er:did_not_occur',
   incorrect_data: 'urn:epcglobal:cbv:er:incorrect_data',
 };
 
+/**
+ * An object containing all the possible sensorMeasurementTypes
+ * More info here: https://www.gs1.org/standards/epcis
+ */
 export const sensorMeasurementTypes = {
   Absorbed_dose: 'gs1:MT-Absorbed_dose',
   Absorbed_dose_rate: 'gs1:MT-Absorbed_dose_rate',
@@ -174,11 +198,19 @@ export const sensorMeasurementTypes = {
   Volumetric_flux: 'gs1:MT-Volumetric_flux',
 };
 
+/**
+ * An object containing all the possible alarmTypes
+ * More info here: https://www.gs1.org/standards/epcis
+ */
 export const alarmTypes = {
   Alarm_condition: 'gs1:AT-Alarm_condition',
   Error_condition: 'gs1:AT-Error_condition',
 };
 
+/**
+ * An object containing all the possible action
+ * More info here: https://www.gs1.org/standards/epcis
+ */
 export const actionTypes = {
   observe: 'OBSERVE',
   add: 'ADD',
