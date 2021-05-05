@@ -21,8 +21,8 @@ export default class Entity {
   }
 
   /**
-   * @param {string} key
-   * @param {string} value
+   * @param {string} key - the key of the extension
+   * @param {string} value - the value of the extension
    * @return {Entity} - the entity instance
    */
   addExtension(key, value) {
@@ -31,7 +31,7 @@ export default class Entity {
   }
 
   /**
-   * @param {string} key
+   * @param {string} key - the key of the extension
    * @return {Entity} - the entity instance
    */
   removeExtension(key) {
@@ -42,14 +42,14 @@ export default class Entity {
   // todo: getExtensions?
 
   /**
-   * Return a JSON object corresponding to the SourceElement object
+   * @return {Object} an object corresponding to the Entity object
    */
   toObject() {
     const json = {};
 
     Object.keys(this).forEach((prop) => {
       if (this.hasOwnProperty(prop)) {
-        if (typeof this[prop].push === 'function') {
+        if (Array.isArray(this[prop])) {
           if (!this[prop].length) {
             json[prop] = [];
           } else {
@@ -66,7 +66,7 @@ export default class Entity {
   }
 
   /**
-   * @returns {string} - a string corresponding to the Entity object
+   * @return {string} - a string corresponding to the Entity object
    */
   toString() {
     return JSON.stringify(this.toObject());
