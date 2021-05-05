@@ -18,6 +18,7 @@ export default class SensorElement extends Entity {
 
     this.clearSensorReportList();
 
+    // Create classes for sub-objects that are provided
     Object.entries(sensor).forEach(([key, value]) => {
       switch (key) {
         case 'sensorMetadata':

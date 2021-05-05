@@ -30,6 +30,7 @@ export default class Event extends Entity {
       return;
     }
 
+    // Create classes for sub-objects that are provided
     Object.entries(event).forEach(([key, value]) => {
       if (key === 'errorDeclaration') this.setErrorDeclaration(new ErrorDeclaration(value));
     });

@@ -28,6 +28,7 @@ export default class ObjectEvent extends Event {
     this.clearSensorElementList();
     this.clearEPCList();
 
+    // Create classes for sub-objects that are provided
     Object.entries(objectEvent).forEach(([key, value]) => {
       switch (key) {
         case 'persistentDisposition':
