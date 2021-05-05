@@ -12,6 +12,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the type property
+   * @return {string} - the type
+   */
+  getType () {
+    return this.type
+  }
+
+  /**
    * Set the deviceID property
    * @param {string} deviceID
    * @return {SensorReportElement} - the sensorReport instance
@@ -19,6 +27,14 @@ export default class SensorReportElement extends Entity {
   setDeviceID (deviceID) {
     this.deviceID = deviceID
     return this
+  }
+
+  /**
+   * Getter for the deviceID property
+   * @return {string} - the deviceID
+   */
+  getDeviceID () {
+    return this.deviceID
   }
 
   /**
@@ -32,6 +48,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the deviceMetadata property
+   * @return {string} - the deviceMetadata
+   */
+  getDeviceMetadata () {
+    return this.deviceMetadata
+  }
+
+  /**
    * Set the rawData property
    * @param {string} rawData
    * @return {SensorReportElement} - the sensorReport instance
@@ -39,6 +63,14 @@ export default class SensorReportElement extends Entity {
   setRawData (rawData) {
     this.rawData = rawData
     return this
+  }
+
+  /**
+   * Getter for the rawData property
+   * @return {string} - the rawData
+   */
+  getRawData () {
+    return this.rawData
   }
 
   /**
@@ -52,6 +84,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the dataProcessingMethod property
+   * @return {string} - the dataProcessingMethod
+   */
+  getDataProcessingMethod () {
+    return this.dataProcessingMethod
+  }
+
+  /**
    * Set the time property
    * @param {string} time
    * @return {SensorReportElement} - the sensorReport instance
@@ -59,6 +99,14 @@ export default class SensorReportElement extends Entity {
   setTime (time) {
     this.time = time
     return this
+  }
+
+  /**
+   * Getter for the time property
+   * @return {string} - the time
+   */
+  getTime () {
+    return this.time
   }
 
   /**
@@ -72,6 +120,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the microorganism property
+   * @return {string} - the microorganism
+   */
+  getMicroorganism () {
+    return this.microorganism
+  }
+
+  /**
    * Set the chemicalSubstance property
    * @param {string} chemicalSubstance
    * @return {SensorReportElement} - the sensorReport instance
@@ -79,6 +135,14 @@ export default class SensorReportElement extends Entity {
   setChemicalSubstance (chemicalSubstance) {
     this.chemicalSubstance = chemicalSubstance
     return this
+  }
+
+  /**
+   * Getter for the chemicalSubstance property
+   * @return {string} - the chemicalSubstance
+   */
+  getChemicalSubstance () {
+    return this.chemicalSubstance
   }
 
   /**
@@ -92,6 +156,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the value property
+   * @return {number} - the value
+   */
+  getValue () {
+    return this.value
+  }
+
+  /**
    * Set the component property
    * @param {string} component
    * @return {SensorReportElement} - the sensorReport instance
@@ -99,6 +171,14 @@ export default class SensorReportElement extends Entity {
   setComponent (component) {
     this.component = component
     return this
+  }
+
+  /**
+   * Getter for the component property
+   * @return {string} - the component
+   */
+  getComponent () {
+    return this.component
   }
 
   /**
@@ -112,6 +192,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the stringValue property
+   * @return {string} - the stringValue
+   */
+  getStringValue () {
+    return this.stringValue
+  }
+
+  /**
    * Set the booleanValue property
    * @param {boolean} booleanValue
    * @return {SensorReportElement} - the sensorReport instance
@@ -119,6 +207,14 @@ export default class SensorReportElement extends Entity {
   setBooleanValue (booleanValue) {
     this.booleanValue = booleanValue
     return this
+  }
+
+  /**
+   * Getter for the booleanValue property
+   * @return {boolean} - the booleanValue
+   */
+  getBooleanValue () {
+    return this.booleanValue
   }
 
   /**
@@ -132,6 +228,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the hexBinaryValue property
+   * @return {string} - the hexBinaryValue
+   */
+  getHexBinaryValue () {
+    return this.hexBinaryValue
+  }
+
+  /**
    * Set the uriValue property
    * @param {string} uriValue
    * @return {SensorReportElement} - the sensorReport instance
@@ -139,6 +243,14 @@ export default class SensorReportElement extends Entity {
   setUriValue (uriValue) {
     this.uriValue = uriValue
     return this
+  }
+
+  /**
+   * Getter for the uriValue property
+   * @return {string} - the uriValue
+   */
+  getUriValue () {
+    return this.uriValue
   }
 
   /**
@@ -152,6 +264,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the minValue property
+   * @return {number} - the minValue
+   */
+  getMinValue () {
+    return this.minValue
+  }
+
+  /**
    * Set the maxValue property
    * @param {number} maxValue
    * @return {SensorReportElement} - the sensorReport instance
@@ -159,6 +279,14 @@ export default class SensorReportElement extends Entity {
   setMaxValue (maxValue) {
     this.maxValue = maxValue
     return this
+  }
+
+  /**
+   * Getter for the maxValue property
+   * @return {number} - the maxValue
+   */
+  getMaxValue () {
+    return this.maxValue
   }
 
   /**
@@ -172,6 +300,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the meanValue property
+   * @return {number} - the meanValue
+   */
+  getMeanValue () {
+    return this.meanValue
+  }
+
+  /**
    * Set the sDev property
    * @param {number} sDev
    * @return {SensorReportElement} - the sensorReport instance
@@ -179,6 +315,14 @@ export default class SensorReportElement extends Entity {
   setSDev (sDev) {
     this.sDev = sDev
     return this
+  }
+
+  /**
+   * Getter for the sDev property
+   * @return {number} - the sDev
+   */
+  getSDev () {
+    return this.sDev
   }
 
   /**
@@ -192,6 +336,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the percRank property
+   * @return {number} - the percRank
+   */
+  getPercRank () {
+    return this.percRank
+  }
+
+  /**
    * Set the percValue property
    * @param {number} percValue
    * @return {SensorReportElement} - the sensorReport instance
@@ -202,6 +354,14 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Getter for the percValue property
+   * @return {number} - the percValue
+   */
+  getPercValue () {
+    return this.percValue
+  }
+
+  /**
    * Set the uom property
    * @param {string} uom
    * @return {SensorReportElement} - the sensorReport instance
@@ -209,5 +369,13 @@ export default class SensorReportElement extends Entity {
   setUom (uom) {
     this.uom = uom
     return this
+  }
+
+  /**
+   * Getter for the uom property
+   * @return {string} - the uom
+   */
+  getUom () {
+    return this.uom
   }
 }

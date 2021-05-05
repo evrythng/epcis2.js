@@ -43,6 +43,14 @@ export default class SensorElement extends Entity {
   }
 
   /**
+   * Getter for the sensorMetadata property
+   * @return {SensorMetadata} - the sensorMetadata
+   */
+  getSensorMetadata () {
+    return this.sensorMetadata
+  }
+
+  /**
    * Add the sensorReport to the "sensorReportList" field
    * @param {SensorReportElement} sensorReport - the sensorReport to add
    * @return {SensorElement} - the objectEvent instance
@@ -101,5 +109,13 @@ export default class SensorElement extends Entity {
     }
     sensorReportList.forEach(sensorReportElement => this.removeSensorReport(sensorReportElement))
     return this
+  }
+
+  /**
+   * Getter for the sensorReport property
+   * @return {SensorReportElement} - the sensorReport
+   */
+  getSensorReport () {
+    return this.sensorReport
   }
 }

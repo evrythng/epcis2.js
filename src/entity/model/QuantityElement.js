@@ -12,6 +12,14 @@ export default class QuantityElement extends Entity {
   }
 
   /**
+   * Getter for the epcClass property
+   * @return {string} - the epcClass
+   */
+  getEpcClass () {
+    return this.epcClass
+  }
+
+  /**
    * Set the uom property
    * @param {string} uom (pattern: "^[A-Z0-9]{2,3}$")
    * @return {QuantityElement} - the quantityElement instance
@@ -22,6 +30,14 @@ export default class QuantityElement extends Entity {
   }
 
   /**
+   * Getter for the uom property
+   * @return {string} - the uom
+   */
+  getUom () {
+    return this.uom
+  }
+
+  /**
    * Set the quantity property
    * @param {number} quantity (pattern: "^[A-Z0-9]{2,3}$")
    * @return {QuantityElement} - the quantityElement instance
@@ -29,5 +45,13 @@ export default class QuantityElement extends Entity {
   setQuantity (quantity) {
     this.quantity = quantity
     return this
+  }
+
+  /**
+   * Getter for the quantity property
+   * @return {number} - the quantity
+   */
+  getQuantity () {
+    return this.quantity
   }
 }

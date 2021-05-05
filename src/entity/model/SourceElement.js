@@ -12,6 +12,14 @@ export default class SourceElement extends Entity {
   }
 
   /**
+   * Getter for the source property
+   * @return {string} - the source
+   */
+  getSource () {
+    return this.source
+  }
+
+  /**
    * Set the type property
    * @param {string} type
    * @return {SourceElement} - the source instance
@@ -19,5 +27,13 @@ export default class SourceElement extends Entity {
   setType (type) {
     this.type = type
     return this
+  }
+
+  /**
+   * Getter for the type property
+   * @return {string} - the type
+   */
+  getType () {
+    return this.type
   }
 }

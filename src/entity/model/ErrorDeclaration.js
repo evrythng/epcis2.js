@@ -25,6 +25,14 @@ export default class ErrorDeclaration extends Entity {
   }
 
   /**
+   * Getter for the declarationTime property
+   * @return {string} - the declarationTime
+   */
+  getDeclarationTime () {
+    return this.declarationTime
+  }
+
+  /**
    * Set the reason property
    * @param {string} reason - the reason (e.g 'urn:epcglobal:cbv:er:incorrect_data')
    * @return {ErrorDeclaration} - the errorDeclaration instance
@@ -32,6 +40,14 @@ export default class ErrorDeclaration extends Entity {
   setReason (reason) {
     this.reason = reason
     return this
+  }
+
+  /**
+   * Getter for the reason property
+   * @return {string} - the reason
+   */
+  getReason () {
+    return this.reason
   }
 
   /**
@@ -87,5 +103,13 @@ export default class ErrorDeclaration extends Entity {
     if (!this.correctiveEventIDs) { this.correctiveEventIDs = [] }
     correctiveEventIDList.forEach(correctiveEventID => this.removeCorrectiveEventID(correctiveEventID))
     return this
+  }
+
+  /**
+   * Getter for the correctiveEventIDs property
+   * @return {Array<string>} - the correctiveEventIDs
+   */
+  getCorrectiveEventIDs () {
+    return this.correctiveEventIDs
   }
 }

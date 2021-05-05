@@ -41,6 +41,8 @@ export default class Entity {
     return this
   }
 
+  // todo: getExtensions?
+
   /**
    * Return a JSON object corresponding to the SourceElement object
    */

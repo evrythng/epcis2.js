@@ -12,6 +12,14 @@ export default class DestinationElement extends Entity {
   }
 
   /**
+   * Getter for the destination property
+   * @return {string} - the destination
+   */
+  getDestination () {
+    return this.destination
+  }
+
+  /**
    * Set the type property
    * @param {string} type
    * @return {DestinationElement} - the destination instance
@@ -19,5 +27,13 @@ export default class DestinationElement extends Entity {
   setType (type) {
     this.type = type
     return this
+  }
+
+  /**
+   * Getter for the type property
+   * @return {string} - the type
+   */
+  getType () {
+    return this.type
   }
 }

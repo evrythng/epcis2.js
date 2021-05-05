@@ -12,6 +12,14 @@ export default class BizTransactionElement extends Entity {
   }
 
   /**
+   * Getter for the type property
+   * @return {string} - the bizTransaction
+   */
+  getBizTransaction () {
+    return this.bizTransaction
+  }
+
+  /**
    * Set the type property
    * @param {string} type
    * @return {BizTransactionElement} - the bizTransaction instance
@@ -19,5 +27,13 @@ export default class BizTransactionElement extends Entity {
   setType (type) {
     this.type = type
     return this
+  }
+
+  /**
+   * Getter for the type property
+   * @return {string} - the type
+   */
+  getType () {
+    return this.type
   }
 }

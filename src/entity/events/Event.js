@@ -47,6 +47,14 @@ export default class Event extends Entity {
   }
 
   /**
+   * Getter for the eventID property
+   * @return {string} - the eventID
+   */
+  getEventID () {
+    return this.eventID
+  }
+
+  /**
    * Set the eventTime property
    * @param {string} time - a string corresponding to the time
    *      If a timezone offset is provided in the string (e.g '2005-04-03T20:33:31.116-06:00')
@@ -64,6 +72,14 @@ export default class Event extends Entity {
   }
 
   /**
+   * Getter for the eventTime property
+   * @return {string} - the eventTime
+   */
+  getEventTime () {
+    return this.eventTime
+  }
+
+  /**
    * @param {number|string} offset - the time zone offset
    * (e.g "+02:30" or "-06:00" if it is a string)
    * (e.g -6 or 2.5 if it is a number)
@@ -72,6 +88,14 @@ export default class Event extends Entity {
   setEventTimeZoneOffset (offset) {
     this.eventTimeZoneOffset = getTimeZoneOffsetFromStringOrNumber(offset)
     return this
+  }
+
+  /**
+   * Getter for the eventTimeZoneOffset property
+   * @return {string} - the eventTimeZoneOffset
+   */
+  getEventTimeZoneOffset () {
+    return this.eventTimeZoneOffset
   }
 
   /**
@@ -85,6 +109,14 @@ export default class Event extends Entity {
   }
 
   /**
+   * Getter for the recordTime property
+   * @return {string} - the recordTime
+   */
+  getRecordTime () {
+    return this.recordTime
+  }
+
+  /**
    * Set the errorDeclaration property
    * @param {ErrorDeclaration} errorDeclaration
    * @return {Event} - the event instance
@@ -92,5 +124,13 @@ export default class Event extends Entity {
   setErrorDeclaration (errorDeclaration) {
     this.errorDeclaration = errorDeclaration
     return this
+  }
+
+  /**
+   * Getter for the errorDeclaration property
+   * @return {ErrorDeclaration} - the errorDeclaration
+   */
+  getErrorDeclaration () {
+    return this.errorDeclaration
   }
 }

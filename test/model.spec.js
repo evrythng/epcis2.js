@@ -39,10 +39,9 @@ describe('unit tests for model Objects', () => {
         .addCorrectiveEventID(correctiveEventID1)
         .addCorrectiveEventID(correctiveEventID2)
 
-      const json = errorDeclaration.toObject()
-      expect(json.reason).to.be.equal(reason)
-      expect(json.declarationTime).to.be.equal(anotherDate)
-      expect(json.correctiveEventIDs.toString()).to.be.equal([correctiveEventID1, correctiveEventID2].toString())
+      expect(errorDeclaration.getReason()).to.be.equal(reason)
+      expect(errorDeclaration.getDeclarationTime()).to.be.equal(anotherDate)
+      expect(errorDeclaration.getCorrectiveEventIDs().toString()).to.be.equal([correctiveEventID1, correctiveEventID2].toString())
     })
     it('should create a valid ErrorDeclaration object from JSON', async () => {
       const errorDeclarationJSON = {
@@ -123,10 +122,9 @@ describe('unit tests for model Objects', () => {
         .setEpcClass(JSONQuantityElement.epcClass)
         .setUom(JSONQuantityElement.uom)
 
-      const json = quantityElement.toObject()
-      expect(json.quantity).to.be.equal(JSONQuantityElement.quantity)
-      expect(json.uom).to.be.equal(JSONQuantityElement.uom)
-      expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass)
+      expect(quantityElement.getQuantity()).to.be.equal(JSONQuantityElement.quantity)
+      expect(quantityElement.getUom()).to.be.equal(JSONQuantityElement.uom)
+      expect(quantityElement.getEpcClass()).to.be.equal(JSONQuantityElement.epcClass)
     })
     it('should create a valid QuantityElement object from JSON', async () => {
       const quantityElement = new QuantityElement(JSONQuantityElement)
@@ -150,8 +148,7 @@ describe('unit tests for model Objects', () => {
       readPoint
         .setId('id')
 
-      const json = readPoint.toObject()
-      expect(json.id).to.be.equal('id')
+      expect(readPoint.getId()).to.be.equal('id')
     })
     it('should create a valid ReadPoint object from JSON', async () => {
       const readPoint = new ReadPoint({ id: 'id' })
@@ -173,8 +170,7 @@ describe('unit tests for model Objects', () => {
       bizLocation
         .setId('id')
 
-      const json = bizLocation.toObject()
-      expect(json.id).to.be.equal('id')
+      expect(bizLocation.getId()).to.be.equal('id')
     })
     it('should create a valid BizLocation object from JSON', async () => {
       const bizLocation = new BizLocation({ id: 'id' })
@@ -197,9 +193,8 @@ describe('unit tests for model Objects', () => {
         .setType(JSONBizTransactionElement.type)
         .setBizTransaction(JSONBizTransactionElement.bizTransaction)
 
-      const json = bizTransaction.toObject()
-      expect(json.type).to.be.equal(JSONBizTransactionElement.type)
-      expect(json.bizTransaction).to.be.equal(JSONBizTransactionElement.bizTransaction)
+      expect(bizTransaction.getType()).to.be.equal(JSONBizTransactionElement.type)
+      expect(bizTransaction.getBizTransaction()).to.be.equal(JSONBizTransactionElement.bizTransaction)
     })
     it('should create a valid BizTransactionElement object from JSON', async () => {
       const bizTransaction = new BizTransactionElement(JSONBizTransactionElement)
@@ -223,9 +218,8 @@ describe('unit tests for model Objects', () => {
         .setType(JSONSourceElement.type)
         .setSource(JSONSourceElement.source)
 
-      const json = sourceElement.toObject()
-      expect(json.type).to.be.equal(JSONSourceElement.type)
-      expect(json.source).to.be.equal(JSONSourceElement.source)
+      expect(sourceElement.getType()).to.be.equal(JSONSourceElement.type)
+      expect(sourceElement.getSource()).to.be.equal(JSONSourceElement.source)
     })
     it('should create a valid SourceElement object from JSON', async () => {
       const sourceElement = new SourceElement(JSONSourceElement)
@@ -249,9 +243,8 @@ describe('unit tests for model Objects', () => {
         .setType(JSONDestinationElement.type)
         .setDestination(JSONDestinationElement.destination)
 
-      const json = destinationElement.toObject()
-      expect(json.type).to.be.equal(JSONDestinationElement.type)
-      expect(json.destination).to.be.equal(JSONDestinationElement.destination)
+      expect(destinationElement.getType()).to.be.equal(JSONDestinationElement.type)
+      expect(destinationElement.getDestination()).to.be.equal(JSONDestinationElement.destination)
     })
     it('should create a valid DestinationElement object from JSON', async () => {
       const destinationElement = new DestinationElement(JSONDestinationElement)
@@ -280,9 +273,8 @@ describe('unit tests for model Objects', () => {
 
       const persistentDisposition = new PersistentDisposition(persistentDispositionJSON)
 
-      const json = persistentDisposition.toObject()
-      expect(json.set.toString()).to.be.equal(persistentDispositionJSON.set.toString())
-      expect(json.unset.toString()).to.be.equal(persistentDispositionJSON.unset.toString())
+      expect(persistentDisposition.getSet().toString()).to.be.equal(persistentDispositionJSON.set.toString())
+      expect(persistentDisposition.getUnset().toString()).to.be.equal(persistentDispositionJSON.unset.toString())
     })
     it('should add and remove set', async () => {
       const persistentDisposition = new PersistentDisposition()

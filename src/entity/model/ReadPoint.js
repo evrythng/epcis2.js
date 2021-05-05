@@ -10,4 +10,12 @@ export default class ReadPoint extends Entity {
     this.id = id
     return this
   }
+
+  /**
+   * Getter for the id property
+   * @return {string} - the id
+   */
+  getId () {
+    return this.id
+  }
 }

@@ -14,8 +14,8 @@ objectEvent
   .addEPC('urn:epc:id:sgtin:4012345.011111.9877') // You can add multiple EPCs to an event
   .setReadPoint('urn:epc:id:sgln:4012345.00005.0')
 
-console.log(objectEvent.bizStep) // urn:epcglobal:cbv:bizstep:inspecting
-console.log(objectEvent.action) // OBSERVE
+console.log(objectEvent.getBizStep()) // urn:epcglobal:cbv:bizstep:inspecting
+console.log(objectEvent.getAction()) // OBSERVE
 
 console.log(objectEvent.toObject())
 /* output:

@@ -55,6 +55,14 @@ export default class PersistentDisposition extends Entity {
   }
 
   /**
+   * Getter for the set property
+   * @return {Array<string>} - the set
+   */
+  getSet () {
+    return this.set
+  }
+
+  /**
    * Add the unset to the "unset" field
    * @param {string} unset - the unset to add
    * @return {PersistentDisposition} - the persistentDisposition instance
@@ -105,5 +113,13 @@ export default class PersistentDisposition extends Entity {
     if (!this.unset) { this.unset = [] }
     unsetList.forEach(unset => this.removeUnset(unset))
     return this
+  }
+
+  /**
+   * Getter for the unset property
+   * @return {Array<string>} - the unset
+   */
+  getUnset () {
+    return this.unset
   }
 }

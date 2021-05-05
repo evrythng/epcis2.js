@@ -34,6 +34,9 @@ export default class ObjectEvent extends Event {
           case 'persistentDisposition':
             this.setPersistentDisposition(new PersistentDisposition(objectEvent[prop]))
             break
+          case 'epcList':
+            objectEvent[prop].forEach(epc => this.addEPC(epc))
+            break
           case 'quantityList':
             objectEvent[prop].forEach(quantityElement => this.addQuantity(new QuantityElement(quantityElement)))
             break
@@ -55,8 +58,6 @@ export default class ObjectEvent extends Event {
           case 'bizLocation':
             this.setBizLocation(new BizLocation(objectEvent[prop]))
             break
-          default:
-            this[prop] = objectEvent[prop]
         }
       }
     }
@@ -126,6 +127,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the epcList property
+   * @return {Array<string>} - the epcList
+   */
+  getEPCList () {
+    return this.epcList
+  }
+
+  /**
    * Add the quantity to the "quantityList" field
    * @param {QuantityElement} quantity - the quantity to add
    * @return {ObjectEvent} - the objectEvent instance
@@ -187,6 +196,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the quantityList property
+   * @return {Array<QuantityElement>} - the quantityList
+   */
+  getQuantityList () {
+    return this.quantityList
+  }
+
+  /**
    * Set the action property
    * @param {string} action - string from {"OBSERVE", "ADD", "DELETE"}
    * @return {ObjectEvent} - the objectEvent instance
@@ -194,6 +211,14 @@ export default class ObjectEvent extends Event {
   setAction (action) {
     this.action = action
     return this
+  }
+
+  /**
+   * Getter for the action property
+   * @return {string} - the action
+   */
+  getAction () {
+    return this.action
   }
 
   /**
@@ -207,6 +232,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the bizStep property
+   * @return {string} - the bizStep
+   */
+  getBizStep () {
+    return this.bizStep
+  }
+
+  /**
    * Set the disposition property
    * @param {string} disposition - e.g dispositions.in_transit
    * @return {ObjectEvent} - the objectEvent instance
@@ -217,6 +250,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the disposition property
+   * @return {string} - the disposition
+   */
+  getDisposition () {
+    return this.disposition
+  }
+
+  /**
    * Set the persistentDisposition property
    * @param {PersistentDisposition} persistentDisposition
    * @return {ObjectEvent} - the objectEvent instance
@@ -224,6 +265,14 @@ export default class ObjectEvent extends Event {
   setPersistentDisposition (persistentDisposition) {
     this.persistentDisposition = persistentDisposition
     return this
+  }
+
+  /**
+   * Getter for the persistentDisposition property
+   * @return {PersistentDisposition} - the persistentDisposition
+   */
+  getPersistentDisposition () {
+    return this.persistentDisposition
   }
 
   /**
@@ -242,6 +291,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the readPoint property
+   * @return {ReadPoint} - the readPoint
+   */
+  getReadPoint () {
+    return this.readPoint
+  }
+
+  /**
    * Set the bizLocation property
    * @param {string|BizLocation} bizLocation instance or bizLocation id
    * @return {ObjectEvent} - the objectEvent instance
@@ -254,6 +311,14 @@ export default class ObjectEvent extends Event {
     // the param is the BizLocation instance
     this.bizLocation = bizLocation
     return this
+  }
+
+  /**
+   * Getter for the bizLocation property
+   * @return {BizLocation} - the bizLocation
+   */
+  getBizLocation () {
+    return this.bizLocation
   }
 
   /**
@@ -318,6 +383,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the bizTransactionList property
+   * @return {Array<BizTransactionElement>} - the bizTransactionList
+   */
+  getBizTransactionList () {
+    return this.bizTransactionList
+  }
+
+  /**
    * Add the source to the "sourceList" field
    * @param {SourceElement} source - the source to add
    * @return {ObjectEvent} - the objectEvent instance
@@ -376,6 +449,14 @@ export default class ObjectEvent extends Event {
     }
     sourceList.forEach(sourceElement => this.removeSource(sourceElement))
     return this
+  }
+
+  /**
+   * Getter for the sourceList property
+   * @return {Array<SourceElement>} - the sourceList
+   */
+  getSourceList () {
+    return this.sourceList
   }
 
   /**
@@ -440,6 +521,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the destinationList property
+   * @return {Array<DestinationElement>} - the destinationList
+   */
+  getDestinationList () {
+    return this.destinationList
+  }
+
+  /**
    * Add the sensorElement to the "sensorElementList" field
    * @param {SensorElement} sensorElement - the sensorElement to add
    * @return {ObjectEvent} - the objectEvent instance
@@ -501,6 +590,14 @@ export default class ObjectEvent extends Event {
   }
 
   /**
+   * Getter for the sensorElementList property
+   * @return {Array<SensorElement>} - the sensorElementList
+   */
+  getSensorElementList () {
+    return this.sensorElementList
+  }
+
+  /**
    * Set the ilmd property
    * @param {{}} ilmd object
    * @return {ObjectEvent} - the objectEvent instance
@@ -508,5 +605,13 @@ export default class ObjectEvent extends Event {
   setIlmd (ilmd) {
     this.ilmd = ilmd
     return this
+  }
+
+  /**
+   * Getter for the ilmd property
+   * @return {{}} - the ilmd
+   */
+  getIlmd () {
+    return this.ilmd
   }
 }

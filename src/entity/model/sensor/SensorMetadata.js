@@ -12,6 +12,14 @@ export default class SensorMetadata extends Entity {
   }
 
   /**
+   * Getter for the time property
+   * @return {string} - the time
+   */
+  getTime () {
+    return this.time
+  }
+
+  /**
    * Set the deviceID property
    * @param {string} deviceID
    * @return {SensorMetadata} - the sensorMetadata instance
@@ -19,6 +27,14 @@ export default class SensorMetadata extends Entity {
   setDeviceID (deviceID) {
     this.deviceID = deviceID
     return this
+  }
+
+  /**
+   * Getter for the deviceID property
+   * @return {string} - the deviceID
+   */
+  getDeviceID () {
+    return this.deviceID
   }
 
   /**
@@ -32,6 +48,14 @@ export default class SensorMetadata extends Entity {
   }
 
   /**
+   * Getter for the deviceMetadata property
+   * @return {string} - the deviceMetadata
+   */
+  getDeviceMetadata () {
+    return this.deviceMetadata
+  }
+
+  /**
    * Set the rawData property
    * @param {string} rawData
    * @return {SensorMetadata} - the sensorMetadata instance
@@ -39,6 +63,14 @@ export default class SensorMetadata extends Entity {
   setRawData (rawData) {
     this.rawData = rawData
     return this
+  }
+
+  /**
+   * Getter for the rawData property
+   * @return {string} - the rawData
+   */
+  getRawData () {
+    return this.rawData
   }
 
   /**
@@ -52,6 +84,14 @@ export default class SensorMetadata extends Entity {
   }
 
   /**
+   * Getter for the startTime property
+   * @return {string} - the startTime
+   */
+  getStartTime () {
+    return this.startTime
+  }
+
+  /**
    * Set the endTime property
    * @param {string} endTime
    * @return {SensorMetadata} - the sensorMetadata instance
@@ -59,6 +99,14 @@ export default class SensorMetadata extends Entity {
   setEndTime (endTime) {
     this.endTime = endTime
     return this
+  }
+
+  /**
+   * Getter for the endTime property
+   * @return {string} - the endTime
+   */
+  getEndTime () {
+    return this.endTime
   }
 
   /**
@@ -72,6 +120,14 @@ export default class SensorMetadata extends Entity {
   }
 
   /**
+   * Getter for the dataProcessingMethod property
+   * @return {string} - the dataProcessingMethod
+   */
+  getDataProcessingMethod () {
+    return this.dataProcessingMethod
+  }
+
+  /**
    * Set the bizRules property
    * @param {string} bizRules
    * @return {SensorMetadata} - the sensorMetadata instance
@@ -79,5 +135,13 @@ export default class SensorMetadata extends Entity {
   setBizRules (bizRules) {
     this.bizRules = bizRules
     return this
+  }
+
+  /**
+   * Getter for the bizRules property
+   * @return {string} - the bizRules
+   */
+  getBizRules () {
+    return this.bizRules
   }
 }
