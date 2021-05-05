@@ -11,7 +11,7 @@ export default class SensorElement extends Entity {
   constructor(sensor) {
     super(sensor);
 
-    if (!arguments.length || sensor === undefined) {
+    if (!sensor) {
       // create an empty SensorElement object
       return;
     }

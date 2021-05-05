@@ -10,7 +10,7 @@ export default class Entity {
       throw new Error('Abstract classes can\'t be instantiated.');
     }
 
-    if (!arguments.length || entity === undefined) {
+    if (!entity) {
       // create an empty Entity object
       return;
     }

@@ -17,7 +17,7 @@ export default class ObjectEvent extends Event {
     super(objectEvent);
     this.isA = 'ObjectEvent';
 
-    if (!arguments.length || objectEvent === undefined) {
+    if (!objectEvent) {
       return;
     }
 

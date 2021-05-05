@@ -25,7 +25,7 @@ export default class Event extends Entity {
       this.setEventTimeZoneOffset(settings.eventTimeZoneOffset);
     }
 
-    if (!arguments.length || event === undefined) {
+    if (!event) {
       // create an empty Event object
       return;
     }
