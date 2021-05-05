@@ -15,7 +15,7 @@ const correctiveEventID2 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a7';
 const correctiveEventID3 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a6';
 const reason = 'urn:epcglobal:cbv:er:incorrect_data';
 
-const JSONQuantityElement = {
+const exampleQuantityElement = {
   epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
   quantity: 200,
   uom: 'KGM',
@@ -49,19 +49,14 @@ describe('unit tests for model Objects', () => {
         .equal([correctiveEventID1, correctiveEventID2].toString());
     });
     it('should create a valid ErrorDeclaration object from JSON', async () => {
-      const errorDeclarationJSON = {
+      const exampleErrorDeclaration = {
         declarationTime: anotherDate,
         correctiveEventIDs: [correctiveEventID1, correctiveEventID2, correctiveEventID3],
         reason,
       };
 
-      const errorDeclaration = new ErrorDeclaration(errorDeclarationJSON);
-
-      const json = errorDeclaration.toObject();
-      expect(json.reason).to.be.equal(reason);
-      expect(json.declarationTime).to.be.equal(anotherDate);
-      expect(json.correctiveEventIDs.toString()).to.be
-        .equal([correctiveEventID1, correctiveEventID2, correctiveEventID3].toString());
+      const errorDeclaration = new ErrorDeclaration(exampleErrorDeclaration);
+      expect(errorDeclaration.toObject()).to.deep.equal(exampleErrorDeclaration);
     });
     it('should create a valid declarationTime', async () => {
       const errorDeclaration = new ErrorDeclaration();
@@ -143,21 +138,17 @@ describe('unit tests for model Objects', () => {
     it('should create a valid QuantityElement object from setters', async () => {
       const quantityElement = new QuantityElement();
       quantityElement
-        .setQuantity(JSONQuantityElement.quantity)
-        .setEpcClass(JSONQuantityElement.epcClass)
-        .setUom(JSONQuantityElement.uom);
+        .setQuantity(exampleQuantityElement.quantity)
+        .setEpcClass(exampleQuantityElement.epcClass)
+        .setUom(exampleQuantityElement.uom);
 
-      expect(quantityElement.getQuantity()).to.be.equal(JSONQuantityElement.quantity);
-      expect(quantityElement.getUom()).to.be.equal(JSONQuantityElement.uom);
-      expect(quantityElement.getEpcClass()).to.be.equal(JSONQuantityElement.epcClass);
+      expect(quantityElement.getQuantity()).to.be.equal(exampleQuantityElement.quantity);
+      expect(quantityElement.getUom()).to.be.equal(exampleQuantityElement.uom);
+      expect(quantityElement.getEpcClass()).to.be.equal(exampleQuantityElement.epcClass);
     });
     it('should create a valid QuantityElement object from JSON', async () => {
-      const quantityElement = new QuantityElement(JSONQuantityElement);
-
-      const json = quantityElement.toObject();
-      expect(json.quantity).to.be.equal(JSONQuantityElement.quantity);
-      expect(json.uom).to.be.equal(JSONQuantityElement.uom);
-      expect(json.epcClass).to.be.equal(JSONQuantityElement.epcClass);
+      const quantityElement = new QuantityElement(exampleQuantityElement);
+      expect(quantityElement.toObject()).to.deep.equal(exampleQuantityElement);
     });
     it('should add and remove custom fields', async () => {
       const obj = new QuantityElement();

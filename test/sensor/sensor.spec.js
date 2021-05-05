@@ -3,7 +3,7 @@ import SensorMetadata from '../../src/entity/model/sensor/SensorMetadata';
 import SensorReportElement from '../../src/entity/model/sensor/SensorReportElement';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 
-const JSONSensorMetadata = {
+const exampleSensorMetadata = {
   time: '2019-04-02T14:05:00.000+01:00',
   startTime: '2019-04-02T14:05:00.000+02:00',
   endTime: '2019-04-02T14:05:00.000+03:00',
@@ -13,7 +13,7 @@ const JSONSensorMetadata = {
   bizRules: 'https://example.com/gdti/4012345000054987',
   dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
 };
-const JSONSensorReportElement = {
+const exampleSensorReportElement = {
   type: 'gs1:MT-Temperature',
   value: 26.0,
   uom: 'CEL',
@@ -39,7 +39,7 @@ const JSONSensorReportElement = {
   dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
   bizRules: 'https://example.org/gdti/4012345000054987',
 };
-const JSONSensorReportElement2 = {
+const exampleSensorReportElement2 = {
   type: 'gs1:MT-Humidity',
   value: 26.0,
   uom: 'CEL',
@@ -65,7 +65,7 @@ const JSONSensorReportElement2 = {
   dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
   bizRules: 'https://example.org/gdti/4012345000054987',
 };
-const JSONSensorElement = {
+const exampleSensorElement = {
   sensorMetadata: {
     time: '2019-07-19T14:00:00.000+01:00', deviceID: 'urn:epc:id:giai:4000001.111', deviceMetadata: 'https://id.gs1.org/giai/4000001111', rawData: 'https://example.org/giai/401234599999', dataProcessingMethod: 'https://example.com/gdti/4012345000054987', bizRules: 'https://example.org/gdti/4012345000054987',
   },
@@ -85,36 +85,28 @@ describe('unit tests for sensor relative Objects', () => {
     it('should create a valid SensorMetadata object from setters', async () => {
       const sensorMetadata = new SensorMetadata();
       sensorMetadata
-        .setTime(JSONSensorMetadata.time)
-        .setDeviceID(JSONSensorMetadata.deviceID)
-        .setDeviceMetadata(JSONSensorMetadata.deviceMetadata)
-        .setRawData(JSONSensorMetadata.rawData)
-        .setStartTime(JSONSensorMetadata.startTime)
-        .setEndTime(JSONSensorMetadata.endTime)
-        .setDataProcessingMethod(JSONSensorMetadata.dataProcessingMethod)
-        .setBizRules(JSONSensorMetadata.bizRules);
+        .setTime(exampleSensorMetadata.time)
+        .setDeviceID(exampleSensorMetadata.deviceID)
+        .setDeviceMetadata(exampleSensorMetadata.deviceMetadata)
+        .setRawData(exampleSensorMetadata.rawData)
+        .setStartTime(exampleSensorMetadata.startTime)
+        .setEndTime(exampleSensorMetadata.endTime)
+        .setDataProcessingMethod(exampleSensorMetadata.dataProcessingMethod)
+        .setBizRules(exampleSensorMetadata.bizRules);
 
-      expect(sensorMetadata.getTime()).to.be.equal(JSONSensorMetadata.time);
-      expect(sensorMetadata.getDeviceID()).to.be.equal(JSONSensorMetadata.deviceID);
-      expect(sensorMetadata.getDeviceMetadata()).to.be.equal(JSONSensorMetadata.deviceMetadata);
-      expect(sensorMetadata.getRawData()).to.be.equal(JSONSensorMetadata.rawData);
-      expect(sensorMetadata.getStartTime()).to.be.equal(JSONSensorMetadata.startTime);
-      expect(sensorMetadata.getEndTime()).to.be.equal(JSONSensorMetadata.endTime);
+      expect(sensorMetadata.getTime()).to.be.equal(exampleSensorMetadata.time);
+      expect(sensorMetadata.getDeviceID()).to.be.equal(exampleSensorMetadata.deviceID);
+      expect(sensorMetadata.getDeviceMetadata()).to.be.equal(exampleSensorMetadata.deviceMetadata);
+      expect(sensorMetadata.getRawData()).to.be.equal(exampleSensorMetadata.rawData);
+      expect(sensorMetadata.getStartTime()).to.be.equal(exampleSensorMetadata.startTime);
+      expect(sensorMetadata.getEndTime()).to.be.equal(exampleSensorMetadata.endTime);
       expect(sensorMetadata.getDataProcessingMethod()).to
-        .be.equal(JSONSensorMetadata.dataProcessingMethod);
-      expect(sensorMetadata.getBizRules()).to.be.equal(JSONSensorMetadata.bizRules);
+        .be.equal(exampleSensorMetadata.dataProcessingMethod);
+      expect(sensorMetadata.getBizRules()).to.be.equal(exampleSensorMetadata.bizRules);
     });
     it('should create a valid SensorMetadata object from JSON', async () => {
-      const sensorMetadata = new SensorMetadata(JSONSensorMetadata);
-      const json = sensorMetadata.toObject();
-      expect(json.time).to.be.equal(JSONSensorMetadata.time);
-      expect(json.deviceID).to.be.equal(JSONSensorMetadata.deviceID);
-      expect(json.deviceMetadata).to.be.equal(JSONSensorMetadata.deviceMetadata);
-      expect(json.rawData).to.be.equal(JSONSensorMetadata.rawData);
-      expect(json.startTime).to.be.equal(JSONSensorMetadata.startTime);
-      expect(json.endTime).to.be.equal(JSONSensorMetadata.endTime);
-      expect(json.dataProcessingMethod).to.be.equal(JSONSensorMetadata.dataProcessingMethod);
-      expect(json.bizRules).to.be.equal(JSONSensorMetadata.bizRules);
+      const sensorMetadata = new SensorMetadata(exampleSensorMetadata);
+      expect(sensorMetadata.toObject()).to.deep.equal(exampleSensorMetadata);
     });
     it('should add and remove custom fields', async () => {
       const obj = new SensorMetadata();
@@ -128,77 +120,57 @@ describe('unit tests for sensor relative Objects', () => {
     it('should create a valid SensorReportElement object from setters', async () => {
       const sensorReport = new SensorReportElement();
       sensorReport
-        .setType(JSONSensorReportElement.type)
-        .setDeviceID(JSONSensorReportElement.deviceID)
-        .setDeviceMetadata(JSONSensorReportElement.deviceMetadata)
-        .setRawData(JSONSensorReportElement.rawData)
-        .setDataProcessingMethod(JSONSensorReportElement.dataProcessingMethod)
-        .setTime(JSONSensorReportElement.time)
-        .setMicroorganism(JSONSensorReportElement.microorganism)
-        .setChemicalSubstance(JSONSensorReportElement.chemicalSubstance)
-        .setValue(JSONSensorReportElement.value)
-        .setComponent(JSONSensorReportElement.component)
-        .setStringValue(JSONSensorReportElement.stringValue)
-        .setBooleanValue(JSONSensorReportElement.booleanValue)
-        .setHexBinaryValue(JSONSensorReportElement.hexBinaryValue)
-        .setUriValue(JSONSensorReportElement.uriValue)
-        .setMinValue(JSONSensorReportElement.minValue)
-        .setMaxValue(JSONSensorReportElement.maxValue)
-        .setMeanValue(JSONSensorReportElement.meanValue)
-        .setSDev(JSONSensorReportElement.sDev)
-        .setPercRank(JSONSensorReportElement.percRank)
-        .setPercValue(JSONSensorReportElement.percValue)
-        .setUom(JSONSensorReportElement.uom);
+        .setType(exampleSensorReportElement.type)
+        .setDeviceID(exampleSensorReportElement.deviceID)
+        .setDeviceMetadata(exampleSensorReportElement.deviceMetadata)
+        .setRawData(exampleSensorReportElement.rawData)
+        .setDataProcessingMethod(exampleSensorReportElement.dataProcessingMethod)
+        .setTime(exampleSensorReportElement.time)
+        .setMicroorganism(exampleSensorReportElement.microorganism)
+        .setChemicalSubstance(exampleSensorReportElement.chemicalSubstance)
+        .setValue(exampleSensorReportElement.value)
+        .setComponent(exampleSensorReportElement.component)
+        .setStringValue(exampleSensorReportElement.stringValue)
+        .setBooleanValue(exampleSensorReportElement.booleanValue)
+        .setHexBinaryValue(exampleSensorReportElement.hexBinaryValue)
+        .setUriValue(exampleSensorReportElement.uriValue)
+        .setMinValue(exampleSensorReportElement.minValue)
+        .setMaxValue(exampleSensorReportElement.maxValue)
+        .setMeanValue(exampleSensorReportElement.meanValue)
+        .setSDev(exampleSensorReportElement.sDev)
+        .setPercRank(exampleSensorReportElement.percRank)
+        .setPercValue(exampleSensorReportElement.percValue)
+        .setUom(exampleSensorReportElement.uom);
 
-      expect(sensorReport.getType()).to.be.equal(JSONSensorReportElement.type);
-      expect(sensorReport.getDeviceID()).to.be.equal(JSONSensorReportElement.deviceID);
-      expect(sensorReport.getDeviceMetadata()).to.be.equal(JSONSensorReportElement.deviceMetadata);
-      expect(sensorReport.getRawData()).to.be.equal(JSONSensorReportElement.rawData);
+      expect(sensorReport.getType()).to.be.equal(exampleSensorReportElement.type);
+      expect(sensorReport.getDeviceID()).to.be.equal(exampleSensorReportElement.deviceID);
+      expect(sensorReport.getDeviceMetadata()).to.be
+        .equal(exampleSensorReportElement.deviceMetadata);
+      expect(sensorReport.getRawData()).to.be.equal(exampleSensorReportElement.rawData);
       expect(sensorReport.getDataProcessingMethod()).to
-        .be.equal(JSONSensorReportElement.dataProcessingMethod);
-      expect(sensorReport.getTime()).to.be.equal(JSONSensorReportElement.time);
-      expect(sensorReport.getMicroorganism()).to.be.equal(JSONSensorReportElement.microorganism);
+        .be.equal(exampleSensorReportElement.dataProcessingMethod);
+      expect(sensorReport.getTime()).to.be.equal(exampleSensorReportElement.time);
+      expect(sensorReport.getMicroorganism()).to.be.equal(exampleSensorReportElement.microorganism);
       expect(sensorReport.getChemicalSubstance()).to
-        .be.equal(JSONSensorReportElement.chemicalSubstance);
-      expect(sensorReport.getValue()).to.be.equal(JSONSensorReportElement.value);
-      expect(sensorReport.getComponent()).to.be.equal(JSONSensorReportElement.component);
-      expect(sensorReport.getStringValue()).to.be.equal(JSONSensorReportElement.stringValue);
-      expect(sensorReport.getBooleanValue()).to.be.equal(JSONSensorReportElement.booleanValue);
-      expect(sensorReport.getHexBinaryValue()).to.be.equal(JSONSensorReportElement.hexBinaryValue);
-      expect(sensorReport.getUriValue()).to.be.equal(JSONSensorReportElement.uriValue);
-      expect(sensorReport.getMinValue()).to.be.equal(JSONSensorReportElement.minValue);
-      expect(sensorReport.getMaxValue()).to.be.equal(JSONSensorReportElement.maxValue);
-      expect(sensorReport.getMeanValue()).to.be.equal(JSONSensorReportElement.meanValue);
-      expect(sensorReport.getSDev()).to.be.equal(JSONSensorReportElement.sDev);
-      expect(sensorReport.getPercRank()).to.be.equal(JSONSensorReportElement.percRank);
-      expect(sensorReport.getPercValue()).to.be.equal(JSONSensorReportElement.percValue);
-      expect(sensorReport.getUom()).to.be.equal(JSONSensorReportElement.uom);
+        .be.equal(exampleSensorReportElement.chemicalSubstance);
+      expect(sensorReport.getValue()).to.be.equal(exampleSensorReportElement.value);
+      expect(sensorReport.getComponent()).to.be.equal(exampleSensorReportElement.component);
+      expect(sensorReport.getStringValue()).to.be.equal(exampleSensorReportElement.stringValue);
+      expect(sensorReport.getBooleanValue()).to.be.equal(exampleSensorReportElement.booleanValue);
+      expect(sensorReport.getHexBinaryValue()).to.be
+        .equal(exampleSensorReportElement.hexBinaryValue);
+      expect(sensorReport.getUriValue()).to.be.equal(exampleSensorReportElement.uriValue);
+      expect(sensorReport.getMinValue()).to.be.equal(exampleSensorReportElement.minValue);
+      expect(sensorReport.getMaxValue()).to.be.equal(exampleSensorReportElement.maxValue);
+      expect(sensorReport.getMeanValue()).to.be.equal(exampleSensorReportElement.meanValue);
+      expect(sensorReport.getSDev()).to.be.equal(exampleSensorReportElement.sDev);
+      expect(sensorReport.getPercRank()).to.be.equal(exampleSensorReportElement.percRank);
+      expect(sensorReport.getPercValue()).to.be.equal(exampleSensorReportElement.percValue);
+      expect(sensorReport.getUom()).to.be.equal(exampleSensorReportElement.uom);
     });
     it('should create a valid SensorReportElement object from JSON', async () => {
-      const sensorReport = new SensorReportElement(JSONSensorReportElement);
-
-      const json = sensorReport.toObject();
-      expect(json.type).to.be.equal(JSONSensorReportElement.type);
-      expect(json.deviceID).to.be.equal(JSONSensorReportElement.deviceID);
-      expect(json.deviceMetadata).to.be.equal(JSONSensorReportElement.deviceMetadata);
-      expect(json.rawData).to.be.equal(JSONSensorReportElement.rawData);
-      expect(json.dataProcessingMethod).to.be.equal(JSONSensorReportElement.dataProcessingMethod);
-      expect(json.time).to.be.equal(JSONSensorReportElement.time);
-      expect(json.microorganism).to.be.equal(JSONSensorReportElement.microorganism);
-      expect(json.chemicalSubstance).to.be.equal(JSONSensorReportElement.chemicalSubstance);
-      expect(json.value).to.be.equal(JSONSensorReportElement.value);
-      expect(json.component).to.be.equal(JSONSensorReportElement.component);
-      expect(json.stringValue).to.be.equal(JSONSensorReportElement.stringValue);
-      expect(json.booleanValue).to.be.equal(JSONSensorReportElement.booleanValue);
-      expect(json.hexBinaryValue).to.be.equal(JSONSensorReportElement.hexBinaryValue);
-      expect(json.uriValue).to.be.equal(JSONSensorReportElement.uriValue);
-      expect(json.minValue).to.be.equal(JSONSensorReportElement.minValue);
-      expect(json.maxValue).to.be.equal(JSONSensorReportElement.maxValue);
-      expect(json.meanValue).to.be.equal(JSONSensorReportElement.meanValue);
-      expect(json.sDev).to.be.equal(JSONSensorReportElement.sDev);
-      expect(json.percRank).to.be.equal(JSONSensorReportElement.percRank);
-      expect(json.percValue).to.be.equal(JSONSensorReportElement.percValue);
-      expect(json.uom).to.be.equal(JSONSensorReportElement.uom);
+      const sensorReport = new SensorReportElement(exampleSensorReportElement);
+      expect(sensorReport.toObject()).to.deep.equal(exampleSensorReportElement);
     });
     it('should add and remove custom fields', async () => {
       const obj = new SensorReportElement();
@@ -212,46 +184,21 @@ describe('unit tests for sensor relative Objects', () => {
     it('should create a valid SensorElement object from setters', async () => {
       const sensorElement = new SensorElement();
       sensorElement
-        .setSensorMetadata(new SensorMetadata(JSONSensorElement.sensorMetadata));
+        .setSensorMetadata(new SensorMetadata(exampleSensorElement.sensorMetadata));
 
       const json = sensorElement.toObject();
-      expect(json.sensorMetadata.time).to.be.equal(JSONSensorElement.sensorMetadata.time);
-      expect(json.sensorMetadata.deviceID).to.be.equal(JSONSensorElement.sensorMetadata.deviceID);
-      expect(json.sensorMetadata.rawData).to.be.equal(JSONSensorElement.sensorMetadata.rawData);
+      expect(json.sensorMetadata.time).to.be.equal(exampleSensorElement.sensorMetadata.time);
+      expect(json.sensorMetadata.deviceID).to.be
+        .equal(exampleSensorElement.sensorMetadata.deviceID);
+      expect(json.sensorMetadata.rawData).to.be.equal(exampleSensorElement.sensorMetadata.rawData);
       expect(json.sensorMetadata.dataProcessingMethod)
-        .to.be.equal(JSONSensorElement.sensorMetadata.dataProcessingMethod);
-      expect(json.sensorMetadata.bizRules).to.be.equal(JSONSensorElement.sensorMetadata.bizRules);
+        .to.be.equal(exampleSensorElement.sensorMetadata.dataProcessingMethod);
+      expect(json.sensorMetadata.bizRules).to.be
+        .equal(exampleSensorElement.sensorMetadata.bizRules);
     });
     it('should create a valid SensorElement object from JSON', async () => {
-      const sensorElement = new SensorElement(JSONSensorElement);
-      expect(sensorElement.getSensorMetadata().time)
-        .to.be.equal(JSONSensorElement.sensorMetadata.time);
-      expect(sensorElement.getSensorMetadata().deviceID)
-        .to.be.equal(JSONSensorElement.sensorMetadata.deviceID);
-      expect(sensorElement.getSensorMetadata().rawData)
-        .to.be.equal(JSONSensorElement.sensorMetadata.rawData);
-      expect(sensorElement.getSensorReport()[0].type)
-        .to.be.equal(JSONSensorElement.sensorReport[0].type);
-      expect(sensorElement.getSensorReport()[1].type)
-        .to.be.equal(JSONSensorElement.sensorReport[1].type);
-      expect(sensorElement.getSensorReport()[2].type)
-        .to.be.equal(JSONSensorElement.sensorReport[2].type);
-      expect(sensorElement.getSensorReport()[0].value)
-        .to.be.equal(JSONSensorElement.sensorReport[0].value);
-      expect(sensorElement.getSensorReport()[0].uom)
-        .to.be.equal(JSONSensorElement.sensorReport[0].uom);
-      expect(sensorElement.getSensorReport()[1].chemicalSubstance)
-        .to.be.equal(JSONSensorElement.sensorReport[1].chemicalSubstance);
-      expect(sensorElement.getSensorReport()[1].value)
-        .to.be.equal(JSONSensorElement.sensorReport[1].value);
-      expect(sensorElement.getSensorReport()[1].uom)
-        .to.be.equal(JSONSensorElement.sensorReport[1].uom);
-      expect(sensorElement.getSensorReport()[2].microorganism)
-        .to.be.equal(JSONSensorElement.sensorReport[2].microorganism);
-      expect(sensorElement.getSensorReport()[2].value)
-        .to.be.equal(JSONSensorElement.sensorReport[2].value);
-      expect(sensorElement.getSensorReport()[2].uom)
-        .to.be.equal(JSONSensorElement.sensorReport[2].uom);
+      const sensorElement = new SensorElement(exampleSensorElement);
+      expect(sensorElement.toObject()).to.deep.equal(exampleSensorElement);
     });
     it('should add and remove custom fields', async () => {
       const obj = new SensorElement();
@@ -261,8 +208,8 @@ describe('unit tests for sensor relative Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
     describe('sensorReport field', () => {
-      const s1 = new SensorReportElement(JSONSensorReportElement);
-      const s2 = new SensorReportElement(JSONSensorReportElement2);
+      const s1 = new SensorReportElement(exampleSensorReportElement);
+      const s2 = new SensorReportElement(exampleSensorReportElement2);
 
       it('should add and remove sensorReport', async () => {
         const obj = new SensorElement();

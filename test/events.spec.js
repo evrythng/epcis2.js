@@ -80,7 +80,7 @@ const sensorElementList = [
     ],
   },
 ];
-const JSONObjectEvent = {
+const exampleObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
   isA: 'ObjectEvent',
   action: 'OBSERVE',
@@ -128,8 +128,8 @@ const JSONObjectEvent = {
   },
   ilmd: { 'example:bestBeforeDate': '2014-12-10', 'example:batch': 'XYZ' },
 };
-const epc1 = JSONObjectEvent.epcList[0];
-const epc2 = JSONObjectEvent.epcList[1];
+const epc1 = exampleObjectEvent.epcList[0];
+const epc2 = exampleObjectEvent.epcList[1];
 const epc3 = 'urn:epc:id:sgtin:0614141.107346.2019';
 
 describe('unit tests for the ObjectEvent class', () => {
@@ -156,87 +156,48 @@ describe('unit tests for the ObjectEvent class', () => {
 
   it('setters should set the variables correctly', async () => {
     const obj = new ObjectEvent();
-    obj.setEventID(JSONObjectEvent.eventID)
-      .addEPCList(JSONObjectEvent.epcList)
-      .setEventTime(JSONObjectEvent.eventTime)
-      .setRecordTime(JSONObjectEvent.recordTime)
-      .setErrorDeclaration(new ErrorDeclaration(JSONObjectEvent.errorDeclaration))
-      .addExtension('example:myField', JSONObjectEvent['example:myField'])
-      .setAction(JSONObjectEvent.action)
-      .setDisposition(JSONObjectEvent.disposition)
-      .setBizStep(JSONObjectEvent.bizStep)
-      .setPersistentDisposition(new PersistentDisposition(JSONObjectEvent.persistentDisposition))
-      .setReadPoint(JSONObjectEvent.readPoint.id)
-      .setBizLocation(JSONObjectEvent.bizLocation.id)
-      .setIlmd(new Ilmd(JSONObjectEvent.ilmd));
+    obj.setEventID(exampleObjectEvent.eventID)
+      .addEPCList(exampleObjectEvent.epcList)
+      .setEventTime(exampleObjectEvent.eventTime)
+      .setRecordTime(exampleObjectEvent.recordTime)
+      .setErrorDeclaration(new ErrorDeclaration(exampleObjectEvent.errorDeclaration))
+      .addExtension('example:myField', exampleObjectEvent['example:myField'])
+      .setAction(exampleObjectEvent.action)
+      .setDisposition(exampleObjectEvent.disposition)
+      .setBizStep(exampleObjectEvent.bizStep)
+      .setPersistentDisposition(new PersistentDisposition(exampleObjectEvent.persistentDisposition))
+      .setReadPoint(exampleObjectEvent.readPoint.id)
+      .setBizLocation(exampleObjectEvent.bizLocation.id)
+      .setIlmd(new Ilmd(exampleObjectEvent.ilmd));
 
-    expect(obj.getEPCList().toString()).to.be.equal(JSONObjectEvent.epcList.toString());
-    expect(obj.getEventID()).to.be.equal(JSONObjectEvent.eventID);
-    expect(obj.getEventTime()).to.be.equal(JSONObjectEvent.eventTime);
-    expect(obj.getEventTimeZoneOffset()).to.be.equal(JSONObjectEvent.eventTimeZoneOffset);
-    expect(obj.getRecordTime()).to.be.equal(JSONObjectEvent.recordTime);
-    expect(obj['example:myField']).to.be.equal(JSONObjectEvent['example:myField']);
+    expect(obj.getEPCList().toString()).to.be.equal(exampleObjectEvent.epcList.toString());
+    expect(obj.getEventID()).to.be.equal(exampleObjectEvent.eventID);
+    expect(obj.getEventTime()).to.be.equal(exampleObjectEvent.eventTime);
+    expect(obj.getEventTimeZoneOffset()).to.be.equal(exampleObjectEvent.eventTimeZoneOffset);
+    expect(obj.getRecordTime()).to.be.equal(exampleObjectEvent.recordTime);
+    expect(obj['example:myField']).to.be.equal(exampleObjectEvent['example:myField']);
     expect(obj.getErrorDeclaration().getDeclarationTime()).to
-      .be.equal(JSONObjectEvent.errorDeclaration.declarationTime);
+      .be.equal(exampleObjectEvent.errorDeclaration.declarationTime);
     expect(obj.getErrorDeclaration().getReason()).to
-      .be.equal(JSONObjectEvent.errorDeclaration.reason);
+      .be.equal(exampleObjectEvent.errorDeclaration.reason);
     expect(obj.getErrorDeclaration().getCorrectiveEventIDs().toString())
-      .to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString());
+      .to.be.equal(exampleObjectEvent.errorDeclaration.correctiveEventIDs.toString());
     expect(obj.getErrorDeclaration()['example:vendorExtension']).to
-      .be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension']);
-    expect(obj.getAction()).to.be.equal(JSONObjectEvent.action);
-    expect(obj.getDisposition()).to.be.equal(JSONObjectEvent.disposition);
-    expect(obj.getBizStep()).to.be.equal(JSONObjectEvent.bizStep);
+      .be.equal(exampleObjectEvent.errorDeclaration['example:vendorExtension']);
+    expect(obj.getAction()).to.be.equal(exampleObjectEvent.action);
+    expect(obj.getDisposition()).to.be.equal(exampleObjectEvent.disposition);
+    expect(obj.getBizStep()).to.be.equal(exampleObjectEvent.bizStep);
     expect(obj.getPersistentDisposition().getUnset().toString()).to
-      .be.equal(JSONObjectEvent.persistentDisposition.unset.toString());
+      .be.equal(exampleObjectEvent.persistentDisposition.unset.toString());
     expect(obj.getPersistentDisposition().getSet().toString()).to
-      .be.equal(JSONObjectEvent.persistentDisposition.set.toString());
-    expect(obj.getReadPoint().getId()).to.be.equal(JSONObjectEvent.readPoint.id);
+      .be.equal(exampleObjectEvent.persistentDisposition.set.toString());
+    expect(obj.getReadPoint().getId()).to.be.equal(exampleObjectEvent.readPoint.id);
     expect(obj.getIlmd()['example:bestBeforeDate']).to
-      .be.equal(JSONObjectEvent.ilmd['example:bestBeforeDate']);
+      .be.equal(exampleObjectEvent.ilmd['example:bestBeforeDate']);
   });
   it('should create an ObjectEvent from json', async () => {
-    const obj = new ObjectEvent(JSONObjectEvent);
-    expect(obj.getEPCList().toString()).to.be.equal(JSONObjectEvent.epcList.toString());
-    expect(obj.getEventID()).to.be.equal(JSONObjectEvent.eventID);
-    expect(obj.getEventTime()).to.be.equal(JSONObjectEvent.eventTime);
-    expect(obj.getEventTimeZoneOffset()).to.be.equal(JSONObjectEvent.eventTimeZoneOffset);
-    expect(obj.getRecordTime()).to.be.equal(JSONObjectEvent.recordTime);
-    expect(obj['example:myField']).to.be.equal(JSONObjectEvent['example:myField']);
-    expect(obj.getErrorDeclaration().getDeclarationTime()).to
-      .be.equal(JSONObjectEvent.errorDeclaration.declarationTime);
-    expect(obj.getErrorDeclaration().getReason()).to
-      .be.equal(JSONObjectEvent.errorDeclaration.reason);
-    expect(obj.getErrorDeclaration().getCorrectiveEventIDs().toString())
-      .to.be.equal(JSONObjectEvent.errorDeclaration.correctiveEventIDs.toString());
-    expect(obj.getErrorDeclaration()['example:vendorExtension']).to
-      .be.equal(JSONObjectEvent.errorDeclaration['example:vendorExtension']);
-    expect(obj.getAction()).to.be.equal(JSONObjectEvent.action);
-    expect(obj.getBizStep()).to.be.equal(JSONObjectEvent.bizStep);
-    expect(obj.getDisposition()).to.be.equal(JSONObjectEvent.disposition);
-    expect(obj.getPersistentDisposition().getUnset().toString()).to
-      .be.equal(JSONObjectEvent.persistentDisposition.unset.toString());
-    expect(obj.getPersistentDisposition().getSet().toString()).to
-      .be.equal(JSONObjectEvent.persistentDisposition.set.toString());
-    expect(obj.getQuantityList().length).to.be.equal(JSONObjectEvent.quantityList.length);
-    expect(obj.getQuantityList()[0].quantity).to.be.equal(JSONObjectEvent.quantityList[0].quantity);
-    expect(obj.getBizLocation().id).to.be.equal(JSONObjectEvent.bizLocation.id);
-    expect(obj.getSourceList().length).to.be.equal(JSONObjectEvent.sourceList.length);
-    expect(obj.getSourceList()[0].source).to.be.equal(JSONObjectEvent.sourceList[0].source);
-    expect(obj.getBizTransactionList().length).to
-      .be.equal(JSONObjectEvent.bizTransactionList.length);
-    expect(obj.getBizTransactionList()[0].bizTransaction).to
-      .be.equal(JSONObjectEvent.bizTransactionList[0].bizTransaction);
-    expect(obj.getDestinationList().length).to.be.equal(JSONObjectEvent.destinationList.length);
-    expect(obj.getDestinationList()[0].destination).to
-      .be.equal(JSONObjectEvent.destinationList[0].destination);
-    expect(obj.getSensorElementList().length).to.be.equal(JSONObjectEvent.sensorElementList.length);
-    expect(obj.getSensorElementList()[0].sensorMetadata.bizRules).to
-      .be.equal(JSONObjectEvent.sensorElementList[0].sensorMetadata.bizRules);
-    expect(obj.getSensorElementList()[1].sensorReport[0].minValue).to
-      .be.equal(JSONObjectEvent.sensorElementList[1].sensorReport[0].minValue);
-    expect(obj.getIlmd()['example:bestBeforeDate']).to
-      .be.equal(JSONObjectEvent.ilmd['example:bestBeforeDate']);
+    const obj = new ObjectEvent(exampleObjectEvent);
+    expect(obj.toObject()).to.deep.equal(exampleObjectEvent);
   });
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent();
@@ -288,21 +249,21 @@ describe('unit tests for the ObjectEvent class', () => {
     });
     it('should add an epc list', async () => {
       const o = new ObjectEvent();
-      o.addEPCList(JSONObjectEvent.epcList);
-      expect(o.epcList.toString()).to.be.equal(JSONObjectEvent.epcList.toString());
+      o.addEPCList(exampleObjectEvent.epcList);
+      expect(o.epcList.toString()).to.be.equal(exampleObjectEvent.epcList.toString());
       o.removeEPC(epc1);
       o.removeEPC(epc2);
 
       // trying again but with a non-empty list
       o.addEPC(epc3);
       expect(o.epcList.toString()).to.be.equal([epc3].toString());
-      o.addEPCList(JSONObjectEvent.epcList);
+      o.addEPCList(exampleObjectEvent.epcList);
       expect(o.epcList.toString()).to.be.equal([epc3, epc1, epc2].toString());
     });
     it('should remove an epc list', async () => {
       const o = new ObjectEvent();
-      o.addEPCList([...JSONObjectEvent.epcList, epc3]);
-      o.removeEPCList(JSONObjectEvent.epcList);
+      o.addEPCList([...exampleObjectEvent.epcList, epc3]);
+      o.removeEPCList(exampleObjectEvent.epcList);
       expect(o.epcList.toString()).to.be.equal([epc3].toString());
 
       // trying again but removing the whole list
@@ -312,7 +273,7 @@ describe('unit tests for the ObjectEvent class', () => {
     });
     it('should clear the epc list', async () => {
       const o = new ObjectEvent();
-      o.addEPCList([...JSONObjectEvent.epcList, epc3]);
+      o.addEPCList([...exampleObjectEvent.epcList, epc3]);
       o.clearEPCList();
       expect(o.epcList).to.be.equal(undefined);
     });
@@ -323,9 +284,9 @@ describe('unit tests for the ObjectEvent class', () => {
     });
   });
   describe('quantityList field', () => {
-    const quantity1 = new QuantityElement(JSONObjectEvent.quantityList[0]);
-    const quantity2 = new QuantityElement(JSONObjectEvent.quantityList[1]);
-    const quantity3 = new QuantityElement(JSONObjectEvent.quantityList[2]);
+    const quantity1 = new QuantityElement(exampleObjectEvent.quantityList[0]);
+    const quantity2 = new QuantityElement(exampleObjectEvent.quantityList[1]);
+    const quantity3 = new QuantityElement(exampleObjectEvent.quantityList[2]);
 
     it('should add and remove quantity', async () => {
       const o = new ObjectEvent();
@@ -375,8 +336,8 @@ describe('unit tests for the ObjectEvent class', () => {
     });
   });
   describe('bizTransactionList field', () => {
-    const bizTransaction1 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[0]);
-    const bizTransaction2 = new BizTransactionElement(JSONObjectEvent.bizTransactionList[1]);
+    const bizTransaction1 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[0]);
+    const bizTransaction2 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[1]);
 
     it('should add and remove bizTransaction', async () => {
       const o = new ObjectEvent();
@@ -417,8 +378,8 @@ describe('unit tests for the ObjectEvent class', () => {
     });
   });
   describe('sourceList field', () => {
-    const source1 = new SourceElement(JSONObjectEvent.sourceList[0]);
-    const source2 = new SourceElement(JSONObjectEvent.sourceList[1]);
+    const source1 = new SourceElement(exampleObjectEvent.sourceList[0]);
+    const source2 = new SourceElement(exampleObjectEvent.sourceList[1]);
 
     it('should add and remove source', async () => {
       const o = new ObjectEvent();
@@ -456,8 +417,8 @@ describe('unit tests for the ObjectEvent class', () => {
     });
   });
   describe('destinationList field', () => {
-    const destination1 = new DestinationElement(JSONObjectEvent.destinationList[0]);
-    const destination2 = new DestinationElement(JSONObjectEvent.destinationList[1]);
+    const destination1 = new DestinationElement(exampleObjectEvent.destinationList[0]);
+    const destination2 = new DestinationElement(exampleObjectEvent.destinationList[1]);
 
     it('should add and remove destination', async () => {
       const o = new ObjectEvent();
@@ -495,8 +456,8 @@ describe('unit tests for the ObjectEvent class', () => {
     });
   });
   describe('sensorElementList field', () => {
-    const sensorElement1 = new SensorElement(JSONObjectEvent.destinationList[0]);
-    const sensorElement2 = new SensorElement(JSONObjectEvent.destinationList[1]);
+    const sensorElement1 = new SensorElement(exampleObjectEvent.destinationList[0]);
+    const sensorElement2 = new SensorElement(exampleObjectEvent.destinationList[1]);
 
     it('should add and remove sensorElement', async () => {
       const o = new ObjectEvent();
