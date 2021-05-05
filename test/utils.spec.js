@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import {
   getTheTimeZoneOffsetFromDateString,
   getTimeZoneOffsetFromStringOrNumber,
-  numberToTwoCharString, offsetToString,
+  numberToZeroPadString, offsetToString,
 } from '../src/utils/utils';
 
 describe('unit tests for util functions', () => {
@@ -11,15 +11,15 @@ describe('unit tests for util functions', () => {
       const num = 9;
       const num2 = 0;
       const num3 = 87;
-      expect(numberToTwoCharString(num)).to.be.equal('09');
-      expect(numberToTwoCharString(num2)).to.be.equal('00');
-      expect(numberToTwoCharString(num3)).to.be.equal('87');
+      expect(numberToZeroPadString(num)).to.be.equal('09');
+      expect(numberToZeroPadString(num2)).to.be.equal('00');
+      expect(numberToZeroPadString(num3)).to.be.equal('87');
     });
     it('should not accept a number < 0 or > 99', async () => {
       const num1 = -1;
       const num2 = 101;
-      expect(() => numberToTwoCharString(num1)).to.throw('The number has to be between 0 and 99');
-      expect(() => numberToTwoCharString(num2)).to.throw('The number has to be between 0 and 99');
+      expect(() => numberToZeroPadString(num1)).to.throw('The number has to be between 0 and 99');
+      expect(() => numberToZeroPadString(num2)).to.throw('The number has to be between 0 and 99');
     });
   });
   describe('timezone functions', () => {
