@@ -1,13 +1,12 @@
-const EPCISDocument = require('./EPCISDocument.schema.json')
+const Ajv = require('ajv');
+const EPCISDocument = require('./EPCISDocument.schema.json');
 
-const Ajv = require('ajv')
-
-const ajv = new Ajv({ useDefaults: true })
+const ajv = new Ajv({ useDefaults: true });
 
 /** Available schemas */
 const validators = {
-  EPCISDocument: ajv.compile(EPCISDocument)
-}
+  EPCISDocument: ajv.compile(EPCISDocument),
+};
 
 /**
  * Validate an EPCIS document.
@@ -16,11 +15,11 @@ const validators = {
  * @returns {Array<string>} Any errors.
  */
 const validateSchema = (instance) => {
-  const test = validators.EPCISDocument
+  const test = validators.EPCISDocument;
   if (!test(instance)) {
-    const [{ dataPath, message }] = test.errors
-    throw new Error(`${dataPath}: ${message}`)
+    const [{ dataPath, message }] = test.errors;
+    throw new Error(`${dataPath}: ${message}`);
   }
-}
+};
 
-export default validateSchema
+export default validateSchema;

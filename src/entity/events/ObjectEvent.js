@@ -1,66 +1,68 @@
-import Event from './Event'
-import PersistentDisposition from '../model/PersistentDisposition'
-import QuantityElement from '../model/QuantityElement'
-import ReadPoint from '../model/ReadPoint'
-import BizLocation from '../model/BizLocation'
-import BizTransactionElement from '../model/BizTransactionElement'
-import SourceElement from '../model/SourceElement'
-import DestinationElement from '../model/DestinationElement'
-import SensorElement from '../model/sensor/SensorElement'
+import Event from './Event';
+import PersistentDisposition from '../model/PersistentDisposition';
+import QuantityElement from '../model/QuantityElement';
+import ReadPoint from '../model/ReadPoint';
+import BizLocation from '../model/BizLocation';
+import BizTransactionElement from '../model/BizTransactionElement';
+import SourceElement from '../model/SourceElement';
+import DestinationElement from '../model/DestinationElement';
+import SensorElement from '../model/sensor/SensorElement';
 
 export default class ObjectEvent extends Event {
   /**
    * You can either create an empty Object Event or provide an already existing Object event via Map
    * @param {{}} [objectEvent] - The Map that will be used to create the ObjectEvent entity
    */
-  constructor (objectEvent) {
-    super(objectEvent)
-    this.isA = 'ObjectEvent'
+  constructor(objectEvent) {
+    super(objectEvent);
+    this.isA = 'ObjectEvent';
 
-    if (!arguments.length) {
-      return
+    if (!arguments.length || objectEvent === undefined) {
+      return;
     }
 
-    this.clearSourceList()
-    this.clearBizTransactionList()
-    this.clearDestinationList()
-    this.clearQuantityList()
-    this.clearSensorElementList()
-    this.clearEPCList()
+    this.clearSourceList();
+    this.clearBizTransactionList();
+    this.clearDestinationList();
+    this.clearQuantityList();
+    this.clearSensorElementList();
+    this.clearEPCList();
 
-    for (const prop in objectEvent) {
-      if (objectEvent.hasOwnProperty(prop)) {
-        switch (prop) {
-          case 'persistentDisposition':
-            this.setPersistentDisposition(new PersistentDisposition(objectEvent[prop]))
-            break
-          case 'epcList':
-            objectEvent[prop].forEach(epc => this.addEPC(epc))
-            break
-          case 'quantityList':
-            objectEvent[prop].forEach(quantityElement => this.addQuantity(new QuantityElement(quantityElement)))
-            break
-          case 'bizTransactionList':
-            objectEvent[prop].forEach(bizTransaction => this.addBizTransaction(new BizTransactionElement(bizTransaction)))
-            break
-          case 'sourceList':
-            objectEvent[prop].forEach(source => this.addSource(new SourceElement(source)))
-            break
-          case 'destinationList':
-            objectEvent[prop].forEach(destination => this.addDestination(new DestinationElement(destination)))
-            break
-          case 'sensorElementList':
-            objectEvent[prop].forEach(sensorElement => this.addSensorElement(new SensorElement(sensorElement)))
-            break
-          case 'readPoint':
-            this.setReadPoint(new ReadPoint(objectEvent[prop]))
-            break
-          case 'bizLocation':
-            this.setBizLocation(new BizLocation(objectEvent[prop]))
-            break
-        }
+    Object.entries(objectEvent).forEach(([key, value]) => {
+      switch (key) {
+        case 'persistentDisposition':
+          this.setPersistentDisposition(new PersistentDisposition(value));
+          break;
+        case 'epcList':
+          value.forEach((epc) => this.addEPC(epc));
+          break;
+        case 'quantityList':
+          value.forEach((quantityElement) => this
+            .addQuantity(new QuantityElement(quantityElement)));
+          break;
+        case 'bizTransactionList':
+          value.forEach((bizTransaction) => this
+            .addBizTransaction(new BizTransactionElement(bizTransaction)));
+          break;
+        case 'sourceList':
+          value.forEach((source) => this.addSource(new SourceElement(source)));
+          break;
+        case 'destinationList':
+          value.forEach((destination) => this.addDestination(new DestinationElement(destination)));
+          break;
+        case 'sensorElementList':
+          value.forEach((sensorElement) => this.addSensorElement(new SensorElement(sensorElement)));
+          break;
+        case 'readPoint':
+          this.setReadPoint(new ReadPoint(value));
+          break;
+        case 'bizLocation':
+          this.setBizLocation(new BizLocation(value));
+          break;
+        default:
+          break;
       }
-    }
+    });
   }
 
   /**
@@ -68,12 +70,12 @@ export default class ObjectEvent extends Event {
    * @param {string} epc - the epc to add (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addEPC (epc) {
+  addEPC(epc) {
     if (!this.epcList) {
-      this.epcList = []
+      this.epcList = [];
     }
-    this.epcList.push(epc)
-    return this
+    this.epcList.push(epc);
+    return this;
   }
 
   /**
@@ -82,21 +84,21 @@ export default class ObjectEvent extends Event {
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addEPCList (epcList) {
+  addEPCList(epcList) {
     if (!this.epcList) {
-      this.epcList = []
+      this.epcList = [];
     }
-    epcList.forEach(epc => this.addEPC(epc))
-    return this
+    epcList.forEach((epc) => this.addEPC(epc));
+    return this;
   }
 
   /**
    * Clear the epc list
    * @return {ObjectEvent} - the objectEvent instance
    */
-  clearEPCList () {
-    delete this.epcList
-    return this
+  clearEPCList() {
+    delete this.epcList;
+    return this;
   }
 
   /**
@@ -104,12 +106,12 @@ export default class ObjectEvent extends Event {
    * @param {string} epc - the epc to remove (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeEPC (epc) {
+  removeEPC(epc) {
     if (!this.epcList) {
-      this.epcList = []
+      this.epcList = [];
     }
-    this.epcList = this.epcList.filter(elem => elem !== epc)
-    return this
+    this.epcList = this.epcList.filter((elem) => elem !== epc);
+    return this;
   }
 
   /**
@@ -118,20 +120,20 @@ export default class ObjectEvent extends Event {
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeEPCList (epcList) {
+  removeEPCList(epcList) {
     if (!this.epcList) {
-      this.epcList = []
+      this.epcList = [];
     }
-    epcList.forEach(epc => this.removeEPC(epc))
-    return this
+    epcList.forEach((epc) => this.removeEPC(epc));
+    return this;
   }
 
   /**
    * Getter for the epcList property
    * @return {Array<string>} - the epcList
    */
-  getEPCList () {
-    return this.epcList
+  getEPCList() {
+    return this.epcList;
   }
 
   /**
@@ -139,12 +141,12 @@ export default class ObjectEvent extends Event {
    * @param {QuantityElement} quantity - the quantity to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addQuantity (quantity) {
+  addQuantity(quantity) {
     if (!this.quantityList) {
-      this.quantityList = []
+      this.quantityList = [];
     }
-    this.quantityList.push(quantity)
-    return this
+    this.quantityList.push(quantity);
+    return this;
   }
 
   /**
@@ -152,21 +154,21 @@ export default class ObjectEvent extends Event {
    * @param {Array<QuantityElement>} quantityList - the quantities to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addQuantityList (quantityList) {
+  addQuantityList(quantityList) {
     if (!this.quantityList) {
-      this.quantityList = []
+      this.quantityList = [];
     }
-    quantityList.forEach(quantity => this.addQuantity(quantity))
-    return this
+    quantityList.forEach((quantity) => this.addQuantity(quantity));
+    return this;
   }
 
   /**
    * Clear the quantity list
    * @return {ObjectEvent} - the objectEvent instance
    */
-  clearQuantityList () {
-    delete this.quantityList
-    return this
+  clearQuantityList() {
+    delete this.quantityList;
+    return this;
   }
 
   /**
@@ -174,12 +176,12 @@ export default class ObjectEvent extends Event {
    * @param {QuantityElement} quantity - the quantity to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeQuantity (quantity) {
+  removeQuantity(quantity) {
     if (!this.quantityList) {
-      this.quantityList = []
+      this.quantityList = [];
     }
-    this.quantityList = this.quantityList.filter(elem => elem !== quantity)
-    return this
+    this.quantityList = this.quantityList.filter((elem) => elem !== quantity);
+    return this;
   }
 
   /**
@@ -187,20 +189,20 @@ export default class ObjectEvent extends Event {
    * @param {Array<QuantityElement>} quantityList - the quantities to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeQuantityList (quantityList) {
+  removeQuantityList(quantityList) {
     if (!this.quantityList) {
-      this.quantityList = []
+      this.quantityList = [];
     }
-    quantityList.forEach(quantity => this.removeQuantity(quantity))
-    return this
+    quantityList.forEach((quantity) => this.removeQuantity(quantity));
+    return this;
   }
 
   /**
    * Getter for the quantityList property
    * @return {Array<QuantityElement>} - the quantityList
    */
-  getQuantityList () {
-    return this.quantityList
+  getQuantityList() {
+    return this.quantityList;
   }
 
   /**
@@ -208,17 +210,17 @@ export default class ObjectEvent extends Event {
    * @param {string} action - string from {"OBSERVE", "ADD", "DELETE"}
    * @return {ObjectEvent} - the objectEvent instance
    */
-  setAction (action) {
-    this.action = action
-    return this
+  setAction(action) {
+    this.action = action;
+    return this;
   }
 
   /**
    * Getter for the action property
    * @return {string} - the action
    */
-  getAction () {
-    return this.action
+  getAction() {
+    return this.action;
   }
 
   /**
@@ -226,17 +228,17 @@ export default class ObjectEvent extends Event {
    * @param {string} bizStep - e.g bizsteps.accepting
    * @return {ObjectEvent} - the objectEvent instance
    */
-  setBizStep (bizStep) {
-    this.bizStep = bizStep
-    return this
+  setBizStep(bizStep) {
+    this.bizStep = bizStep;
+    return this;
   }
 
   /**
    * Getter for the bizStep property
    * @return {string} - the bizStep
    */
-  getBizStep () {
-    return this.bizStep
+  getBizStep() {
+    return this.bizStep;
   }
 
   /**
@@ -244,17 +246,17 @@ export default class ObjectEvent extends Event {
    * @param {string} disposition - e.g dispositions.in_transit
    * @return {ObjectEvent} - the objectEvent instance
    */
-  setDisposition (disposition) {
-    this.disposition = disposition
-    return this
+  setDisposition(disposition) {
+    this.disposition = disposition;
+    return this;
   }
 
   /**
    * Getter for the disposition property
    * @return {string} - the disposition
    */
-  getDisposition () {
-    return this.disposition
+  getDisposition() {
+    return this.disposition;
   }
 
   /**
@@ -262,17 +264,17 @@ export default class ObjectEvent extends Event {
    * @param {PersistentDisposition} persistentDisposition
    * @return {ObjectEvent} - the objectEvent instance
    */
-  setPersistentDisposition (persistentDisposition) {
-    this.persistentDisposition = persistentDisposition
-    return this
+  setPersistentDisposition(persistentDisposition) {
+    this.persistentDisposition = persistentDisposition;
+    return this;
   }
 
   /**
    * Getter for the persistentDisposition property
    * @return {PersistentDisposition} - the persistentDisposition
    */
-  getPersistentDisposition () {
-    return this.persistentDisposition
+  getPersistentDisposition() {
+    return this.persistentDisposition;
   }
 
   /**
@@ -280,22 +282,22 @@ export default class ObjectEvent extends Event {
    * @param {string|ReadPoint} readPoint id or readPoint instance
    * @return {ObjectEvent} - the objectEvent instance
    */
-  setReadPoint (readPoint) {
+  setReadPoint(readPoint) {
     if ((typeof readPoint) === 'string') { // the param is the id of the readPoint
-      this.readPoint = new ReadPoint().setId(readPoint)
-      return this
+      this.readPoint = new ReadPoint().setId(readPoint);
+      return this;
     }
     // the param is the ReadPoint instance
-    this.readPoint = readPoint
-    return this
+    this.readPoint = readPoint;
+    return this;
   }
 
   /**
    * Getter for the readPoint property
    * @return {ReadPoint} - the readPoint
    */
-  getReadPoint () {
-    return this.readPoint
+  getReadPoint() {
+    return this.readPoint;
   }
 
   /**
@@ -303,22 +305,22 @@ export default class ObjectEvent extends Event {
    * @param {string|BizLocation} bizLocation instance or bizLocation id
    * @return {ObjectEvent} - the objectEvent instance
    */
-  setBizLocation (bizLocation) {
+  setBizLocation(bizLocation) {
     if ((typeof bizLocation) === 'string') { // the param is the id of the bizLocation
-      this.bizLocation = new BizLocation().setId(bizLocation)
-      return this
+      this.bizLocation = new BizLocation().setId(bizLocation);
+      return this;
     }
     // the param is the BizLocation instance
-    this.bizLocation = bizLocation
-    return this
+    this.bizLocation = bizLocation;
+    return this;
   }
 
   /**
    * Getter for the bizLocation property
    * @return {BizLocation} - the bizLocation
    */
-  getBizLocation () {
-    return this.bizLocation
+  getBizLocation() {
+    return this.bizLocation;
   }
 
   /**
@@ -326,12 +328,12 @@ export default class ObjectEvent extends Event {
    * @param {BizTransactionElement} bizTransaction - the bizTransaction to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addBizTransaction (bizTransaction) {
+  addBizTransaction(bizTransaction) {
     if (!this.bizTransactionList) {
-      this.bizTransactionList = []
+      this.bizTransactionList = [];
     }
-    this.bizTransactionList.push(bizTransaction)
-    return this
+    this.bizTransactionList.push(bizTransaction);
+    return this;
   }
 
   /**
@@ -339,21 +341,22 @@ export default class ObjectEvent extends Event {
    * @param {Array<BizTransactionElement>} bizTransactionList - the bizTransactions to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addBizTransactionList (bizTransactionList) {
+  addBizTransactionList(bizTransactionList) {
     if (!this.bizTransactionList) {
-      this.bizTransactionList = []
+      this.bizTransactionList = [];
     }
-    bizTransactionList.forEach(bizTransaction => this.addBizTransaction(bizTransaction))
-    return this
+    bizTransactionList
+      .forEach((bizTransaction) => this.addBizTransaction(bizTransaction));
+    return this;
   }
 
   /**
    * Clear the bizTransaction list
    * @return {ObjectEvent} - the objectEvent instance
    */
-  clearBizTransactionList () {
-    delete this.bizTransactionList
-    return this
+  clearBizTransactionList() {
+    delete this.bizTransactionList;
+    return this;
   }
 
   /**
@@ -361,12 +364,12 @@ export default class ObjectEvent extends Event {
    * @param {BizTransactionElement} bizTransaction - the bizTransaction to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeBizTransaction (bizTransaction) {
+  removeBizTransaction(bizTransaction) {
     if (!this.bizTransactionList) {
-      this.bizTransactionList = []
+      this.bizTransactionList = [];
     }
-    this.bizTransactionList = this.bizTransactionList.filter(elem => elem !== bizTransaction)
-    return this
+    this.bizTransactionList = this.bizTransactionList.filter((elem) => elem !== bizTransaction);
+    return this;
   }
 
   /**
@@ -374,20 +377,21 @@ export default class ObjectEvent extends Event {
    * @param {Array<BizTransactionElement>} bizTransactionList - the bizTransactions to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeBizTransactionList (bizTransactionList) {
+  removeBizTransactionList(bizTransactionList) {
     if (!this.bizTransactionList) {
-      this.bizTransactionList = []
+      this.bizTransactionList = [];
     }
-    bizTransactionList.forEach(bizTransaction => this.removeBizTransaction(bizTransaction))
-    return this
+    bizTransactionList
+      .forEach((bizTransaction) => this.removeBizTransaction(bizTransaction));
+    return this;
   }
 
   /**
    * Getter for the bizTransactionList property
    * @return {Array<BizTransactionElement>} - the bizTransactionList
    */
-  getBizTransactionList () {
-    return this.bizTransactionList
+  getBizTransactionList() {
+    return this.bizTransactionList;
   }
 
   /**
@@ -395,12 +399,12 @@ export default class ObjectEvent extends Event {
    * @param {SourceElement} source - the source to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addSource (source) {
+  addSource(source) {
     if (!this.sourceList) {
-      this.sourceList = []
+      this.sourceList = [];
     }
-    this.sourceList.push(source)
-    return this
+    this.sourceList.push(source);
+    return this;
   }
 
   /**
@@ -408,21 +412,21 @@ export default class ObjectEvent extends Event {
    * @param {Array<SourceElement>} sourceList - the sourceElements to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addSourceList (sourceList) {
+  addSourceList(sourceList) {
     if (!this.sourceList) {
-      this.sourceList = []
+      this.sourceList = [];
     }
-    sourceList.forEach(sourceElement => this.addSource(sourceElement))
-    return this
+    sourceList.forEach((sourceElement) => this.addSource(sourceElement));
+    return this;
   }
 
   /**
    * Clear the source list
    * @return {ObjectEvent} - the objectEvent instance
    */
-  clearSourceList () {
-    delete this.sourceList
-    return this
+  clearSourceList() {
+    delete this.sourceList;
+    return this;
   }
 
   /**
@@ -430,12 +434,12 @@ export default class ObjectEvent extends Event {
    * @param {SourceElement} source - the source to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeSource (source) {
+  removeSource(source) {
     if (!this.sourceList) {
-      this.sourceList = []
+      this.sourceList = [];
     }
-    this.sourceList = this.sourceList.filter(elem => elem !== source)
-    return this
+    this.sourceList = this.sourceList.filter((elem) => elem !== source);
+    return this;
   }
 
   /**
@@ -443,20 +447,20 @@ export default class ObjectEvent extends Event {
    * @param {Array<SourceElement>} sourceList - the sources to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeSourceList (sourceList) {
+  removeSourceList(sourceList) {
     if (!this.sourceList) {
-      this.sourceList = []
+      this.sourceList = [];
     }
-    sourceList.forEach(sourceElement => this.removeSource(sourceElement))
-    return this
+    sourceList.forEach((sourceElement) => this.removeSource(sourceElement));
+    return this;
   }
 
   /**
    * Getter for the sourceList property
    * @return {Array<SourceElement>} - the sourceList
    */
-  getSourceList () {
-    return this.sourceList
+  getSourceList() {
+    return this.sourceList;
   }
 
   /**
@@ -464,12 +468,12 @@ export default class ObjectEvent extends Event {
    * @param {DestinationElement} destination - the destination to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addDestination (destination) {
+  addDestination(destination) {
     if (!this.destinationList) {
-      this.destinationList = []
+      this.destinationList = [];
     }
-    this.destinationList.push(destination)
-    return this
+    this.destinationList.push(destination);
+    return this;
   }
 
   /**
@@ -477,21 +481,22 @@ export default class ObjectEvent extends Event {
    * @param {Array<DestinationElement>} destinationList - the destinationElements to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addDestinationList (destinationList) {
+  addDestinationList(destinationList) {
     if (!this.destinationList) {
-      this.destinationList = []
+      this.destinationList = [];
     }
-    destinationList.forEach(destinationElement => this.addDestination(destinationElement))
-    return this
+    destinationList
+      .forEach((destinationElement) => this.addDestination(destinationElement));
+    return this;
   }
 
   /**
    * Clear the destination list
    * @return {ObjectEvent} - the objectEvent instance
    */
-  clearDestinationList () {
-    delete this.destinationList
-    return this
+  clearDestinationList() {
+    delete this.destinationList;
+    return this;
   }
 
   /**
@@ -499,12 +504,12 @@ export default class ObjectEvent extends Event {
    * @param {DestinationElement} destination - the destination to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeDestination (destination) {
+  removeDestination(destination) {
     if (!this.destinationList) {
-      this.destinationList = []
+      this.destinationList = [];
     }
-    this.destinationList = this.destinationList.filter(elem => elem !== destination)
-    return this
+    this.destinationList = this.destinationList.filter((elem) => elem !== destination);
+    return this;
   }
 
   /**
@@ -512,20 +517,21 @@ export default class ObjectEvent extends Event {
    * @param {Array<DestinationElement>} destinationList - the destinations to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeDestinationList (destinationList) {
+  removeDestinationList(destinationList) {
     if (!this.destinationList) {
-      this.destinationList = []
+      this.destinationList = [];
     }
-    destinationList.forEach(destinationElement => this.removeDestination(destinationElement))
-    return this
+    destinationList
+      .forEach((destinationElement) => this.removeDestination(destinationElement));
+    return this;
   }
 
   /**
    * Getter for the destinationList property
    * @return {Array<DestinationElement>} - the destinationList
    */
-  getDestinationList () {
-    return this.destinationList
+  getDestinationList() {
+    return this.destinationList;
   }
 
   /**
@@ -533,12 +539,12 @@ export default class ObjectEvent extends Event {
    * @param {SensorElement} sensorElement - the sensorElement to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addSensorElement (sensorElement) {
+  addSensorElement(sensorElement) {
     if (!this.sensorElementList) {
-      this.sensorElementList = []
+      this.sensorElementList = [];
     }
-    this.sensorElementList.push(sensorElement)
-    return this
+    this.sensorElementList.push(sensorElement);
+    return this;
   }
 
   /**
@@ -546,21 +552,22 @@ export default class ObjectEvent extends Event {
    * @param {Array<SensorElement>} sensorElementList - the sensorElementElements to add
    * @return {ObjectEvent} - the objectEvent instance
    */
-  addSensorElementList (sensorElementList) {
+  addSensorElementList(sensorElementList) {
     if (!this.sensorElementList) {
-      this.sensorElementList = []
+      this.sensorElementList = [];
     }
-    sensorElementList.forEach(sensorElementElement => this.addSensorElement(sensorElementElement))
-    return this
+    sensorElementList
+      .forEach((sensorElementElement) => this.addSensorElement(sensorElementElement));
+    return this;
   }
 
   /**
    * Clear the sensorElement list
    * @return {ObjectEvent} - the objectEvent instance
    */
-  clearSensorElementList () {
-    delete this.sensorElementList
-    return this
+  clearSensorElementList() {
+    delete this.sensorElementList;
+    return this;
   }
 
   /**
@@ -568,12 +575,12 @@ export default class ObjectEvent extends Event {
    * @param {SensorElement} sensorElement - the sensorElement to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeSensorElement (sensorElement) {
+  removeSensorElement(sensorElement) {
     if (!this.sensorElementList) {
-      this.sensorElementList = []
+      this.sensorElementList = [];
     }
-    this.sensorElementList = this.sensorElementList.filter(elem => elem !== sensorElement)
-    return this
+    this.sensorElementList = this.sensorElementList.filter((elem) => elem !== sensorElement);
+    return this;
   }
 
   /**
@@ -581,20 +588,21 @@ export default class ObjectEvent extends Event {
    * @param {Array<SensorElement>} sensorElementList - the sensorElements to remove
    * @return {ObjectEvent} - the objectEvent instance
    */
-  removeSensorElementList (sensorElementList) {
+  removeSensorElementList(sensorElementList) {
     if (!this.sensorElementList) {
-      this.sensorElementList = []
+      this.sensorElementList = [];
     }
-    sensorElementList.forEach(sensorElementElement => this.removeSensorElement(sensorElementElement))
-    return this
+    sensorElementList
+      .forEach((sensorElementElement) => this.removeSensorElement(sensorElementElement));
+    return this;
   }
 
   /**
    * Getter for the sensorElementList property
    * @return {Array<SensorElement>} - the sensorElementList
    */
-  getSensorElementList () {
-    return this.sensorElementList
+  getSensorElementList() {
+    return this.sensorElementList;
   }
 
   /**
@@ -602,16 +610,16 @@ export default class ObjectEvent extends Event {
    * @param {{}} ilmd object
    * @return {ObjectEvent} - the objectEvent instance
    */
-  setIlmd (ilmd) {
-    this.ilmd = ilmd
-    return this
+  setIlmd(ilmd) {
+    this.ilmd = ilmd;
+    return this;
   }
 
   /**
    * Getter for the ilmd property
    * @return {{}} - the ilmd
    */
-  getIlmd () {
-    return this.ilmd
+  getIlmd() {
+    return this.ilmd;
   }
 }

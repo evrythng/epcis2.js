@@ -1,21 +1,21 @@
 /* eslint-env jasmine */
-import fetchMock from 'fetch-mock'
-import responses from './responses'
-import settings from '../../src/settings'
+import fetchMock from 'fetch-mock';
+import responses from './responses';
+import settings from '../../src/settings';
 
 /**
  * Delayed promise.
  *
  * @param {Number} time - Delay time in milliseconds
  */
-const delay = (time) => new Promise((resolve) => setTimeout(resolve, time))
+const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 /**
  * Init API mock as a whole.
  */
-export function prepare () {
+export function prepare() {
   // Root - generic requests handles
-  fetchMock.mock(settings.endpoint, responses.ok)
+  fetchMock.mock(settings.endpoint, responses.ok);
 }
 
 /**
@@ -24,9 +24,9 @@ export function prepare () {
  *
  * @param {Function} done - Jasmine done callback
  */
-export async function tearDown (done) {
+export async function tearDown(done) {
   delay(100).then(() => {
-    fetchMock.restore()
-    done()
-  })
+    fetchMock.restore();
+    done();
+  });
 }

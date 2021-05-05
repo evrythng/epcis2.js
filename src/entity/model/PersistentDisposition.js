@@ -1,4 +1,4 @@
-import Entity from '../Entity'
+import Entity from '../Entity';
 
 export default class PersistentDisposition extends Entity {
   /**
@@ -6,10 +6,10 @@ export default class PersistentDisposition extends Entity {
    * @param {string} set - the set to add
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  addSet (set) {
-    if (!this.set) { this.set = [] }
-    this.set.push(set)
-    return this
+  addSet(set) {
+    if (!this.set) { this.set = []; }
+    this.set.push(set);
+    return this;
   }
 
   /**
@@ -17,19 +17,19 @@ export default class PersistentDisposition extends Entity {
    * @param {Array<string>} setList - the sets to add
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  addSetList (setList) {
-    if (!this.set) { this.set = [] }
-    setList.forEach(set => this.addSet(set))
-    return this
+  addSetList(setList) {
+    if (!this.set) { this.set = []; }
+    setList.forEach((set) => this.addSet(set));
+    return this;
   }
 
   /**
    * Clear the set list
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  clearSetList () {
-    delete this.set
-    return this
+  clearSetList() {
+    delete this.set;
+    return this;
   }
 
   /**
@@ -37,10 +37,10 @@ export default class PersistentDisposition extends Entity {
    * @param {string} set - the set to remove
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  removeSet (set) {
-    if (!this.set) { this.set = [] }
-    this.set = this.set.filter(elem => elem !== set)
-    return this
+  removeSet(set) {
+    if (!this.set) { this.set = []; }
+    this.set = this.set.filter((elem) => elem !== set);
+    return this;
   }
 
   /**
@@ -48,18 +48,18 @@ export default class PersistentDisposition extends Entity {
    * @param {Array<string>} setList - the sets to remove
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  removeSetList (setList) {
-    if (!this.set) { this.set = [] }
-    setList.forEach(set => this.removeSet(set))
-    return this
+  removeSetList(setList) {
+    if (!this.set) { this.set = []; }
+    setList.forEach((set) => this.removeSet(set));
+    return this;
   }
 
   /**
    * Getter for the set property
    * @return {Array<string>} - the set
    */
-  getSet () {
-    return this.set
+  getSet() {
+    return this.set;
   }
 
   /**
@@ -67,10 +67,10 @@ export default class PersistentDisposition extends Entity {
    * @param {string} unset - the unset to add
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  addUnset (unset) {
-    if (!this.unset) { this.unset = [] }
-    this.unset.push(unset)
-    return this
+  addUnset(unset) {
+    if (!this.unset) { this.unset = []; }
+    this.unset.push(unset);
+    return this;
   }
 
   /**
@@ -78,19 +78,19 @@ export default class PersistentDisposition extends Entity {
    * @param {Array<string>} unsetList - the unsets to add
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  addUnsetList (unsetList) {
-    if (!this.unset) { this.unset = [] }
-    unsetList.forEach(unset => this.addUnset(unset))
-    return this
+  addUnsetList(unsetList) {
+    if (!this.unset) { this.unset = []; }
+    unsetList.forEach((unset) => this.addUnset(unset));
+    return this;
   }
 
   /**
    * Clear the unset list
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  clearUnsetList () {
-    delete this.unset
-    return this
+  clearUnsetList() {
+    delete this.unset;
+    return this;
   }
 
   /**
@@ -98,10 +98,10 @@ export default class PersistentDisposition extends Entity {
    * @param {string} unset - the unset to remove
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  removeUnset (unset) {
-    if (!this.unset) { this.unset = [] }
-    this.unset = this.unset.filter(elem => elem !== unset)
-    return this
+  removeUnset(unset) {
+    if (!this.unset) { this.unset = []; }
+    this.unset = this.unset.filter((elem) => elem !== unset);
+    return this;
   }
 
   /**
@@ -109,17 +109,17 @@ export default class PersistentDisposition extends Entity {
    * @param {Array<string>} unsetList - the unsets to remove
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
-  removeUnsetList (unsetList) {
-    if (!this.unset) { this.unset = [] }
-    unsetList.forEach(unset => this.removeUnset(unset))
-    return this
+  removeUnsetList(unsetList) {
+    if (!this.unset) { this.unset = []; }
+    unsetList.forEach((unset) => this.removeUnset(unset));
+    return this;
   }
 
   /**
    * Getter for the unset property
    * @return {Array<string>} - the unset
    */
-  getUnset () {
-    return this.unset
+  getUnset() {
+    return this.unset;
   }
 }

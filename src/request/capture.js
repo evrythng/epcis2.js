@@ -1,4 +1,4 @@
-import request from './request'
+import request from './request';
 
 /**
  * Make capture request to provided Url. Custom user options are merged with
@@ -12,9 +12,11 @@ import request from './request'
  * @returns {Promise} - Response promise
  */
 const capture = (epcisDocument, customOptions = {}, callback) => {
-  customOptions.method = 'POST'
-  customOptions.body = JSON.stringify(epcisDocument.toObject())
-  return request('capture', customOptions, callback)
-}
+  let captureOptions = {};
+  Object.assign(captureOptions, customOptions);
+  captureOptions.method = 'POST';
+  captureOptions.body = JSON.stringify(epcisDocument.toObject());
+  return request('capture', captureOptions, callback);
+};
 
-export default capture
+export default capture;

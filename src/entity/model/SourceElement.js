@@ -1,4 +1,4 @@
-import Entity from '../Entity'
+import Entity from '../Entity';
 
 export default class SourceElement extends Entity {
   /**
@@ -6,17 +6,17 @@ export default class SourceElement extends Entity {
    * @param {string} source
    * @return {SourceElement} - the source instance
    */
-  setSource (source) {
-    this.source = source
-    return this
+  setSource(source) {
+    this.source = source;
+    return this;
   }
 
   /**
    * Getter for the source property
    * @return {string} - the source
    */
-  getSource () {
-    return this.source
+  getSource() {
+    return this.source;
   }
 
   /**
@@ -24,16 +24,16 @@ export default class SourceElement extends Entity {
    * @param {string} type
    * @return {SourceElement} - the source instance
    */
-  setType (type) {
-    this.type = type
-    return this
+  setType(type) {
+    this.type = type;
+    return this;
   }
 
   /**
    * Getter for the type property
    * @return {string} - the type
    */
-  getType () {
-    return this.type
+  getType() {
+    return this.type;
   }
 }

@@ -1,21 +1,27 @@
-import { isPlainObject } from 'is-plain-object'
+import { isPlainObject } from 'is-plain-object';
 
-const SPECIALS = ['&', '|', '!', '>', '<', '=', '~', '(', ')', ',']
-const SPECIALS_REGEXP = new RegExp(`[${SPECIALS.join('\\')}]`, 'g')
-const SPECIALS_ESCAPE = '\\$&'
+const SPECIALS = ['&', '|', '!', '>', '<', '=', '~', '(', ')', ','];
+const SPECIALS_REGEXP = new RegExp(`[${SPECIALS.join('\\')}]`, 'g');
+const SPECIALS_ESCAPE = '\\$&';
 
 /**
- * Build url safe parameter string if an object provided.
+ * Escape special characters in value with the backslash (\) character.
  *
- * @export
- * @param {(Object | string)} [params] key-value object or final query string
- * @param {boolean} [useEncoding] whether to skip encoding
+ * @param {string} value
  * @returns {string}
  */
-export default function buildParams (params = {}, useEncoding = true) {
-  return isPlainObject(params)
-    ? Object.entries(params).map(buildParam(useEncoding)).join('&')
-    : params
+function escapeSpecials(value) {
+  return value.replace(SPECIALS_REGEXP, SPECIALS_ESCAPE);
+}
+
+/**
+ * Returns function that encodes values using encodeURIComponent.
+ *
+ * @param {boolean} useEncoding
+ * @returns {Function}
+ */
+function uriEncoder(useEncoding) {
+  return (value) => (useEncoding ? encodeURIComponent(value) : escapeSpecials(value));
 }
 
 /**
@@ -25,29 +31,22 @@ export default function buildParams (params = {}, useEncoding = true) {
  * @param {boolean} useEncoding
  * @returns {Function}
  */
-function buildParam (useEncoding) {
-  const encode = uriEncoder(useEncoding)
-  return ([key, value]) => {
-    return `${encode(key)}=${encode(buildParams(value))}`
-  }
+function buildParam(useEncoding) {
+  const encode = uriEncoder(useEncoding);
+  // eslint-disable-next-line  no-use-before-define
+  return ([key, value]) => `${encode(key)}=${encode(buildParams(value))}`;
 }
 
 /**
- * Returns function that encodes values using encodeURIComponent.
+ * Build url safe parameter string if an object provided.
  *
- * @param {boolean} useEncoding
- * @returns {Function}
- */
-function uriEncoder (useEncoding) {
-  return (value) => (useEncoding ? encodeURIComponent(value) : escapeSpecials(value))
-}
-
-/**
- * Escape special characters in value with the backslash (\) character.
- *
- * @param {string} value
+ * @export
+ * @param {(Object | string)} [params] key-value object or final query string
+ * @param {boolean} [useEncoding] whether to skip encoding
  * @returns {string}
  */
-function escapeSpecials (value) {
-  return value.replace(SPECIALS_REGEXP, SPECIALS_ESCAPE)
+export default function buildParams(params = {}, useEncoding = true) {
+  return isPlainObject(params)
+    ? Object.entries(params).map(buildParam(useEncoding)).join('&')
+    : params;
 }

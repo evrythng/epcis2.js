@@ -1,4 +1,4 @@
-import Entity from '../Entity'
+import Entity from '../Entity';
 
 export default class BizTransactionElement extends Entity {
   /**
@@ -6,17 +6,17 @@ export default class BizTransactionElement extends Entity {
    * @param {string} bizTransaction
    * @return {BizTransactionElement} - the bizTransaction instance
    */
-  setBizTransaction (bizTransaction) {
-    this.bizTransaction = bizTransaction
-    return this
+  setBizTransaction(bizTransaction) {
+    this.bizTransaction = bizTransaction;
+    return this;
   }
 
   /**
    * Getter for the type property
    * @return {string} - the bizTransaction
    */
-  getBizTransaction () {
-    return this.bizTransaction
+  getBizTransaction() {
+    return this.bizTransaction;
   }
 
   /**
@@ -24,16 +24,16 @@ export default class BizTransactionElement extends Entity {
    * @param {string} type
    * @return {BizTransactionElement} - the bizTransaction instance
    */
-  setType (type) {
-    this.type = type
-    return this
+  setType(type) {
+    this.type = type;
+    return this;
   }
 
   /**
    * Getter for the type property
    * @return {string} - the type
    */
-  getType () {
-    return this.type
+  getType() {
+    return this.type;
   }
 }

@@ -1,4 +1,4 @@
-import Entity from '../Entity'
+import Entity from '../Entity';
 
 export default class DestinationElement extends Entity {
   /**
@@ -6,17 +6,17 @@ export default class DestinationElement extends Entity {
    * @param {string} destination
    * @return {DestinationElement} - the destination instance
    */
-  setDestination (destination) {
-    this.destination = destination
-    return this
+  setDestination(destination) {
+    this.destination = destination;
+    return this;
   }
 
   /**
    * Getter for the destination property
    * @return {string} - the destination
    */
-  getDestination () {
-    return this.destination
+  getDestination() {
+    return this.destination;
   }
 
   /**
@@ -24,16 +24,16 @@ export default class DestinationElement extends Entity {
    * @param {string} type
    * @return {DestinationElement} - the destination instance
    */
-  setType (type) {
-    this.type = type
-    return this
+  setType(type) {
+    this.type = type;
+    return this;
   }
 
   /**
    * Getter for the type property
    * @return {string} - the type
    */
-  getType () {
-    return this.type
+  getType() {
+    return this.type;
   }
 }

@@ -39,8 +39,8 @@ export const bizSteps = {
   transporting: 'urn:epcglobal:cbv:bizstep:transporting',
   unloading: 'urn:epcglobal:cbv:bizstep:unloading',
   unpacking: 'urn:epcglobal:cbv:bizstep:unpacking',
-  void_shipping: 'urn:epcglobal:cbv:bizstep:void_shipping'
-}
+  void_shipping: 'urn:epcglobal:cbv:bizstep:void_shipping',
+};
 
 export const dispositions = {
   active: 'urn:epcglobal:cbv:disp:active',
@@ -74,8 +74,8 @@ export const dispositions = {
   sellable_not_accessible: 'urn:epcglobal:cbv:disp:sellable_not_accessible',
   stolen: 'urn:epcglobal:cbv:disp:stolen',
   unavailable: 'urn:epcglobal:cbv:disp:unavailable',
-  unknown: 'urn:epcglobal:cbv:disp:unknown'
-}
+  unknown: 'urn:epcglobal:cbv:disp:unknown',
+};
 
 export const businessTransactionTypes = {
   bol: 'urn:epcglobal:cbv:btt:bol',
@@ -90,19 +90,19 @@ export const businessTransactionTypes = {
   rma: 'urn:epcglobal:cbv:btt:rma',
   testprd: 'urn:epcglobal:cbv:btt:testprd',
   testres: 'urn:epcglobal:cbv:btt:testres',
-  upevt: 'urn:epcglobal:cbv:btt:upevt'
-}
+  upevt: 'urn:epcglobal:cbv:btt:upevt',
+};
 
 export const SourceDestinationTypes = {
   owning_party: 'urn:epcglobal:cbv:sdt:owning_party',
   possessing_party: 'urn:epcglobal:cbv:sdt:possessing_party',
-  location: 'urn:epcglobal:cbv:sdt:location'
-}
+  location: 'urn:epcglobal:cbv:sdt:location',
+};
 
 export const errorReasonIdentifiers = {
   did_not_occur: 'urn:epcglobal:cbv:er:did_not_occur',
-  incorrect_data: 'urn:epcglobal:cbv:er:incorrect_data'
-}
+  incorrect_data: 'urn:epcglobal:cbv:er:incorrect_data',
+};
 
 export const sensorMeasurementTypes = {
   Absorbed_dose: 'gs1:MT-Absorbed_dose',
@@ -171,16 +171,16 @@ export const sensorMeasurementTypes = {
   Voltage: 'gs1:MT-Voltage',
   Volume: 'gs1:MT-Volume',
   Volumetric_flow_rate: 'gs1:MT-Volumetric_flow_rate',
-  Volumetric_flux: 'gs1:MT-Volumetric_flux'
-}
+  Volumetric_flux: 'gs1:MT-Volumetric_flux',
+};
 
 export const alarmTypes = {
   Alarm_condition: 'gs1:AT-Alarm_condition',
-  Error_condition: 'gs1:AT-Error_condition'
-}
+  Error_condition: 'gs1:AT-Error_condition',
+};
 
 export const actionTypes = {
   observe: 'OBSERVE',
   add: 'ADD',
-  delete: 'DELETE'
-}
+  delete: 'DELETE',
+};

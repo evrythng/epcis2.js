@@ -1,25 +1,6 @@
-import settings from '../settings'
-import { success, failure } from './callback'
-import buildParams from './buildParams'
-
-/**
- * Make request to provided Url. Custom user options are merged with
- * the globally defined settings and request defaults.
- *
- * This method returns both a Promise and accepts error first callbacks.
- *
- * @param {string} path - The url of the request
- * @param {Settings} [customOptions] - User options for this single request
- * @param {function} [callback] - Error first callback
- * @returns {Promise} - Response promise
- */
-export default function request (path, customOptions = {}, callback) {
-  const initialOptions = mergeInitialOptions(customOptions)
-
-  return makeFetch(path, initialOptions)
-    .then(success(callback))
-    .catch(failure(callback))
-}
+import settings from '../settings';
+import { success, failure } from './callback';
+import buildParams from './buildParams';
 
 /**
  * Merge base options, global settings, one-off request options and nested
@@ -28,18 +9,35 @@ export default function request (path, customOptions = {}, callback) {
  * @param {Settings} customOptions - User options
  * @returns {Settings} - Merged options for fetch
  */
-function mergeInitialOptions (customOptions) {
-  const options = Object.assign({ method: 'get', url: '' }, settings, customOptions, {
-    headers: Object.assign({}, settings.headers, customOptions.headers)
-  })
+function mergeInitialOptions(customOptions) {
+  const options = {
+    method: 'get', url: '', ...settings, ...customOptions, headers: { ...settings.headers, ...customOptions.headers },
+  };
 
   // Stringify data if any
   if (options.data) {
-    options.body = JSON.stringify(options.data)
-    Reflect.deleteProperty(options, 'data')
+    options.body = JSON.stringify(options.data);
+    Reflect.deleteProperty(options, 'data');
   }
 
-  return options
+  return options;
+}
+
+/**
+ * Concatenate url with parameters from request options.
+ *
+ * @param {Object} options request options including url and params
+ * @param {string} path - the path to add to the url
+ * @returns {string}
+ */
+export function buildUrl(options, path) {
+  let url = `${options.endpoint}${options.endpoint.endsWith('/') ? path : `/${path}`}`;
+
+  if (options.params) {
+    url += `?${buildParams(options.params)}`;
+  }
+
+  return url;
 }
 
 /**
@@ -52,33 +50,34 @@ function mergeInitialOptions (customOptions) {
  * @param {string} path - the url of the request
  * @param {Settings} options - Request options
  */
-function makeFetch (path, options) {
-  const req = fetch(buildUrl(options, path), options)
+function makeFetch(path, options) {
+  const req = fetch(buildUrl(options, path), options);
   if (!options.timeout) {
-    return req
-  } else {
-    return Promise.race([
-      req,
-      new Promise(function (resolve, reject) {
-        setTimeout(() => reject('Request timeout'), options.timeout)
-      })
-    ])
+    return req;
   }
+  return Promise.race([
+    req,
+    new Promise((resolve, reject) => {
+      setTimeout(() => reject('Request timeout'), options.timeout);
+    }),
+  ]);
 }
 
 /**
- * Concatenate url with parameters from request options.
+ * Make request to provided Url. Custom user options are merged with
+ * the globally defined settings and request defaults.
  *
- * @param {Object} options request options including url and params
- * @param {string} path - the path to add to the url
- * @returns {string}
+ * This method returns both a Promise and accepts error first callbacks.
+ *
+ * @param {string} path - The url of the request
+ * @param {Settings} [customOptions] - User options for this single request
+ * @param {function} [callback] - Error first callback
+ * @returns {Promise} - Response promise
  */
-export function buildUrl (options, path) {
-  let url = `${options.endpoint}${options.endpoint.endsWith('/') ? path : `/${path}`}`
+export default function request(path, customOptions = {}, callback) {
+  const initialOptions = mergeInitialOptions(customOptions);
 
-  if (options.params) {
-    url += `?${buildParams(options.params)}`
-  }
-
-  return url
+  return makeFetch(path, initialOptions)
+    .then(success(callback))
+    .catch(failure(callback));
 }

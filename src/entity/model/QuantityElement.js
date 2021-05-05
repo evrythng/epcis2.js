@@ -1,4 +1,4 @@
-import Entity from '../Entity'
+import Entity from '../Entity';
 
 export default class QuantityElement extends Entity {
   /**
@@ -6,17 +6,17 @@ export default class QuantityElement extends Entity {
    * @param {string} epcClass
    * @return {QuantityElement} - the quantityElement instance
    */
-  setEpcClass (epcClass) {
-    this.epcClass = epcClass
-    return this
+  setEpcClass(epcClass) {
+    this.epcClass = epcClass;
+    return this;
   }
 
   /**
    * Getter for the epcClass property
    * @return {string} - the epcClass
    */
-  getEpcClass () {
-    return this.epcClass
+  getEpcClass() {
+    return this.epcClass;
   }
 
   /**
@@ -24,17 +24,17 @@ export default class QuantityElement extends Entity {
    * @param {string} uom (pattern: "^[A-Z0-9]{2,3}$")
    * @return {QuantityElement} - the quantityElement instance
    */
-  setUom (uom) {
-    this.uom = uom
-    return this
+  setUom(uom) {
+    this.uom = uom;
+    return this;
   }
 
   /**
    * Getter for the uom property
    * @return {string} - the uom
    */
-  getUom () {
-    return this.uom
+  getUom() {
+    return this.uom;
   }
 
   /**
@@ -42,16 +42,16 @@ export default class QuantityElement extends Entity {
    * @param {number} quantity (pattern: "^[A-Z0-9]{2,3}$")
    * @return {QuantityElement} - the quantityElement instance
    */
-  setQuantity (quantity) {
-    this.quantity = quantity
-    return this
+  setQuantity(quantity) {
+    this.quantity = quantity;
+    return this;
   }
 
   /**
    * Getter for the quantity property
    * @return {number} - the quantity
    */
-  getQuantity () {
-    return this.quantity
+  getQuantity() {
+    return this.quantity;
   }
 }

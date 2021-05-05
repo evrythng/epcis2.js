@@ -19,14 +19,14 @@
 export const defaultSettings = {
   endpoint: 'https://epcis.evrythng.io/v2_0/',
   headers: {
-    'content-type': 'application/json'
+    'content-type': 'application/json',
   },
   eventTimeZoneOffset: '',
   timeout: 0,
-  method: 'GET'
-}
+  method: 'GET',
+};
 
 // Initialize settings with defaults.
-const settings = Object.assign({}, defaultSettings)
+const settings = { ...defaultSettings };
 
-export default settings
+export default settings;

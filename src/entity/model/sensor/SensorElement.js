@@ -1,6 +1,6 @@
-import SensorMetadata from './SensorMetadata'
-import SensorReportElement from './SensorReportElement'
-import Entity from '../../Entity'
+import SensorMetadata from './SensorMetadata';
+import SensorReportElement from './SensorReportElement';
+import Entity from '../../Entity';
 
 export default class SensorElement extends Entity {
   /**
@@ -8,28 +8,29 @@ export default class SensorElement extends Entity {
    * Map
    * @param {{}} [sensor] - The Map that will be used to create the SensorElement entity
    */
-  constructor (sensor) {
-    super(sensor)
+  constructor(sensor) {
+    super(sensor);
 
-    if (!arguments.length) {
+    if (!arguments.length || sensor === undefined) {
       // create an empty SensorElement object
-      return
+      return;
     }
 
-    this.clearSensorReportList()
+    this.clearSensorReportList();
 
-    for (const prop in sensor) {
-      if (sensor.hasOwnProperty(prop)) {
-        switch (prop) {
-          case 'sensorMetadata':
-            this.setSensorMetadata(new SensorMetadata(sensor[prop]))
-            break
-          case 'sensorReport':
-            sensor[prop].forEach(sensorReport => this.addSensorReport(new SensorReportElement(sensorReport)))
-            break
-        }
+    Object.entries(sensor).forEach(([key, value]) => {
+      switch (key) {
+        case 'sensorMetadata':
+          this.setSensorMetadata(new SensorMetadata(value));
+          break;
+        case 'sensorReport':
+          value.forEach((sensorReport) => this
+            .addSensorReport(new SensorReportElement(sensorReport)));
+          break;
+        default:
+          break;
       }
-    }
+    });
   }
 
   /**
@@ -37,17 +38,17 @@ export default class SensorElement extends Entity {
    * @param {SensorMetadata} sensorMetadata
    * @return {SensorElement} - the sensor instance
    */
-  setSensorMetadata (sensorMetadata) {
-    this.sensorMetadata = sensorMetadata
-    return this
+  setSensorMetadata(sensorMetadata) {
+    this.sensorMetadata = sensorMetadata;
+    return this;
   }
 
   /**
    * Getter for the sensorMetadata property
    * @return {SensorMetadata} - the sensorMetadata
    */
-  getSensorMetadata () {
-    return this.sensorMetadata
+  getSensorMetadata() {
+    return this.sensorMetadata;
   }
 
   /**
@@ -55,12 +56,12 @@ export default class SensorElement extends Entity {
    * @param {SensorReportElement} sensorReport - the sensorReport to add
    * @return {SensorElement} - the objectEvent instance
    */
-  addSensorReport (sensorReport) {
+  addSensorReport(sensorReport) {
     if (!this.sensorReport) {
-      this.sensorReport = []
+      this.sensorReport = [];
     }
-    this.sensorReport.push(sensorReport)
-    return this
+    this.sensorReport.push(sensorReport);
+    return this;
   }
 
   /**
@@ -68,21 +69,21 @@ export default class SensorElement extends Entity {
    * @param {Array<SensorReportElement>} sensorReportList - the sensorReports to add
    * @return {SensorElement} - the objectEvent instance
    */
-  addSensorReportList (sensorReportList) {
+  addSensorReportList(sensorReportList) {
     if (!this.sensorReport) {
-      this.sensorReport = []
+      this.sensorReport = [];
     }
-    sensorReportList.forEach(sensorReportElement => this.addSensorReport(sensorReportElement))
-    return this
+    sensorReportList.forEach((sensorReportElement) => this.addSensorReport(sensorReportElement));
+    return this;
   }
 
   /**
    * Clear the sensorReport list
    * @return {SensorElement} - the objectEvent instance
    */
-  clearSensorReportList () {
-    delete this.sensorReport
-    return this
+  clearSensorReportList() {
+    delete this.sensorReport;
+    return this;
   }
 
   /**
@@ -90,12 +91,12 @@ export default class SensorElement extends Entity {
    * @param {SensorReportElement} sensorReport - the sensorReport to remove
    * @return {SensorElement} - the objectEvent instance
    */
-  removeSensorReport (sensorReport) {
+  removeSensorReport(sensorReport) {
     if (!this.sensorReport) {
-      this.sensorReport = []
+      this.sensorReport = [];
     }
-    this.sensorReport = this.sensorReport.filter(elem => elem !== sensorReport)
-    return this
+    this.sensorReport = this.sensorReport.filter((elem) => elem !== sensorReport);
+    return this;
   }
 
   /**
@@ -103,19 +104,19 @@ export default class SensorElement extends Entity {
    * @param {Array<SensorReportElement>} sensorReportList - the sensorReports to remove
    * @return {SensorElement} - the objectEvent instance
    */
-  removeSensorReportList (sensorReportList) {
+  removeSensorReportList(sensorReportList) {
     if (!this.sensorReport) {
-      this.sensorReport = []
+      this.sensorReport = [];
     }
-    sensorReportList.forEach(sensorReportElement => this.removeSensorReport(sensorReportElement))
-    return this
+    sensorReportList.forEach((sensorReportElement) => this.removeSensorReport(sensorReportElement));
+    return this;
   }
 
   /**
    * Getter for the sensorReport property
    * @return {SensorReportElement} - the sensorReport
    */
-  getSensorReport () {
-    return this.sensorReport
+  getSensorReport() {
+    return this.sensorReport;
   }
 }

@@ -1,7 +1,7 @@
-import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils'
-import settings from '../../settings'
-import ErrorDeclaration from '../model/ErrorDeclaration'
-import Entity from '../Entity'
+import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils';
+import settings from '../../settings';
+import ErrorDeclaration from '../model/ErrorDeclaration';
+import Entity from '../Entity';
 
 /**
  * Abstract class Event
@@ -15,25 +15,30 @@ export default class Event extends Entity {
    * Only the errorDeclaration will be set here from the JSON passed in param, the other fields are
    * set in the extended classes
    */
-  constructor (event) {
-    super(event)
+  constructor(event) {
+    super(event);
     if (new.target === Event) {
-      throw new Error("Abstract classes can't be instantiated.")
+      throw new Error('Abstract classes can\'t be instantiated.');
     }
 
     if (settings.eventTimeZoneOffset !== '') {
-      this.setEventTimeZoneOffset(settings.eventTimeZoneOffset)
+      this.setEventTimeZoneOffset(settings.eventTimeZoneOffset);
     }
 
-    for (const prop in event) {
-      if (event.hasOwnProperty(prop)) {
-        switch (prop) {
-          case 'errorDeclaration':
-            this.setErrorDeclaration(new ErrorDeclaration(event[prop]))
-            break
-        }
-      }
+    if (!arguments.length || event === undefined) {
+      // create an empty Event object
+      return;
     }
+
+    Object.entries(event).forEach(([key, value]) => {
+      switch (key) {
+        case 'errorDeclaration':
+          this.setErrorDeclaration(new ErrorDeclaration(value));
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   /**
@@ -41,17 +46,17 @@ export default class Event extends Entity {
    * @param {string} id
    * @return {Event} - the event instance
    */
-  setEventID (id) {
-    this.eventID = id
-    return this
+  setEventID(id) {
+    this.eventID = id;
+    return this;
   }
 
   /**
    * Getter for the eventID property
    * @return {string} - the eventID
    */
-  getEventID () {
-    return this.eventID
+  getEventID() {
+    return this.eventID;
   }
 
   /**
@@ -62,21 +67,23 @@ export default class Event extends Entity {
    *      the extracted offset (here: '-06:00')
    * @return {Event} - the event instance
    */
-  setEventTime (time) {
-    this.eventTime = time
+  setEventTime(time) {
+    this.eventTime = time;
     if (!this.eventTimeZoneOffset) {
-      const offset = getTheTimeZoneOffsetFromDateString(time)
-      if (offset) { this.setEventTimeZoneOffset(offset) }
+      const offset = getTheTimeZoneOffsetFromDateString(time);
+      if (offset) {
+        this.setEventTimeZoneOffset(offset);
+      }
     }
-    return this
+    return this;
   }
 
   /**
    * Getter for the eventTime property
    * @return {string} - the eventTime
    */
-  getEventTime () {
-    return this.eventTime
+  getEventTime() {
+    return this.eventTime;
   }
 
   /**
@@ -85,17 +92,17 @@ export default class Event extends Entity {
    * (e.g -6 or 2.5 if it is a number)
    * @return {Event} - the event instance
    */
-  setEventTimeZoneOffset (offset) {
-    this.eventTimeZoneOffset = getTimeZoneOffsetFromStringOrNumber(offset)
-    return this
+  setEventTimeZoneOffset(offset) {
+    this.eventTimeZoneOffset = getTimeZoneOffsetFromStringOrNumber(offset);
+    return this;
   }
 
   /**
    * Getter for the eventTimeZoneOffset property
    * @return {string} - the eventTimeZoneOffset
    */
-  getEventTimeZoneOffset () {
-    return this.eventTimeZoneOffset
+  getEventTimeZoneOffset() {
+    return this.eventTimeZoneOffset;
   }
 
   /**
@@ -103,17 +110,17 @@ export default class Event extends Entity {
    * @param {string} time - a string corresponding to the time
    * @return {Event} - the event instance
    */
-  setRecordTime (time) {
-    this.recordTime = time
-    return this
+  setRecordTime(time) {
+    this.recordTime = time;
+    return this;
   }
 
   /**
    * Getter for the recordTime property
    * @return {string} - the recordTime
    */
-  getRecordTime () {
-    return this.recordTime
+  getRecordTime() {
+    return this.recordTime;
   }
 
   /**
@@ -121,16 +128,16 @@ export default class Event extends Entity {
    * @param {ErrorDeclaration} errorDeclaration
    * @return {Event} - the event instance
    */
-  setErrorDeclaration (errorDeclaration) {
-    this.errorDeclaration = errorDeclaration
-    return this
+  setErrorDeclaration(errorDeclaration) {
+    this.errorDeclaration = errorDeclaration;
+    return this;
   }
 
   /**
    * Getter for the errorDeclaration property
    * @return {ErrorDeclaration} - the errorDeclaration
    */
-  getErrorDeclaration () {
-    return this.errorDeclaration
+  getErrorDeclaration() {
+    return this.errorDeclaration;
   }
 }

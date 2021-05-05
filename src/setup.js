@@ -1,4 +1,4 @@
-import settings from './settings'
+import settings from './settings';
 
 /**
  * Override global settings. Ignore unknown settings.
@@ -6,6 +6,6 @@ import settings from './settings'
  * @param {Object} newSettings - Custom settings
  * @returns {Object} new
  */
-export default function setup (newSettings = {}) {
-  return Object.assign(settings, newSettings)
+export default function setup(newSettings = {}) {
+  return Object.assign(settings, newSettings);
 }

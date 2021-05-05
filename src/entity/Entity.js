@@ -1,25 +1,23 @@
-import { objectToJSON } from '../utils/utils'
+import { objectToJSON } from '../utils/utils';
 
 export default class Entity {
   /**
    * You can either create an empty Entity or provide an already existing Entity via Map
    * @param {{}} [entity] - The Map that will be used to create the entity
    */
-  constructor (entity) {
+  constructor(entity) {
     if (new.target === Entity) {
-      throw new Error("Abstract classes can't be instantiated.")
+      throw new Error('Abstract classes can\'t be instantiated.');
     }
 
-    if (!arguments.length) {
+    if (!arguments.length || entity === undefined) {
       // create an empty Entity object
-      return
+      return;
     }
 
-    for (const prop in entity) {
-      if (entity.hasOwnProperty(prop)) {
-        this[prop] = entity[prop]
-      }
-    }
+    Object.entries(entity).forEach(([key, value]) => {
+      this[key] = value;
+    });
   }
 
   /**
@@ -27,18 +25,18 @@ export default class Entity {
    * @param {string} value
    * @return {Entity} - the entity instance
    */
-  addExtension (key, value) {
-    this[key] = value
-    return this
+  addExtension(key, value) {
+    this[key] = value;
+    return this;
   }
 
   /**
    * @param {string} key
    * @return {Entity} - the entity instance
    */
-  removeExtension (key) {
-    delete this[key]
-    return this
+  removeExtension(key) {
+    delete this[key];
+    return this;
   }
 
   // todo: getExtensions?
@@ -46,31 +44,31 @@ export default class Entity {
   /**
    * Return a JSON object corresponding to the SourceElement object
    */
-  toObject () {
-    const json = {}
+  toObject() {
+    const json = {};
 
-    for (const prop in this) {
+    Object.keys(this).forEach((prop) => {
       if (this.hasOwnProperty(prop)) {
         if (typeof this[prop].push === 'function') {
           if (!this[prop].length) {
-            json[prop] = []
+            json[prop] = [];
           } else {
-            json[prop] = []
-            this[prop].forEach((e) => json[prop].push(objectToJSON(e)))
+            json[prop] = [];
+            this[prop].forEach((e) => json[prop].push(objectToJSON(e)));
           }
         } else {
-          json[prop] = objectToJSON(this[prop])
+          json[prop] = objectToJSON(this[prop]);
         }
       }
-    }
+    });
 
-    return json
+    return json;
   }
 
   /**
    * @returns {string} - a string corresponding to the Entity object
    */
-  toString () {
-    return JSON.stringify(this.toObject())
+  toString() {
+    return JSON.stringify(this.toObject());
   }
 }

@@ -78,7 +78,6 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.13.12",
     "@babel/register": "^7.13.16",
-    "ajv": "^6.12.6",
     "babel-loader": "^8.2.2",
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
@@ -101,6 +100,7 @@
     "wnpm-ci": "^7.0.100"
   },
   "dependencies": {
+    "ajv": "^6.12.6",
     "@babel/runtime": "^7.13.17",
     "fs": "0.0.1-security",
     "is-plain-object": "^5.0.0",

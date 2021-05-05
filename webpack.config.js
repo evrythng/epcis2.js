@@ -1,16 +1,16 @@
-const { resolve } = require('path')
+const { resolve } = require('path');
 
-const path = resolve(__dirname, 'dist')
-const entry = './src/index.js'
-const library = 'epcis2'
+const path = resolve(__dirname, 'dist');
+const entry = './src/index.js';
+const library = 'epcis2';
 
 const browserConfig = {
-  entry: entry,
+  entry,
   output: {
-    path: path,
-    library: library,
+    path,
+    library,
     filename: 'epcis2.browser.js',
-    libraryTarget: 'var'
+    libraryTarget: 'var',
   },
   mode: 'production',
   module: {
@@ -21,23 +21,23 @@ const browserConfig = {
         exclude: /node_modules/,
         options: {
           presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']
-        }
-      }
-    ]
-  }
-}
+          plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties'],
+        },
+      },
+    ],
+  },
+};
 
 const nodeConfig = {
-  entry: entry,
+  entry,
   target: 'node',
   output: {
-    path: path,
-    library: library,
+    path,
+    library,
     filename: 'epcis2.node.js',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    globalObject: "typeof self !== 'undefined' ? self : this"
+    globalObject: "typeof self !== 'undefined' ? self : this",
   },
   mode: 'production',
   module: {
@@ -48,11 +48,11 @@ const nodeConfig = {
         exclude: /node_modules/,
         options: {
           presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']
-        }
-      }
-    ]
-  }
-}
+          plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties'],
+        },
+      },
+    ],
+  },
+};
 
-module.exports = [browserConfig, nodeConfig]
+module.exports = [browserConfig, nodeConfig];

@@ -5,15 +5,73 @@
  */
 export const numberToTwoCharString = (number) => {
   if (number > 99 || number < 0) {
-    throw new Error('The number has to be between 0 and 99')
+    throw new Error('The number has to be between 0 and 99');
   }
 
   if (number > 9) {
-    return number.toString()
+    return number.toString();
   }
 
-  return '0' + number.toString()
-}
+  return `0${number.toString()}`;
+};
+
+/**
+ *
+ * @param {number} hours
+ * @param {number} minutes
+ * @return {string} - a string corresponding to the offset (e.g "+02:00")
+ */
+export const offsetToString = (hours, minutes) => {
+  if (hours >= 0) {
+    return `+${numberToTwoCharString(hours)}:${numberToTwoCharString(minutes)}`;
+  }
+  return `-${numberToTwoCharString(-1 * hours)}:${numberToTwoCharString(minutes)}`;
+};
+
+/**
+ * Return a string corresponding to the offset passed in parameter
+ * @param {number|string} offset - the time zone offset
+ * (e.g "+02:30" or "-06:00" if it is a string)
+ * (e.g -6 or 2.5 if it is a number)
+ * @return {string} a string corresponding to the offset (e.g "+02:00")
+ */
+export const getTimeZoneOffsetFromStringOrNumber = (offset) => {
+  if ((typeof offset) === 'string') {
+    let [strHours, strMinutes] = offset.split(':'); // eslint-disable-line prefer-const
+
+    if (offset.length !== 6 || strHours.length !== 3 || strMinutes.length !== 2) {
+      throw new Error('The TimeZoneOffset is invalid');
+    }
+
+    let sign = 0;
+
+    if (strHours.charAt(0) === '+') {
+      sign = 1;
+    } else if (strHours.charAt(0) === '-') {
+      sign = -1;
+    } else {
+      throw new Error('The first character of the offset shall be a \'+\' or a \'-\'');
+    }
+
+    strHours = strHours.substring(1);
+
+    if (Number.isNaN(Number(strHours)) || Number.isNaN(Number(strMinutes))) {
+      throw new Error('The hours and minutes shall be numbers in the string');
+    }
+
+    const hours = sign * parseInt(strHours, 10);
+    const minutes = parseInt(strMinutes, 10);
+    return offsetToString(hours, minutes);
+  }
+
+  if ((typeof offset) === 'number') {
+    const hours = Math.floor(offset);
+    const minutes = (offset - Math.floor(offset)) * 60;
+    return offsetToString(hours, minutes);
+  }
+
+  throw new Error('The parameter provided in the constructor should be a number or a string');
+};
 
 /**
  * Returns the offset of the date passed in parameter
@@ -25,76 +83,18 @@ export const numberToTwoCharString = (number) => {
  */
 export const getTheTimeZoneOffsetFromDateString = (date) => {
   if (!((typeof date) === 'string')) {
-    throw new Error('The parameter has to be a string')
+    throw new Error('The parameter has to be a string');
   }
   if (date.length < 7) {
-    return null
+    return null;
   }
-  const potentialOffset = date.substring(date.length - 6, date.length)
+  const potentialOffset = date.substring(date.length - 6, date.length);
   try {
-    return getTimeZoneOffsetFromStringOrNumber(potentialOffset)
+    return getTimeZoneOffsetFromStringOrNumber(potentialOffset);
   } catch (e) {
-    return null
+    return null;
   }
-}
-
-/**
- * Return a string corresponding to the offset passed in parameter
- * @param {number|string} offset - the time zone offset
- * (e.g "+02:30" or "-06:00" if it is a string)
- * (e.g -6 or 2.5 if it is a number)
- * @return {string} a string corresponding to the offset (e.g "+02:00")
- */
-export const getTimeZoneOffsetFromStringOrNumber = (offset) => {
-  if ((typeof offset) === 'string') {
-    let [strHours, strMinutes] = offset.split(':')
-
-    if (offset.length !== 6 || strHours.length !== 3 || strMinutes.length !== 2) {
-      throw new Error('The TimeZoneOffset is invalid')
-    }
-
-    let sign = 0
-
-    if (strHours.charAt(0) === '+') {
-      sign = 1
-    } else if (strHours.charAt(0) === '-') {
-      sign = -1
-    } else {
-      throw new Error('The first character of the offset shall be a \'+\' or a \'-\'')
-    }
-
-    strHours = strHours.substring(1)
-
-    if (isNaN(strHours) || isNaN(strMinutes)) {
-      throw new Error('The hours and minutes shall be numbers in the string')
-    }
-
-    const hours = sign * parseInt(strHours)
-    const minutes = parseInt(strMinutes)
-    return offsetToString(hours, minutes)
-  }
-
-  if ((typeof offset) === 'number') {
-    const hours = Math.floor(offset)
-    const minutes = (offset - Math.floor(offset)) * 60
-    return offsetToString(hours, minutes)
-  }
-
-  throw new Error('The parameter provided in the constructor should be a number or a string')
-}
-
-/**
- *
- * @param {number} hours
- * @param {number} minutes
- * @return {string} - a string corresponding to the offset (e.g "+02:00")
- */
-export const offsetToString = (hours, minutes) => {
-  if (hours >= 0) {
-    return `+${numberToTwoCharString(hours)}:${numberToTwoCharString(minutes)}`
-  }
-  return `-${numberToTwoCharString(-1 * hours)}:${numberToTwoCharString(minutes)}`
-}
+};
 
 /**
  * Returns a JSON corresponding to the parameter
@@ -104,8 +104,7 @@ export const offsetToString = (hours, minutes) => {
  */
 export const objectToJSON = (obj) => {
   if (typeof obj.toObject === 'function') {
-    return obj.toObject()
-  } else {
-    return obj
+    return obj.toObject();
   }
-}
+  return obj;
+};
