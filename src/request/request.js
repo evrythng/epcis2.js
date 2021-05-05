@@ -1,5 +1,4 @@
 import settings from '../settings';
-import { success, failure } from './callback';
 import buildParams from './buildParams';
 
 /**
@@ -71,13 +70,10 @@ function makeFetch(path, options) {
  *
  * @param {string} path - The url of the request
  * @param {Settings} [customOptions] - User options for this single request
- * @param {function} [callback] - Error first callback
  * @returns {Promise} - Response promise
  */
-export default function request(path, customOptions = {}, callback) {
+export default function request(path, customOptions = {}) {
   const initialOptions = mergeInitialOptions(customOptions);
 
   return makeFetch(path, initialOptions)
-    .then(success(callback))
-    .catch(failure(callback));
 }

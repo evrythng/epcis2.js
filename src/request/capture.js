@@ -8,15 +8,14 @@ import request from './request';
  *
  * @param {EPCISDocument} epcisDocument - The url of the request
  * @param {Settings} [customOptions] - User options for this single request
- * @param {function} [callback] - Error first callback
  * @returns {Promise} - Response promise
  */
-const capture = (epcisDocument, customOptions = {}, callback) => {
+const capture = (epcisDocument, customOptions = {}) => {
   const captureOptions = {};
   Object.assign(captureOptions, customOptions);
   captureOptions.method = 'POST';
   captureOptions.body = JSON.stringify(epcisDocument.toObject());
-  return request('capture', captureOptions, callback);
+  return request('capture', captureOptions);
 };
 
 export default capture;
