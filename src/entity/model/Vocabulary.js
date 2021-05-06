@@ -1,11 +1,6 @@
 import Entity from '../Entity';
 import VocabularyElement from './VocabularyElement';
 
-/**
- * Abstract class Event
- *
- * @class Event
- */
 export default class Vocabulary extends Entity {
   /**
    * You can either create an empty Vocabulary or provide an already existing vocabulary via Map
