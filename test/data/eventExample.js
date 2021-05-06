@@ -303,7 +303,7 @@ export const exampleEPCISDocument = {
     epcisMasterData: {
       vocabularyList: [
         {
-          "type": "vtype:BusinessLocation",
+          type: 'vtype:BusinessLocation',
           vocabularyElementList: [
             {
               isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
@@ -352,7 +352,7 @@ export const exampleEPCISDocument = {
           ],
         },
         {
-          "type": "vtype:ReadPoint",
+          type: 'vtype:ReadPoint',
           vocabularyElementList: [
             {
               isA: 'urn:epcglobal:epcis:vtype:ReadPoint',

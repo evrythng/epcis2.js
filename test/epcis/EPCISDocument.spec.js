@@ -7,7 +7,6 @@ import { ObjectEvent } from '../../src';
 import { exampleEPCISDocument } from '../data/eventExample';
 import exampleValidEPCISDocument from '../data/EPCISDocument-ObjectEvent.json';
 
-
 describe('unit tests for the EPCISDocument class', () => {
   const events = [
     new ObjectEvent(exampleEPCISDocument.epcisBody.eventList[0]),
