@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import setup from '../src/setup';
-import { defaultSettings } from '../src/settings';
-import EPCISDocument from '../src/entity/EPCISDocument';
+import setup from '../../src/setup';
+import { defaultSettings } from '../../src/settings';
+import EPCISDocument from '../../src/entity/epcis/EPCISDocument';
 
 const exampleEPCISDocument = {
   '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld', { example: 'http://ns.example.com/epcis/' }],

@@ -1,17 +1,17 @@
 import { expect } from 'chai';
-import ObjectEvent from '../src/entity/events/ObjectEvent';
-import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';
-import QuantityElement from '../src/entity/model/QuantityElement';
-import setup from '../src/setup';
-import { defaultSettings } from '../src/settings';
-import PersistentDisposition from '../src/entity/model/PersistentDisposition';
-import ReadPoint from '../src/entity/model/ReadPoint';
-import BizLocation from '../src/entity/model/BizLocation';
-import BizTransactionElement from '../src/entity/model/BizTransactionElement';
-import SourceElement from '../src/entity/model/SourceElement';
-import DestinationElement from '../src/entity/model/DestinationElement';
-import SensorElement from '../src/entity/model/sensor/SensorElement';
-import Ilmd from '../src/entity/model/Ilmd';
+import ObjectEvent from '../../src/entity/events/ObjectEvent';
+import ErrorDeclaration from '../../src/entity/model/ErrorDeclaration';
+import QuantityElement from '../../src/entity/model/QuantityElement';
+import setup from '../../src/setup';
+import { defaultSettings } from '../../src/settings';
+import PersistentDisposition from '../../src/entity/model/PersistentDisposition';
+import ReadPoint from '../../src/entity/model/ReadPoint';
+import BizLocation from '../../src/entity/model/BizLocation';
+import BizTransactionElement from '../../src/entity/model/BizTransactionElement';
+import SourceElement from '../../src/entity/model/SourceElement';
+import DestinationElement from '../../src/entity/model/DestinationElement';
+import SensorElement from '../../src/entity/model/sensor/SensorElement';
+import Ilmd from '../../src/entity/model/Ilmd';
 
 const sensorElementList = [
   {
