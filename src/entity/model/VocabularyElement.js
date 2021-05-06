@@ -106,15 +106,6 @@ export default class VocabularyElement extends Entity {
     return this.attributes;
   }
 
-
-
-
-
-
-
-
-
-
   /**
    * Add the child to the "children" field
    * @param {string} child
