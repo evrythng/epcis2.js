@@ -8,6 +8,9 @@ import BizLocation from '../src/entity/model/BizLocation';
 import BizTransactionElement from '../src/entity/model/BizTransactionElement';
 import SourceElement from '../src/entity/model/SourceElement';
 import DestinationElement from '../src/entity/model/DestinationElement';
+import Vocabulary from '../src/entity/model/Vocabulary';
+import VocabularyElement from '../src/entity/model/VocabularyElement';
+import AttributeElement from '../src/entity/model/AttributeElement';
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00';
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8';
@@ -20,18 +23,64 @@ const exampleQuantityElement = {
   quantity: 200,
   uom: 'KGM',
 };
-const JSONBizTransactionElement = {
+const exampleBizTransactionElement = {
   type: 'urn:epcglobal:cbv:btt:po',
   bizTransaction: 'http://transaction.acme.com/po/12345678',
 };
-const JSONSourceElement = {
+const exampleSourceElement = {
   type: 'urn:epcglobal:cbv:sdt:owning_party',
   source: 'urn:epc:id:pgln:9520001.11111',
 };
-const JSONDestinationElement = {
+const exampleDestinationElement = {
   type: 'urn:epcglobal:cbv:sdt:owning_party',
   destination: 'urn:epc:id:pgln:9520999.99999',
 };
+const exampleVocabulary = {
+  isA: 'Vocabulary',
+  type: 'vtype:ReadPoint',
+  vocabularyElementList: [{
+    isA: 'VocabularyElement',
+    id: 'urn:epc:id:sgln:0037000.00729.8201',
+    'cbvmda:site': '0037000007296',
+    'cbvmda:sst': 201,
+  },
+
+  {
+    isA: 'VocabularyElement',
+    id: 'urn:epc:id:sgln:0037000.00729.8202',
+    'cbvmda:site': '0037000007296',
+    'cbvmda:sst': 202,
+  },
+
+  {
+    isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+    id: 'urn:epc:id:sgln:0037000.00729.0',
+    attributes: [
+      { id: 'xmda:latitude', attribute: '+18.0000' },
+      { id: 'xmda:longitude', attribute: '-70.0000' },
+      {
+        id: 'xmda:address',
+        attribute: {
+          '@context': {
+            '@vocab': 'http://epcis.example.com/ns/',
+          },
+          isA: 'Address',
+          street: '100 Nowhere Street',
+          city: 'Fancy',
+          state: 'DC',
+          zip: '99999',
+        },
+      },
+    ],
+    children: [
+      'urn:epc:id:sgln:0037000.00729.8201',
+      'urn:epc:id:sgln:0037000.00729.8202',
+      'urn:epc:id:sgln:0037000.00729.8203',
+    ],
+  },
+  ],
+};
+const exampleVocabularyElements = exampleVocabulary.vocabularyElementList;
 
 describe('unit tests for model Objects', () => {
   describe('ErrorDeclaration.js', () => {
@@ -206,19 +255,19 @@ describe('unit tests for model Objects', () => {
     it('should create a valid BizTransactionElement object from setters', async () => {
       const bizTransaction = new BizTransactionElement();
       bizTransaction
-        .setType(JSONBizTransactionElement.type)
-        .setBizTransaction(JSONBizTransactionElement.bizTransaction);
+        .setType(exampleBizTransactionElement.type)
+        .setBizTransaction(exampleBizTransactionElement.bizTransaction);
 
-      expect(bizTransaction.getType()).to.be.equal(JSONBizTransactionElement.type);
+      expect(bizTransaction.getType()).to.be.equal(exampleBizTransactionElement.type);
       expect(bizTransaction.getBizTransaction()).to.be
-        .equal(JSONBizTransactionElement.bizTransaction);
+        .equal(exampleBizTransactionElement.bizTransaction);
     });
     it('should create a valid BizTransactionElement object from JSON', async () => {
-      const bizTransaction = new BizTransactionElement(JSONBizTransactionElement);
+      const bizTransaction = new BizTransactionElement(exampleBizTransactionElement);
 
       const json = bizTransaction.toObject();
-      expect(json.type).to.be.equal(JSONBizTransactionElement.type);
-      expect(json.bizTransaction).to.be.equal(JSONBizTransactionElement.bizTransaction);
+      expect(json.type).to.be.equal(exampleBizTransactionElement.type);
+      expect(json.bizTransaction).to.be.equal(exampleBizTransactionElement.bizTransaction);
     });
     it('should add and remove custom fields', async () => {
       const obj = new BizTransactionElement();
@@ -232,18 +281,18 @@ describe('unit tests for model Objects', () => {
     it('should create a valid SourceElement object from setters', async () => {
       const sourceElement = new SourceElement();
       sourceElement
-        .setType(JSONSourceElement.type)
-        .setSource(JSONSourceElement.source);
+        .setType(exampleSourceElement.type)
+        .setSource(exampleSourceElement.source);
 
-      expect(sourceElement.getType()).to.be.equal(JSONSourceElement.type);
-      expect(sourceElement.getSource()).to.be.equal(JSONSourceElement.source);
+      expect(sourceElement.getType()).to.be.equal(exampleSourceElement.type);
+      expect(sourceElement.getSource()).to.be.equal(exampleSourceElement.source);
     });
     it('should create a valid SourceElement object from JSON', async () => {
-      const sourceElement = new SourceElement(JSONSourceElement);
+      const sourceElement = new SourceElement(exampleSourceElement);
 
       const json = sourceElement.toObject();
-      expect(json.type).to.be.equal(JSONSourceElement.type);
-      expect(json.source).to.be.equal(JSONSourceElement.source);
+      expect(json.type).to.be.equal(exampleSourceElement.type);
+      expect(json.source).to.be.equal(exampleSourceElement.source);
     });
     it('should add and remove custom fields', async () => {
       const obj = new SourceElement();
@@ -257,18 +306,19 @@ describe('unit tests for model Objects', () => {
     it('should create a valid DestinationElement object from setters', async () => {
       const destinationElement = new DestinationElement();
       destinationElement
-        .setType(JSONDestinationElement.type)
-        .setDestination(JSONDestinationElement.destination);
+        .setType(exampleDestinationElement.type)
+        .setDestination(exampleDestinationElement.destination);
 
-      expect(destinationElement.getType()).to.be.equal(JSONDestinationElement.type);
-      expect(destinationElement.getDestination()).to.be.equal(JSONDestinationElement.destination);
+      expect(destinationElement.getType()).to.be.equal(exampleDestinationElement.type);
+      expect(destinationElement.getDestination())
+        .to.be.equal(exampleDestinationElement.destination);
     });
     it('should create a valid DestinationElement object from JSON', async () => {
-      const destinationElement = new DestinationElement(JSONDestinationElement);
+      const destinationElement = new DestinationElement(exampleDestinationElement);
 
       const json = destinationElement.toObject();
-      expect(json.type).to.be.equal(JSONDestinationElement.type);
-      expect(json.destination).to.be.equal(JSONDestinationElement.destination);
+      expect(json.type).to.be.equal(exampleDestinationElement.type);
+      expect(json.destination).to.be.equal(exampleDestinationElement.destination);
     });
     it('should add and remove custom fields', async () => {
       const obj = new DestinationElement();
@@ -320,7 +370,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.clearSetList();
       expect(persistentDisposition.set).to.be.equal(undefined);
     });
-    it('should not add the correctiveEventID list to JSON if it is not defined',
+    it('should not add the set list to JSON if it is not defined',
       async () => {
         const persistentDisposition = new PersistentDisposition();
         const json = persistentDisposition.toObject();
@@ -351,7 +401,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.clearUnsetList();
       expect(persistentDisposition.unset).to.be.equal(undefined);
     });
-    it('should not add the correctiveEventID list to JSON if it is not defined',
+    it('should not add the unset list to JSON if it is not defined',
       async () => {
         const persistentDisposition = new PersistentDisposition();
         const json = persistentDisposition.toObject();
@@ -363,6 +413,169 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal('value');
       obj.removeExtension('key');
       expect(obj.toObject().key).to.be.equal(undefined);
+    });
+  });
+  describe('Vocabulary.js', () => {
+    const vocabularyElement = exampleVocabularyElements.map((ve) => new VocabularyElement(ve));
+
+    it('should create a valid Vocabulary object from setters', async () => {
+      const vocabulary = new Vocabulary();
+      vocabulary
+        .setType(exampleVocabulary.type)
+        .addVocabularyElementList(exampleVocabulary.vocabularyElementList);
+
+      expect(vocabulary.getType()).to.be.equal(exampleVocabulary.type);
+      expect(vocabulary.getVocabularyElementList().length).to
+        .be.equal(exampleVocabulary.vocabularyElementList.length);
+    });
+    it('should create a valid Vocabulary object from JSON', async () => {
+      const vocabulary = new Vocabulary(exampleVocabulary);
+
+      expect(vocabulary.toObject()).to.deep
+        .equal(exampleVocabulary);
+    });
+
+    it('should add and remove vocabulary element', async () => {
+      const vocabulary = new Vocabulary();
+      vocabulary.addVocabularyElement(vocabularyElement[0]);
+      expect(vocabulary.getVocabularyElementList()).to.deep.equal([vocabularyElement[0]]);
+      vocabulary.addVocabularyElement(vocabularyElement[1]);
+      expect(vocabulary.getVocabularyElementList()).to.deep
+        .equal([vocabularyElement[0], vocabularyElement[1]]);
+      vocabulary.removeVocabularyElement(vocabularyElement[0]);
+      expect(vocabulary.getVocabularyElementList()).to.deep.equal([vocabularyElement[1]]);
+      vocabulary.removeVocabularyElement(vocabularyElement[1]);
+      expect(vocabulary.getVocabularyElementList()).to.deep.equal([]);
+    });
+    it('should add and remove a vocabulary element list', async () => {
+      const vocabulary = new Vocabulary();
+      vocabulary.addVocabularyElementList(vocabularyElement);
+      expect(vocabulary.toObject().vocabularyElementList).to.deep.equal(vocabularyElement);
+      vocabulary.removeVocabularyElementList(vocabularyElement);
+      expect(vocabulary.toObject().vocabularyElementList).to.deep.equal([]);
+    });
+    it('should clear the vocabulary element list', async () => {
+      const vocabulary = new Vocabulary();
+      vocabulary.addVocabularyElementList(vocabularyElement);
+      expect(vocabulary.toObject().vocabularyElementList).to.deep.equal(vocabularyElement);
+      vocabulary.clearVocabularyElementList();
+      expect(vocabulary.toObject().vocabularyElementList).to.be.equal(undefined);
+    });
+    it('should not add the vocabulary element list to JSON if it is not defined',
+      async () => {
+        const vocabulary = new Vocabulary();
+        const json = vocabulary.toObject();
+        expect(json.vocabularyElementList).to.be.equal(undefined);
+      });
+  });
+  describe('VocabularyElement.js', () => {
+    const attributeList = [
+      new AttributeElement(exampleVocabulary.vocabularyElementList[2].attributes[0]),
+      new AttributeElement(exampleVocabulary.vocabularyElementList[2].attributes[1]),
+      new AttributeElement(exampleVocabulary.vocabularyElementList[2].attributes[2]),
+    ];
+    const { children } = exampleVocabulary.vocabularyElementList[2];
+
+    it('should create a valid VocabularyElement object from setters', async () => {
+      const vocabularyE = new VocabularyElement();
+      vocabularyE
+        .setId(exampleVocabulary.vocabularyElementList[2].id)
+        .addChildList(children)
+        .addAttributeList(attributeList);
+
+      expect(vocabularyE.getId()).to.be.equal(exampleVocabulary.vocabularyElementList[2].id);
+      expect(vocabularyE.getChildren().length).to
+        .be.equal(exampleVocabulary.vocabularyElementList[2].children.length);
+      expect(vocabularyE.getAttributes().length).to
+        .be.equal(exampleVocabulary.vocabularyElementList[2].attributes.length);
+    });
+    it('should create a valid VocabularyElement object from JSON', async () => {
+      const vocabularyElement = new VocabularyElement(exampleVocabularyElements[2]);
+
+      expect(vocabularyElement.toObject()).to.deep.equal(exampleVocabularyElements[2]);
+    });
+
+    it('should add and remove attribute', async () => {
+      const vocabularyElement = new VocabularyElement();
+      vocabularyElement.addAttribute(attributeList[0]);
+      expect(vocabularyElement.getAttributes()[0]).to.deep.equal(attributeList[0]);
+      vocabularyElement.addAttribute(attributeList[1]);
+      expect(vocabularyElement.getAttributes()).to.deep
+        .equal([attributeList[0], attributeList[1]]);
+      vocabularyElement.removeAttribute(attributeList[0]);
+      expect(vocabularyElement.getAttributes()).to.deep.equal([attributeList[1]]);
+      vocabularyElement.removeAttribute(attributeList[1]);
+      expect(vocabularyElement.getAttributes()).to.deep.equal([]);
+    });
+    it('should add and remove an attribute List', async () => {
+      const vocabularyElement = new VocabularyElement();
+      vocabularyElement.addAttributeList(attributeList);
+      expect(vocabularyElement.getAttributes()).to.deep.equal(attributeList);
+      vocabularyElement.removeAttributeList(attributeList);
+      expect(vocabularyElement.getAttributes()).to.deep.equal([]);
+    });
+    it('should clear the attribute List', async () => {
+      const vocabularyElement = new VocabularyElement();
+      vocabularyElement.addAttributeList(attributeList);
+      expect(vocabularyElement.getAttributes()).to.deep.equal(attributeList);
+      vocabularyElement.clearAttributeList();
+      expect(vocabularyElement.getAttributes()).to.be.equal(undefined);
+    });
+    it('should not add the attributes list to JSON if it is not defined',
+      async () => {
+        const vocabularyElement = new VocabularyElement();
+        const json = vocabularyElement.toObject();
+        expect(json.attributes).to.be.equal(undefined);
+      });
+
+    it('should add and remove child', async () => {
+      const vocabularyElement = new VocabularyElement();
+      vocabularyElement.addChild(children[0]);
+      expect(vocabularyElement.getChildren()[0]).to.deep.equal(children[0]);
+      vocabularyElement.addChild(children[1]);
+      expect(vocabularyElement.getChildren()).to.deep.equal([children[0], children[1]]);
+      vocabularyElement.removeChild(children[0]);
+      expect(vocabularyElement.getChildren()).to.deep.equal([children[1]]);
+      vocabularyElement.removeChild(children[1]);
+      expect(vocabularyElement.getChildren()).to.deep.equal([]);
+    });
+    it('should add and remove a child List', async () => {
+      const vocabularyElement = new VocabularyElement();
+      vocabularyElement.addChildList(children);
+      expect(vocabularyElement.getChildren()).to.deep.equal(children);
+      vocabularyElement.removeChildList(children);
+      expect(vocabularyElement.getChildren()).to.deep.equal([]);
+    });
+    it('should clear the child List', async () => {
+      const vocabularyElement = new VocabularyElement();
+      vocabularyElement.addChildList(children);
+      expect(vocabularyElement.getChildren()).to.deep.equal(children);
+      vocabularyElement.clearChildren();
+      expect(vocabularyElement.getChildren()).to.be.equal(undefined);
+    });
+    it('should not add the child list to JSON if it is not defined',
+      async () => {
+        const vocabularyElement = new VocabularyElement();
+        const json = vocabularyElement.toObject();
+        expect(json.children).to.be.equal(undefined);
+      });
+  });
+  describe('AttributeElement.js', () => {
+    const exampleAttribute =
+      new AttributeElement(exampleVocabulary.vocabularyElementList[2].attributes[0]);
+
+    it('should create a valid AttributeElement object from setters', async () => {
+      const attributeElement = new AttributeElement();
+      attributeElement
+        .setId(exampleAttribute.id)
+        .setAttribute(exampleAttribute.attribute);
+
+      expect(attributeElement.getId()).to.be.equal(exampleAttribute.id);
+      expect(attributeElement.getAttribute()).to.be.equal(exampleAttribute.attribute);
+    });
+    it('should create a valid AttributeElement object from JSON', async () => {
+      const attributeElement = new AttributeElement(exampleAttribute);
+      expect(attributeElement.toObject()).to.deep.equal(exampleAttribute);
     });
   });
 });

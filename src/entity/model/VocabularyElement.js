@@ -19,6 +19,10 @@ export default class VocabularyElement extends Entity {
           value.forEach((attribute) => this
             .addAttribute(new AttributeElement(attribute)));
           break;
+        case 'children':
+          value.forEach((child) => this
+            .addChild(child));
+          break;
         default:
           break;
       }
@@ -65,7 +69,7 @@ export default class VocabularyElement extends Entity {
     if (!this.attributes) {
       this.attributes = [];
     }
-    this.attributes = { ...this.attributes, ...attributeList };
+    this.attributes = [...this.attributes, ...attributeList];
     return this;
   }
 
@@ -128,7 +132,7 @@ export default class VocabularyElement extends Entity {
     if (!this.children) {
       this.children = [];
     }
-    this.children = { ...this.children, ...childList };
+    this.children = [...this.children, ...childList];
     return this;
   }
 
