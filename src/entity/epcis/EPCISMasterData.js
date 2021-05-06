@@ -78,7 +78,7 @@ export default class EPCISMasterData extends Entity {
    * @return {EPCISMasterData} - the epcis master data instance
    */
   removeVocabularyList(vocabularyList) {
-    vocabularyList.forEach((epc) => this.removeVocabulary(epc));
+    vocabularyList.forEach((vocabulary) => this.removeVocabulary(vocabulary));
     return this;
   }
 
