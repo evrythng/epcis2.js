@@ -2,7 +2,6 @@ import Entity from '../Entity';
 import AttributeElement from './AttributeElement';
 
 export default class VocabularyElement extends Entity {
-
   constructor(vocabularyElement) {
     super(vocabularyElement);
 
@@ -11,6 +10,7 @@ export default class VocabularyElement extends Entity {
     }
 
     this.clearAttributeList();
+    this.clearChildren();
 
     // Create classes for sub-objects that are provided
     Object.entries(vocabularyElement).forEach(([key, value]) => {
@@ -65,7 +65,7 @@ export default class VocabularyElement extends Entity {
     if (!this.attributes) {
       this.attributes = [];
     }
-    this.attributes = {...this.attributes, ...attributeList}
+    this.attributes = { ...this.attributes, ...attributeList };
     return this;
   }
 
@@ -128,7 +128,7 @@ export default class VocabularyElement extends Entity {
     if (!this.children) {
       this.children = [];
     }
-    this.children = {...this.children, ...childList}
+    this.children = { ...this.children, ...childList };
     return this;
   }
 
@@ -168,5 +168,4 @@ export default class VocabularyElement extends Entity {
   getChildren() {
     return this.children;
   }
-
 }
