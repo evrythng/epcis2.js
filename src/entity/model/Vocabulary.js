@@ -22,9 +22,10 @@ export default class Vocabulary extends Entity {
 
     // Create classes for sub-objects that are provided
     Object.entries(event).forEach(([key, value]) => {
-      if (key === 'vocabularyElementList')
+      if (key === 'vocabularyElementList') {
         value.forEach((vocabularyElement) => this
           .addVocabularyElement(new VocabularyElement(vocabularyElement)));
+      }
     });
   }
 
@@ -87,7 +88,8 @@ export default class Vocabulary extends Entity {
    * @return {Vocabulary} - the vocabulary instance
    */
   removeVocabularyElement(vocabularyElement) {
-    this.vocabularyElementList = this.vocabularyElementList.filter((elem) => elem !== vocabularyElement);
+    this.vocabularyElementList = this.vocabularyElementList
+      .filter((elem) => elem !== vocabularyElement);
     return this;
   }
 
