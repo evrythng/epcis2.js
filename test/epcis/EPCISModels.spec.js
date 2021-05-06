@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import EPCISMasterData from '../../src/entity/epcis/EPCISMasterData';
 import Vocabulary from '../../src/entity/model/Vocabulary';
+import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
 
 const exampleEPCISHeader = {
   epcisMasterData: {
@@ -86,9 +87,12 @@ const exampleEPCISHeader = {
 
 describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () => {
   describe('EPCISMasterData.js', () => {
+    const vocabularyList = exampleEPCISHeader.epcisMasterData
+      .vocabularyList.map((v) => new Vocabulary(v));
+
     it('setters should set the variables correctly', async () => {
       const e = new EPCISMasterData()
-        .addVocabularyList(exampleEPCISHeader.epcisMasterData.vocabularyList);
+        .addVocabularyList(vocabularyList);
 
       expect(e.getVocabularyList()).to.deep
         .equal(exampleEPCISHeader.epcisMasterData.vocabularyList);
@@ -97,9 +101,6 @@ describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () =
       const e = new EPCISMasterData(exampleEPCISHeader.epcisMasterData);
       expect(e.toObject()).to.deep.equal(exampleEPCISHeader.epcisMasterData);
     });
-
-    const vocabularyList = exampleEPCISHeader.epcisMasterData
-      .vocabularyList.map((v) => new Vocabulary(v));
 
     it('should add and remove vocabulary', async () => {
       const e = new EPCISMasterData();
@@ -132,5 +133,18 @@ describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () =
         const json = e.toObject();
         expect(json.vocabularyList).to.be.equal(undefined);
       });
+  });
+  describe('EPCISHeader.js', () => {
+    it('setters should set the variables correctly', async () => {
+      const e = new EPCISHeader()
+        .setEPCISMasterData(new EPCISMasterData(exampleEPCISHeader.epcisMasterData));
+
+      expect(e.getEPCISMasterData()).to.deep
+        .equal(exampleEPCISHeader.epcisMasterData);
+    });
+    it('creation from object should set the variables correctly', async () => {
+      const e = new EPCISHeader(exampleEPCISHeader);
+      expect(e.toObject()).to.deep.equal(exampleEPCISHeader);
+    });
   });
 });
