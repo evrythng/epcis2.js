@@ -3,6 +3,8 @@ EPCIS 2.0 Javascript SDK
 
 The goal of this SDK is to easily create and send a customizable EPCISDocument.
 
+//todo: add what EPCIS 2.0 is and why this sdk makes life easier, the use cases, ...
+
 ## Building an EPCIS document
 
 ### Adding events to an EPCIS document
