@@ -1,10 +1,12 @@
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import setup from '../../src/setup';
 import { defaultSettings } from '../../src/settings';
 import EPCISDocument from '../../src/entity/epcis/EPCISDocument';
 import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
 import { ObjectEvent } from '../../src';
 import { exampleEPCISDocument } from '../data/eventExample';
+import exampleValidEPCISDocument from '../data/EPCISDocument-ObjectEvent.json';
+
 
 describe('unit tests for the EPCISDocument class', () => {
   const events = [
@@ -29,6 +31,9 @@ describe('unit tests for the EPCISDocument class', () => {
       expect(e.getUseEventListByDefault()).to.be.equal(false);
       expect(e.toObject().epcisBody.eventList).to.be.equal(undefined);
       expect(e.toObject().epcisBody.event).to.deep.equal(o.toObject());
+      e.addEvent(events[0]);
+      expect(e.toObject().epcisBody.eventList.length).to.be.equal(2);
+      expect(e.toObject().epcisBody.event).to.deep.equal(undefined);
     });
   });
 
@@ -51,7 +56,6 @@ describe('unit tests for the EPCISDocument class', () => {
     const e = new EPCISDocument(exampleEPCISDocument);
     expect(e.getEventList()[0]).to.be.instanceof(ObjectEvent);
     expect(e.toObject()).to.deep.equal(exampleEPCISDocument);
-    console.log(e.toString());
   });
   it('should set the object event in the eventList field', async () => {
     const o = new ObjectEvent();
@@ -67,6 +71,14 @@ describe('unit tests for the EPCISDocument class', () => {
     expect(e.getUseEventListByDefault()).to.be.equal(false);
     expect(e.toObject().epcisBody.eventList).to.be.equal(undefined);
     expect(e.toObject().epcisBody.event).to.deep.equal(o.toObject());
+  });
+  it('should not validate the document', async () => {
+    const e = new EPCISDocument();
+    assert.throws(() => e.isValid());
+  });
+  it('should validate the document', async () => {
+    const e = new EPCISDocument(exampleValidEPCISDocument);
+    expect(e.isValid()).to.be.equal(true);
   });
 
   describe('Context can have different types', () => {

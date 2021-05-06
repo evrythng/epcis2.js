@@ -2,6 +2,7 @@ import Entity from '../Entity';
 import EPCISHeader from './EPCISHeader';
 import settings from '../../settings';
 import objectToEvent from '../../utils/entityUtils';
+import validateSchema from '../../schema/validator';
 
 export default class EPCISDocument extends Entity {
   /**
@@ -212,6 +213,17 @@ export default class EPCISDocument extends Entity {
    */
   getEventList() {
     return this.eventList;
+  }
+
+  /**
+   * Check if the EPCISDocument respects the rules of the standard defined in
+   * src/schema/EPCISDocument.schema.json
+   * @return {boolean} - true if the EPCIS document is valid
+   * @throws {Error} - if the schema isn't valid
+   */
+  isValid() {
+    validateSchema(this);
+    return true;
   }
 
   /**

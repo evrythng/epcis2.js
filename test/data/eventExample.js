@@ -158,10 +158,10 @@ export const exampleObjectEvent = {
     type: 'urn:epcglobal:cbv:btt:po',
     bizTransaction: 'http://transaction.acme.com/po/12345678',
   },
-    {
-      type: 'urn:epcglobal:cbv:btt:po',
-      bizTransaction: 'http://transaction.acme.com/po/12345679',
-    }],
+  {
+    type: 'urn:epcglobal:cbv:btt:po',
+    bizTransaction: 'http://transaction.acme.com/po/12345679',
+  }],
   destinationList: [
     { type: 'urn:epcglobal:cbv:sdt:owning_party', destination: 'urn:epc:id:pgln:9520999.99999' },
   ],
@@ -218,39 +218,39 @@ export const exampleVocabulary = {
     'cbvmda:sst': 201,
   },
 
-    {
-      isA: 'VocabularyElement',
-      id: 'urn:epc:id:sgln:0037000.00729.8202',
-      'cbvmda:site': '0037000007296',
-      'cbvmda:sst': 202,
-    },
+  {
+    isA: 'VocabularyElement',
+    id: 'urn:epc:id:sgln:0037000.00729.8202',
+    'cbvmda:site': '0037000007296',
+    'cbvmda:sst': 202,
+  },
 
-    {
-      isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
-      id: 'urn:epc:id:sgln:0037000.00729.0',
-      attributes: [
-        { id: 'xmda:latitude', attribute: '+18.0000' },
-        { id: 'xmda:longitude', attribute: '-70.0000' },
-        {
-          id: 'xmda:address',
-          attribute: {
-            '@context': {
-              '@vocab': 'http://epcis.example.com/ns/',
-            },
-            isA: 'Address',
-            street: '100 Nowhere Street',
-            city: 'Fancy',
-            state: 'DC',
-            zip: '99999',
+  {
+    isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+    id: 'urn:epc:id:sgln:0037000.00729.0',
+    attributes: [
+      { id: 'xmda:latitude', attribute: '+18.0000' },
+      { id: 'xmda:longitude', attribute: '-70.0000' },
+      {
+        id: 'xmda:address',
+        attribute: {
+          '@context': {
+            '@vocab': 'http://epcis.example.com/ns/',
           },
+          isA: 'Address',
+          street: '100 Nowhere Street',
+          city: 'Fancy',
+          state: 'DC',
+          zip: '99999',
         },
-      ],
-      children: [
-        'urn:epc:id:sgln:0037000.00729.8201',
-        'urn:epc:id:sgln:0037000.00729.8202',
-        'urn:epc:id:sgln:0037000.00729.8203',
-      ],
-    },
+      },
+    ],
+    children: [
+      'urn:epc:id:sgln:0037000.00729.8201',
+      'urn:epc:id:sgln:0037000.00729.8202',
+      'urn:epc:id:sgln:0037000.00729.8203',
+    ],
+  },
   ],
 };
 export const exampleVocabularyElements = exampleVocabulary.vocabularyElementList;
@@ -259,7 +259,7 @@ export const exampleEPCISDocument = {
   '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld', { example: 'http://ns.example.com/epcis/' }],
   id: '_:document1',
   isA: 'EPCISDocument',
-  schemaVersion: '2.0',
+  schemaVersion: 2.0,
   creationDate: '2005-07-11T11:30:47.0Z',
   format: 'application/ld+json',
   epcisBody: {
@@ -303,6 +303,7 @@ export const exampleEPCISDocument = {
     epcisMasterData: {
       vocabularyList: [
         {
+          "type": "vtype:BusinessLocation",
           vocabularyElementList: [
             {
               isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
@@ -351,6 +352,7 @@ export const exampleEPCISDocument = {
           ],
         },
         {
+          "type": "vtype:ReadPoint",
           vocabularyElementList: [
             {
               isA: 'urn:epcglobal:epcis:vtype:ReadPoint',
