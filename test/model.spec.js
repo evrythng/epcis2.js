@@ -431,6 +431,7 @@ describe('unit tests for model Objects', () => {
     it('should create a valid Vocabulary object from JSON', async () => {
       const vocabulary = new Vocabulary(exampleVocabulary);
 
+      expect(vocabulary.getVocabularyElementList()[0]).to.be.instanceof(VocabularyElement);
       expect(vocabulary.toObject()).to.deep
         .equal(exampleVocabulary);
     });
@@ -492,6 +493,7 @@ describe('unit tests for model Objects', () => {
     it('should create a valid VocabularyElement object from JSON', async () => {
       const vocabularyElement = new VocabularyElement(exampleVocabularyElements[2]);
 
+      expect(vocabularyElement.getAttributes()[0]).to.be.instanceof(AttributeElement);
       expect(vocabularyElement.toObject()).to.deep.equal(exampleVocabularyElements[2]);
     });
 

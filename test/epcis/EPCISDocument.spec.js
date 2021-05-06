@@ -174,7 +174,7 @@ describe('unit tests for the EPCISDocument class', () => {
   });
   it('creation from object should set the variables correctly', async () => {
     const e = new EPCISDocument(exampleEPCISDocument);
-    expect(e.getEventList()[0] instanceof ObjectEvent).to.be.equal(true);
+    expect(e.getEventList()[0]).to.be.instanceof(ObjectEvent);
     expect(e.toObject()).to.deep.equal(exampleEPCISDocument);
   });
   it('should set the object event in the eventList field', async () => {

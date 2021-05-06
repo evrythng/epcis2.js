@@ -52,7 +52,7 @@ describe('unit tests for util functions', () => {
     });
     it('should return an ObjectEvent', async () => {
       const o = objectToEvent({ isA: 'ObjectEvent' });
-      expect(o instanceof ObjectEvent).to.equal(true);
+      expect(o).to.be.instanceof(ObjectEvent);
     });
     it('should return a aggregationEvent');
     it('should return a associationEvent');

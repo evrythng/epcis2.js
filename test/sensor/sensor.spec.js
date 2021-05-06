@@ -198,6 +198,8 @@ describe('unit tests for sensor relative Objects', () => {
     });
     it('should create a valid SensorElement object from JSON', async () => {
       const sensorElement = new SensorElement(exampleSensorElement);
+      expect(sensorElement.getSensorReport()[1]).to.be.instanceof(SensorReportElement);
+      expect(sensorElement.getSensorMetadata()).to.be.instanceof(SensorMetadata);
       expect(sensorElement.toObject()).to.deep.equal(exampleSensorElement);
     });
     it('should add and remove custom fields', async () => {

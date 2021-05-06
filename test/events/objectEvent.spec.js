@@ -197,6 +197,15 @@ describe('unit tests for the ObjectEvent class', () => {
   });
   it('should create an ObjectEvent from json', async () => {
     const obj = new ObjectEvent(exampleObjectEvent);
+    expect(obj.getBizLocation()).to.be.instanceof(BizLocation);
+    expect(obj.getBizTransactionList()[0]).to.be.instanceof(BizTransactionElement);
+    expect(obj.getDestinationList()[0]).to.be.instanceof(DestinationElement);
+    expect(obj.getPersistentDisposition()).to.be.instanceof(PersistentDisposition);
+    expect(obj.getQuantityList()[0]).to.be.instanceof(QuantityElement);
+    expect(obj.getReadPoint()).to.be.instanceof(ReadPoint);
+    expect(obj.getErrorDeclaration()).to.be.instanceof(ErrorDeclaration);
+    expect(obj.getSensorElementList()[0]).to.be.instanceof(SensorElement);
+    expect(obj.getSourceList()[0]).to.be.instanceof(SourceElement);
     expect(obj.toObject()).to.deep.equal(exampleObjectEvent);
   });
   it('should be able to set the time zone offset from number or string', async () => {
