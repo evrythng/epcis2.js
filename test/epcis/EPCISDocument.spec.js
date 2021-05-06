@@ -48,7 +48,7 @@ const exampleEPCISDocument = {
   },
 };
 
-describe('unit tests for the ObjectEvent class', () => {
+describe('unit tests for the EPCISDocument class', () => {
   describe('setup function and EPCISDocument class', () => {
     afterEach((done) => {
       setup(defaultSettings);
