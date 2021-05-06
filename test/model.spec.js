@@ -11,76 +11,20 @@ import DestinationElement from '../src/entity/model/DestinationElement';
 import Vocabulary from '../src/entity/model/Vocabulary';
 import VocabularyElement from '../src/entity/model/VocabularyElement';
 import AttributeElement from '../src/entity/model/AttributeElement';
+import {
+  exampleVocabulary,
+  exampleQuantityElement,
+  exampleBizTransactionElement,
+  exampleSourceElement,
+  exampleDestinationElement,
+  exampleVocabularyElements,
+} from './data/eventExample';
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00';
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8';
 const correctiveEventID2 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a7';
 const correctiveEventID3 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a6';
 const reason = 'urn:epcglobal:cbv:er:incorrect_data';
-
-const exampleQuantityElement = {
-  epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
-  quantity: 200,
-  uom: 'KGM',
-};
-const exampleBizTransactionElement = {
-  type: 'urn:epcglobal:cbv:btt:po',
-  bizTransaction: 'http://transaction.acme.com/po/12345678',
-};
-const exampleSourceElement = {
-  type: 'urn:epcglobal:cbv:sdt:owning_party',
-  source: 'urn:epc:id:pgln:9520001.11111',
-};
-const exampleDestinationElement = {
-  type: 'urn:epcglobal:cbv:sdt:owning_party',
-  destination: 'urn:epc:id:pgln:9520999.99999',
-};
-const exampleVocabulary = {
-  isA: 'Vocabulary',
-  type: 'vtype:ReadPoint',
-  vocabularyElementList: [{
-    isA: 'VocabularyElement',
-    id: 'urn:epc:id:sgln:0037000.00729.8201',
-    'cbvmda:site': '0037000007296',
-    'cbvmda:sst': 201,
-  },
-
-  {
-    isA: 'VocabularyElement',
-    id: 'urn:epc:id:sgln:0037000.00729.8202',
-    'cbvmda:site': '0037000007296',
-    'cbvmda:sst': 202,
-  },
-
-  {
-    isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
-    id: 'urn:epc:id:sgln:0037000.00729.0',
-    attributes: [
-      { id: 'xmda:latitude', attribute: '+18.0000' },
-      { id: 'xmda:longitude', attribute: '-70.0000' },
-      {
-        id: 'xmda:address',
-        attribute: {
-          '@context': {
-            '@vocab': 'http://epcis.example.com/ns/',
-          },
-          isA: 'Address',
-          street: '100 Nowhere Street',
-          city: 'Fancy',
-          state: 'DC',
-          zip: '99999',
-        },
-      },
-    ],
-    children: [
-      'urn:epc:id:sgln:0037000.00729.8201',
-      'urn:epc:id:sgln:0037000.00729.8202',
-      'urn:epc:id:sgln:0037000.00729.8203',
-    ],
-  },
-  ],
-};
-const exampleVocabularyElements = exampleVocabulary.vocabularyElementList;
 
 describe('unit tests for model Objects', () => {
   describe('ErrorDeclaration.js', () => {

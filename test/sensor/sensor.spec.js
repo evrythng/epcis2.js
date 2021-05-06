@@ -2,83 +2,12 @@ import { expect } from 'chai';
 import SensorMetadata from '../../src/entity/model/sensor/SensorMetadata';
 import SensorReportElement from '../../src/entity/model/sensor/SensorReportElement';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
-
-const exampleSensorMetadata = {
-  time: '2019-04-02T14:05:00.000+01:00',
-  startTime: '2019-04-02T14:05:00.000+02:00',
-  endTime: '2019-04-02T14:05:00.000+03:00',
-  deviceID: 'urn:epc:id:giai:4000001.111',
-  deviceMetadata: 'https://id.gs1.org/giai/4000001111',
-  rawData: 'https://example.org/giai/401234599999',
-  bizRules: 'https://example.com/gdti/4012345000054987',
-  dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
-};
-const exampleSensorReportElement = {
-  type: 'gs1:MT-Temperature',
-  value: 26.0,
-  uom: 'CEL',
-  'ex:feature': 'ex:ambiance',
-  minValue: 12.4,
-  maxValue: 13.8,
-  microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
-  chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
-  component: 'componentValue',
-  deviceID: 'urn:epc:id:giai:4000001.111',
-  deviceMetadata: 'https://id.gs1.org/giai/4000001111',
-  rawData: 'https://example.org/giai/401234599999',
-  time: '2019-04-02T14:05:00.000+01:00',
-  meanValue: 13.2,
-  sDev: 0.41,
-  percRank: 50,
-  percValue: 12.7,
-  'example:cv': '123',
-  hexBinaryValue: 'F0F0F0',
-  stringValue: 'SomeString',
-  booleanValue: true,
-  uriValue: 'https://example.org/example/someSectorSpecificValue',
-  dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
-  bizRules: 'https://example.org/gdti/4012345000054987',
-};
-const exampleSensorReportElement2 = {
-  type: 'gs1:MT-Humidity',
-  value: 26.0,
-  uom: 'CEL',
-  'ex:feature': 'ex:ambiance',
-  minValue: 12.4,
-  maxValue: 13.8,
-  microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
-  chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
-  component: 'componentValue',
-  deviceID: 'urn:epc:id:giai:4000001.111',
-  deviceMetadata: 'https://id.gs1.org/giai/4000001111',
-  rawData: 'https://example.org/giai/401234599999',
-  time: '2019-04-02T14:05:00.000+01:00',
-  meanValue: 13.2,
-  sDev: 0.41,
-  percRank: 50,
-  percValue: 12.7,
-  'example:cv': '123',
-  hexBinaryValue: 'F0F0F0',
-  stringValue: 'SomeString',
-  booleanValue: true,
-  uriValue: 'https://example.org/example/someSectorSpecificValue',
-  dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
-  bizRules: 'https://example.org/gdti/4012345000054987',
-};
-const exampleSensorElement = {
-  sensorMetadata: {
-    time: '2019-07-19T14:00:00.000+01:00', deviceID: 'urn:epc:id:giai:4000001.111', deviceMetadata: 'https://id.gs1.org/giai/4000001111', rawData: 'https://example.org/giai/401234599999', dataProcessingMethod: 'https://example.com/gdti/4012345000054987', bizRules: 'https://example.org/gdti/4012345000054987',
-  },
-  sensorReport: [
-    { type: 'gs1:MT-Humidity', value: 12.1, uom: 'A93' },
-    {
-      type: 'gs1:MT-Molar_concentration', chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N', value: 0.18, uom: 'C35',
-    },
-    {
-      type: 'gs1:MT-Molar_concentration', microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011', value: 0.05, uom: 'C35',
-    },
-  ],
-};
+import {
+  exampleSensorElement,
+  exampleSensorMetadata,
+  exampleSensorReportElement,
+  exampleSensorReportElement2,
+} from '../data/eventExample';
 
 describe('unit tests for sensor relative Objects', () => {
   describe('SensorMetadata.js', () => {
