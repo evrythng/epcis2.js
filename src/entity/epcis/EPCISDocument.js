@@ -1,4 +1,5 @@
 import Entity from '../Entity';
+import EPCISHeader from './EPCISHeader';
 
 export default class EPCISDocument extends Entity {
   /**
@@ -16,7 +17,9 @@ export default class EPCISDocument extends Entity {
 
     // Create classes for sub-objects that are provided
     Object.entries(epcisDocument).forEach(([key, value]) => {
-
+      if (key === 'epcisHeader') {
+        this.setEPCISHeader(new EPCISHeader(value));
+      }
     });
   }
 
@@ -90,5 +93,23 @@ export default class EPCISDocument extends Entity {
    */
   getFormat() {
     return this.format;
+  }
+
+  /**
+   * Set the epcisHeader property
+   * @param {EPCISHeader} epcisHeader
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  setEPCISHeader(epcisHeader) {
+    this.epcisHeader = epcisHeader;
+    return this;
+  }
+
+  /**
+   * Getter for the epcisHeader property
+   * @return {EPCISHeader} - the epcisHeader
+   */
+  getEPCISHeader() {
+    return this.epcisHeader;
   }
 }

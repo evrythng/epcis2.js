@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import setup from '../../src/setup';
 import { defaultSettings } from '../../src/settings';
 import EPCISDocument from '../../src/entity/epcis/EPCISDocument';
+import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
 
 const exampleEPCISDocument = {
   '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld', { example: 'http://ns.example.com/epcis/' }],
@@ -46,6 +47,87 @@ const exampleEPCISDocument = {
       },
     ],
   },
+  epcisHeader: {
+    epcisMasterData: {
+      vocabularyList: [
+        {
+          vocabularyElementList: [
+            {
+              isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              id: 'urn:epc:id:sgln:0037000.00729.0',
+              attributes: [
+                { id: 'xmda:latitude', attribute: '+18.0000' },
+                { id: 'xmda:longitude', attribute: '-70.0000' },
+                {
+                  id: 'xmda:address',
+                  attribute: {
+                    '@context': {
+                      '@vocab': 'http://epcis.example.com/ns/',
+                    },
+                    isA: 'Address',
+                    street: '100 Nowhere Street',
+                    city: 'Fancy',
+                    state: 'DC',
+                    zip: '99999',
+                  },
+                },
+              ],
+              children: [
+                'urn:epc:id:sgln:0037000.00729.8201',
+                'urn:epc:id:sgln:0037000.00729.8202',
+                'urn:epc:id:sgln:0037000.00729.8203',
+              ],
+            },
+            {
+              isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              id: 'urn:epc:id:sgln:0037000.00729.8202',
+              attributes: [
+                { id: 'cbvmda:sst', attribute: '202' },
+              ],
+              children: [
+                'urn:epc:id:sgln:0037000.00729.8203',
+              ],
+            },
+            {
+              isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              id: 'urn:epc:id:sgln:0037000.00729.8203',
+              attributes: [
+                { id: 'cbvmda:sst', attribute: '202' },
+                { id: 'cbvmda:ssa', attribute: '402' },
+              ],
+            },
+          ],
+        },
+        {
+          vocabularyElementList: [
+            {
+              isA: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              id: 'urn:epc:id:sgln:0037000.00729.8201',
+              attributes: [
+                { id: 'cbvmda:site', attribute: '0037000007296' },
+                { id: 'cbvmda:sst', attribute: 201 },
+              ],
+            },
+            {
+              isA: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              id: 'urn:epc:id:sgln:0037000.00729.8202',
+              attributes: [
+                { id: 'cbvmda:site', attribute: '0037000007296' },
+                { id: 'cbvmda:sst', attribute: '202' },
+              ],
+            },
+            {
+              isA: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              id: 'urn:epc:id:sgln:0037000.00729.8203',
+              attributes: [
+                { id: 'cbvmda:sst', attribute: 204 },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
 };
 
 describe('unit tests for the EPCISDocument class', () => {
@@ -65,11 +147,13 @@ describe('unit tests for the EPCISDocument class', () => {
       .setContext(exampleEPCISDocument['@context'])
       .setCreationDate(exampleEPCISDocument.creationDate)
       .setSchemaVersion(exampleEPCISDocument.schemaVersion)
-      .setFormat(exampleEPCISDocument.format);
+      .setFormat(exampleEPCISDocument.format)
+      .setEPCISHeader(new EPCISHeader(exampleEPCISDocument.epcisHeader));
     expect(e.getContext()).to.be.equal(exampleEPCISDocument['@context']);
     expect(e.getCreationDate()).to.be.equal(exampleEPCISDocument.creationDate);
     expect(e.getSchemaVersion()).to.be.equal(exampleEPCISDocument.schemaVersion);
-    expect(e.getSchemaVersion()).to.be.equal(exampleEPCISDocument.schemaVersion);
+    expect(e.getFormat()).to.be.equal(exampleEPCISDocument.format);
+    expect(e.getEPCISHeader().toObject()).to.deep.equal(exampleEPCISDocument.epcisHeader);
   });
   it('creation from object should set the variables correctly', async () => {
     const e = new EPCISDocument(exampleEPCISDocument);
@@ -77,6 +161,8 @@ describe('unit tests for the EPCISDocument class', () => {
     expect(e.getContext()).to.be.equal(exampleEPCISDocument['@context']);
     expect(e.getCreationDate()).to.be.equal(exampleEPCISDocument.creationDate);
     expect(e.getSchemaVersion()).to.be.equal(exampleEPCISDocument.schemaVersion);
+    expect(e.getFormat()).to.be.equal(exampleEPCISDocument.format);
+    expect(e.getEPCISHeader().toObject()).to.deep.equal(exampleEPCISDocument.epcisHeader);
   });
 
   describe('Context can have different types', () => {
