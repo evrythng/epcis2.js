@@ -1,4 +1,5 @@
 import ObjectEvent from '../entity/events/ObjectEvent';
+import TransactionEvent from '../entity/events/TransactionEvent';
 
 /**
  * Returns an instance of an Event object corresponding to the object passed in param
@@ -16,8 +17,8 @@ const objectToEvent = (obj) => {
       return new ObjectEvent(obj);
     case 'AssociationEvent': // todo:
       return new ObjectEvent(obj);
-    case 'TransactionEvent': // todo:
-      return new ObjectEvent(obj);
+    case 'TransactionEvent':
+      return new TransactionEvent(obj);
     case 'TransformationEvent': // todo:
       return new ObjectEvent(obj);
     default:
