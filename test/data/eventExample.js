@@ -190,6 +190,54 @@ export const exampleObjectEvent = {
   },
   ilmd: { 'example:bestBeforeDate': '2014-12-10', 'example:batch': 'XYZ' },
 };
+export const exampleTransactionEvent = {
+  eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
+  isA: 'TransactionEvent',
+  action: 'OBSERVE',
+  bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
+  disposition: 'urn:epcglobal:cbv:disp:in_transit',
+  bizLocation: { id: 'urn:epc:id:sgln:9529999.99999.0' },
+  epcList: ['urn:epc:id:sgtin:0614141.107346.2017', 'urn:epc:id:sgtin:0614141.107346.2018'],
+  eventTime: '2005-04-03T20:33:31.116-06:00',
+  recordTime: '2020-04-04T20:33:31.116-06:00',
+  eventTimeZoneOffset: '-06:00',
+  readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
+  bizTransactionList: [{
+    type: 'urn:epcglobal:cbv:btt:po',
+    bizTransaction: 'http://transaction.acme.com/po/12345678',
+  },
+  {
+    type: 'urn:epcglobal:cbv:btt:po',
+    bizTransaction: 'http://transaction.acme.com/po/12345679',
+  }],
+  destinationList: [
+    { type: 'urn:epcglobal:cbv:sdt:owning_party', destination: 'urn:epc:id:pgln:9520999.99999' },
+  ],
+  'example:myField': 'Example of a vendor/user extension',
+  quantityList: [
+    { epcClass: 'urn:epc:class:lgtin:4012345.012345.998877', quantity: 200, uom: 'KGM' },
+    { epcClass: 'urn:epc:class:lgtin:4012345.012345.998878', quantity: 201, uom: 'KGM' },
+    { epcClass: 'urn:epc:class:lgtin:4012345.012345.998879', quantity: 202, uom: 'KGM' },
+  ],
+  sensorElementList,
+  errorDeclaration: {
+    declarationTime: '2020-01-15T00:00:00.000+01:00',
+    reason: 'urn:epcglobal:cbv:er:incorrect_data',
+    'example:vendorExtension': 'Test1',
+    correctiveEventIDs: [
+      'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8',
+    ],
+  },
+  sourceList: [
+    { type: 'urn:epcglobal:cbv:sdt:owning_party', source: 'urn:epc:id:pgln:9520001.11111' },
+    { type: 'urn:epcglobal:cbv:sdt:owning_party', source: 'urn:epc:id:pgln:9520001.11112' },
+  ],
+  persistentDisposition: {
+    set: ['urn:epcglobal:cbv:disp:completeness_inferred'],
+    unset: ['urn:epcglobal:cbv:disp:completeness_verified'],
+  },
+  parentID: 'parentID',
+};
 
 export const exampleQuantityElement = {
   epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
