@@ -4,6 +4,8 @@ import {
   getTimeZoneOffsetFromStringOrNumber,
   numberToZeroPadString, offsetToString,
 } from '../src/utils/utils';
+import objectToEvent from '../src/utils/entityUtils';
+import ObjectEvent from '../src/entity/events/ObjectEvent';
 
 describe('unit tests for util functions', () => {
   describe('numberToTwoCharString function', () => {
@@ -38,5 +40,23 @@ describe('unit tests for util functions', () => {
       expect(offsetToString(-6, 30)).to.be.equal('-06:30');
       expect(offsetToString(5, 30)).to.be.equal('+05:30');
     });
+  });
+  describe('object to event function', () => {
+    it('should not accept invalid parameter', async () => {
+      expect(() => objectToEvent({})).to.throw(
+        "The object passed in parameter isn't valid. The isA field should be set to a valid value",
+      );
+      expect(() => objectToEvent({ isA: 'foo' })).to.throw(
+        "The object passed in parameter isn't valid. The isA field should be set to a valid value",
+      );
+    });
+    it('should return an ObjectEvent', async () => {
+      const o = objectToEvent({ isA: 'ObjectEvent' });
+      expect(o instanceof ObjectEvent).to.equal(true);
+    });
+    it('should return a aggregationEvent');
+    it('should return a associationEvent');
+    it('should return a transactionEvent');
+    it('should return a transformationEvent');
   });
 });

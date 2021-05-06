@@ -85,16 +85,3 @@ export const getTheTimeZoneOffsetFromDateString = (date) => {
     return null;
   }
 };
-
-/**
- * Returns a JSON corresponding to the parameter
- * @param {any} obj
- * @return {Object} - a json if the object passed in param has a toObject function defined - the
- * object passed in param otherwise
- */
-export const objectToJSON = (obj) => {
-  if (typeof obj.toObject === 'function') {
-    return obj.toObject();
-  }
-  return obj;
-};

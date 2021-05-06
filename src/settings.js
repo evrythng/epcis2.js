@@ -7,6 +7,9 @@
  * @property {Object} headers - Headers to send with request
  * @property {string} eventTimeZoneOffset - The default eventTimeZoneOffset that will be set in
  * @property {number} timeout - Timeout for request
+ * @property {boolean} useEventListByDefault - if true, a single event will be in the eventList
+ * field of the EPCISDocument by default. Otherwise, it will be in the event field of the
+ * EPCISDocument
  * */
 
 /**
@@ -21,6 +24,7 @@ export const defaultSettings = {
   },
   eventTimeZoneOffset: undefined,
   timeout: undefined,
+  useEventListByDefault: true,
 };
 
 // Initialize settings with defaults.

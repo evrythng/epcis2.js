@@ -3,6 +3,73 @@ EPCIS 2.0 Javascript SDK
 
 The goal of this SDK is to easily create and send a customizable EPCISDocument.
 
+## Building an EPCIS document
+
+### Adding events to an EPCIS document
+To add an event to an EPCIS document, you can do like this: 
+```js
+const event = new ObjectEvent();
+const event2 = new ObjectEvent();
+const epcisDocument = new EPCISDocument();
+
+epcisDocument
+  .addEvent(event)
+  .addEvent(event2);
+
+console.log(epcisDocument.toObject());
+```
+
+This example would output:
+
+```json
+{
+  ...,
+  eventList: [
+    {
+      'isA': 'ObjectEvent',
+      ...
+    },
+    {
+      'isA': 'ObjectEvent',
+      ...
+    }
+  ]
+}
+```
+
+If you provide a single element, by default, it will be in the `eventList` field.
+
+```json
+{
+  ...,
+  eventList: [
+    {
+      'isA': 'ObjectEvent',
+      ...
+    }
+  ]
+}
+```
+
+However, you can override this default parameter like this:
+
+```js
+// to override it globally
+setup({useEventListByDefault: false});
+
+// to override it locally
+epcisDocument.setUseEventListByDefault(false);
+
+// the event will be in the event field (if there is only one event provided)
+{
+  ...,
+  event: {
+    'isA': 'ObjectEvent',
+    ...
+  }
+}
+```
+
 ### The setup function
 
 You can override the default settings by providing them to the setup function. For example, you can set a default 

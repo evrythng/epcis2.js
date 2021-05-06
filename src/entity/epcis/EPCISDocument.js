@@ -1,5 +1,7 @@
 import Entity from '../Entity';
 import EPCISHeader from './EPCISHeader';
+import settings from '../../settings';
+import objectToEvent from '../../utils/entityUtils';
 
 export default class EPCISDocument extends Entity {
   /**
@@ -11,14 +13,31 @@ export default class EPCISDocument extends Entity {
     super(epcisDocument);
     this.isA = 'EPCISDocument';
 
+    this.setUseEventListByDefault(settings.useEventListByDefault);
+
     if (!epcisDocument) {
       return;
     }
 
     // Create classes for sub-objects that are provided
     Object.entries(epcisDocument).forEach(([key, value]) => {
-      if (key === 'epcisHeader') {
-        this.setEPCISHeader(new EPCISHeader(value));
+      switch (key) {
+        case 'epcisHeader':
+          this.setEPCISHeader(new EPCISHeader(value));
+          break;
+        case 'epcisBody':
+          if (value.event) {
+            this.addEvent(objectToEvent(value.event));
+            break;
+          }
+          if (value.eventList) {
+            value.eventList.forEach((event) => this
+              .addEvent(objectToEvent(event)));
+            break;
+          }
+          break;
+        default:
+          break;
       }
     });
   }
@@ -96,6 +115,24 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
+   * Set the useEventListByDefault property
+   * @param {boolean} useEventListByDefault
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  setUseEventListByDefault(useEventListByDefault) {
+    this.useEventListByDefault = useEventListByDefault;
+    return this;
+  }
+
+  /**
+   * Getter for the useEventListByDefault property
+   * @return {boolean} - the useEventListByDefault
+   */
+  getUseEventListByDefault() {
+    return this.useEventListByDefault;
+  }
+
+  /**
    * Set the epcisHeader property
    * @param {EPCISHeader} epcisHeader
    * @return {EPCISDocument} - the epcisDocument instance
@@ -111,5 +148,98 @@ export default class EPCISDocument extends Entity {
    */
   getEPCISHeader() {
     return this.epcisHeader;
+  }
+
+  /**
+   * Add the event to the "eventList" field
+   * @param {Event} event - the event to add
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  addEvent(event) {
+    if (!this.eventList) {
+      this.eventList = [];
+    }
+    this.eventList.push(event);
+    return this;
+  }
+
+  /**
+   * Add each event to the "eventList" field
+   * @param {Array<Event>} eventList - the events to add
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  addEventList(eventList) {
+    if (!this.eventList) {
+      this.eventList = [];
+    }
+    this.eventList = [...this.eventList, ...eventList];
+    return this;
+  }
+
+  /**
+   * Clear the vocabularyList list
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  clearEventList() {
+    delete this.eventList;
+    return this;
+  }
+
+  /**
+   * Remove the event from the "eventList" field
+   * @param {Event} event - the events to remove
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  removeEvent(event) {
+    this.eventList = this.eventList
+      .filter((elem) => elem !== event);
+    return this;
+  }
+
+  /**
+   * Remove each event from the "eventList" field
+   * @param {Array<Event>} eventList - the events to remove
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  removeEventList(eventList) {
+    eventList.forEach((event) => this.removeEvent(event));
+    return this;
+  }
+
+  /**
+   * Getter for the eventList property
+   * @return {Array<Event>} - the eventList
+   */
+  getEventList() {
+    return this.eventList;
+  }
+
+  /**
+   * @return {Object} an object corresponding to the Entity object
+   */
+  toObject() {
+    const o = super.toObject();
+    delete o.useEventListByDefault;
+
+    // check the settings to know if a single event has to be in the event field or eventList field.
+    if (!this.useEventListByDefault && this.eventList.length < 2) {
+      delete o.eventList;
+      o.event = this.eventList.length ? this.eventList[0] : {};
+    }
+
+    // the event or event list has to be in the epcisBody field
+    if (o.event || o.eventList) {
+      const body = {};
+      if (o.event) {
+        body.event = o.event;
+        delete o.event;
+      } else {
+        body.eventList = o.eventList;
+        delete o.eventList;
+      }
+      o.epcisBody = body;
+    }
+
+    return o;
   }
 }
