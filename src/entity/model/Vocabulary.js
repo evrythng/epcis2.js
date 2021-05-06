@@ -9,19 +9,19 @@ import VocabularyElement from './VocabularyElement';
 export default class Vocabulary extends Entity {
   /**
    * You can either create an empty Vocabulary or provide an already existing vocabulary via Map
-   * @param {Object} [event] - The Map that will be used to create the Vocabulary entity
+   * @param {Object} [vocabulary] - The Map that will be used to create the Vocabulary entity
    */
-  constructor(event) {
-    super(event);
+  constructor(vocabulary) {
+    super(vocabulary);
 
-    if (!event) {
+    if (!vocabulary) {
       return;
     }
 
     this.clearVocabularyElementList();
 
     // Create classes for sub-objects that are provided
-    Object.entries(event).forEach(([key, value]) => {
+    Object.entries(vocabulary).forEach(([key, value]) => {
       if (key === 'vocabularyElementList') {
         value.forEach((vocabularyElement) => this
           .addVocabularyElement(new VocabularyElement(vocabularyElement)));
