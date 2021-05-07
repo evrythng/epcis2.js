@@ -6,6 +6,10 @@ import {
 } from '../src/utils/utils';
 import objectToEvent from '../src/utils/entityUtils';
 import ObjectEvent from '../src/entity/events/ObjectEvent';
+import TransformationEvent from '../src/entity/events/TransformationEvent';
+import TransactionEvent from '../src/entity/events/TransactionEvent';
+import AggregationEvent from '../src/entity/events/AggregationEvent';
+import AssociationEvent from '../src/entity/events/AssociationEvent';
 
 describe('unit tests for util functions', () => {
   describe('numberToTwoCharString function', () => {
@@ -54,9 +58,21 @@ describe('unit tests for util functions', () => {
       const o = objectToEvent({ isA: 'ObjectEvent' });
       expect(o).to.be.instanceof(ObjectEvent);
     });
-    it('should return a aggregationEvent');
-    it('should return a associationEvent');
-    it('should return a transactionEvent');
-    it('should return a transformationEvent');
+    it('should return an AggregationEvent', async () => {
+      const o = objectToEvent({ isA: 'AggregationEvent' });
+      expect(o).to.be.instanceof(AggregationEvent);
+    });
+    it('should return an TransactionEvent', async () => {
+      const o = objectToEvent({ isA: 'TransactionEvent' });
+      expect(o).to.be.instanceof(TransactionEvent);
+    });
+    it('should return an TransformationEvent', async () => {
+      const o = objectToEvent({ isA: 'TransformationEvent' });
+      expect(o).to.be.instanceof(TransformationEvent);
+    });
+    it('should return an AssociationEvent', async () => {
+      const o = objectToEvent({ isA: 'AssociationEvent' });
+      expect(o).to.be.instanceof(AssociationEvent);
+    });
   });
 });
