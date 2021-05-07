@@ -12,9 +12,9 @@ let req;
 
 describe('requests utils', () => {
   it('should build a valid url', () => {
-    expect(buildUrl(initialSettings, '')).to.be.equal(initialSettings.endpoint);
-    expect(buildUrl(initialSettings, 'capture')).to.be.equal(`${initialSettings.endpoint}capture`);
-    expect(buildUrl({ endpoint: 'https://example.com' }, 'capture')).to.be.equal('https://example.com/capture');
+    expect(buildUrl(initialSettings, '')).to.be.equal(initialSettings.apiUrl);
+    expect(buildUrl(initialSettings, 'capture')).to.be.equal(`${initialSettings.apiUrl}capture`);
+    expect(buildUrl({ apiUrl: 'https://example.com' }, 'capture')).to.be.equal('https://example.com/capture');
   });
 });
 
@@ -33,7 +33,7 @@ describe('requests', () => {
     describe('defaults', () => {
       it('should have default url and method', () => {
         req = request('').then(() => {
-          expect(fetchMock.lastUrl()).to.be.equal(initialSettings.endpoint);
+          expect(fetchMock.lastUrl()).to.be.equal(initialSettings.apiUrl);
         });
       });
     });

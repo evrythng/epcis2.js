@@ -30,7 +30,7 @@ function mergeInitialOptions(customOptions) {
  * @returns {string}
  */
 export function buildUrl(options, path) {
-  let url = `${options.endpoint}${options.endpoint.endsWith('/') ? path : `/${path}`}`;
+  let url = `${options.apiUrl}${options.apiUrl.endsWith('/') ? path : `/${path}`}`;
 
   if (options.params) {
     url += `?${buildParams(options.params)}`;

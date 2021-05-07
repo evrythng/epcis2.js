@@ -3,7 +3,7 @@
  * Available options are provided below:
  *
  * @typedef {Object} Settings
- * @property {string} endpoint - Url of the request
+ * @property {string} apiUrl - Url of the request
  * @property {Object} headers - Headers to send with request
  * @property {string} eventTimeZoneOffset - The default eventTimeZoneOffset that will be set in
  * @property {number} timeout - Timeout for request
@@ -18,7 +18,7 @@
  * @type {Settings}
  */
 export const defaultSettings = {
-  endpoint: 'https://epcis.evrythng.io/v2_0/',
+  apiUrl: 'https://epcis.evrythng.io/v2_0/',
   headers: {
     'content-type': 'application/json',
   },

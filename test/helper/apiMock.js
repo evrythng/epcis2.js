@@ -15,7 +15,7 @@ const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
  */
 export function prepare() {
   // Root - generic requests handles
-  fetchMock.mock(settings.endpoint, responses.ok);
+  fetchMock.mock(settings.apiUrl, responses.ok);
 }
 
 /**
