@@ -78,7 +78,7 @@ You can override the default settings by providing them to the setup function. F
 endpoint that will be use for each EPCIS request if none endpoint is provided.
 
 ```js
-setup({endpoint: 'example.com'});
+setup({endpoint: 'https://api.evrythng.io/v2/epcis'});
 ```
 
 ### The eventTimeZoneOffset property
