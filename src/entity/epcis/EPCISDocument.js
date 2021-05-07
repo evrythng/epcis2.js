@@ -8,7 +8,8 @@ export default class EPCISDocument extends Entity {
   /**
    * You can either create an empty EPCISDocument or provide an already existing EPCIS document via
    * Map
-   * @param {Object} [epcisDocument] - The Map that will be used to create the EPCISDocument entity
+   * @param {Object} [epcisDocument] - The object that will be used to create the EPCISDocument
+   * entity
    */
   constructor(epcisDocument) {
     super(epcisDocument);
@@ -236,7 +237,7 @@ export default class EPCISDocument extends Entity {
     // check the settings to know if a single event has to be in the event field or eventList field.
     if (!this.useEventListByDefault && this.eventList.length < 2) {
       delete o.eventList;
-      o.event = this.eventList.length ? this.eventList[0] : {};
+      o.event = this.eventList.length ? this.eventList[0].toObject() : {};
     }
 
     // the event or event list has to be in the epcisBody field

@@ -95,8 +95,9 @@
     "wnpm-ci": "^7.0.100"
   },
   "dependencies": {
-    "ajv": "^6.12.6",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/runtime": "^7.13.17",
+    "ajv": "^6.12.6",
     "fs": "0.0.1-security",
     "is-plain-object": "^5.0.0",
     "node-fetch": "^2.6.1",

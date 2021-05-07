@@ -1,5 +1,8 @@
 import ObjectEvent from '../entity/events/ObjectEvent';
 import TransactionEvent from '../entity/events/TransactionEvent';
+import AggregationEvent from '../entity/events/AggregationEvent';
+import AssociationEvent from '../entity/events/AssociationEvent';
+import TransformationEvent from '../entity/events/TransformationEvent';
 
 /**
  * Returns an instance of an Event object corresponding to the object passed in param
@@ -13,14 +16,14 @@ const objectToEvent = (obj) => {
   switch (obj.isA) {
     case 'ObjectEvent':
       return new ObjectEvent(obj);
-    case 'AggregationEvent': // todo:
-      return new ObjectEvent(obj);
-    case 'AssociationEvent': // todo:
-      return new ObjectEvent(obj);
+    case 'AggregationEvent':
+      return new AggregationEvent(obj);
+    case 'AssociationEvent':
+      return new AssociationEvent(obj);
     case 'TransactionEvent':
       return new TransactionEvent(obj);
-    case 'TransformationEvent': // todo:
-      return new ObjectEvent(obj);
+    case 'TransformationEvent':
+      return new TransformationEvent(obj);
     default:
       throw new Error("The object passed in parameter isn't valid. " +
         'The isA field should be set to a valid value');
