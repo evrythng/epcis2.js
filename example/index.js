@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 const {
-  ObjectEvent, actionTypes, bizSteps, setup,
+  ObjectEvent, actionTypes, bizSteps, setup, EPCISDocument,
 } = require('epcis2');
 
 setup({
@@ -9,6 +9,7 @@ setup({
 });
 
 const objectEvent = new ObjectEvent();
+const epcisDocument = new EPCISDocument();
 
 objectEvent
   .setEventID('...ID')
@@ -32,3 +33,12 @@ console.log(objectEvent.toObject());
   readPoint: { id: 'urn:epc:id:sgln:4012345.00005.0' },
 }
 */
+
+epcisDocument.addEvent(objectEvent);
+console.log(epcisDocument.toString());
+/* output:
+{"isA":"EPCISDocument","epcisBody":{"eventList":[{"isA":"ObjectEvent","eventID":"...ID",
+"action":"OBSERVE","bizStep":"urn:epcglobal:cbv:bizstep:inspecting","epcList":
+["urn:epc:id:sgtin:4012345.011111.9876","urn:epc:id:sgtin:4012345.011111.9877"],
+"readPoint":{"id":"urn:epc:id:sgln:4012345.00005.0"}}]}}
+ */
