@@ -91,6 +91,18 @@ describe('unit tests for the EPCISDocument class', () => {
     const e5 = new EPCISDocument(EPCISDocumentAssociationEvent);
     expect(e5.isValid()).to.be.equal(true);
   });
+  it('should output the document passed in input', async () => {
+    const e = new EPCISDocument(EPCISDocumentObjectEvent);
+    expect(e.toObject()).to.deep.equal(EPCISDocumentObjectEvent);
+    const e2 = new EPCISDocument(EPCISDocumentAggregationEvent);
+    expect(e2.toObject()).to.deep.equal(EPCISDocumentAggregationEvent);
+    const e3 = new EPCISDocument(EPCISDocumentMasterDataDocument);
+    expect(e3.toObject()).to.deep.equal(EPCISDocumentMasterDataDocument);
+    const e4 = new EPCISDocument(EPCISDocumentTransformationEvent);
+    expect(e4.toObject()).to.deep.equal(EPCISDocumentTransformationEvent);
+    const e5 = new EPCISDocument(EPCISDocumentAssociationEvent);
+    expect(e5.toObject()).to.deep.equal(EPCISDocumentAssociationEvent);
+  });
 
   describe('Context can have different types', () => {
     it('context can be a string', async () => {
