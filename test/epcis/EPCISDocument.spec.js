@@ -5,7 +5,11 @@ import EPCISDocument from '../../src/entity/epcis/EPCISDocument';
 import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
 import { ObjectEvent } from '../../src';
 import { exampleEPCISDocument } from '../data/eventExample';
-import exampleValidEPCISDocument from '../data/EPCISDocument-ObjectEvent.json';
+import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
+import EPCISDocumentAggregationEvent from '../data/EPCISDocument-AggregationEvent.json';
+import EPCISDocumentTransformationEvent from '../data/EPCISDocument-TransformationEvent.json';
+import EPCISDocumentAssociationEvent from '../data/EPCISDocument-AssociationEvent.json';
+import EPCISDocumentMasterDataDocument from '../data/EPCISMasterDataDocument.json';
 
 describe('unit tests for the EPCISDocument class', () => {
   const events = [
@@ -76,8 +80,16 @@ describe('unit tests for the EPCISDocument class', () => {
     assert.throws(() => e.isValid());
   });
   it('should validate the document', async () => {
-    const e = new EPCISDocument(exampleValidEPCISDocument);
+    const e = new EPCISDocument(EPCISDocumentObjectEvent);
     expect(e.isValid()).to.be.equal(true);
+    const e2 = new EPCISDocument(EPCISDocumentAggregationEvent);
+    expect(e2.isValid()).to.be.equal(true);
+    const e3 = new EPCISDocument(EPCISDocumentMasterDataDocument);
+    expect(e3.isValid()).to.be.equal(true);
+    const e4 = new EPCISDocument(EPCISDocumentTransformationEvent);
+    expect(e4.isValid()).to.be.equal(true);
+    const e5 = new EPCISDocument(EPCISDocumentAssociationEvent);
+    expect(e5.isValid()).to.be.equal(true);
   });
 
   describe('Context can have different types', () => {
