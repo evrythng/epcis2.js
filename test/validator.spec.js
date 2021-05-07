@@ -1,21 +1,21 @@
 import { assert } from 'chai';
 import { validateSchema } from '../src';
-import ObjectEvent from './data/EPCISDocument-ObjectEvent.json';
-import AggregationEvent from './data/EPCISDocument-AggregationEvent.json';
-import TransformationEvent from './data/EPCISDocument-TransformationEvent.json';
+import EPCISDocumentObjectEvent from './data/EPCISDocument-ObjectEvent.json';
+import EPCISDocumentAggregationEvent from './data/EPCISDocument-AggregationEvent.json';
+import EPCISDocumentTransformationEvent from './data/EPCISDocument-TransformationEvent.json';
+import EPCISDocumentAssociationEvent from './data/EPCISDocument-AssociationEvent.json';
+import EPCISDocumentQueryDocument from './data/EPCISQueryDocument.json';
+import EPCISDocumentMasterDataDocument from './data/EPCISMasterDataDocument.json';
 
-import AssociationEvent from './data/EPCISDocument-AssociationEvent.json';
-import QueryDocument from './data/EPCISQueryDocument.json';
-import MasterDataDocument from './data/EPCISMasterDataDocument.json';
 /** Test documents with different event types inside */
 const testData = {
   invalid: { foo: 'bar' },
-  ObjectEvent,
-  AggregationEvent,
-  TransformationEvent,
-  AssociationEvent,
-  QueryDocument,
-  MasterDataDocument,
+  ObjectEvent: EPCISDocumentObjectEvent,
+  AggregationEvent: EPCISDocumentAggregationEvent,
+  TransformationEvent: EPCISDocumentTransformationEvent,
+  AssociationEvent: EPCISDocumentAssociationEvent,
+  QueryDocument: EPCISDocumentQueryDocument,
+  MasterDataDocument: EPCISDocumentMasterDataDocument,
 };
 
 describe('validation of an EPCIS document', () => {
