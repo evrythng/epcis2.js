@@ -24,6 +24,9 @@ export default class EPCISDocument extends Entity {
     // Create classes for sub-objects that are provided
     Object.entries(epcisDocument).forEach(([key, value]) => {
       switch (key) {
+        case 'isA':
+          this.isA = value;
+          break;
         case 'epcisHeader':
           this.setEPCISHeader(new EPCISHeader(value));
           break;
@@ -42,6 +45,24 @@ export default class EPCISDocument extends Entity {
           break;
       }
     });
+  }
+
+  /**
+   * Set the isA property
+   * @param {string} isA
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  setIsA(isA) {
+    this.isA = isA;
+    return this;
+  }
+
+  /**
+   * Getter for the isA property
+   * @return {string} - the isA property
+   */
+  getIsA() {
+    return this.isA;
   }
 
   /**
