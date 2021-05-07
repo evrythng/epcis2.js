@@ -16,6 +16,7 @@
     "epcisMasterData": {
       "vocabularyList": [
         {
+          "type": "vtype:ReadPoint",
           "vocabularyElementList": [
             {
               "isA": "urn:epcglobal:epcis:vtype:ReadPoint",
