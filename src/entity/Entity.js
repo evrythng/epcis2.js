@@ -4,7 +4,7 @@
  * @return {Object} - a json if the object passed in param has a toObject function defined - the
  * object passed in param otherwise
  */
-const objectToJSON = (obj) => {
+const variableToObject = (obj) => {
   if (typeof obj.toObject === 'function') {
     return obj.toObject();
   }
@@ -13,8 +13,8 @@ const objectToJSON = (obj) => {
 
 export default class Entity {
   /**
-   * You can either create an empty Entity or provide an already existing Entity via Map
-   * @param {Object} [entity] - The Map that will be used to create the entity
+   * You can either create an empty Entity or provide an already existing Entity via Object
+   * @param {Object} [entity] - The object that will be used to create the entity
    */
   constructor(entity) {
     if (new.target === Entity) {
@@ -65,10 +65,10 @@ export default class Entity {
             json[prop] = [];
           } else {
             json[prop] = [];
-            this[prop].forEach((e) => json[prop].push(objectToJSON(e)));
+            this[prop].forEach((e) => json[prop].push(variableToObject(e)));
           }
         } else {
-          json[prop] = objectToJSON(this[prop]);
+          json[prop] = variableToObject(this[prop]);
         }
       }
     });

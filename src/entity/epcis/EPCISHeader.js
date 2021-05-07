@@ -4,8 +4,8 @@ import EPCISMasterData from './EPCISMasterData';
 export default class EPCISHeader extends Entity {
   /**
    * You can either create an empty EPCISHeader or provide an already existing EPCISHeader
-   * via Map
-   * @param {Object} [epcisHeader] - The Map that will be used to create the epcisHeader entity
+   * via Object
+   * @param {Object} [epcisHeader] - The object that will be used to create the epcisHeader entity
    */
   constructor(epcisHeader) {
     super(epcisHeader);

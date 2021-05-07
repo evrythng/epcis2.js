@@ -6,7 +6,7 @@ export default class SensorElement extends Entity {
   /**
    * You can either create an empty SensorElement or provide an already existing SensorElement via
    * Map
-   * @param {Object} [sensor] - The Map that will be used to create the SensorElement entity
+   * @param {Object} [sensor] - The object that will be used to create the SensorElement entity
    */
   constructor(sensor) {
     super(sensor);

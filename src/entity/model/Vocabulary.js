@@ -3,8 +3,8 @@ import VocabularyElement from './VocabularyElement';
 
 export default class Vocabulary extends Entity {
   /**
-   * You can either create an empty Vocabulary or provide an already existing vocabulary via Map
-   * @param {Object} [vocabulary] - The Map that will be used to create the Vocabulary entity
+   * You can either create an empty Vocabulary or provide an already existing vocabulary via Object
+   * @param {Object} [vocabulary] - The object that will be used to create the Vocabulary entity
    */
   constructor(vocabulary) {
     super(vocabulary);

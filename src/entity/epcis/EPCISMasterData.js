@@ -4,8 +4,8 @@ import Vocabulary from '../model/Vocabulary';
 export default class EPCISMasterData extends Entity {
   /**
    * You can either create an empty EPCISMasterData or provide an already existing EPCISMasterData
-   * via Map
-   * @param {Object} [epcisMasterData] - The Map that will be used to create the epcisMasterData
+   * via Object
+   * @param {Object} [epcisMasterData] - The object that will be used to create the epcisMasterData
    * entity
    */
   constructor(epcisMasterData) {
