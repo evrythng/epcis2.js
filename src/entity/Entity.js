@@ -1,6 +1,6 @@
 /**
- * Returns a JSON corresponding to the parameter
- * @param {any} obj
+ * Returns an object corresponding to the parameter
+ * @param {any} obj - The variable that will be converted to an object.
  * @return {Object} - a json if the object passed in param has a toObject function defined - the
  * object passed in param otherwise
  */
