@@ -57,6 +57,11 @@
   "babel": {
     "presets": [
       "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-throw-expressions"
     ]
   },
   "repository": {
@@ -96,6 +101,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.12.13",
     "@babel/runtime": "^7.13.17",
     "ajv": "^6.12.6",
     "fs": "0.0.1-security",

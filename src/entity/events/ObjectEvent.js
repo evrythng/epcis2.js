@@ -1,7 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-unused-vars */
 
-import Event from './Event';
+import Event, { fieldToFunctions } from './Event';
+
+const invalidFields = ['parentID', 'childEPCs','childQuantityList'];
 
 export default class ObjectEvent extends Event {
   /**
@@ -12,61 +14,14 @@ export default class ObjectEvent extends Event {
   constructor(objectEvent) {
     super(objectEvent);
     this.isA = 'ObjectEvent';
+
+    invalidFields.forEach((name) => {
+      const functions = fieldToFunctions[name];
+      functions.forEach(func => {
+        this[func] = () =>
+          throw new Error(`${name} is not a field of the ObjectEvent class`);
+      });
+    });
   }
 
-  getParentId() {
-    throw new Error('parentID is not a field of the ObjectEvent class');
-  }
-
-  setParentId(parentID) {
-    throw new Error('parentID is not a field of the ObjectEvent class');
-  }
-
-  clearChildEPCList() {
-    throw new Error('childEPCs is not a field of the ObjectEvent class');
-  }
-
-  addChildEPC(epc) {
-    throw new Error('childEPCs is not a field of the ObjectEvent class');
-  }
-
-  addChildEPCList(epcList) {
-    throw new Error('childEPCs is not a field of the ObjectEvent class');
-  }
-
-  getChildEPCList() {
-    throw new Error('childEPCs is not a field of the ObjectEvent class');
-  }
-
-  removeChildEPC(epc) {
-    throw new Error('childEPCs is not a field of the ObjectEvent class');
-  }
-
-  removeChildEPCList(epcList) {
-    throw new Error('childEPCs is not a field of the ObjectEvent class');
-  }
-
-  clearChildQuantityList() {
-    throw new Error('childQuantityList is not a field of the ObjectEvent class');
-  }
-
-  addChildQuantityList(quantityList) {
-    throw new Error('childQuantityList is not a field of the ObjectEvent class');
-  }
-
-  addChildQuantity(quantity) {
-    throw new Error('childQuantityList is not a field of the ObjectEvent class');
-  }
-
-  getChildQuantityList() {
-    throw new Error('childQuantityList is not a field of the ObjectEvent class');
-  }
-
-  removeChildQuantity(quantity) {
-    throw new Error('childQuantityList is not a field of the ObjectEvent class');
-  }
-
-  removeChildQuantityList(quantityList) {
-    throw new Error('childQuantityList is not a field of the ObjectEvent class');
-  }
 }

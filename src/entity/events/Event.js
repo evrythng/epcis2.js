@@ -14,6 +14,74 @@ import DestinationElement from '../model/DestinationElement';
 import SensorElement from '../model/sensor/SensorElement';
 import Ilmd from '../model/Ilmd';
 
+export const fieldToFunctions = {
+  epcList: ['addEPC', 'addEPCList', 'clearEPCList', 'removeEPC', 'removeEPCList', 'getEPCList'],
+  quantityList: [
+    'addQuantity',
+    'addQuantityList',
+    'clearQuantityList',
+    'removeQuantity',
+    'removeQuantityList',
+    'getQuantityList',
+  ],
+  action: ['setAction', 'getAction'],
+  bizStep: ['setBizStep', 'getBizStep'],
+  disposition: ['setDisposition', 'getDisposition'],
+  persistentDisposition: ['setPersistentDisposition', 'getPersistentDisposition'],
+  readPoint: ['setReadPoint', 'getReadPoint'],
+  bizLocation: ['setBizLocation', 'getBizLocation'],
+  ilmd: ['setIlmd', 'getIlmd'],
+  parentID: ['setParentId', 'getParentId'],
+  bizTransactionList: [
+    'addBizTransaction',
+    'addBizTransactionList',
+    'clearBizTransactionList',
+    'removeBizTransaction',
+    'removeBizTransactionList',
+    'getBizTransactionList',
+  ],
+  sourceList: [
+    'addSource',
+    'addSourceList',
+    'clearSourceList',
+    'removeSource',
+    'removeSourceList',
+    'getSourceList',
+  ],
+  destinationList: [
+    'addDestinationList',
+    'addDestinationListList',
+    'clearDestinationListList',
+    'removeDestinationList',
+    'removeDestinationListList',
+    'getDestinationListList',
+  ],
+  sensorElementList: [
+    'addSensorElementList',
+    'addSensorElementListList',
+    'clearSensorElementListList',
+    'removeSensorElementList',
+    'removeSensorElementListList',
+    'getSensorElementListList',
+  ],
+  childEPCs: [
+    'addChildEPC',
+    'addChildEPCList',
+    'clearChildEPCList',
+    'removeChildEPC',
+    'removeChildEPCList',
+    'getChildEPCList',
+  ],
+  childQuantityList: [
+    'addChildQuantity',
+    'addChildQuantityList',
+    'clearChildQuantityList',
+    'removeChildQuantity',
+    'removeChildQuantityList',
+    'getChildQuantityList',
+  ],
+};
+
 /**
  * Abstract class Event
  *
@@ -50,52 +118,60 @@ export default class Event extends Entity {
         case 'epcList':
           try {
             this.clearEPCList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((epc) => this.addEPC(epc));
           break;
         case 'childEPCs':
           try {
             this.clearChildEPCList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((epc) => this.addChildEPC(epc));
           break;
         case 'quantityList':
           try {
             this.clearQuantityList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((quantityElement) => this
             .addQuantity(new QuantityElement(quantityElement)));
           break;
         case 'childQuantityList':
           try {
             this.clearChildQuantityList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((quantityElement) => this
             .addChildQuantity(new QuantityElement(quantityElement)));
           break;
         case 'bizTransactionList':
           try {
             this.clearBizTransactionList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((bizTransaction) => this
             .addBizTransaction(new BizTransactionElement(bizTransaction)));
           break;
         case 'sourceList':
           try {
             this.clearSourceList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((source) => this.addSource(new SourceElement(source)));
           break;
         case 'destinationList':
           try {
             this.clearDestinationList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((destination) => this.addDestination(new DestinationElement(destination)));
           break;
         case 'sensorElementList':
           try {
             this.clearSensorElementList();
-          } catch (e) {}
+          } catch (e) {
+          }
           value.forEach((sensorElement) => this.addSensorElement(new SensorElement(sensorElement)));
           break;
         case 'readPoint':

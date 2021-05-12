@@ -1,7 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-unused-vars */
 
-import Event from './Event';
+import Event, { fieldToFunctions } from './Event';
+
+const invalidFields = ['ilmd', 'epcList','quantityList'];
 
 export default class AggregationEvent extends Event {
   /**
@@ -13,61 +15,12 @@ export default class AggregationEvent extends Event {
   constructor(aggregationEvent) {
     super(aggregationEvent);
     this.isA = 'AggregationEvent';
-  }
-
-  getIlmd() {
-    throw new Error('ilmd is not a field of the AggregationEvent class');
-  }
-
-  setIlmd(ilmd) {
-    throw new Error('ilmd is not a field of the AggregationEvent class');
-  }
-
-  clearEPCList() {
-    throw new Error('epcList is not a field of the AggregationEvent class');
-  }
-
-  addEPC(epc) {
-    throw new Error('epcList is not a field of the AggregationEvent class');
-  }
-
-  addEPCList(epcList) {
-    throw new Error('epcList is not a field of the AggregationEvent class');
-  }
-
-  getEPCList() {
-    throw new Error('epcList is not a field of the AggregationEvent class');
-  }
-
-  removeEPC(epc) {
-    throw new Error('epcList is not a field of the AggregationEvent class');
-  }
-
-  removeEPCList(epcList) {
-    throw new Error('epcList is not a field of the AggregationEvent class');
-  }
-
-  clearQuantityList() {
-    throw new Error('quantityList is not a field of the AggregationEvent class');
-  }
-
-  addQuantityList(quantityList) {
-    throw new Error('quantityList is not a field of the AggregationEvent class');
-  }
-
-  addQuantity(quantity) {
-    throw new Error('quantityList is not a field of the AggregationEvent class');
-  }
-
-  getQuantityList() {
-    throw new Error('quantityList is not a field of the AggregationEvent class');
-  }
-
-  removeQuantity(quantity) {
-    throw new Error('quantityList is not a field of the AggregationEvent class');
-  }
-
-  removeQuantityList(quantityList) {
-    throw new Error('quantityList is not a field of the AggregationEvent class');
+    invalidFields.forEach((name) => {
+      const functions = fieldToFunctions[name];
+      functions.forEach(func => {
+        this[func] = () =>
+          throw new Error(`${name} is not a field of the AggregationEvent class`);
+      });
+    });
   }
 }

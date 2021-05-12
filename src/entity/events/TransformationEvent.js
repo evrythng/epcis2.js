@@ -1,8 +1,18 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-unused-vars */
 
-import Event from './Event';
+import Event, { fieldToFunctions } from './Event';
 import QuantityElement from '../model/QuantityElement';
+
+const invalidFields = [
+  'childQuantityList',
+  'childEPCs',
+  'childQuantityList',
+  'action',
+  'parentID',
+  'quantityList',
+  'epcList'
+];
 
 export default class TransformationEvent extends Event {
   /**
@@ -14,6 +24,14 @@ export default class TransformationEvent extends Event {
   constructor(transformationEvent) {
     super(transformationEvent);
     this.isA = 'TransformationEvent';
+
+    invalidFields.forEach((name) => {
+      const functions = fieldToFunctions[name];
+      functions.forEach(func => {
+        this[func] = () =>
+          throw new Error(`${name} is not a field of the TransformationEvent class`);
+      });
+    });
 
     if (!transformationEvent) {
       // create an empty TransformationEvent object
@@ -319,117 +337,5 @@ export default class TransformationEvent extends Event {
    */
   getOutputQuantityList() {
     return this.outputQuantityList;
-  }
-
-  clearEPCList() {
-    throw new Error('epcList is not a field of the TransformationEvent class');
-  }
-
-  addEPC(epc) {
-    throw new Error('epcList is not a field of the TransformationEvent class');
-  }
-
-  addEPCList(epcList) {
-    throw new Error('epcList is not a field of the TransformationEvent class');
-  }
-
-  getEPCList() {
-    throw new Error('epcList is not a field of the TransformationEvent class');
-  }
-
-  removeEPC(epc) {
-    throw new Error('epcList is not a field of the TransformationEvent class');
-  }
-
-  removeEPCList(epcList) {
-    throw new Error('epcList is not a field of the TransformationEvent class');
-  }
-
-  clearQuantityList() {
-    throw new Error('quantityList is not a field of the TransformationEvent class');
-  }
-
-  addQuantityList(quantityList) {
-    throw new Error('quantityList is not a field of the TransformationEvent class');
-  }
-
-  addQuantity(quantity) {
-    throw new Error('quantityList is not a field of the TransformationEvent class');
-  }
-
-  getQuantityList() {
-    throw new Error('quantityList is not a field of the TransformationEvent class');
-  }
-
-  removeQuantity(quantity) {
-    throw new Error('quantityList is not a field of the TransformationEvent class');
-  }
-
-  removeQuantityList(quantityList) {
-    throw new Error('quantityList is not a field of the TransformationEvent class');
-  }
-
-  getParentId() {
-    throw new Error('parentID is not a field of the TransformationEvent class');
-  }
-
-  setParentId(parentID) {
-    throw new Error('parentID is not a field of the TransformationEvent class');
-  }
-
-  getAction() {
-    throw new Error('action is not a field of the TransformationEvent class');
-  }
-
-  setAction(action) {
-    throw new Error('action is not a field of the TransformationEvent class');
-  }
-
-  clearChildEPCList() {
-    throw new Error('childEPCs is not a field of the TransformationEvent class');
-  }
-
-  addChildEPC(epc) {
-    throw new Error('childEPCs is not a field of the TransformationEvent class');
-  }
-
-  addChildEPCList(epcList) {
-    throw new Error('childEPCs is not a field of the TransformationEvent class');
-  }
-
-  getChildEPCList() {
-    throw new Error('childEPCs is not a field of the TransformationEvent class');
-  }
-
-  removeChildEPC(epc) {
-    throw new Error('childEPCs is not a field of the TransformationEvent class');
-  }
-
-  removeChildEPCList(epcList) {
-    throw new Error('childEPCs is not a field of the TransformationEvent class');
-  }
-
-  clearChildQuantityList() {
-    throw new Error('childQuantityList is not a field of the TransformationEvent class');
-  }
-
-  addChildQuantityList(quantityList) {
-    throw new Error('childQuantityList is not a field of the TransformationEvent class');
-  }
-
-  addChildQuantity(quantity) {
-    throw new Error('childQuantityList is not a field of the TransformationEvent class');
-  }
-
-  getChildQuantityList() {
-    throw new Error('childQuantityList is not a field of the TransformationEvent class');
-  }
-
-  removeChildQuantity(quantity) {
-    throw new Error('childQuantityList is not a field of the TransformationEvent class');
-  }
-
-  removeChildQuantityList(quantityList) {
-    throw new Error('childQuantityList is not a field of the TransformationEvent class');
   }
 }
