@@ -3,7 +3,7 @@
 
 import Event, { fieldToFunctions } from './Event';
 
-const invalidFields = ['ilmd', 'epcList','quantityList'];
+const invalidFields = ['ilmd', 'epcList', 'quantityList'];
 
 export default class AggregationEvent extends Event {
   /**
@@ -17,9 +17,8 @@ export default class AggregationEvent extends Event {
     this.isA = 'AggregationEvent';
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
-      functions.forEach(func => {
-        this[func] = () =>
-          throw new Error(`${name} is not a field of the AggregationEvent class`);
+      functions.forEach((func) => {
+        this[func] = () => throw new Error(`${name} is not a field of the AggregationEvent class`);
       });
     });
   }

@@ -3,7 +3,7 @@
 
 import Event, { fieldToFunctions } from './Event';
 
-const invalidFields = ['parentID', 'childEPCs','childQuantityList'];
+const invalidFields = ['parentID', 'childEPCs', 'childQuantityList'];
 
 export default class ObjectEvent extends Event {
   /**
@@ -17,11 +17,9 @@ export default class ObjectEvent extends Event {
 
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
-      functions.forEach(func => {
-        this[func] = () =>
-          throw new Error(`${name} is not a field of the ObjectEvent class`);
+      functions.forEach((func) => {
+        this[func] = () => throw new Error(`${name} is not a field of the ObjectEvent class`);
       });
     });
   }
-
 }

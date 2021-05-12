@@ -67,9 +67,7 @@ export default class Entity {
             json[prop] = [];
             this[prop].forEach((e) => json[prop].push(variableToObject(e)));
           }
-        } else if (this[prop] instanceof Function) {
-
-        } else {
+        } else if (!(this[prop] instanceof Function)) {
           json[prop] = variableToObject(this[prop]);
         }
       }

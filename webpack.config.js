@@ -22,7 +22,7 @@ const browserConfig = {
         options: {
           presets: ['@babel/preset-env'],
           plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties',
-            "@babel/plugin-proposal-throw-expressions"],
+            '@babel/plugin-proposal-throw-expressions'],
         },
       },
     ],
@@ -50,7 +50,7 @@ const nodeConfig = {
         options: {
           presets: ['@babel/preset-env'],
           plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties',
-            "@babel/plugin-proposal-throw-expressions"],
+            '@babel/plugin-proposal-throw-expressions'],
         },
       },
     ],

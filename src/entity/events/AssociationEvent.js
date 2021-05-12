@@ -3,7 +3,7 @@
 
 import Event, { fieldToFunctions } from './Event';
 
-const invalidFields = ['ilmd', 'epcList','quantityList'];
+const invalidFields = ['ilmd', 'epcList', 'quantityList'];
 
 export default class AssociationEvent extends Event {
   /**
@@ -17,9 +17,8 @@ export default class AssociationEvent extends Event {
     this.isA = 'AssociationEvent';
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
-      functions.forEach(func => {
-        this[func] = () =>
-          throw new Error(`${name} is not a field of the AssociationEvent class`);
+      functions.forEach((func) => {
+        this[func] = () => throw new Error(`${name} is not a field of the AssociationEvent class`);
       });
     });
   }
