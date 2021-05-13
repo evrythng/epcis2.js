@@ -24,7 +24,6 @@ describe('unit tests for the EPCISDocument class', () => {
     });
     it('should use default values', async () => {
       const e = new EPCISDocument();
-      console.log(e.toString());
       expect(e.getIsA()).to.be.equal('EPCISDocument');
       expect(e.getUseEventListByDefault()).to.be.equal(true);
       expect(e.getSchemaVersion()).to.be.equal(2);
@@ -44,12 +43,10 @@ describe('unit tests for the EPCISDocument class', () => {
     it('should set the correct context and schema version', async () => {
       setup({ EPCISDocumentSchemaVersion: 3, EPCISDocumentContext: 'foo' });
       const e = new EPCISDocument();
-      console.log(e.toString());
       expect(e.getSchemaVersion()).to.be.equal(3);
       expect(e.getContext()).to.be.equal('foo');
       setup({ EPCISDocumentSchemaVersion: undefined, EPCISDocumentContext: undefined });
       const e2 = new EPCISDocument();
-      console.log(e2.toString());
       expect(e2.toObject().schemaVersion).to.be.equal(undefined);
       expect(e2.toObject()['@context']).to.be.equal(undefined);
     });

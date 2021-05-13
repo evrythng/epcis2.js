@@ -11,9 +11,10 @@
  * field of the EPCISDocument by default. Otherwise, it will be in the event field of the
  * EPCISDocument
  * @property {string} EPCISDocumentContext - The default value of the '@context' parameter of an
- * EPCISDocument. Set it to undefined if you don't want the parameter in your EPCISDocument
- * @property {number} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion' parameter
- * of an EPCISDocument. Set it to undefined if you don't want the parameter in your EPCISDocument
+ * EPCISDocument. Set it to undefined if you don't want the parameter in your EPCISDocument.
+ * @property {number} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion'
+ * parameter of an EPCISDocument. Set it to undefined if you don't want the parameter in your
+ * EPCISDocument.
  * */
 
 /**
