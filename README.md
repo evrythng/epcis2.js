@@ -36,6 +36,8 @@ This example would output:
 ```json
 {
    "isA":"EPCISDocument",
+   "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
+   "schemaVersion":2,
    "epcisBody":{
       "eventList":[
          {
@@ -77,6 +79,8 @@ This example would output:
 ```json
 {
    "isA":"EPCISDocument",
+   "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
+   "schemaVersion":2,
    "epcisBody":{
       "eventList":[
          {
@@ -119,6 +123,8 @@ This example would output:
 ```json
 {
    "isA":"EPCISDocument",
+   "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
+   "schemaVersion":2,
    "epcisBody":{
       "event":{
          "isA":"ObjectEvent",

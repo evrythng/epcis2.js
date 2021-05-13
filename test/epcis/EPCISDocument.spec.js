@@ -1,6 +1,6 @@
 import { assert, expect } from 'chai';
 import setup from '../../src/setup';
-import { defaultSettings } from '../../src/settings';
+import settings, { defaultSettings } from '../../src/settings';
 import EPCISDocument from '../../src/entity/epcis/EPCISDocument';
 import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
 import { ObjectEvent } from '../../src';
@@ -24,8 +24,11 @@ describe('unit tests for the EPCISDocument class', () => {
     });
     it('should use default values', async () => {
       const e = new EPCISDocument();
-      expect(e.isA).to.be.equal('EPCISDocument');
-      expect(e.useEventListByDefault).to.be.equal(true);
+      console.log(e.toString());
+      expect(e.getIsA()).to.be.equal('EPCISDocument');
+      expect(e.getUseEventListByDefault()).to.be.equal(true);
+      expect(e.getSchemaVersion()).to.be.equal(2);
+      expect(e.getContext()).to.be.equal(settings.EPCISDocumentContext);
     });
     it('should set the object event in the event field', async () => {
       setup({ useEventListByDefault: false });
@@ -37,6 +40,18 @@ describe('unit tests for the EPCISDocument class', () => {
       e.addEvent(events[0]);
       expect(e.toObject().epcisBody.eventList.length).to.be.equal(2);
       expect(e.toObject().epcisBody.event).to.deep.equal(undefined);
+    });
+    it('should set the correct context and schema version', async () => {
+      setup({ EPCISDocumentSchemaVersion: 3, EPCISDocumentContext: 'foo' });
+      const e = new EPCISDocument();
+      console.log(e.toString());
+      expect(e.getSchemaVersion()).to.be.equal(3);
+      expect(e.getContext()).to.be.equal('foo');
+      setup({ EPCISDocumentSchemaVersion: undefined, EPCISDocumentContext: undefined });
+      const e2 = new EPCISDocument();
+      console.log(e2.toString());
+      expect(e2.toObject().schemaVersion).to.be.equal(undefined);
+      expect(e2.toObject()['@context']).to.be.equal(undefined);
     });
   });
 

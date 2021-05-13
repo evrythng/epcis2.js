@@ -17,6 +17,14 @@ export default class EPCISDocument extends Entity {
 
     this.setUseEventListByDefault(settings.useEventListByDefault);
 
+    if (!this.getContext()) {
+      this.setContext(settings.EPCISDocumentContext);
+    }
+
+    if (!this.getSchemaVersion()) {
+      this.setSchemaVersion(settings.EPCISDocumentSchemaVersion);
+    }
+
     if (!epcisDocument) {
       return;
     }

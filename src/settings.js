@@ -10,6 +10,10 @@
  * @property {boolean} useEventListByDefault - if true, a single event will be in the eventList
  * field of the EPCISDocument by default. Otherwise, it will be in the event field of the
  * EPCISDocument
+ * @property {string} EPCISDocumentContext - The default value of the '@context' parameter of an
+ * EPCISDocument. Set it to undefined if you don't want the parameter in your EPCISDocument
+ * @property {number} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion' parameter
+ * of an EPCISDocument. Set it to undefined if you don't want the parameter in your EPCISDocument
  * */
 
 /**
@@ -25,6 +29,8 @@ export const defaultSettings = {
   eventTimeZoneOffset: undefined,
   timeout: undefined,
   useEventListByDefault: true,
+  EPCISDocumentContext: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+  EPCISDocumentSchemaVersion: 2,
 };
 
 // Initialize settings with defaults.
