@@ -80,6 +80,8 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getReadPoint().getId()).to.be.equal(exampleObjectEvent.readPoint.id);
     expect(obj.getIlmd()['example:bestBeforeDate']).to
       .be.equal(exampleObjectEvent.ilmd['example:bestBeforeDate']);
+    expect(obj.getExtension('example:myField')).to
+      .be.equal(exampleObjectEvent['example:myField']);
   });
   it('should create an ObjectEvent from json', async () => {
     const obj = new ObjectEvent(exampleObjectEvent);

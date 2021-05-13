@@ -32,7 +32,7 @@ export default class Entity {
   }
 
   /**
-   * @param {string} key - the key of the extension
+   * @param {string} key - the key of the extension (e.g 'vendor:example')
    * @param {string} value - the value of the extension
    * @return {Entity} - the entity instance
    */
@@ -42,12 +42,21 @@ export default class Entity {
   }
 
   /**
-   * @param {string} key - the key of the extension
+   * @param {string} key - the key of the extension (e.g 'vendor:example')
    * @return {Entity} - the entity instance
    */
   removeExtension(key) {
     delete this[key];
     return this;
+  }
+
+  /**
+   * Getter for extensions
+   * @param {string} key - the key of the extension (e.g 'vendor:example')
+   * @return {any} - the extension
+   */
+  getExtension(key) {
+    return this[key];
   }
 
   // todo: getExtensions?
