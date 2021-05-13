@@ -1,5 +1,5 @@
 {
-  "name": "epcis2",
+  "name": "epcis2.js",
   "version": "1.0.0",
   "description": "Javascript SDK for the EPCIS 2.0 standard",
   "main": "dist/epcis2.node.js",
@@ -9,7 +9,6 @@
   "scripts": {
     "lint": "eslint --fix --max-warnings 0 --ext .js .",
     "format": "./node_modules/.bin/prettier --write '**/*.{js,json,md,yaml,yml}'",
-    "release": "wnpm-release",
     "build": "rm dist/*; webpack --config webpack.config.js --mode production",
     "build:dev": "rm dist/*; webpack --config webpack.config.js --mode development",
     "test": "./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/**/*.spec.js'",
