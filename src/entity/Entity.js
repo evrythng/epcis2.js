@@ -5,7 +5,7 @@
  * object passed in param otherwise
  */
 const variableToObject = (obj) => {
-  if (typeof obj.toObject === 'function') {
+  if (obj && obj.toObject instanceof Function) {
     return obj.toObject();
   }
   return obj;
