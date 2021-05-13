@@ -14,61 +14,119 @@ const event = new ObjectEvent();
 const event2 = new ObjectEvent();
 const epcisDocument = new EPCISDocument();
 
+event
+  .setAction('OBSERVE')
+  .setEventTime('2005-04-03T20:33:31.116-06:00')
+  .setEventTimeZoneOffset('-06:00')
+
+event2
+  .setAction('OBSERVE')
+  .setEventTime('2005-04-03T21:33:31.116-06:00')
+  .setEventTimeZoneOffset('-06:00')
+
 epcisDocument
   .addEvent(event)
   .addEvent(event2);
 
-console.log(epcisDocument.toObject());
+console.log(epcisDocument.toString());
 ```
 
 This example would output:
 
 ```json
 {
-  ...,
-  eventList: [
-    {
-      'isA': 'ObjectEvent',
-      ...
-    },
-    {
-      'isA': 'ObjectEvent',
-      ...
-    }
-  ]
+   "isA":"EPCISDocument",
+   "epcisBody":{
+      "eventList":[
+         {
+            "isA":"ObjectEvent",
+            "action":"OBSERVE",
+            "eventTime":"2005-04-03T20:33:31.116-06:00",
+            "eventTimeZoneOffset":"-06:00"
+         },
+         {
+            "isA":"ObjectEvent",
+            "action":"OBSERVE",
+            "eventTime":"2005-04-03T21:33:31.116-06:00",
+            "eventTimeZoneOffset":"-06:00"
+         }
+      ]
+   }
 }
 ```
 
 If you provide a single element, by default, it will be in the `eventList` field.
 
+```js
+const epcisDocument = new EPCISDocument();
+const event = new ObjectEvent();
+
+event
+  .setAction('OBSERVE')
+  .setEventTime('2005-04-03T20:33:31.116-06:00')
+  .setEventTimeZoneOffset('-06:00')
+
+epcisDocument
+  .addEvent(event);
+
+console.log(epcisDocument.toString());
+```
+
+This example would output:
+
 ```json
 {
-  ...,
-  eventList: [
-    {
-      'isA': 'ObjectEvent',
-      ...
-    }
-  ]
+   "isA":"EPCISDocument",
+   "epcisBody":{
+      "eventList":[
+         {
+            "isA":"ObjectEvent",
+            "action":"OBSERVE",
+            "eventTime":"2005-04-03T20:33:31.116-06:00",
+            "eventTimeZoneOffset":"-06:00"
+         }
+      ]
+   }
 }
 ```
 
 However, you can override this default parameter like this:
 
 ```js
-// to override it globally
+// to override it globally (it needs to be called before the creation of the EPCISDocument)
 setup({useEventListByDefault: false});
 
-// to override it locally
+const epcisDocument = new EPCISDocument();
+const event = new ObjectEvent();
+
+
+// alternatively, you can override it locally
 epcisDocument.setUseEventListByDefault(false);
 
-// the event will be in the event field (if there is only one event provided)
+event
+  .setAction('OBSERVE')
+  .setEventTime('2005-04-03T20:33:31.116-06:00')
+  .setEventTimeZoneOffset('-06:00')
+
+epcisDocument
+  .addEvent(event);
+
+console.log(epcisDocument.toString());
+```
+
+This example would output:
+
+```json
 {
-  ...,
-  event: {
-    'isA': 'ObjectEvent',
-    ...
-  }
+   "isA":"EPCISDocument",
+   "epcisBody":{
+      "event":{
+         "isA":"ObjectEvent",
+         "action":"OBSERVE",
+         "eventTime":"2005-04-03T20:33:31.116-06:00",
+         "eventTimeZoneOffset":"-06:00"
+      }
+   }
 }
 ```
 
