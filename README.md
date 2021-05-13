@@ -163,15 +163,15 @@ value to the setup function.
 For each object, you can add extensions. You have two ways to do it:
 - by providing them in the constructor
 ```js
-let readPoint = new ReadPoint({'id': 'myID', 'extension': 'value'});
+let readPoint = new ReadPoint({'id': 'myID', 'extension:example': 'value'});
 ```
 - by adding them later
 ```js
 let readPoint = new ReadPoint({'id': 'myID'});
-readPoint.addExtension('extension', 'value')
+readPoint.addExtension('extension:example', 'value')
 
 // you can also remove it
-readPoint.removeExtension('extension')
+readPoint.removeExtension('extension:example')
 ```
 
 ### The lists
