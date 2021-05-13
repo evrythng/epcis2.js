@@ -58,8 +58,7 @@ export default class TransformationEvent extends Event {
           value.forEach((quantityElement) => this
             .addInputQuantity(new QuantityElement(quantityElement)));
           break;
-        default:
-          break;
+        // no default
       }
     });
   }

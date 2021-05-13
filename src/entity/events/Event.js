@@ -186,8 +186,7 @@ export default class Event extends Entity {
         case 'ilmd':
           this.setIlmd(new Ilmd(value));
           break;
-        default:
-          break;
+        // no default
       }
     });
   }

@@ -49,8 +49,7 @@ export default class EPCISDocument extends Entity {
             break;
           }
           break;
-        default:
-          break;
+        // no default
       }
     });
   }

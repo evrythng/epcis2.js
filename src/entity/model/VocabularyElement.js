@@ -23,8 +23,7 @@ export default class VocabularyElement extends Entity {
           value.forEach((child) => this
             .addChild(child));
           break;
-        default:
-          break;
+        // no default
       }
     });
   }

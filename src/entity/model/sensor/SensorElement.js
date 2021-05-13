@@ -28,8 +28,7 @@ export default class SensorElement extends Entity {
           value.forEach((sensorReport) => this
             .addSensorReport(new SensorReportElement(sensorReport)));
           break;
-        default:
-          break;
+        // no default
       }
     });
   }
