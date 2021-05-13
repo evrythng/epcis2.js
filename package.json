@@ -11,7 +11,7 @@
     "format": "./node_modules/.bin/prettier --write '**/*.{js,json,md,yaml,yml}'",
     "build": "rm dist/*; webpack --config webpack.config.js --mode production",
     "build:dev": "rm dist/*; webpack --config webpack.config.js --mode development",
-    "test": "./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/**/*.spec.js'",
+    "test": "nyc ./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/**/*.spec.js'",
     "prepublishOnly": "npm run build && npm test"
   },
   "husky": {
@@ -95,6 +95,7 @@
     "fetch-mock": "^9.11.0",
     "husky": "^6.0.0",
     "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
     "prettier": "^2.2.1",
     "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0",
