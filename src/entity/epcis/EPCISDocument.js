@@ -259,28 +259,28 @@ export default class EPCISDocument extends Entity {
    * @return {Object} an object corresponding to the Entity object
    */
   toObject() {
-    const o = super.toObject();
-    delete o.useEventListByDefault;
+    const output = super.toObject();
+    delete output.useEventListByDefault;
 
     // check the settings to know if a single event has to be in the event field or eventList field.
     if (!this.useEventListByDefault && this.eventList.length < 2) {
-      delete o.eventList;
-      o.event = this.eventList.length ? this.eventList[0].toObject() : {};
+      delete output.eventList;
+      output.event = this.eventList.length ? this.eventList[0].toObject() : {};
     }
 
     // the event or event list has to be in the epcisBody field
-    if (o.event || o.eventList) {
+    if (output.event || output.eventList) {
       const body = {};
-      if (o.event) {
-        body.event = o.event;
-        delete o.event;
+      if (output.event) {
+        body.event = output.event;
+        delete output.event;
       } else {
-        body.eventList = o.eventList;
-        delete o.eventList;
+        body.eventList = output.eventList;
+        delete output.eventList;
       }
-      o.epcisBody = body;
+      output.epcisBody = body;
     }
 
-    return o;
+    return output;
   }
 }
