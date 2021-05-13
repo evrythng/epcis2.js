@@ -11,10 +11,11 @@ import request from './request';
  * @returns {Promise} - Response promise
  */
 const capture = (epcisDocument, customOptions = {}) => {
-  const captureOptions = {};
-  Object.assign(captureOptions, customOptions);
-  captureOptions.method = 'POST';
-  captureOptions.body = JSON.stringify(epcisDocument.toObject());
+  const captureOptions = {
+    method: 'POST',
+    body: JSON.stringify(epcisDocument.toObject()),
+    ...customOptions,
+  };
   return request('capture', captureOptions);
 };
 

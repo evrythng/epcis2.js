@@ -33,7 +33,7 @@ export const offsetToString = (hours, minutes) => (hours >= 0
  * @return {string} a string corresponding to the offset (e.g "+02:00")
  */
 export const getTimeZoneOffsetFromStringOrNumber = (offset) => {
-  if ((typeof offset) === 'string') {
+  if (typeof offset === 'string') {
     let [strHours, strMinutes] = offset.split(':'); // eslint-disable-line prefer-const
 
     if (offset.length !== 6 || strHours.length !== 3 || strMinutes.length !== 2) {
@@ -54,7 +54,7 @@ export const getTimeZoneOffsetFromStringOrNumber = (offset) => {
     return offsetToString(hours, minutes);
   }
 
-  if ((typeof offset) === 'number') {
+  if (typeof offset === 'number') {
     const hours = Math.floor(offset);
     const minutes = (offset - Math.floor(offset)) * 60;
     return offsetToString(hours, minutes);

@@ -1,3 +1,6 @@
+/**
+ * Example of a sensorMetadata object
+ */
 export const exampleSensorMetadata = {
   time: '2019-04-02T14:05:00.000+01:00',
   startTime: '2019-04-02T14:05:00.000+02:00',
@@ -8,6 +11,10 @@ export const exampleSensorMetadata = {
   bizRules: 'https://example.com/gdti/4012345000054987',
   dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
 };
+
+/**
+ * Example of a sensorReportElement object
+ */
 export const exampleSensorReportElement = {
   type: 'gs1:MT-Temperature',
   value: 26.0,
@@ -34,6 +41,10 @@ export const exampleSensorReportElement = {
   dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
   bizRules: 'https://example.org/gdti/4012345000054987',
 };
+
+/**
+ * Another example of a sensorReportElement object
+ */
 export const exampleSensorReportElement2 = {
   type: 'gs1:MT-Humidity',
   value: 26.0,
@@ -60,6 +71,10 @@ export const exampleSensorReportElement2 = {
   dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
   bizRules: 'https://example.org/gdti/4012345000054987',
 };
+
+/**
+ * Example of a sensorElement object
+ */
 export const exampleSensorElement = {
   sensorMetadata: {
     time: '2019-07-19T14:00:00.000+01:00',
@@ -86,7 +101,10 @@ export const exampleSensorElement = {
   ],
 };
 
-export const sensorElementList = [
+/**
+ * Example of a sensorElementList object
+ */
+export const exampleSensorElementList = [
   {
     sensorMetadata: {
       time: '2019-07-19T14:00:00.000+01:00',
@@ -153,6 +171,10 @@ export const sensorElementList = [
     ],
   },
 ];
+
+/**
+ * Example of an objectEvent object
+ */
 export const exampleObjectEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
   isA: 'ObjectEvent',
@@ -182,7 +204,7 @@ export const exampleObjectEvent = {
     { epcClass: 'urn:epc:class:lgtin:4012345.012345.998878', quantity: 201, uom: 'KGM' },
     { epcClass: 'urn:epc:class:lgtin:4012345.012345.998879', quantity: 202, uom: 'KGM' },
   ],
-  sensorElementList,
+  sensorElementList: exampleSensorElementList,
   errorDeclaration: {
     declarationTime: '2020-01-15T00:00:00.000+01:00',
     reason: 'urn:epcglobal:cbv:er:incorrect_data',
@@ -201,6 +223,10 @@ export const exampleObjectEvent = {
   },
   ilmd: { 'example:bestBeforeDate': '2014-12-10', 'example:batch': 'XYZ' },
 };
+
+/**
+ * Example of a transactionEvent object
+ */
 export const exampleTransactionEvent = {
   eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
   isA: 'TransactionEvent',
@@ -230,7 +256,7 @@ export const exampleTransactionEvent = {
     { epcClass: 'urn:epc:class:lgtin:4012345.012345.998878', quantity: 201, uom: 'KGM' },
     { epcClass: 'urn:epc:class:lgtin:4012345.012345.998879', quantity: 202, uom: 'KGM' },
   ],
-  sensorElementList,
+  sensorElementList: exampleSensorElementList,
   errorDeclaration: {
     declarationTime: '2020-01-15T00:00:00.000+01:00',
     reason: 'urn:epcglobal:cbv:er:incorrect_data',
@@ -249,6 +275,10 @@ export const exampleTransactionEvent = {
   },
   parentID: 'parentID',
 };
+
+/**
+ * Example of a aggregationEvent object
+ */
 export const exampleAggregationEvent = {
   eventID: 'ni:///sha-256;87b5f18a69993f0052046d4687dfacdf48f7c988cfabda2819688c86b4066a49?ver=CBV2.0',
   isA: 'AggregationEvent',
@@ -268,6 +298,10 @@ export const exampleAggregationEvent = {
   ],
   'example:myField': 'Example of a vendor/user extension',
 };
+
+/**
+ * Example of a transformationEvent object
+ */
 export const exampleTransformationEvent = {
   eventID: 'ni:///sha-256;e65c3a997e77f34b58306da7a82ab0fc91c7820013287700f0b50345e5795b97?ver=CBV2.0',
   isA: 'TransformationEvent',
@@ -297,6 +331,10 @@ export const exampleTransformationEvent = {
   ilmd: { 'example:bestBeforeDate': '2014-12-10', 'example:batch': 'XYZ' },
   'example:myField': 'Example of a vendor/user extension',
 };
+
+/**
+ * Example of an associationEvent object
+ */
 export const exampleAssociationEvent = {
   eventID: 'ni:///sha-256;5f7c472bc4905de27a19b2efc8e4a9c6dc195139669b80b515f12218ff07cf65?ver=CBV2.0',
   isA: 'AssociationEvent',
@@ -338,23 +376,42 @@ export const exampleAssociationEvent = {
   ],
 };
 
+/**
+ * Example of a quantityElement object
+ */
 export const exampleQuantityElement = {
   epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
   quantity: 200,
   uom: 'KGM',
 };
+
+/**
+ * Example of a bizTransactionElement object
+ */
 export const exampleBizTransactionElement = {
   type: 'urn:epcglobal:cbv:btt:po',
   bizTransaction: 'http://transaction.acme.com/po/12345678',
 };
+
+/**
+ * Example of a sourceElement object
+ */
 export const exampleSourceElement = {
   type: 'urn:epcglobal:cbv:sdt:owning_party',
   source: 'urn:epc:id:pgln:9520001.11111',
 };
+
+/**
+ * Example of a destinationElement object
+ */
 export const exampleDestinationElement = {
   type: 'urn:epcglobal:cbv:sdt:owning_party',
   destination: 'urn:epc:id:pgln:9520999.99999',
 };
+
+/**
+ * Example of a vocabulary object
+ */
 export const exampleVocabulary = {
   isA: 'Vocabulary',
   type: 'vtype:ReadPoint',
@@ -400,8 +457,15 @@ export const exampleVocabulary = {
   },
   ],
 };
+
+/**
+ * Example of a vocabularyElement list
+ */
 export const exampleVocabularyElements = exampleVocabulary.vocabularyElementList;
 
+/**
+ * Example of an EPCISDocument object
+ */
 export const exampleEPCISDocument = {
   '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld', { example: 'http://ns.example.com/epcis/' }],
   id: '_:document1',
@@ -528,5 +592,90 @@ export const exampleEPCISDocument = {
         },
       ],
     },
+  },
+};
+
+/**
+ * Example of an EPCISHeader object
+ */
+export const exampleEPCISHeader = {
+  epcisMasterData: {
+    vocabularyList: [
+      {
+        vocabularyElementList: [
+          {
+            isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+            id: 'urn:epc:id:sgln:0037000.00729.0',
+            attributes: [
+              { id: 'xmda:latitude', attribute: '+18.0000' },
+              { id: 'xmda:longitude', attribute: '-70.0000' },
+              {
+                id: 'xmda:address',
+                attribute: {
+                  '@context': {
+                    '@vocab': 'http://epcis.example.com/ns/',
+                  },
+                  isA: 'Address',
+                  street: '100 Nowhere Street',
+                  city: 'Fancy',
+                  state: 'DC',
+                  zip: '99999',
+                },
+              },
+            ],
+            children: [
+              'urn:epc:id:sgln:0037000.00729.8201',
+              'urn:epc:id:sgln:0037000.00729.8202',
+              'urn:epc:id:sgln:0037000.00729.8203',
+            ],
+          },
+          {
+            isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+            id: 'urn:epc:id:sgln:0037000.00729.8202',
+            attributes: [
+              { id: 'cbvmda:sst', attribute: '202' },
+            ],
+            children: [
+              'urn:epc:id:sgln:0037000.00729.8203',
+            ],
+          },
+          {
+            isA: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+            id: 'urn:epc:id:sgln:0037000.00729.8203',
+            attributes: [
+              { id: 'cbvmda:sst', attribute: '202' },
+              { id: 'cbvmda:ssa', attribute: '402' },
+            ],
+          },
+        ],
+      },
+      {
+        vocabularyElementList: [
+          {
+            isA: 'urn:epcglobal:epcis:vtype:ReadPoint',
+            id: 'urn:epc:id:sgln:0037000.00729.8201',
+            attributes: [
+              { id: 'cbvmda:site', attribute: '0037000007296' },
+              { id: 'cbvmda:sst', attribute: 201 },
+            ],
+          },
+          {
+            isA: 'urn:epcglobal:epcis:vtype:ReadPoint',
+            id: 'urn:epc:id:sgln:0037000.00729.8202',
+            attributes: [
+              { id: 'cbvmda:site', attribute: '0037000007296' },
+              { id: 'cbvmda:sst', attribute: '202' },
+            ],
+          },
+          {
+            isA: 'urn:epcglobal:epcis:vtype:ReadPoint',
+            id: 'urn:epc:id:sgln:0037000.00729.8203',
+            attributes: [
+              { id: 'cbvmda:sst', attribute: 204 },
+            ],
+          },
+        ],
+      },
+    ],
   },
 };

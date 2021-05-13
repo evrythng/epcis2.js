@@ -32,6 +32,7 @@ describe('unit tests for the TransformationEvent class', () => {
     expect(obj.getReadPoint().getId()).to.be.equal(exampleTransformationEvent.readPoint.id);
     expect(obj.getIlmd().toObject()).to.deep.equal(exampleTransformationEvent.ilmd);
   });
+
   it('should create an TransformationEvent from json', async () => {
     const obj = new TransformationEvent(exampleTransformationEvent);
     expect(obj.getInputQuantityList()[0]).to.be.instanceof(QuantityElement);
@@ -52,6 +53,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeInputEPC(epc2);
       expect(o.getInputEPCList().toString()).to.be.equal([].toString());
     });
+
     it('should add an epc list', async () => {
       const o = new TransformationEvent();
       o.addInputEPCList([epc1, epc2]);
@@ -65,6 +67,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.addInputEPCList([epc1, epc2]);
       expect(o.getInputEPCList().toString()).to.be.equal([epc3, epc1, epc2].toString());
     });
+
     it('should remove an epc list', async () => {
       const o = new TransformationEvent();
       o.addInputEPCList([epc1, epc2, epc3]);
@@ -76,18 +79,21 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeInputEPCList([epc2, epc3]);
       expect(o.getInputEPCList().toString()).to.be.equal([].toString());
     });
+
     it('should clear the epc list', async () => {
       const o = new TransformationEvent();
       o.addInputEPCList([epc1, epc2, epc3]);
       o.clearInputEPCList();
       expect(o.getInputEPCList()).to.be.equal(undefined);
     });
+
     it('should not add the epc list to JSON if it is not defined', async () => {
       const o = new TransformationEvent();
       const json = o.toObject();
       expect(json.inputEPCList).to.be.equal(undefined);
     });
   });
+
   describe('inputQuantityList field', () => {
     const quantity1 = new QuantityElement(exampleTransformationEvent.inputQuantityList[0]);
     const quantity2 = new QuantityElement(exampleTransformationEvent.inputQuantityList[1]);
@@ -104,6 +110,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeInputQuantity(quantity2);
       expect(o.getInputQuantityList().toString()).to.be.equal([].toString());
     });
+
     it('should add a quantity list', async () => {
       const o = new TransformationEvent();
       o.addInputQuantityList([quantity1, quantity2]);
@@ -118,6 +125,7 @@ describe('unit tests for the TransformationEvent class', () => {
       expect(o.getInputQuantityList().toString()).to.be
         .equal([quantity3, quantity1, quantity2].toString());
     });
+
     it('should remove a quantity list', async () => {
       const o = new TransformationEvent();
       o.addInputQuantityList([quantity1, quantity2, quantity3]);
@@ -129,12 +137,14 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeInputQuantityList([quantity2, quantity3]);
       expect(o.getInputQuantityList().toString()).to.be.equal([].toString());
     });
+
     it('should clear the quantity list', async () => {
       const o = new TransformationEvent();
       o.addInputQuantityList([quantity1, quantity2]);
       o.clearInputQuantityList();
       expect(o.getInputQuantityList()).to.be.equal(undefined);
     });
+
     it('should not add the quantity list to JSON if it is not defined', async () => {
       const o = new TransformationEvent();
       const json = o.toObject();
@@ -154,6 +164,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeOutputEPC(epc2);
       expect(o.getOutputEPCList().toString()).to.be.equal([].toString());
     });
+
     it('should add an epc list', async () => {
       const o = new TransformationEvent();
       o.addOutputEPCList([epc1, epc2]);
@@ -167,6 +178,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.addOutputEPCList([epc1, epc2]);
       expect(o.getOutputEPCList().toString()).to.be.equal([epc3, epc1, epc2].toString());
     });
+
     it('should remove an epc list', async () => {
       const o = new TransformationEvent();
       o.addOutputEPCList([epc1, epc2, epc3]);
@@ -178,18 +190,21 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeOutputEPCList([epc2, epc3]);
       expect(o.getOutputEPCList().toString()).to.be.equal([].toString());
     });
+
     it('should clear the epc list', async () => {
       const o = new TransformationEvent();
       o.addOutputEPCList([epc1, epc2, epc3]);
       o.clearOutputEPCList();
       expect(o.getOutputEPCList()).to.be.equal(undefined);
     });
+
     it('should not add the epc list to JSON if it is not defined', async () => {
       const o = new TransformationEvent();
       const json = o.toObject();
       expect(json.outputEPCList).to.be.equal(undefined);
     });
   });
+
   describe('outputQuantityList field', () => {
     const quantity1 = new QuantityElement(exampleTransformationEvent.outputQuantityList[0]);
     const quantity2 = new QuantityElement(exampleTransformationEvent.outputQuantityList[1]);
@@ -206,6 +221,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeOutputQuantity(quantity2);
       expect(o.getOutputQuantityList().toString()).to.be.equal([].toString());
     });
+
     it('should add a quantity list', async () => {
       const o = new TransformationEvent();
       o.addOutputQuantityList([quantity1, quantity2]);
@@ -220,6 +236,7 @@ describe('unit tests for the TransformationEvent class', () => {
       expect(o.getOutputQuantityList().toString()).to.be
         .equal([quantity3, quantity1, quantity2].toString());
     });
+
     it('should remove a quantity list', async () => {
       const o = new TransformationEvent();
       o.addOutputQuantityList([quantity1, quantity2, quantity3]);
@@ -231,12 +248,14 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeOutputQuantityList([quantity2, quantity3]);
       expect(o.getOutputQuantityList().toString()).to.be.equal([].toString());
     });
+
     it('should clear the quantity list', async () => {
       const o = new TransformationEvent();
       o.addOutputQuantityList([quantity1, quantity2]);
       o.clearOutputQuantityList();
       expect(o.getOutputQuantityList()).to.be.equal(undefined);
     });
+
     it('should not add the quantity list to JSON if it is not defined', async () => {
       const o = new TransformationEvent();
       const json = o.toObject();

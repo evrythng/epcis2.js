@@ -38,6 +38,7 @@ describe('unit tests for the AggregationEvent class', () => {
     expect(obj.getReadPoint().getId()).to.be.equal(exampleAggregationEvent.readPoint.id);
     expect(obj.getParentId()).to.be.equal(exampleAggregationEvent.parentID);
   });
+
   it('should create an AggregationEvent from json', async () => {
     const obj = new AggregationEvent(exampleAggregationEvent);
     expect(obj.getBizLocation()).to.be.instanceof(BizLocation);

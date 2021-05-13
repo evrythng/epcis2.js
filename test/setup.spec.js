@@ -10,6 +10,7 @@ describe('unit tests for setup.js', () => {
       'content-type': 'application/json',
     }.toString());
   });
+
   it('should use custom settings', async () => {
     const settings = setup({
       apiUrl: 'google.com',

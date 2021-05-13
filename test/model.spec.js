@@ -41,6 +41,7 @@ describe('unit tests for model Objects', () => {
       expect(errorDeclaration.getCorrectiveEventIDs().toString()).to.be
         .equal([correctiveEventID1, correctiveEventID2].toString());
     });
+
     it('should create a valid ErrorDeclaration object from JSON', async () => {
       const exampleErrorDeclaration = {
         declarationTime: anotherDate,
@@ -51,6 +52,7 @@ describe('unit tests for model Objects', () => {
       const errorDeclaration = new ErrorDeclaration(exampleErrorDeclaration);
       expect(errorDeclaration.toObject()).to.deep.equal(exampleErrorDeclaration);
     });
+
     it('should create a valid declarationTime', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration
@@ -59,6 +61,7 @@ describe('unit tests for model Objects', () => {
       const json = errorDeclaration.toObject();
       expect(json.declarationTime).to.be.equal(anotherDate);
     });
+
     it('should add and remove correctiveEventIDs', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addCorrectiveEventID(correctiveEventID1);
@@ -74,6 +77,7 @@ describe('unit tests for model Objects', () => {
       expect(errorDeclaration.correctiveEventIDs.toString()).to.be
         .equal([].toString());
     });
+
     it('should add a correctiveEventID List', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addCorrectiveEventIDList(
@@ -88,6 +92,7 @@ describe('unit tests for model Objects', () => {
       expect(errorDeclaration.correctiveEventIDs.toString()).to.be
         .equal([correctiveEventID1, correctiveEventID2, correctiveEventID3].toString());
     });
+
     it('should remove a correctiveEventID List', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addCorrectiveEventIDList(
@@ -99,6 +104,7 @@ describe('unit tests for model Objects', () => {
       expect(errorDeclaration.correctiveEventIDs.toString()).to.be
         .equal([correctiveEventID3].toString());
     });
+
     it('should clear the correctiveEventID List', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addCorrectiveEventIDList(
@@ -107,17 +113,20 @@ describe('unit tests for model Objects', () => {
       errorDeclaration.clearCorrectiveEventIDList();
       expect(errorDeclaration.correctiveEventIDs).to.be.equal(undefined);
     });
+
     it('should not add the correctiveEventID list to JSON if it is not defined',
       async () => {
         const errorDeclaration = new ErrorDeclaration();
         const json = errorDeclaration.toObject();
         expect(json.correctiveEventIDs).to.be.equal(undefined);
       });
+
     it('should add a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addExtension('key', 'value');
       expect(errorDeclaration.toObject().key).to.be.equal(('value'));
     });
+
     it('should remove a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addExtension('key', 'value');
@@ -127,6 +136,7 @@ describe('unit tests for model Objects', () => {
         .equal({ reason, correctiveEventIDs: [] }.toString());
     });
   });
+
   describe('QuantityElement.js', () => {
     it('should create a valid QuantityElement object from setters', async () => {
       const quantityElement = new QuantityElement();
@@ -139,10 +149,12 @@ describe('unit tests for model Objects', () => {
       expect(quantityElement.getUom()).to.be.equal(exampleQuantityElement.uom);
       expect(quantityElement.getEpcClass()).to.be.equal(exampleQuantityElement.epcClass);
     });
+
     it('should create a valid QuantityElement object from JSON', async () => {
       const quantityElement = new QuantityElement(exampleQuantityElement);
       expect(quantityElement.toObject()).to.deep.equal(exampleQuantityElement);
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new QuantityElement();
       obj.addExtension('key', 'value');
@@ -151,6 +163,7 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('ReadPoint.js', () => {
     it('should create a valid ReadPoint object from setters', async () => {
       const readPoint = new ReadPoint();
@@ -159,12 +172,14 @@ describe('unit tests for model Objects', () => {
 
       expect(readPoint.getId()).to.be.equal('id');
     });
+
     it('should create a valid ReadPoint object from JSON', async () => {
       const readPoint = new ReadPoint({ id: 'id' });
 
       const json = readPoint.toObject();
       expect(json.id).to.be.equal('id');
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new ReadPoint();
       obj.addExtension('key', 'value');
@@ -173,6 +188,7 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('BizLocation.js', () => {
     it('should create a valid BizLocation object from setters', async () => {
       const bizLocation = new BizLocation();
@@ -181,12 +197,14 @@ describe('unit tests for model Objects', () => {
 
       expect(bizLocation.getId()).to.be.equal('id');
     });
+
     it('should create a valid BizLocation object from JSON', async () => {
       const bizLocation = new BizLocation({ id: 'id' });
 
       const json = bizLocation.toObject();
       expect(json.id).to.be.equal('id');
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new BizLocation();
       obj.addExtension('key', 'value');
@@ -195,6 +213,7 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('BizTransactionElement.js', () => {
     it('should create a valid BizTransactionElement object from setters', async () => {
       const bizTransaction = new BizTransactionElement();
@@ -206,6 +225,7 @@ describe('unit tests for model Objects', () => {
       expect(bizTransaction.getBizTransaction()).to.be
         .equal(exampleBizTransactionElement.bizTransaction);
     });
+
     it('should create a valid BizTransactionElement object from JSON', async () => {
       const bizTransaction = new BizTransactionElement(exampleBizTransactionElement);
 
@@ -213,6 +233,7 @@ describe('unit tests for model Objects', () => {
       expect(json.type).to.be.equal(exampleBizTransactionElement.type);
       expect(json.bizTransaction).to.be.equal(exampleBizTransactionElement.bizTransaction);
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new BizTransactionElement();
       obj.addExtension('key', 'value');
@@ -221,6 +242,7 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('SourceElement.js', () => {
     it('should create a valid SourceElement object from setters', async () => {
       const sourceElement = new SourceElement();
@@ -231,6 +253,7 @@ describe('unit tests for model Objects', () => {
       expect(sourceElement.getType()).to.be.equal(exampleSourceElement.type);
       expect(sourceElement.getSource()).to.be.equal(exampleSourceElement.source);
     });
+
     it('should create a valid SourceElement object from JSON', async () => {
       const sourceElement = new SourceElement(exampleSourceElement);
 
@@ -238,6 +261,7 @@ describe('unit tests for model Objects', () => {
       expect(json.type).to.be.equal(exampleSourceElement.type);
       expect(json.source).to.be.equal(exampleSourceElement.source);
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new SourceElement();
       obj.addExtension('key', 'value');
@@ -246,6 +270,7 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('DestinationElement.js', () => {
     it('should create a valid DestinationElement object from setters', async () => {
       const destinationElement = new DestinationElement();
@@ -257,6 +282,7 @@ describe('unit tests for model Objects', () => {
       expect(destinationElement.getDestination())
         .to.be.equal(exampleDestinationElement.destination);
     });
+
     it('should create a valid DestinationElement object from JSON', async () => {
       const destinationElement = new DestinationElement(exampleDestinationElement);
 
@@ -264,6 +290,7 @@ describe('unit tests for model Objects', () => {
       expect(json.type).to.be.equal(exampleDestinationElement.type);
       expect(json.destination).to.be.equal(exampleDestinationElement.destination);
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new DestinationElement();
       obj.addExtension('key', 'value');
@@ -272,6 +299,7 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('PersistentDisposition.js', () => {
     const set = [dispositions.active, dispositions.unavailable];
     const unset = [dispositions.completeness_inferred, dispositions.unknown];
@@ -289,6 +317,7 @@ describe('unit tests for model Objects', () => {
       expect(persistentDisposition.getUnset().toString()).to.be
         .equal(persistentDispositionJSON.unset.toString());
     });
+
     it('should add and remove set', async () => {
       const persistentDisposition = new PersistentDisposition();
       persistentDisposition.addSet(set[0]);
@@ -300,6 +329,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.removeSet(set[1]);
       expect(persistentDisposition.set.toString()).to.be.equal([].toString());
     });
+
     it('should add and remove a set List', async () => {
       const persistentDisposition = new PersistentDisposition();
       persistentDisposition.addSetList(set);
@@ -307,6 +337,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.removeSetList(set);
       expect(persistentDisposition.set.toString()).to.be.equal([].toString());
     });
+
     it('should clear the set List', async () => {
       const persistentDisposition = new PersistentDisposition();
       persistentDisposition.addSetList(set);
@@ -314,12 +345,14 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.clearSetList();
       expect(persistentDisposition.set).to.be.equal(undefined);
     });
+
     it('should not add the set list to JSON if it is not defined',
       async () => {
         const persistentDisposition = new PersistentDisposition();
         const json = persistentDisposition.toObject();
         expect(json.set).to.be.equal(undefined);
       });
+
     it('should add and remove unset', async () => {
       const persistentDisposition = new PersistentDisposition();
       persistentDisposition.addUnset(unset[0]);
@@ -331,6 +364,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.removeUnset(unset[1]);
       expect(persistentDisposition.unset.toString()).to.be.equal([].toString());
     });
+
     it('should add and remove an unset List', async () => {
       const persistentDisposition = new PersistentDisposition();
       persistentDisposition.addUnsetList(unset);
@@ -338,6 +372,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.removeUnsetList(unset);
       expect(persistentDisposition.unset.toString()).to.be.equal([].toString());
     });
+
     it('should clear the unset List', async () => {
       const persistentDisposition = new PersistentDisposition();
       persistentDisposition.addUnsetList(unset);
@@ -345,12 +380,14 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.clearUnsetList();
       expect(persistentDisposition.unset).to.be.equal(undefined);
     });
+
     it('should not add the unset list to JSON if it is not defined',
       async () => {
         const persistentDisposition = new PersistentDisposition();
         const json = persistentDisposition.toObject();
         expect(json.unset).to.be.equal(undefined);
       });
+
     it('should add and remove custom fields', async () => {
       const obj = new PersistentDisposition();
       obj.addExtension('key', 'value');
@@ -359,6 +396,7 @@ describe('unit tests for model Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('Vocabulary.js', () => {
     const vocabularyElement = exampleVocabularyElements.map((ve) => new VocabularyElement(ve));
 
@@ -372,6 +410,7 @@ describe('unit tests for model Objects', () => {
       expect(vocabulary.getVocabularyElementList().length).to
         .be.equal(exampleVocabulary.vocabularyElementList.length);
     });
+
     it('should create a valid Vocabulary object from JSON', async () => {
       const vocabulary = new Vocabulary(exampleVocabulary);
 
@@ -392,6 +431,7 @@ describe('unit tests for model Objects', () => {
       vocabulary.removeVocabularyElement(vocabularyElement[1]);
       expect(vocabulary.getVocabularyElementList()).to.deep.equal([]);
     });
+
     it('should add and remove a vocabulary element list', async () => {
       const vocabulary = new Vocabulary();
       vocabulary.addVocabularyElementList(vocabularyElement);
@@ -399,6 +439,7 @@ describe('unit tests for model Objects', () => {
       vocabulary.removeVocabularyElementList(vocabularyElement);
       expect(vocabulary.toObject().vocabularyElementList).to.deep.equal([]);
     });
+
     it('should clear the vocabulary element list', async () => {
       const vocabulary = new Vocabulary();
       vocabulary.addVocabularyElementList(vocabularyElement);
@@ -406,6 +447,7 @@ describe('unit tests for model Objects', () => {
       vocabulary.clearVocabularyElementList();
       expect(vocabulary.toObject().vocabularyElementList).to.be.equal(undefined);
     });
+
     it('should not add the vocabulary element list to JSON if it is not defined',
       async () => {
         const vocabulary = new Vocabulary();
@@ -413,6 +455,7 @@ describe('unit tests for model Objects', () => {
         expect(json.vocabularyElementList).to.be.equal(undefined);
       });
   });
+
   describe('VocabularyElement.js', () => {
     const attributeList = [
       new AttributeElement(exampleVocabulary.vocabularyElementList[2].attributes[0]),
@@ -434,6 +477,7 @@ describe('unit tests for model Objects', () => {
       expect(vocabularyE.getAttributes().length).to
         .be.equal(exampleVocabulary.vocabularyElementList[2].attributes.length);
     });
+
     it('should create a valid VocabularyElement object from JSON', async () => {
       const vocabularyElement = new VocabularyElement(exampleVocabularyElements[2]);
 
@@ -453,6 +497,7 @@ describe('unit tests for model Objects', () => {
       vocabularyElement.removeAttribute(attributeList[1]);
       expect(vocabularyElement.getAttributes()).to.deep.equal([]);
     });
+
     it('should add and remove an attribute List', async () => {
       const vocabularyElement = new VocabularyElement();
       vocabularyElement.addAttributeList(attributeList);
@@ -460,6 +505,7 @@ describe('unit tests for model Objects', () => {
       vocabularyElement.removeAttributeList(attributeList);
       expect(vocabularyElement.getAttributes()).to.deep.equal([]);
     });
+
     it('should clear the attribute List', async () => {
       const vocabularyElement = new VocabularyElement();
       vocabularyElement.addAttributeList(attributeList);
@@ -467,6 +513,7 @@ describe('unit tests for model Objects', () => {
       vocabularyElement.clearAttributeList();
       expect(vocabularyElement.getAttributes()).to.be.equal(undefined);
     });
+
     it('should not add the attributes list to JSON if it is not defined',
       async () => {
         const vocabularyElement = new VocabularyElement();
@@ -485,6 +532,7 @@ describe('unit tests for model Objects', () => {
       vocabularyElement.removeChild(children[1]);
       expect(vocabularyElement.getChildren()).to.deep.equal([]);
     });
+
     it('should add and remove a child List', async () => {
       const vocabularyElement = new VocabularyElement();
       vocabularyElement.addChildList(children);
@@ -492,6 +540,7 @@ describe('unit tests for model Objects', () => {
       vocabularyElement.removeChildList(children);
       expect(vocabularyElement.getChildren()).to.deep.equal([]);
     });
+
     it('should clear the child List', async () => {
       const vocabularyElement = new VocabularyElement();
       vocabularyElement.addChildList(children);
@@ -499,6 +548,7 @@ describe('unit tests for model Objects', () => {
       vocabularyElement.clearChildren();
       expect(vocabularyElement.getChildren()).to.be.equal(undefined);
     });
+
     it('should not add the child list to JSON if it is not defined',
       async () => {
         const vocabularyElement = new VocabularyElement();
@@ -506,6 +556,7 @@ describe('unit tests for model Objects', () => {
         expect(json.children).to.be.equal(undefined);
       });
   });
+
   describe('AttributeElement.js', () => {
     const exampleAttribute =
       new AttributeElement(exampleVocabulary.vocabularyElementList[2].attributes[0]);
@@ -519,6 +570,7 @@ describe('unit tests for model Objects', () => {
       expect(attributeElement.getId()).to.be.equal(exampleAttribute.id);
       expect(attributeElement.getAttribute()).to.be.equal(exampleAttribute.attribute);
     });
+
     it('should create a valid AttributeElement object from JSON', async () => {
       const attributeElement = new AttributeElement(exampleAttribute);
       expect(attributeElement.toObject()).to.deep.equal(exampleAttribute);

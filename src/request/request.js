@@ -10,13 +10,17 @@ import buildParams from './buildParams';
  */
 function mergeInitialOptions(customOptions) {
   const options = {
-    method: 'get', url: '', ...settings, ...customOptions, headers: { ...settings.headers, ...customOptions.headers },
+    method: 'get',
+    url: '',
+    ...settings,
+    ...customOptions,
+    headers: { ...settings.headers, ...customOptions.headers },
   };
 
   // Stringify data if any
   if (options.data) {
     options.body = JSON.stringify(options.data);
-    Reflect.deleteProperty(options, 'data');
+    delete options.data;
   }
 
   return options;

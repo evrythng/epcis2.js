@@ -24,15 +24,18 @@ describe('unit tests for the ObjectEvent class', () => {
       setup(defaultSettings);
       done();
     });
+
     it('should use default values', async () => {
       const o = new ObjectEvent();
       expect(o.isA).to.be.equal('ObjectEvent');
     });
+
     it('should not use eventTimeZoneOffset from settings if it is not overridden', async () => {
       setup({});
       const o = new ObjectEvent();
       expect(o.eventTimeZoneOffset).to.be.equal(undefined);
     });
+
     it('should use eventTimeZoneOffset from settings if it is overridden', async () => {
       setup({ eventTimeZoneOffset: '+02:00' });
       const o = new ObjectEvent();
@@ -83,6 +86,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getExtension('example:myField')).to
       .be.equal(exampleObjectEvent['example:myField']);
   });
+
   it('should create an ObjectEvent from json', async () => {
     const obj = new ObjectEvent(exampleObjectEvent);
     expect(obj.getBizLocation()).to.be.instanceof(BizLocation);
@@ -97,6 +101,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getIlmd()).to.be.instanceof(Ilmd);
     expect(obj.toObject()).to.deep.equal(exampleObjectEvent);
   });
+
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent();
     const o2 = new ObjectEvent();
@@ -104,11 +109,13 @@ describe('unit tests for the ObjectEvent class', () => {
     o2.setEventTimeZoneOffset(-6);
     expect(o1.toObject().eventTimeZoneOffset).to.be.equal(o2.toObject().eventTimeZoneOffset);
   });
+
   it('should add a custom field', async () => {
     const objectEvent = new ObjectEvent();
     objectEvent.addExtension('key', 'value');
     expect(objectEvent.toObject().key).to.be.equal(('value'));
   });
+
   it('should remove a custom field', async () => {
     const objectEvent = new ObjectEvent();
     objectEvent.addExtension('key', 'value');
@@ -116,6 +123,7 @@ describe('unit tests for the ObjectEvent class', () => {
     objectEvent.removeExtension('key');
     expect(objectEvent.toObject().toString()).to.be.equal({ epcList: [epc1] }.toString());
   });
+
   it('should set the readPoint with ID or ReadPoint instance', async () => {
     const o = new ObjectEvent();
     const o2 = new ObjectEvent();
@@ -124,6 +132,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(o.readPoint.id).to.be.equal('readPointID');
     expect(o2.readPoint.id).to.be.equal('readPointID');
   });
+
   it('should set the bizLocation with ID or BizLocation instance', async () => {
     const o = new ObjectEvent();
     const o2 = new ObjectEvent();
@@ -145,6 +154,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeEPC(epc2);
       expect(o.epcList.toString()).to.be.equal([].toString());
     });
+
     it('should add an epc list', async () => {
       const o = new ObjectEvent();
       o.addEPCList(exampleObjectEvent.epcList);
@@ -158,6 +168,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.addEPCList(exampleObjectEvent.epcList);
       expect(o.epcList.toString()).to.be.equal([epc3, epc1, epc2].toString());
     });
+
     it('should remove an epc list', async () => {
       const o = new ObjectEvent();
       o.addEPCList([...exampleObjectEvent.epcList, epc3]);
@@ -169,18 +180,21 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeEPCList([epc2, epc3]);
       expect(o.epcList.toString()).to.be.equal([].toString());
     });
+
     it('should clear the epc list', async () => {
       const o = new ObjectEvent();
       o.addEPCList([...exampleObjectEvent.epcList, epc3]);
       o.clearEPCList();
       expect(o.epcList).to.be.equal(undefined);
     });
+
     it('should not add the epc list to JSON if it is not defined', async () => {
       const o = new ObjectEvent();
       const json = o.toObject();
       expect(json.epcList).to.be.equal(undefined);
     });
   });
+
   describe('quantityList field', () => {
     const quantity1 = new QuantityElement(exampleObjectEvent.quantityList[0]);
     const quantity2 = new QuantityElement(exampleObjectEvent.quantityList[1]);
@@ -197,6 +211,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeQuantity(quantity2);
       expect(o.quantityList.toString()).to.be.equal([].toString());
     });
+
     it('should add a quantity list', async () => {
       const o = new ObjectEvent();
       o.addQuantityList([quantity1, quantity2]);
@@ -210,6 +225,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.addQuantityList([quantity1, quantity2]);
       expect(o.quantityList.toString()).to.be.equal([quantity3, quantity1, quantity2].toString());
     });
+
     it('should remove a quantity list', async () => {
       const o = new ObjectEvent();
       o.addQuantityList([quantity1, quantity2, quantity3]);
@@ -221,18 +237,21 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeQuantityList([quantity2, quantity3]);
       expect(o.quantityList.toString()).to.be.equal([].toString());
     });
+
     it('should clear the quantity list', async () => {
       const o = new ObjectEvent();
       o.addQuantityList([quantity1, quantity2]);
       o.clearQuantityList();
       expect(o.quantityList).to.be.equal(undefined);
     });
+
     it('should not add the quantity list to JSON if it is not defined', async () => {
       const o = new ObjectEvent();
       const json = o.toObject();
       expect(json.quantityList).to.be.equal(undefined);
     });
   });
+
   describe('bizTransactionList field', () => {
     const bizTransaction1 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[0]);
     const bizTransaction2 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[1]);
@@ -249,12 +268,14 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeBizTransaction(bizTransaction2);
       expect(o.bizTransactionList.toString()).to.be.equal([].toString());
     });
+
     it('should add a bizTransaction list', async () => {
       const o = new ObjectEvent();
       o.addBizTransactionList([bizTransaction1, bizTransaction2]);
       expect(o.bizTransactionList.toString()).to.be
         .equal([bizTransaction1, bizTransaction2].toString());
     });
+
     it('should remove a bizTransaction list', async () => {
       const o = new ObjectEvent();
       o.addBizTransactionList([bizTransaction1, bizTransaction2]);
@@ -263,18 +284,21 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeBizTransactionList([bizTransaction1, bizTransaction2]);
       expect(o.bizTransactionList.toString()).to.be.equal([].toString());
     });
+
     it('should clear the bizTransaction list', async () => {
       const o = new ObjectEvent();
       o.addBizTransactionList([bizTransaction1, bizTransaction2]);
       o.clearBizTransactionList();
       expect(o.bizTransactionList).to.be.equal(undefined);
     });
+
     it('should not add the bizTransaction list to JSON if it is not defined', async () => {
       const o = new ObjectEvent();
       const json = o.toObject();
       expect(json.bizTransactionList).to.be.equal(undefined);
     });
   });
+
   describe('sourceList field', () => {
     const source1 = new SourceElement(exampleObjectEvent.sourceList[0]);
     const source2 = new SourceElement(exampleObjectEvent.sourceList[1]);
@@ -290,11 +314,13 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeSource(source2);
       expect(o.sourceList.toString()).to.be.equal([].toString());
     });
+
     it('should add a source list', async () => {
       const o = new ObjectEvent();
       o.addSourceList([source1, source2]);
       expect(o.sourceList.toString()).to.be.equal([source1, source2].toString());
     });
+
     it('should remove a source list', async () => {
       const o = new ObjectEvent();
       o.addSourceList([source1, source2]);
@@ -302,18 +328,21 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeSourceList([source1, source2]);
       expect(o.sourceList.toString()).to.be.equal([].toString());
     });
+
     it('should clear the source list', async () => {
       const o = new ObjectEvent();
       o.addSourceList([source1, source2]);
       o.clearSourceList();
       expect(o.sourceList).to.be.equal(undefined);
     });
+
     it('should not add the source list to JSON if it is not defined', async () => {
       const o = new ObjectEvent();
       const json = o.toObject();
       expect(json.sourceList).to.be.equal(undefined);
     });
   });
+
   describe('destinationList field', () => {
     const destination1 = new DestinationElement(exampleObjectEvent.destinationList[0]);
     const destination2 = new DestinationElement(exampleObjectEvent.destinationList[1]);
@@ -329,11 +358,13 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeDestination(destination2);
       expect(o.destinationList.toString()).to.be.equal([].toString());
     });
+
     it('should add a destination list', async () => {
       const o = new ObjectEvent();
       o.addDestinationList([destination1, destination2]);
       expect(o.destinationList.toString()).to.be.equal([destination1, destination2].toString());
     });
+
     it('should remove a destination list', async () => {
       const o = new ObjectEvent();
       o.addDestinationList([destination1, destination2]);
@@ -341,18 +372,21 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeDestinationList([destination1, destination2]);
       expect(o.destinationList.toString()).to.be.equal([].toString());
     });
+
     it('should clear the destination list', async () => {
       const o = new ObjectEvent();
       o.addDestinationList([destination1, destination2]);
       o.clearDestinationList();
       expect(o.destinationList).to.be.equal(undefined);
     });
+
     it('should not add the destination list to JSON if it is not defined', async () => {
       const o = new ObjectEvent();
       const json = o.toObject();
       expect(json.destinationList).to.be.equal(undefined);
     });
   });
+
   describe('sensorElementList field', () => {
     const sensorElement1 = new SensorElement(exampleObjectEvent.destinationList[0]);
     const sensorElement2 = new SensorElement(exampleObjectEvent.destinationList[1]);
@@ -369,12 +403,14 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeSensorElement(sensorElement2);
       expect(o.sensorElementList.toString()).to.be.equal([].toString());
     });
+
     it('should add a sensorElement list', async () => {
       const o = new ObjectEvent();
       o.addSensorElementList([sensorElement1, sensorElement2]);
       expect(o.sensorElementList.toString()).to.be
         .equal([sensorElement1, sensorElement2].toString());
     });
+
     it('should remove a sensorElement list', async () => {
       const o = new ObjectEvent();
       o.addSensorElementList([sensorElement1, sensorElement2]);
@@ -383,12 +419,14 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeSensorElementList([sensorElement1, sensorElement2]);
       expect(o.sensorElementList.toString()).to.be.equal([].toString());
     });
+
     it('should clear the sensorElement list', async () => {
       const o = new ObjectEvent();
       o.addSensorElementList([sensorElement1, sensorElement2]);
       o.clearSensorElementList();
       expect(o.sensorElementList).to.be.equal(undefined);
     });
+
     it('should not add the sensorElement list to JSON if it is not defined', async () => {
       const o = new ObjectEvent();
       const json = o.toObject();

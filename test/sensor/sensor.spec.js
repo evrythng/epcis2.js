@@ -33,10 +33,12 @@ describe('unit tests for sensor relative Objects', () => {
         .be.equal(exampleSensorMetadata.dataProcessingMethod);
       expect(sensorMetadata.getBizRules()).to.be.equal(exampleSensorMetadata.bizRules);
     });
+
     it('should create a valid SensorMetadata object from JSON', async () => {
       const sensorMetadata = new SensorMetadata(exampleSensorMetadata);
       expect(sensorMetadata.toObject()).to.deep.equal(exampleSensorMetadata);
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new SensorMetadata();
       obj.addExtension('key', 'value');
@@ -45,6 +47,7 @@ describe('unit tests for sensor relative Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('SensorReportElement.js', () => {
     it('should create a valid SensorReportElement object from setters', async () => {
       const sensorReport = new SensorReportElement();
@@ -97,10 +100,12 @@ describe('unit tests for sensor relative Objects', () => {
       expect(sensorReport.getPercValue()).to.be.equal(exampleSensorReportElement.percValue);
       expect(sensorReport.getUom()).to.be.equal(exampleSensorReportElement.uom);
     });
+
     it('should create a valid SensorReportElement object from JSON', async () => {
       const sensorReport = new SensorReportElement(exampleSensorReportElement);
       expect(sensorReport.toObject()).to.deep.equal(exampleSensorReportElement);
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new SensorReportElement();
       obj.addExtension('key', 'value');
@@ -109,6 +114,7 @@ describe('unit tests for sensor relative Objects', () => {
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
+
   describe('SensorElement.js', () => {
     it('should create a valid SensorElement object from setters', async () => {
       const sensorElement = new SensorElement();
@@ -125,12 +131,14 @@ describe('unit tests for sensor relative Objects', () => {
       expect(json.sensorMetadata.bizRules).to.be
         .equal(exampleSensorElement.sensorMetadata.bizRules);
     });
+
     it('should create a valid SensorElement object from JSON', async () => {
       const sensorElement = new SensorElement(exampleSensorElement);
       expect(sensorElement.getSensorReport()[1]).to.be.instanceof(SensorReportElement);
       expect(sensorElement.getSensorMetadata()).to.be.instanceof(SensorMetadata);
       expect(sensorElement.toObject()).to.deep.equal(exampleSensorElement);
     });
+
     it('should add and remove custom fields', async () => {
       const obj = new SensorElement();
       obj.addExtension('key', 'value');
@@ -138,6 +146,7 @@ describe('unit tests for sensor relative Objects', () => {
       obj.removeExtension('key');
       expect(obj.toObject().key).to.be.equal(undefined);
     });
+
     describe('sensorReport field', () => {
       const s1 = new SensorReportElement(exampleSensorReportElement);
       const s2 = new SensorReportElement(exampleSensorReportElement2);
@@ -154,23 +163,27 @@ describe('unit tests for sensor relative Objects', () => {
         obj.removeSensorReport(s1);
         expect(obj.getSensorReport().toString()).to.be.equal([].toString());
       });
+
       it('should add a sensorReport list', async () => {
         const obj = new SensorElement();
         obj.addSensorReportList([s1, s2]);
         expect(obj.getSensorReport()[1].toString()).to.be.equal(s2.toString());
       });
+
       it('should remove a sensorReport list', async () => {
         const obj = new SensorElement();
         obj.addSensorReportList([s1, s2]);
         obj.removeSensorReportList([s1]);
         expect(obj.getSensorReport()[0].toString()).to.be.equal(s2.toString());
       });
+
       it('should clear the sensorReport list', async () => {
         const obj = new SensorElement();
         obj.addSensorReport(s1);
         obj.clearSensorReportList();
         expect(obj.epcList).to.be.equal(undefined);
       });
+
       it('should not add the sensorReport list to JSON if it is not defined', async () => {
         const obj = new SensorElement();
         expect(obj.getSensorReport()).to.be.equal(undefined);

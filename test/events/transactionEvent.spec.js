@@ -55,6 +55,7 @@ describe('unit tests for the TransactionEvent class', () => {
     expect(obj.getReadPoint().getId()).to.be.equal(exampleTransactionEvent.readPoint.id);
     expect(obj.getParentId()).to.be.equal(exampleTransactionEvent.parentID);
   });
+
   it('should create an TransactionEvent from json', async () => {
     const obj = new TransactionEvent(exampleTransactionEvent);
     expect(obj.getBizLocation()).to.be.instanceof(BizLocation);

@@ -43,6 +43,7 @@ describe('unit tests for the AssociationEvent class', () => {
     expect(obj.getReadPoint().getId()).to.be.equal(exampleAssociationEvent.readPoint.id);
     expect(obj.getParentId()).to.be.equal(exampleAssociationEvent.parentID);
   });
+
   it('should create an AssociationEvent from json', async () => {
     const obj = new AssociationEvent(exampleAssociationEvent);
     expect(obj.getBizLocation()).to.be.instanceof(BizLocation);
@@ -66,6 +67,7 @@ describe('unit tests for the AssociationEvent class', () => {
       o.removeChildEPC(epc2);
       expect(o.getChildEPCList().toString()).to.be.equal([].toString());
     });
+
     it('should add an epc list', async () => {
       const o = new AssociationEvent();
       o.addChildEPCList([epc1, epc2]);
@@ -79,6 +81,7 @@ describe('unit tests for the AssociationEvent class', () => {
       o.addChildEPCList([epc1, epc2]);
       expect(o.getChildEPCList().toString()).to.be.equal([epc3, epc1, epc2].toString());
     });
+
     it('should remove an epc list', async () => {
       const o = new AssociationEvent();
       o.addChildEPCList([epc1, epc2, epc3]);
@@ -90,18 +93,21 @@ describe('unit tests for the AssociationEvent class', () => {
       o.removeChildEPCList([epc2, epc3]);
       expect(o.getChildEPCList().toString()).to.be.equal([].toString());
     });
+
     it('should clear the epc list', async () => {
       const o = new AssociationEvent();
       o.addChildEPCList([epc1, epc2, epc3]);
       o.clearChildEPCList();
       expect(o.getChildEPCList()).to.be.equal(undefined);
     });
+
     it('should not add the epc list to JSON if it is not defined', async () => {
       const o = new AssociationEvent();
       const json = o.toObject();
       expect(json.childEPCs).to.be.equal(undefined);
     });
   });
+
   describe('childQuantityList field', () => {
     const quantity1 = new QuantityElement(exampleAssociationEvent.childQuantityList[0]);
     const quantity2 = new QuantityElement(exampleAssociationEvent.childQuantityList[1]);
@@ -118,6 +124,7 @@ describe('unit tests for the AssociationEvent class', () => {
       o.removeChildQuantity(quantity2);
       expect(o.getChildQuantityList().toString()).to.be.equal([].toString());
     });
+
     it('should add a quantity list', async () => {
       const o = new AssociationEvent();
       o.addChildQuantityList([quantity1, quantity2]);
@@ -132,6 +139,7 @@ describe('unit tests for the AssociationEvent class', () => {
       expect(o.getChildQuantityList().toString()).to.be
         .equal([quantity3, quantity1, quantity2].toString());
     });
+
     it('should remove a quantity list', async () => {
       const o = new AssociationEvent();
       o.addChildQuantityList([quantity1, quantity2, quantity3]);
@@ -143,12 +151,14 @@ describe('unit tests for the AssociationEvent class', () => {
       o.removeChildQuantityList([quantity2, quantity3]);
       expect(o.getChildQuantityList().toString()).to.be.equal([].toString());
     });
+
     it('should clear the quantity list', async () => {
       const o = new AssociationEvent();
       o.addChildQuantityList([quantity1, quantity2]);
       o.clearChildQuantityList();
       expect(o.getChildQuantityList()).to.be.equal(undefined);
     });
+
     it('should not add the quantity list to JSON if it is not defined', async () => {
       const o = new AssociationEvent();
       const json = o.toObject();
