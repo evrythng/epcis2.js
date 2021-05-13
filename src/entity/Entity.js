@@ -59,8 +59,6 @@ export default class Entity {
     return this[key];
   }
 
-  // todo: getExtensions?
-
   /**
    * @return {Object} an object corresponding to the Entity object
    */
