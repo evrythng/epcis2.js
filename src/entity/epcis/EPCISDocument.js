@@ -25,7 +25,9 @@ export default class EPCISDocument extends Entity {
       this.setSchemaVersion(settings.EPCISDocumentSchemaVersion);
     }
 
-    // todo: if (!creationDate)
+    if (!this.getCreationDate()) {
+      this.setCreationDate(new Date().toISOString());
+    }
 
     if (!epcisDocument) {
       return;

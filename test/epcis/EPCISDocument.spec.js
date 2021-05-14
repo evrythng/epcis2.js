@@ -29,6 +29,7 @@ describe('unit tests for the EPCISDocument class', () => {
       expect(e.getUseEventListByDefault()).to.be.equal(true);
       expect(e.getSchemaVersion()).to.be.equal(2);
       expect(e.getContext()).to.be.equal(settings.EPCISDocumentContext);
+      expect(e.getCreationDate().length).to.not.be.equal(0);
     });
 
     it('should set the object event in the event field', async () => {
