@@ -250,8 +250,6 @@ Finally, you can test the built library with: `node example/index.js`
 
 ### Deploy
 
-Before deploying, make sure to run the linter:
-`npm run lint`
+1. Before deploying, make sure to run the linter: `npm run lint`.
 
-And make sure to run the unit tests:
-`npm run test`
+2. Make sure to run the unit tests: `npm run test`.
