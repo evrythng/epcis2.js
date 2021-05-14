@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 
 const path = resolve(__dirname, 'dist');
-const entry = './src/index.js';
+const entry = './src/epcis2.polyfill.js';
 const library = 'epcis2';
 
 const browserConfig = {
