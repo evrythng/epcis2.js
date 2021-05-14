@@ -1,11 +1,15 @@
 import { assert } from 'chai';
-import { validateSchema } from '../src';
+import {
+  actionTypes, bizSteps, dispositions, ObjectEvent, validateSchema,
+} from '../src';
 import EPCISDocumentObjectEvent from './data/EPCISDocument-ObjectEvent.json';
 import EPCISDocumentAggregationEvent from './data/EPCISDocument-AggregationEvent.json';
 import EPCISDocumentTransformationEvent from './data/EPCISDocument-TransformationEvent.json';
 import EPCISDocumentAssociationEvent from './data/EPCISDocument-AssociationEvent.json';
 import EPCISDocumentQueryDocument from './data/EPCISQueryDocument.json';
 import EPCISDocumentMasterDataDocument from './data/EPCISMasterDataDocument.json';
+import EPCISDocument from '../src/entity/epcis/EPCISDocument';
+import BizTransactionElement from '../src/entity/model/BizTransactionElement';
 
 /** Test documents with different event types inside */
 const testData = {
@@ -22,6 +26,33 @@ describe('validation of an EPCIS document', () => {
   describe('schema validation: valid', () => {
     it('should accept a valid EPCISDocument containing ObjectEvent', () => {
       assert.doesNotThrow(() => validateSchema(testData.ObjectEvent));
+    });
+
+    it('should accept a valid EPCISDocument containing ObjectEvent (2)', () => {
+      const epcisDocument = new EPCISDocument();
+      const objectEvent = new ObjectEvent();
+      const bizTransaction = new BizTransactionElement({
+        type: 'urn:epcglobal:cbv:btt:po',
+        bizTransaction: 'http://transaction.acme.com/po/12345678',
+      });
+
+      objectEvent
+        .setEventTime('2005-04-03T20:33:31.116-06:00')
+        .addEPC('urn:epc:id:sgtin:0614141.107346.2020')
+        .addEPC('urn:epc:id:sgtin:0614141.107346.2021')
+        .setAction(actionTypes.observe)
+        .setEventID('ni:///sha-256;87b5f18a69993f0052046d4687dfacdf48f?ver=CBV2.0')
+        .setBizStep(bizSteps.shipping)
+        .setDisposition(dispositions.in_transit)
+        .setReadPoint('urn:epc:id:sgln:0614141.07346.1234')
+        .addBizTransaction(bizTransaction);
+
+      epcisDocument
+        .setCreationDate('2005-07-11T11:30:47+00:00')
+        .setFormat('application/ld+json')
+        .addEvent(objectEvent);
+
+      assert.doesNotThrow(() => epcisDocument.isValid());
     });
 
     it('should accept a valid EPCISDocument containing AggregationEvent', () => {
