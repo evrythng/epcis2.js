@@ -1,11 +1,12 @@
 import { expect } from 'chai';
 import setup from '../src/setup';
+import { defaultSettings } from '../src/settings';
 
 describe('unit tests for setup.js', () => {
   it('should use default settings', async () => {
     const settings = setup({});
     expect(settings.eventTimeZoneOffset).to.be.equal(undefined);
-    expect(settings.apiUrl).to.be.equal('https://epcis.evrythng.io/v2_0/');
+    expect(settings.apiUrl).to.be.equal(defaultSettings.apiUrl);
     expect(settings.headers.toString()).to.be.equal({
       'content-type': 'application/json',
     }.toString());

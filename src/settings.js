@@ -6,7 +6,9 @@
  * @property {string} apiUrl - Url of the request
  * @property {Object} headers - Headers to send with request
  * @property {string} eventTimeZoneOffset - The default eventTimeZoneOffset that will be set in
- * @property {number} timeout - Timeout for request
+ * @property {number} timeout - Timeout for request in ms
+ * @property {boolean} documentValidation - whether the EPCISDocument has to be validated or not
+ * before sending it via the capture interface
  * @property {boolean} useEventListByDefault - if true, a single event will be in the eventList
  * field of the EPCISDocument by default. Otherwise, it will be in the event field of the
  * EPCISDocument
@@ -23,7 +25,7 @@
  * @type {Settings}
  */
 export const defaultSettings = {
-  apiUrl: 'https://epcis.evrythng.io/v2_0/',
+  apiUrl: 'https://api.evrythng.io/v2/epcis/',
   headers: {
     'content-type': 'application/json',
   },
@@ -32,6 +34,7 @@ export const defaultSettings = {
   useEventListByDefault: true,
   EPCISDocumentContext: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
   EPCISDocumentSchemaVersion: 2,
+  documentValidation: true,
 };
 
 // Initialize settings with defaults.

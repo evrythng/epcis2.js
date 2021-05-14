@@ -5,7 +5,7 @@ const {
 } = require('epcis2');
 
 setup({
-  apiUrl: 'https://epcis.evrythng.io/v2_0/',
+  apiUrl: 'https://api.evrythng.io/v2/epcis',
 });
 
 const objectEvent = new ObjectEvent();

@@ -23,5 +23,6 @@ export { default as VocabularyElement } from './entity/model/VocabularyElement';
 export { default as SensorMetadata } from './entity/model/sensor/SensorMetadata';
 export { default as SensorReportElement } from './entity/model/sensor/SensorReportElement';
 export { default as setup } from './setup';
+export { default as capture } from './request/capture';
 
 export * from './cbv/cbv';

@@ -2,8 +2,7 @@ import settings from '../settings';
 import buildParams from './buildParams';
 
 /**
- * Merge base options, global settings, one-off request options and nested
- * headers object. Use apiKey option if headers.authorization is not provided.
+ * Merge base options and global settings
  *
  * @param {Settings} customOptions - User options
  * @returns {Settings} - Merged options for fetch
@@ -11,17 +10,15 @@ import buildParams from './buildParams';
 function mergeInitialOptions(customOptions) {
   const options = {
     method: 'get',
-    url: '',
     ...settings,
     ...customOptions,
     headers: { ...settings.headers, ...customOptions.headers },
   };
 
-  // Stringify data if any
-  if (options.data) {
-    options.body = JSON.stringify(options.data);
-    delete options.data;
-  }
+  delete options.eventTimeZoneOffset;
+  delete options.useEventListByDefault;
+  delete options.EPCISDocumentContext;
+  delete options.EPCISDocumentSchemaVersion;
 
   return options;
 }

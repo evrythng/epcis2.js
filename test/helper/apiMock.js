@@ -16,6 +16,9 @@ const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 export function prepare() {
   // Root - generic requests handles
   fetchMock.mock(settings.apiUrl, responses.ok);
+  fetchMock.mock('https://evrythng.com', responses.ok);
+  fetchMock.mock('https://google.com', () => delay(1500).then(() => ({ Ack: true })));
+  fetchMock.post('end:/capture', responses.ok);
 }
 
 /**

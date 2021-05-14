@@ -136,13 +136,18 @@ This example would output:
 }
 ```
 
-### The setup function
+### The default values
 
-You can override the default settings by providing them to the setup function. For example, you can set a default 
-`apiUrl` that will be use for each EPCIS request if none `apiUrl` is provided.
+You can override the default values of EPCISDocument fields by providing them to the setup function.
+
+Here are the fields that you can configure by default:
+- `EPCISDocumentContext` - the '@context' property of an EPCIS document. By default, the value is 
+`https://gs1.github.io/EPCIS/epcis-context.jsonld`
+- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCIS document. By default, the value is 2.
 
 ```js
-setup({ apiUrl: 'https://api.evrythng.io/v2/epcis' });
+setup({ EPCISDocumentContext: 'value' }); // the '@context' field of the EPCISDocument that you will create will be 
+// 'value' by default.
 ```
 
 ### The eventTimeZoneOffset property
@@ -197,6 +202,39 @@ const object = o.toObject(); //{ isA: 'ObjectEvent', epcList: [] } -> the epcLis
 o.clearEPCList();
 const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
+
+## Sending a capture event
+
+### The setup function
+
+You can override the default settings by providing them to the setup function. For example, you can set a default 
+`apiUrl` that will be use for each EPCIS request if none `apiUrl` is provided.
+
+```js
+setup({ apiUrl: 'https://api.evrythng.io/v2/epcis' });
+```
+
+Here are the settings that you can configure by default:
+- `timeout` - max wait time on requests. Its default value is `undefined`, which means no timeout.
+- `apiUrl` - the url that will be used for requests. Its default value is `https://api.evrythng.io/v2/epcis`
+- `headers` - the headers of your requests. Its default value is `{ 'content-type': 'application/json' }`.
+- `documentValidation` - whether the EPCISDocument has to be validated or not before sending it via the capture 
+interface. Its default value is `true`.
+
+### The capture function
+
+To send a capture request with your EPCISDocument, you need to call the `capture` function. It accepts an 
+`EPCISDocument` as first parameter. The second parameter is optional, you can override the settings of the request with 
+it. For example, if for this particular request, you want to override the `timeout`, you can do this:
+
+```js
+capture(myEPCISDocumentInstance, { 'timeout': 2000 });
+```
+
+You can override all the parameters defined in the previous section in the second parameter.
+
+If the `documentValidation` field of the settings is set to true, and the EPCISDocument hasn't a valid syntax, the 
+function throws an error.
 
 ## Build and deploy
 
