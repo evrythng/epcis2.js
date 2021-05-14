@@ -108,6 +108,7 @@
     "ajv": "^6.12.6",
     "fs": "0.0.1-security",
     "is-plain-object": "^5.0.0",
+    "node-fetch": "^2.6.1",
     "querystring": "^0.2.1",
     "superagent": "^6.1.0"
   }
