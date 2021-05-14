@@ -33,8 +33,8 @@ describe('unit tests for util functions', () => {
   describe('timezone functions', () => {
     it('should not accept invalid parameter in the constructor', async () => {
       expect(() => getTimeZoneOffsetFromStringOrNumber('TEST')).to.throw('The TimeZoneOffset is invalid');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('123:08')).to.throw('The first character of the offset shall be a \'+\' or a \'-\'');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('+1u:08')).to.throw('The hours and minutes shall be numbers in the string');
+      expect(() => getTimeZoneOffsetFromStringOrNumber('123:08')).to.throw('The TimeZoneOffset is invalid');
+      expect(() => getTimeZoneOffsetFromStringOrNumber('+1u:08')).to.throw('The TimeZoneOffset is invalid');
       expect(() => getTimeZoneOffsetFromStringOrNumber('+10:08')).to.not.throw();
       expect(() => getTimeZoneOffsetFromStringOrNumber(new Date(Date.now()))).to.throw('The parameter provided in the constructor should be a number or a string');
     });

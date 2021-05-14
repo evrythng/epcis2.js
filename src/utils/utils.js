@@ -34,20 +34,17 @@ export const offsetToString = (hours, minutes) => (hours >= 0
  */
 export const getTimeZoneOffsetFromStringOrNumber = (offset) => {
   if (typeof offset === 'string') {
-    let [strHours, strMinutes] = offset.split(':'); // eslint-disable-line prefer-const
+    const pattern = /^(\+|-)[0-9]{2}:[0-9]{2}/;
+    const result = offset.match(pattern);
 
-    if (offset.length !== 6 || strHours.length !== 3 || strMinutes.length !== 2) {
+    if (!result) {
       throw new Error('The TimeZoneOffset is invalid');
     }
 
-    if (strHours.charAt(0) !== '+' && strHours.charAt(0) !== '-') throw new Error('The first character of the offset shall be a \'+\' or a \'-\'');
+    let [strHours, strMinutes] = offset.split(':'); // eslint-disable-line prefer-const
 
     const sign = strHours.charAt(0);
     strHours = strHours.substring(1);
-
-    if (Number.isNaN(Number(strHours)) || Number.isNaN(Number(strMinutes))) {
-      throw new Error('The hours and minutes shall be numbers in the string');
-    }
 
     const hours = sign === '+' ? parseInt(strHours, 10) : -parseInt(strHours, 10);
     const minutes = parseInt(strMinutes, 10);
