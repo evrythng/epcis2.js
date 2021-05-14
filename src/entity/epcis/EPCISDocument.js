@@ -25,6 +25,8 @@ export default class EPCISDocument extends Entity {
       this.setSchemaVersion(settings.EPCISDocumentSchemaVersion);
     }
 
+    // todo: if (!creationDate)
+
     if (!epcisDocument) {
       return;
     }
@@ -251,7 +253,7 @@ export default class EPCISDocument extends Entity {
    * @throws {Error} - if the schema isn't valid
    */
   isValid() {
-    validateSchema(this);
+    validateSchema(this.toObject());
     return true;
   }
 
