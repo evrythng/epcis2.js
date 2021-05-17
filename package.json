@@ -1,0 +1,115 @@
+{
+  "name": "epcis2.js",
+  "version": "1.0.0",
+  "description": "Javascript SDK for the EPCIS 2.0 standard",
+  "main": "dist/epcis2.node.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "lint": "eslint --fix --max-warnings 0 --ext .js .",
+    "format": "./node_modules/.bin/prettier --write '**/*.{js,json,md,yaml,yml}'",
+    "build": "rm dist/*; webpack --config webpack.config.js --mode production",
+    "build:dev": "rm dist/*; webpack --config webpack.config.js --mode development",
+    "test": "nyc ./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/**/*.spec.js'",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged -p false"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,md,yaml,yml}": "prettier --write",
+    "*.js": "eslint --fix"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "mocha": true
+    },
+    "extends": [
+      "airbnb"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 12
+    },
+    "rules": {
+      "no-prototype-builtins": "off",
+      "prefer-promise-reject-errors": "off",
+      "operator-linebreak": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "reports",
+    "mochawesome-report",
+    ".nyc_output",
+    "dist"
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-throw-expressions"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evrythng/epcis2.js"
+  },
+  "keywords": [],
+  "author": "EVRYTHNG Ltd. <support@evrythng.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/evrythng/epcis2.js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.13.14",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/register": "^7.13.16",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.3.4",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.23.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "fetch-mock": "^9.11.0",
+    "husky": "^6.0.0",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0",
+    "wnpm-ci": "^7.0.100"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.12.13",
+    "@babel/runtime": "^7.13.17",
+    "ajv": "^6.12.6",
+    "cross-fetch": "^3.1.4",
+    "fs": "0.0.1-security",
+    "is-plain-object": "^5.0.0",
+    "querystring": "^0.2.1",
+    "superagent": "^6.1.0"
+  }
+}

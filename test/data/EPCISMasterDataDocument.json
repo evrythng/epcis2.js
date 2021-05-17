@@ -1,0 +1,43 @@
+{
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "example": "http://ns.example.com/epcis/"
+    },
+    {
+      "mda": "http://epcis.example.com/mda"
+    }
+  ],
+  "isA": "EPCISMasterDataDocument",
+  "schemaVersion": 2,
+  "creationDate": "2005-07-11T11:30:47.0Z",
+  "format": "application/ld+json",
+  "epcisHeader": {
+    "epcisMasterData": {
+      "vocabularyList": [
+        {
+          "type": "vtype:ReadPoint",
+          "vocabularyElementList": [
+            {
+              "isA": "urn:epcglobal:epcis:vtype:ReadPoint",
+              "id": "urn:epc:id:sgln:0037000.00729.8201",
+              "attributes": [
+                {
+                  "id": "cbvmda:site",
+                  "attribute": "0037000007296"
+                },
+                {
+                  "id": "cbvmda:sst",
+                  "attribute": 201
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "epcisBody": {
+    "eventList": []
+  }
+}

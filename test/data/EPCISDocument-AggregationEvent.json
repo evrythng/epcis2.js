@@ -1,0 +1,48 @@
+{
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "example": "http://ns.example.com/epcis/"
+    }
+  ],
+  "id": "_:document1",
+  "isA": "EPCISDocument",
+  "schemaVersion": 2,
+  "creationDate": "2005-07-11T11:30:47.0Z",
+  "format": "application/ld+json",
+  "epcisBody": {
+    "eventList": [
+      {
+        "isA": "AggregationEvent",
+        "eventTime": "2013-06-08T14:58:56.591Z",
+        "eventTimeZoneOffset": "+02:00",
+        "parentID": "urn:epc:id:sscc:0614141.1234567890",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.2017",
+          "urn:epc:id:sgtin:0614141.107346.2018"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "urn:epcglobal:cbv:bizstep:receiving",
+        "disposition": "urn:epcglobal:cbv:disp:in_progress",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:0614141.00777.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:0614141.00888.0"
+        },
+        "childQuantityList": [
+          {
+            "epcClass": "urn:epc:idpat:sgtin:4012345.098765.*",
+            "quantity": 10
+          },
+          {
+            "epcClass": "urn:epc:class:lgtin:4012345.012345.998877",
+            "quantity": 200.5,
+            "uom": "KGM"
+          }
+        ],
+        "example:myField": "Example of a vendor/user extension"
+      }
+    ]
+  }
+}
