@@ -1,6 +1,7 @@
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/jsx-filename-extension */
+
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import {
   ObjectEvent,
   actionTypes,
@@ -11,6 +12,8 @@ import {
   dispositions,
   BizTransactionElement,
 } from 'epcis2.js';
+import logo from './logo.svg';
+import './App.css';
 
 // you can override the global parameter with the setup function
 setup({
@@ -19,29 +22,9 @@ setup({
   EPCISDocumentSchemaVersion: 1.2,
   headers: {
     'content-type': 'application/json',
-    'authorization': 'MY_API_KEY'
+    authorization: 'MY_API_KEY',
   },
 });
-
-class App extends Component {
-
-  render() {
-
-    sendACaptureRequestExample();
-
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
 
 const sendACaptureRequestExample = async () => {
   const objectEvent = new ObjectEvent();
@@ -69,5 +52,27 @@ const sendACaptureRequestExample = async () => {
 
   await capture(epcisDocument);
 };
+
+class App extends Component {
+  render() {
+    sendACaptureRequestExample();
+
+    return (
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Welcome to React</h2>
+        </div>
+        <p className="App-intro">
+          To get started, edit
+          {' '}
+          <code>src/App.js</code>
+          {' '}
+          and save to reload.
+        </p>
+      </div>
+    );
+  }
+}
 
 export default App;

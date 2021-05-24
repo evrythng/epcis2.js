@@ -19,7 +19,7 @@ setup({
   EPCISDocumentSchemaVersion: 1.2,
   headers: {
     'content-type': 'application/json',
-    'authorization': 'MY_API_KEY'
+    authorization: 'MY_API_KEY',
   },
 });
 
