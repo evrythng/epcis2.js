@@ -5,12 +5,12 @@ The goal of this SDK is to easily create and send a customizable EPCISDocument.
 
 //todo: add what EPCIS 2.0 is and why this sdk makes life easier, the use cases, ...
 
-* [Installation](#Installation)
-* [Building an EPCIS document](#Building an EPCIS document)
-* [Sending a capture event](#Sending a capture event)
-* [Contributing](#Contributing)
+* [Installation](#installation)
+* [Building an EPCIS document](#building-an-EPCIS-document)
+* [Sending a capture event](#sending-a-capture-event)
+* [Contributing](#contributing)
 
-# Installation
+## Installation
 
 Install an app dependency:
 ```
@@ -39,7 +39,7 @@ import { setup } from 'epcis2';
 import * as epcis from 'epcis2';
 ```
 
-# Building an EPCIS document
+## Building an EPCIS document
 
 ### Instantiating an EPCIS Document
 
@@ -258,7 +258,7 @@ o.clearEPCList();
 const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
 
-# Sending a capture event
+## Sending a capture event
 
 ### The setup function
 
@@ -291,7 +291,7 @@ You can override all the parameters defined in the previous section in the secon
 If the `documentValidation` field of the settings is set to true, and the EPCISDocument hasn't a valid syntax, the 
 function throws an error.
 
-# Contributing
+## Contributing
 
 ### Build
 
