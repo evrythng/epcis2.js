@@ -5,7 +5,62 @@ The goal of this SDK is to easily create and send a customizable EPCISDocument.
 
 //todo: add what EPCIS 2.0 is and why this sdk makes life easier, the use cases, ...
 
-## Building an EPCIS document
+* [Installation](#Installation)
+* [Building an EPCIS document](#Building an EPCIS document)
+* [Sending a capture event](#Sending a capture event)
+* [Contributing](#Contributing)
+
+#Installation
+
+Install an app dependency:
+```
+npm install --save epcis2
+```
+or as a development dependency:
+```
+npm install --save-dev epcis2
+```
+
+Then require it in any module:
+```js
+const { setup } = require('epcis2');
+
+setup({ apiUrl: 'https://api.evrythng.io/v2/epcis' });
+```
+
+Or using ES6 `import` / `export` syntax when available:
+```js
+import epcis from 'epcis2';
+
+// Alternatively
+import { setup } from 'epcis2';
+
+// Alternatively
+import * as epcis from 'epcis2';
+```
+
+#Building an EPCIS document
+
+### Instantiating an EPCIS Document
+
+For each object you instantiate with this library, you can create it from setters:
+
+```js
+const epcisDocument = new EPCISDocument();
+
+epcisDocument
+    .setCreationDate('2005-07-11T11:30:47+00:00')
+    .setFormat('application/ld+json')
+```
+
+Or create it from another object:
+
+```js
+const epcisDocument = new EPCISDocument({
+  'creationDate': '2005-07-11T11:30:47+00:00',
+  'format': 'application/ld+json',
+});
+```
 
 ### Adding events to an EPCIS document
 To add an event to an EPCIS document, you can do like this: 
@@ -163,7 +218,7 @@ You have multiple ways to set the `eventTimeZoneOffset` property of an event (e.
 value to the setup function.
 
     ```js
-    setup({eventTimeZoneOffset: '-02:00'});
+    setup({ eventTimeZoneOffset: '-02:00' });
     ```
     
     Now, the `eventTimeZoneOffset` will be `'-02:00'` by default.
@@ -203,7 +258,7 @@ o.clearEPCList();
 const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
 
-## Sending a capture event
+#Sending a capture event
 
 ### The setup function
 
@@ -236,7 +291,7 @@ You can override all the parameters defined in the previous section in the secon
 If the `documentValidation` field of the settings is set to true, and the EPCISDocument hasn't a valid syntax, the 
 function throws an error.
 
-## Build and deploy
+#Contributing
 
 ### Build
 
