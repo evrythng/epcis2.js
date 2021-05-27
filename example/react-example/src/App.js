@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/jsx-filename-extension */
 
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {
   ObjectEvent,
   actionTypes,
@@ -53,26 +53,26 @@ const sendACaptureRequestExample = async () => {
   await capture(epcisDocument);
 };
 
-class App extends Component {
-  render() {
+function App() {
+  useEffect(() => {
     sendACaptureRequestExample();
+  }, []);
 
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
-        </p>
+  return (
+    <div className="App">
+      <div className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h2>Welcome to React</h2>
       </div>
-    );
-  }
+      <p className="App-intro">
+        To get started, edit
+        {' '}
+        <code>src/App.js</code>
+        {' '}
+        and save to reload.
+      </p>
+    </div>
+  );
 }
 
 export default App;
