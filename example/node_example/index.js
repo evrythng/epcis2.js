@@ -59,7 +59,7 @@ const sendACaptureRequestExample = async () => {
   console.log('Request status: ');
   console.log(res.status);
   console.log('Request response: ');
-  console.log(text.body);
+  console.log(text);
 };
 
 sendACaptureRequestExample();
