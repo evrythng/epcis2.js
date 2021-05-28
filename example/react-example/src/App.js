@@ -64,6 +64,7 @@ function App() {
 
     setState('Sending the request...');
 
+    console.log(epcisDocument.toObject());
     const res = await capture(epcisDocument);
     console.log(res);
 
