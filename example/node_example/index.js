@@ -54,9 +54,12 @@ const sendACaptureRequestExample = async () => {
   console.log('epcisDocument (toString): ');
   console.log(epcisDocument.toString());
 
-  const res = await (await capture(epcisDocument)).text();
-  console.log('Request response:');
-  console.log(res);
+  const res = (await capture(epcisDocument));
+  const text = (await res.text());
+  console.log('Request status: ');
+  console.log(res.status);
+  console.log('Request response: ');
+  console.log(text.body);
 };
 
 sendACaptureRequestExample();
