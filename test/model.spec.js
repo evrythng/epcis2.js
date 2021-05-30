@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
 import { expect } from 'chai';
 import { dispositions } from '../src';
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';

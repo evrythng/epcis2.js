@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
 import { assert, expect } from 'chai';
 import ObjectEvent from '../../src/entity/events/ObjectEvent';
 import ErrorDeclaration from '../../src/entity/model/ErrorDeclaration';

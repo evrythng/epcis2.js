@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
 export { default as EPCISDocument } from './entity/epcis/EPCISDocument';
 export { default as EPCISMasterData } from './entity/epcis/EPCISMasterData';
 export { default as EPCISHeader } from './entity/epcis/EPCISHeader';

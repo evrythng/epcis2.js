@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
 /** A string date with a timezone offset can't be less than 7 chars */
 const MIN_DATE_WITH_OFFSET_LENGTH = 7;
 

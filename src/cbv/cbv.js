@@ -1,4 +1,10 @@
 /**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
+/**
  * An object containing all the possible bizSteps
  * More info here: https://www.gs1.org/standards/epcis
  */

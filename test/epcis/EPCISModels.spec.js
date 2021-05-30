@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
 import { expect } from 'chai';
 import EPCISMasterData from '../../src/entity/epcis/EPCISMasterData';
 import Vocabulary from '../../src/entity/model/Vocabulary';
