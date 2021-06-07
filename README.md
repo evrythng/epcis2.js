@@ -1,14 +1,73 @@
 # epcis2.js
 EPCIS 2.0 Javascript SDK
 
-The goal of this SDK is to easily create and send a customizable EPCISDocument.
+`epcis2.js` is a Javascript SDK (client-side & Node.js compatible) to facilitate sending data to GS1 EPCIS 2.0 compliant repositories. It provides plenty of helper function
+to make pushing standard compliant supply chain events as easy a possible.
 
-//todo: add what EPCIS 2.0 is and why this sdk makes life easier, the use cases, ...
+## Introduction to EPCIS and EPCIS 2.0
 
-## Building an EPCIS document
+EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the work-in-progress major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web. EPCIS 2.0 currently being developed by the EPCIS and CBV 2.0 MSWG which EVRYTHNG are Zebra part of. The standard has not been ratified yet, hence consider everything you see here tentative.
 
-### Adding events to an EPCIS document
-To add an event to an EPCIS document, you can do like this: 
+EPCIS 2.0 brings the following highlights to the table:
+* Support for JSON and JSON-LD (vs XML before)
+* A REST API (vs SOAP before)
+* Support for IoT data, i.e., sensor information
+
+## Installation
+
+Install as an app dependency:
+```
+npm install --save epcis2
+```
+or as a development dependency:
+```
+npm install --save-dev epcis2
+```
+
+Then require it in any module:
+```js
+const { setup } = require('epcis2');
+
+setup({ apiUrl: 'https://api.evrythng.io/v2/epcis' });
+```
+
+Or using ES6 `import` / `export` syntax when available:
+```js
+import epcis from 'epcis2';
+
+// Alternatively
+import { setup } from 'epcis2';
+
+// Alternatively
+import * as epcis from 'epcis2';
+```
+
+## Building an EPCIS 2.0 JSON document
+
+### Instantiating an EPCIS 2.0 Document
+
+For each object you instantiate with this library, you can create it from setters:
+
+```js
+const epcisDocument = new EPCISDocument();
+
+epcisDocument
+    .setCreationDate('2005-07-11T11:30:47+00:00')
+    .setFormat('application/ld+json')
+```
+
+Or create it from another object:
+
+```js
+const epcisDocument = new EPCISDocument({
+  'creationDate': '2005-07-11T11:30:47+00:00',
+  'format': 'application/ld+json',
+});
+```
+
+### Adding events to an EPCIS 2.0 document
+
+To add an event to an EPCIS document, you can use the following:
 ```js
 const event = new ObjectEvent();
 const event2 = new ObjectEvent();
@@ -57,7 +116,7 @@ This example would output:
 }
 ```
 
-If you provide a single element, by default, it will be in the `eventList` field.
+If you provide a single element by default it will be added to the `eventList` array:
 
 ```js
 const epcisDocument = new EPCISDocument();
@@ -94,7 +153,7 @@ This example would output:
 }
 ```
 
-However, you can override this default parameter like this:
+However, you can override this default parameter like so:
 
 ```js
 // to override it globally (it needs to be called before the creation of the EPCISDocument)
@@ -136,25 +195,25 @@ This example would output:
 }
 ```
 
-### The default values
+### Default values
 
 You can override the default values of EPCISDocument fields by providing them to the setup function.
 
-Here are the fields that you can configure by default:
-- `EPCISDocumentContext` - the '@context' property of an EPCIS document. By default, the value is 
+You can configure the following fields:
+- `EPCISDocumentContext` - the '@context' property of an EPCISDocument. By default, the value is 
 `https://gs1.github.io/EPCIS/epcis-context.jsonld`
-- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCIS document. By default, the value is 2.
+- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is 2.
 
 ```js
 setup({ EPCISDocumentContext: 'value' }); // the '@context' field of the EPCISDocument that you will create will be 
 // 'value' by default.
 ```
 
-### The eventTimeZoneOffset property
+### The `eventTimeZoneOffset` property
 
-You have multiple ways to set the `eventTimeZoneOffset` property of an event (e.g an ObjectEvent).
+You have multiple ways to set the `eventTimeZoneOffset` property of an event (e.g, `ObjectEvent`).
 
-- You can set it with its setter: `event.setEventTimeZoneOffset(2)` or `event.setEventTimeZoneOffset('+02:00')`.
+- You can set it by using its setter: `event.setEventTimeZoneOffset(2)` or `event.setEventTimeZoneOffset('+02:00')`.
 
 - You can set it by providing an offset when you set the `eventTime` property:
 `event.setEventTime('2005-04-03T20:33:31.116-06:00')` will set the `eventTimeZoneOffset` property to `'-06:00'`.
@@ -163,7 +222,7 @@ You have multiple ways to set the `eventTimeZoneOffset` property of an event (e.
 value to the setup function.
 
     ```js
-    setup({eventTimeZoneOffset: '-02:00'});
+    setup({ eventTimeZoneOffset: '-02:00' });
     ```
     
     Now, the `eventTimeZoneOffset` will be `'-02:00'` by default.
@@ -186,8 +245,8 @@ readPoint.removeExtension('evt:serial_number')
 
 ### List Fields
 
-Each time you have a list object (e.g epcList in an ObjectEvent), the list won't be sent in the request by default.
-If you add an element to the list, the list will be sent. If you add some elements, and then remove then, the list will
+Whenever using fields that are arrays (e.g, `epcList` in an `ObjectEvent`), the list won't be sent in the request by default.
+If you add an element to the list, the list will be sent. If you add some elements, and then remove them, the list will
 be sent even if it is empty. You can override this and choose to not send the empty list by clearing the list. 
 
 ```js
@@ -205,27 +264,27 @@ const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent a
 
 ## Sending a capture event
 
-### The setup function
+### Setup function
 
 You can override the default settings by providing them to the setup function. For example, you can set a default 
-`apiUrl` that will be use for each EPCIS request if none `apiUrl` is provided.
+`apiUrl` that will be use for each EPCIS request if no `apiUrl` is provided.
 
 ```js
 setup({ apiUrl: 'https://api.evrythng.io/v2/epcis' });
 ```
 
 Here are the settings that you can configure by default:
-- `timeout` - max wait time on requests. Its default value is `undefined`, which means no timeout.
-- `apiUrl` - the url that will be used for requests. Its default value is `https://api.evrythng.io/v2/epcis`
-- `headers` - the headers of your requests. Its default value is `{ 'content-type': 'application/json' }`.
-- `documentValidation` - whether the EPCISDocument has to be validated or not before sending it via the capture 
-interface. Its default value is `true`.
+- `timeout` - max wait time for requests. Default value is `undefined`, which means no timeout.
+- `apiUrl` - the url that will be used for requests. Default value is `https://api.evrythng.io/v2/epcis`
+- `headers` - the headers of your requests. Default value is `{ 'content-type': 'application/json' }`.
+- `documentValidation` - whether the EPCISDocument has to be validated or not before sending it via the Capture 
+interface. The default value is `true`.
 
 ### The capture function
 
-To send a capture request with your EPCISDocument, you need to call the `capture` function. It accepts an 
-`EPCISDocument` as first parameter. The second parameter is optional, you can override the settings of the request with 
-it. For example, if for this particular request, you want to override the `timeout`, you can do this:
+To send a capture request with your EPCISDocument, you'll need to call the `capture` function. It accepts an 
+`EPCISDocument` as first parameter. The second parameter is optional, and can be used to override the settings of the request. 
+For example if you want to override the `timeout` for a request, you can use:
 
 ```js
 capture(myEPCISDocumentInstance, { 'timeout': 2000 });
@@ -233,18 +292,18 @@ capture(myEPCISDocumentInstance, { 'timeout': 2000 });
 
 You can override all the parameters defined in the previous section in the second parameter.
 
-If the `documentValidation` field of the settings is set to true, and the EPCISDocument hasn't a valid syntax, the 
+If the `documentValidation` field of the settings is set to `true`, and the EPCISDocument hasn't a valid syntax, the 
 function throws an error.
 
-## Build and deploy
+## Contributing
 
 ### Build
 
-To build the sdk, you need node >= `v12.0.0`
+To build the sdk, you'll need `Node.js` >= `v12.0.0`
 
-First, you need to test if you didn't break the functionalities of the library with: `npm run test`.
+First, ensure you did not break anything with: `npm run test`.
 
-Then, you need to run: `npm run build`.
+Then, run: `npm run build`.
 
 Finally, you can test the built library with: `node example/index.js`
 

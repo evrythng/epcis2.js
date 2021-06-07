@@ -4,6 +4,6 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "epcis2": "file:../"
+    "epcis2": "file:../../"
   }
 }

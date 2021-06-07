@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
 import { assert, expect } from 'chai';
 import fetchMock from 'fetch-mock';
 import settings from '../src/settings';
@@ -127,52 +133,51 @@ describe('requests', () => {
   });
 });
 
-
 describe('buildParams', () => {
   it('should handle empty params', () => {
-    expect(buildParams()).to.be.equal('')
-    expect(buildParams({})).to.be.equal('')
-  })
+    expect(buildParams()).to.be.equal('');
+    expect(buildParams({})).to.be.equal('');
+  });
 
   it('should do nothing on string values', () => {
-    const qs = 'foo=bar'
-    expect(buildParams(qs)).to.be.equal(qs)
-  })
+    const qs = 'foo=bar';
+    expect(buildParams(qs)).to.be.equal(qs);
+  });
 
   it('should join params', () => {
     const params = {
       foo: 'bar',
-      baz: 1
-    }
-    const paramsStr = 'foo=bar&baz=1'
-    expect(buildParams(params)).to.be.equal(paramsStr)
-  })
+      baz: 1,
+    };
+    const paramsStr = 'foo=bar&baz=1';
+    expect(buildParams(params)).to.be.equal(paramsStr);
+  });
 
   it('should encode query string', () => {
     const params = {
-      'a+b': 'a=b'
-    }
-    const paramsStr = 'a%2Bb=a%3Db'
-    expect(buildParams(params)).to.be.equal(paramsStr)
-  })
+      'a+b': 'a=b',
+    };
+    const paramsStr = 'a%2Bb=a%3Db';
+    expect(buildParams(params)).to.be.equal(paramsStr);
+  });
 
   it('should handle nested params', () => {
     const params = {
       a: {
         b: 'c',
-        d: 'e=1'
+        d: 'e=1',
       },
-      f: 1
-    }
-    const paramsStr = 'a=b%3Dc%26d%3De%253D1&f=1'
-    expect(buildParams(params)).to.be.equal(paramsStr)
-  })
+      f: 1,
+    };
+    const paramsStr = 'a=b%3Dc%26d%3De%253D1&f=1';
+    expect(buildParams(params)).to.be.equal(paramsStr);
+  });
 
   it('should escape special characters', () => {
     const params = {
-      a: 'va|ue'
-    }
-    const paramsStr = 'a=va%7Cue'
-    expect(buildParams(params)).to.be.equal(paramsStr)
-  })
-})
+      a: 'va|ue',
+    };
+    const paramsStr = 'a=va%7Cue';
+    expect(buildParams(params)).to.be.equal(paramsStr);
+  });
+});

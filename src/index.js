@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
 export { default as EPCISDocument } from './entity/epcis/EPCISDocument';
 export { default as EPCISMasterData } from './entity/epcis/EPCISMasterData';
 export { default as EPCISHeader } from './entity/epcis/EPCISHeader';
@@ -6,6 +12,8 @@ export { default as TransformationEvent } from './entity/events/TransformationEv
 export { default as AggregationEvent } from './entity/events/AggregationEvent';
 export { default as AssociationEvent } from './entity/events/AssociationEvent';
 export { default as TransactionEvent } from './entity/events/TransactionEvent';
+export { default as Event } from './entity/events/TransactionEvent';
+
 export { default as validateSchema } from './schema/validator';
 export { default as ErrorDeclaration } from './entity/model/ErrorDeclaration';
 export { default as AttributeElement } from './entity/model/AttributeElement';
@@ -26,3 +34,4 @@ export { default as setup } from './setup';
 export { default as capture } from './request/capture';
 
 export * from './cbv/cbv';
+export * from './settings';

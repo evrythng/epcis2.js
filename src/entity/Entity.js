@@ -1,4 +1,10 @@
 /**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
+/**
  * Returns an object corresponding to the parameter
  * @param {any} obj - The variable that will be converted to an object.
  * @return {Object} - a json if the object passed in param has a toObject function defined - the

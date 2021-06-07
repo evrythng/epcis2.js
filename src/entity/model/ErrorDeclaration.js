@@ -1,4 +1,10 @@
 /**
+ * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
+ * Use of this material is subject to license.
+ * Copying and unauthorised use of this material strictly prohibited.
+ */
+
+/**
  * This class contains these fields :
  * - {Array<string>} correctiveEventIDList - the list of correctiveEventIDs
  *   default: null
