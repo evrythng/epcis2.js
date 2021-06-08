@@ -1,11 +1,8 @@
 {
   "name": "epcis2.js",
-  "version": "0.0.2-beta.0",
+  "version": "0.0.2-beta.1",
   "description": "Javascript SDK for the EPCIS 2.0 standard",
   "main": "dist/epcis2.node.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "scripts": {
     "lint": "eslint --fix --max-warnings 0 --ext .js .",
     "format": "./node_modules/.bin/prettier --write '**/*.{js,json,md,yaml,yml}'",

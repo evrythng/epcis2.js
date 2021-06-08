@@ -16,7 +16,7 @@ const {
   capture,
   dispositions,
   BizTransactionElement,
-} = require('epcis2');
+} = require('epcis2.js');
 
 // you can override the global parameter with the setup function
 setup({
