@@ -17,29 +17,29 @@ EPCIS 2.0 brings the following highlights to the table:
 
 Install as an app dependency:
 ```
-npm install --save epcis2
+npm install --save epcis2.js
 ```
 or as a development dependency:
 ```
-npm install --save-dev epcis2
+npm install --save-dev epcis2.js
 ```
 
 Then require it in any module:
 ```js
-const { setup } = require('epcis2');
+const { setup } = require('epcis2.js');
 
 setup({ apiUrl: 'https://api.evrythng.io/v2/epcis' });
 ```
 
 Or using ES6 `import` / `export` syntax when available:
 ```js
-import epcis from 'epcis2';
+import epcis from 'epcis2.js';
 
 // Alternatively
-import { setup } from 'epcis2';
+import { setup } from 'epcis2.js';
 
 // Alternatively
-import * as epcis from 'epcis2';
+import * as epcis from 'epcis2.js';
 ```
 
 ## Building an EPCIS 2.0 JSON document
