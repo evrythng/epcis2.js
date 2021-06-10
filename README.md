@@ -4,6 +4,8 @@ EPCIS 2.0 Javascript SDK
 `epcis2.js` is a Javascript SDK (client-side & Node.js compatible) to facilitate sending data to GS1 EPCIS 2.0 compliant repositories. It provides plenty of helper function
 to make pushing standard compliant supply chain events as easy a possible.
 
+This project is jointly supported by [EVRYTHNG](https://evrythng.com) and [Zebra](https://www.zebra.com/).
+
 ## Introduction to EPCIS and EPCIS 2.0
 
 EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the work-in-progress major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web. EPCIS 2.0 currently being developed by the EPCIS and CBV 2.0 MSWG which EVRYTHNG are Zebra part of. The standard has not been ratified yet, hence consider everything you see here tentative.
