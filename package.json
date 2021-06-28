@@ -1,6 +1,6 @@
 {
   "name": "epcis2.js",
-  "version": "0.0.2-beta.1",
+  "version": "0.0.2-beta.2",
   "description": "Javascript SDK for the EPCIS 2.0 standard",
   "main": "dist/epcis2.node.js",
   "scripts": {
@@ -65,7 +65,17 @@
     "type": "git",
     "url": "https://github.com/evrythng/epcis2.js"
   },
-  "keywords": ["epcis2.js", "epcis2", "epcis", "epc", "supply chain", "gs1", "traceability", "track and trace", "standard"],
+  "keywords": [
+    "epcis2.js",
+    "epcis2",
+    "epcis",
+    "epc",
+    "supply chain",
+    "gs1",
+    "traceability",
+    "track and trace",
+    "standard"
+  ],
   "author": "EVRYTHNG Ltd. <support@evrythng.com>",
   "license": "Apache-2.0",
   "homepage": "https://github.com/evrythng/epcis2.js#readme",
