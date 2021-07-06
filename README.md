@@ -290,7 +290,7 @@ obj.generateHashID({
 ```
 
 - `throwError` is a boolean. If it is set to true, the generation will throw an error if it encounters a problem 
-(e.g a context isn't provided for a field). If it is set to false, the generation won't throw any error
+(e.g a context isn't provided for a field). If it is set to false, the generation won't throw any error.
 
 ## Sending a capture event
 
@@ -335,7 +335,7 @@ First, ensure you did not break anything with: `npm run test`.
 
 Then, run: `npm run build`.
 
-Finally, you can test the built library with: `node example/index.js`
+Finally, you can test the built library with: `node example/example_with_creation_from_setters.js`
 
 ### Deploy
 

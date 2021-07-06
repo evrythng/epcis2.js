@@ -1,7 +1,7 @@
 {
   "name": "epcis2.js-node",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "example_with_creation_from_setters.js",
   "license": "Apache-2.0",
   "dependencies": {
     "epcis2.js": "file:../../"
