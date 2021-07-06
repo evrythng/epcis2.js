@@ -27,6 +27,7 @@ export const canonicalPropertyOrder = [
   'transformationID',
   'bizStep',
   'disposition',
+  'persistentDisposition',
   'readPoint',
   'bizLocation',
   'bizTransactionList',
@@ -159,4 +160,14 @@ export const sensorReportCanonicalPropertyOrder = [
   'percRank',
   'percValue',
   'uom',
+];
+
+/**
+ * This variable sets the order of Persistent Disposition fields that a pre-hashed string has to
+ * follow in order to comply with the used algorithm
+ * @type {string[]}
+ */
+export const persistentDispositionCanonicalPropertyOrder = [
+  'set',
+  'unset',
 ];

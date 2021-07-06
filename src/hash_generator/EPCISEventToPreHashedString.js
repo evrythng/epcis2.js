@@ -12,7 +12,7 @@ import {
   bizTransactionCanonicalPropertyOrder,
   canonicalPropertyOrder,
   destinationCanonicalPropertyOrder,
-  errorDeclarationCanonicalPropertyOrder,
+  errorDeclarationCanonicalPropertyOrder, persistentDispositionCanonicalPropertyOrder,
   quantityElementCanonicalPropertyOrder,
   readPointCanonicalPropertyOrder,
   sensorElementCanonicalPropertyOrder,
@@ -192,6 +192,22 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         strings.push(getPreHashStringOfField('epc', list[i], throwError));
       }
       break;
+    case 'set':
+      string = '';
+      // todo: see if we need to replace 'completeness_inferred'
+      // by 'urn:epcglobal:cbv:disp:completeness_inferred' for example
+      for (let i = 0; i < list.length; i += 1) {
+        strings.push(getPreHashStringOfField('set', list[i], throwError));
+      }
+      break;
+    case 'unset':
+      string = '';
+      // todo: see if we need to replace 'completeness_inferred'
+      // by 'urn:epcglobal:cbv:disp:completeness_inferred' for example
+      for (let i = 0; i < list.length; i += 1) {
+        strings.push(getPreHashStringOfField('unset', list[i], throwError));
+      }
+      break;
     case 'quantityList':
       for (let i = 0; i < list.length; i += 1) {
         res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
@@ -353,6 +369,13 @@ export const getPreHashStringOfElementAccordingToOrderList =
                 sensorMetadataCanonicalPropertyOrder, throwError);
               string += res.preHashed;
               strings.push(...res.customFields.map((j) => `sensorMetadata${j}`));
+              break;
+            case 'persistentDisposition':
+              string += 'persistentDisposition';
+              res = getPreHashStringOfElementAccordingToOrderList(object[orderList[i]], context,
+                persistentDispositionCanonicalPropertyOrder, throwError);
+              string += res.preHashed;
+              strings.push(...res.customFields.map((j) => `persistentDisposition${j}`));
               break;
             case 'ilmd':
               string += `ilmd${

@@ -1077,7 +1077,21 @@ describe('pre-hashing of an EPCIS Event', () => {
       expect(str).to.be.equal('disposition=https://ns.gs1.org/cbv/Disp-damaged');
     });
 
-    it('should pre-hash a persistentDisposition - wait for issues on Github to be resolved');
+    it('should pre-hash a persistentDisposition', () => {
+      const str = eventToPreHashedString({
+        persistentDisposition: {
+          set: [
+            'urn:epcglobal:cbv:disp:completeness_inferred',
+            'urn:epcglobal:cbv:disp:completeness_verified',
+          ],
+          unset: [
+            'urn:epcglobal:cbv:disp:completeness_verified',
+            'urn:epcglobal:cbv:disp:completeness_inferred',
+          ],
+        },
+      }, {});
+      expect(str).to.be.equal('persistentDispositionset=https://ns.gs1.org/cbv/Disp-completeness_inferredset=https://ns.gs1.org/cbv/Disp-completeness_verifiedunset=https://ns.gs1.org/cbv/Disp-completeness_inferredunset=https://ns.gs1.org/cbv/Disp-completeness_verified');
+    });
 
     it('should pre-hash a readPoint', () => {
       const str = eventToPreHashedString({
