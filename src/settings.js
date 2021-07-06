@@ -39,7 +39,7 @@ export const defaultSettings = {
   timeout: undefined,
   useEventListByDefault: true,
   EPCISDocumentContext: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: 2,
+  EPCISDocumentSchemaVersion: "2",
   documentValidation: true,
 };
 

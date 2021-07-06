@@ -476,7 +476,7 @@ export const exampleEPCISDocument = {
   '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld', { example: 'http://ns.example.com/epcis/' }],
   id: '_:document1',
   isA: 'EPCISDocument',
-  schemaVersion: 2.0,
+  schemaVersion: "2.0",
   creationDate: '2005-07-11T11:30:47.0Z',
   format: 'application/ld+json',
   epcisBody: {

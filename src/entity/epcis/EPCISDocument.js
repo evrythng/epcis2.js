@@ -102,7 +102,7 @@ export default class EPCISDocument extends Entity {
 
   /**
    * Set the schemaVersion property
-   * @param {number} schemaVersion
+   * @param {string} schemaVersion
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setSchemaVersion(schemaVersion) {
@@ -112,7 +112,7 @@ export default class EPCISDocument extends Entity {
 
   /**
    * Getter for the schemaVersion property
-   * @return {number} - the schemaVersion
+   * @return {string} - the schemaVersion
    */
   getSchemaVersion() {
     return this.schemaVersion;

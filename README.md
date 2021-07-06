@@ -98,7 +98,7 @@ This example would output:
 {
    "isA":"EPCISDocument",
    "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-   "schemaVersion":2,
+   "schemaVersion": "2",
    "epcisBody":{
       "eventList":[
          {
@@ -141,7 +141,7 @@ This example would output:
 {
    "isA":"EPCISDocument",
    "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-   "schemaVersion":2,
+   "schemaVersion": "2",
    "epcisBody":{
       "eventList":[
          {
@@ -185,7 +185,7 @@ This example would output:
 {
    "isA":"EPCISDocument",
    "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-   "schemaVersion":2,
+   "schemaVersion": "2",
    "epcisBody":{
       "event":{
          "isA":"ObjectEvent",
@@ -204,7 +204,7 @@ You can override the default values of EPCISDocument fields by providing them to
 You can configure the following fields:
 - `EPCISDocumentContext` - the '@context' property of an EPCISDocument. By default, the value is 
 `https://gs1.github.io/EPCIS/epcis-context.jsonld`
-- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is 2.
+- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is "2".
 
 ```js
 setup({ EPCISDocumentContext: 'value' }); // the '@context' field of the EPCISDocument that you will create will be 
