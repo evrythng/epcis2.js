@@ -182,7 +182,7 @@ export const exampleSensorElementList = [
  * Example of an objectEvent object
  */
 export const exampleObjectEvent = {
-  eventID: 'ni:///sha-256;df7bb3c352fef055578554f09f5e2aa41782150ced7bd0b8af24dd3ccb30ba69?ver=CBV2.0',
+  eventID: 'eventID_ABC',
   isA: 'ObjectEvent',
   action: 'OBSERVE',
   bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
@@ -476,7 +476,7 @@ export const exampleEPCISDocument = {
   '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld', { example: 'http://ns.example.com/epcis/' }],
   id: '_:document1',
   isA: 'EPCISDocument',
-  schemaVersion: "2.0",
+  schemaVersion: '2.0',
   creationDate: '2005-07-11T11:30:47.0Z',
   format: 'application/ld+json',
   epcisBody: {

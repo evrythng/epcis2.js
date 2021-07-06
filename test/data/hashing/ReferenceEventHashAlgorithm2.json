@@ -1,0 +1,55 @@
+{
+  "@context": ["https://id.gs1.org/epcis-context.jsonld",{"gs1": "https://gs1.org/voc/"}],
+  "isA": "EPCISDocument",
+  "creationDate": "2020-04-01T15:00:00+01:00",
+  "schemaVersion": "2",
+  "format": "application/ld+json",
+  "epcisBody": {
+    "eventList": [
+      {
+        "isA": "ObjectEvent",
+        "eventTime": "2020-04-01T15:00:00+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sgtin:4012345.011111.9876"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
+        "readPoint": {"id": "urn:epc:id:sgln:4012345.00005.0"},
+        "sensorElementList": [
+          {
+            "sensorMetadata": {
+              "deviceID": "urn:epc:id:giai:4000001.111",
+              "deviceMetadata": "https://id.gs1.org/giai/4000001111"
+            },
+            "sensorReport": [
+              {
+                "type": "gs1:MT-Temperature",
+                "value": 26,
+                "sDev": 0.1,
+                "uom": "CEL"
+              },
+              {
+                "type": "gs1:MT-Humidity",
+                "value": 12.1,
+                "uom": "A93"
+              },
+              {
+                "type": "gs1:MT-Molar_concentration",
+                "microorganism": "https://www.ncbi.nlm.nih.gov/taxonomy/1126011",
+                "value": 0.05,
+                "uom": "C35"
+              },
+              {
+                "type": "gs1:MT-Molar_concentration",
+                "chemicalSubstance": "urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
+                "value": 0.18,
+                "uom": "C35"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
