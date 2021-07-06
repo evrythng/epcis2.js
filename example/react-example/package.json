@@ -6,7 +6,19 @@
     "epcis2.js": "file:../..",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "normalize-url": ">=4.5.1",
+    "glob-parent": ">=5.1.2",
+    "merge": ">=2.1.1",
+    "is-svg": ">=4.2.2",
+    "react-dev-utils": ">=11.0.4",
+    "node-notifier": ">=8.0.1",
+    "yargs-parser": ">=5.0.0-security.0",
+    "open": ">=6.0.0",
+    "braces": ">=2.3.1",
+    "js-yaml": ">=3.13.1",
+    "webpack-dev-server": ">=3.1.11",
+    "mime": ">=1.4.1"
   },
   "devDependencies": {},
   "scripts": {
