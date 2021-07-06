@@ -11,7 +11,7 @@ const {
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
   EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: "1.2",
+  EPCISDocumentSchemaVersion: '1.2',
   headers: {
     'content-type': 'application/json',
     authorization: 'MY_API_KEY',
@@ -53,10 +53,18 @@ const sendACaptureRequestExample = async () => {
               bizTransaction: 'http://transaction.acme.com/po/12345678',
             },
           ],
+          'example:field': 'customFieldValue',
         },
       ],
     },
   });
+
+  epcisDocument.eventList[0].generateHashID({
+    example: 'http://ns.example.com/epcis/',
+  });
+  console.log('The generated id is:');
+  console.log(epcisDocument.eventList[0].getEventID());
+
   console.log('epcisDocument (toString): ');
   console.log(epcisDocument.toString());
 
