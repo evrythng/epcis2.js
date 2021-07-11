@@ -1021,6 +1021,16 @@ describe('pre-hashing of an EPCIS Event', () => {
       }, {}, false);
       expect(str3).to.be.equal('action=OBSERVE');
 
+      const str4 = eventToPreHashedString({
+        'example:test': [
+          '3',
+          '1',
+        ],
+        'action': 'OBSERVE'
+      }, context, false);
+      expect(str4).to.be.equal('action=OBSERVE{http://ns.example.com/epcis/}test=1{http://ns.example.com/epcis/}test=3');
+
+
       // throw an error
       expect(() => eventToPreHashedString({
         action: 'OBSERVE',

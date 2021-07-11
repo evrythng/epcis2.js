@@ -122,7 +122,6 @@ export const getPreHashStringFromCustomFieldElement = (key, value, context, thro
 
   // If the object is an Array
   if (Array.isArray(value)) {
-    console.log('ARRAY');
     return getPreHashStringFromCustomFieldElementList(field, value, throwError);
   }
 
@@ -299,7 +298,11 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         strings.push(getPreHashStringOfField('correctiveEventID', list[i], throwError));
       }
       break;
-    // no default
+    default:
+      for (let i = 0; i < list.length; i += 1) {
+        customFields.push(getPreHashStringFromCustomFieldElement(fieldName, list[i], context, throwError));
+      }
+      break;
   }
 
   // rule n°12 - order the element of a list according to their case-sensitive lexical ordering
