@@ -23,7 +23,7 @@ import {
 import {
   convertEpcUriToDlUri,
   convertURNBasedVocabularyToURI,
-  formatTheDateToFollowTheAlgorithmRules,
+  formatTheDate,
   listOfStringToPreHashLexicalOrderedString,
   readAllTheContextProvidedInTheObject,
   removeWhiteSpaceAtTheBeginningOrEndOfString,
@@ -43,7 +43,7 @@ import {
  */
 export const getPreHashStringOfField = (field, value, throwError) => {
   value = removeWhiteSpaceAtTheBeginningOrEndOfString(value); // rule n°5
-  value = formatTheDateToFollowTheAlgorithmRules(value); // rule n°8 and rule n°9
+  value = formatTheDate(value); // rule n°8 and rule n°9
   value = convertURNBasedVocabularyToURI(value); // rule n°14
   value = convertEpcUriToDlUri(value, throwError); // rule n°15
   return `${field}=${value}`;
@@ -91,10 +91,12 @@ export const getPreHashStringFromCustomFieldElementList = (prefix, value, throwE
 export const getPreHashStringFromCustomFieldElement = (key, value, context, throwError) => {
   let field = key;
 
-  if (key.split(':').length > 1) {
-    if (!context.hasOwnProperty(key.split(':')[0])) {
+  const splitKey = key.split(':');
+
+  if (splitKey.length > 1) {
+    if (!context.hasOwnProperty(splitKey[0])) {
       // this field gives the context and shall not be added to the pre-hashed string
-      if (key.split(':')[0] === '@xmlns') {
+      if (splitKey[0] === '@xmlns') {
         return '';
       }
 
@@ -106,7 +108,7 @@ export const getPreHashStringFromCustomFieldElement = (key, value, context, thro
     }
 
     field =
-      key.replace(`${key.split(':')[0]}:`, `{${context[key.split(':')[0]]}}`);
+      key.replace(`${splitKey[0]}:`, `{${context[splitKey[0]]}}`);
   } else if (key.startsWith('#')) {
     // if the key is '#text' for example, we don't want ot add the
     // key to the pre-hashed string
@@ -120,6 +122,7 @@ export const getPreHashStringFromCustomFieldElement = (key, value, context, thro
 
   // If the object is an Array
   if (Array.isArray(value)) {
+    console.log('ARRAY');
     return getPreHashStringFromCustomFieldElementList(field, value, throwError);
   }
 
@@ -210,7 +213,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'quantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           quantityElementCanonicalPropertyOrder, throwError);
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
@@ -218,7 +221,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'childQuantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           quantityElementCanonicalPropertyOrder, throwError);
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
@@ -226,7 +229,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'inputQuantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           quantityElementCanonicalPropertyOrder, throwError);
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
@@ -234,7 +237,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'outputQuantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           quantityElementCanonicalPropertyOrder, throwError);
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
@@ -247,7 +250,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         if (businessTransactionTypes[list[i].type] !== undefined) {
           list[i].type = businessTransactionTypes[list[i].type];
         }
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           bizTransactionCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
         customFields.push(...res.customFields.map((j) => `bizTransaction${j}`));
@@ -255,7 +258,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'sourceList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           sourceCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
         customFields.push(...res.customFields.map((j) => `source${j}`));
@@ -268,7 +271,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         if (sourceDestinationTypes[list[i].type] !== undefined) {
           list[i].type = sourceDestinationTypes[list[i].type];
         }
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           destinationCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
         customFields.push(...res.customFields.map((j) => `destination${j}`));
@@ -276,7 +279,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'sensorElementList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           sensorElementCanonicalPropertyOrder, throwError);
         strings.push(`sensorElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `sensorElement${j}`));
@@ -285,7 +288,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'sensorReport':
       string = '';
       for (let i = 0; i < list.length; i += 1) {
-        res = getPreHashStringOfElementAccordingToOrderList(list[i], context,
+        res = getOrderedPreHashString(list[i], context,
           sensorReportCanonicalPropertyOrder, throwError);
         strings.push(`sensorReport${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `sensorReport${j}`));
@@ -319,7 +322,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
  * @returns {{preHashed: string, customFields: []}} the object passed in parameter with its field
  * ordered
  */
-export const getPreHashStringOfElementAccordingToOrderList =
+export const getOrderedPreHashString =
   (object, context, orderList, throwError) => {
     let string = '';
     const strings = [];
@@ -344,35 +347,35 @@ export const getPreHashStringOfElementAccordingToOrderList =
               if (errorReasonIdentifiers[object[orderList[i]].reason] !== undefined) {
                 object[orderList[i]].reason = errorReasonIdentifiers[object[orderList[i]].reason];
               }
-              res = getPreHashStringOfElementAccordingToOrderList(object[orderList[i]], context,
+              res = getOrderedPreHashString(object[orderList[i]], context,
                 errorDeclarationCanonicalPropertyOrder, throwError);
               string += `errorDeclaration${res.preHashed}`;
               strings.push(...res.customFields.map((j) => `errorDeclaration${j}`));
               break;
             case 'readPoint':
               string += 'readPoint';
-              res = getPreHashStringOfElementAccordingToOrderList(object[orderList[i]], context,
+              res = getOrderedPreHashString(object[orderList[i]], context,
                 readPointCanonicalPropertyOrder, throwError);
               string += res.preHashed;
               strings.push(...res.customFields.map((j) => `readPoint${j}`));
               break;
             case 'bizLocation':
               string += 'bizLocation';
-              res = getPreHashStringOfElementAccordingToOrderList(object[orderList[i]], context,
+              res = getOrderedPreHashString(object[orderList[i]], context,
                 bizLocationCanonicalPropertyOrder, throwError);
               string += res.preHashed;
               strings.push(...res.customFields.map((j) => `bizLocation${j}`));
               break;
             case 'sensorMetadata':
               string += 'sensorMetadata';
-              res = getPreHashStringOfElementAccordingToOrderList(object[orderList[i]], context,
+              res = getOrderedPreHashString(object[orderList[i]], context,
                 sensorMetadataCanonicalPropertyOrder, throwError);
               string += res.preHashed;
               strings.push(...res.customFields.map((j) => `sensorMetadata${j}`));
               break;
             case 'persistentDisposition':
               string += 'persistentDisposition';
-              res = getPreHashStringOfElementAccordingToOrderList(object[orderList[i]], context,
+              res = getOrderedPreHashString(object[orderList[i]], context,
                 persistentDispositionCanonicalPropertyOrder, throwError);
               string += res.preHashed;
               strings.push(...res.customFields.map((j) => `persistentDisposition${j}`));
@@ -442,7 +445,7 @@ export const eventToPreHashedString = (event, context, throwError = true) => {
   // this field contains the context defined in the "context" field and the context defined directly
   // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
   const extendedContext = { ...context, ...readAllTheContextProvidedInTheObject(event) };
-  const res = getPreHashStringOfElementAccordingToOrderList(
+  const res = getOrderedPreHashString(
     event, extendedContext, canonicalPropertyOrder, throwError,
   );
   return res.preHashed + listOfStringToPreHashLexicalOrderedString(res.customFields);

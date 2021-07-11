@@ -55,16 +55,14 @@ const sendACaptureRequestExample = async () => {
 
   console.log(`BizStep of the object event: ${objectEvent.getBizStep()}`);
   console.log(`Action of the object event: ${objectEvent.getAction()}`);
-  console.log('objectEvent: ');
+  console.log(`objectEvent: `);
   console.log(objectEvent.toObject());
-  console.log('epcisDocument (toString): ');
+  console.log(`epcisDocument (toString): ${epcisDocument.toString()}`);
 
-  const res = (await capture(epcisDocument));
-  const text = (await res.text());
-  console.log('Request status: ');
-  console.log(res.status);
-  console.log('Request response: ');
-  console.log(text);
+  const res = await capture(epcisDocument);
+  const text = await res.text();
+  console.log(`Request status: ${res.status}`);
+  console.log(`Request response: ${text}`);
 };
 
 sendACaptureRequestExample();

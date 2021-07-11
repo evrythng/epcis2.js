@@ -34,7 +34,7 @@ export const isAString = (obj) => typeof obj === 'string' || obj instanceof Stri
 export const removeWhiteSpaceAtTheBeginningOrEndOfString = (obj) => {
   if (!isAString(obj)) return obj;
 
-  return obj.replace(/^\s+|\s+$/g, '');
+  return obj.trim();
 };
 
 /**
@@ -158,7 +158,7 @@ export const addMillisecondPrecisionToDate = (date) => {
  * @return {*} - the obj if it isn't a date, the date with some modification to follow the
  * rules defined by the algorithm otherwise.
  */
-export const formatTheDateToFollowTheAlgorithmRules = (obj) => {
+export const formatTheDate = (obj) => {
   if (!isADate(obj)) return obj;
 
   let date = addATrailingZIfItIsNeeded(obj);

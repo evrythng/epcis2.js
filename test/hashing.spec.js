@@ -9,7 +9,7 @@ import { eventToPreHashedString, getPreHashStringOfField } from '../src/hash_gen
 import {
   addATrailingZIfItIsNeeded,
   addMillisecondPrecisionToDate,
-  formatTheDateToFollowTheAlgorithmRules,
+  formatTheDate,
   isADate,
   isAString, readAllTheContextProvidedInTheObject, removeTimeZonePropertyIfItIsNeeded,
   removeWhiteSpaceAtTheBeginningOrEndOfString,
@@ -150,13 +150,13 @@ describe('Hashing algorithm utils', () => {
 
   describe('formatTheDateToFollowTheAlgorithmRules function', () => {
     it('Should return the parameter', () => {
-      expect(formatTheDateToFollowTheAlgorithmRules('foo')).to.be.equal('foo');
-      expect(formatTheDateToFollowTheAlgorithmRules('2.187968'))
+      expect(formatTheDate('foo')).to.be.equal('foo');
+      expect(formatTheDate('2.187968'))
         .to.be.equal('2.187968');
-      expect(formatTheDateToFollowTheAlgorithmRules(String('foo')))
+      expect(formatTheDate(String('foo')))
         .to.be.equal('foo');
-      expect(formatTheDateToFollowTheAlgorithmRules(2)).to.be.equal(2);
-      expect(formatTheDateToFollowTheAlgorithmRules({}).toString())
+      expect(formatTheDate(2)).to.be.equal(2);
+      expect(formatTheDate({}).toString())
         .to.be.equal({}.toString());
     });
 
@@ -173,7 +173,7 @@ describe('Hashing algorithm utils', () => {
     });
 
     it('Should not add millisecond precision', () => {
-      expect(formatTheDateToFollowTheAlgorithmRules('2005-07-11T11:30:47.000Z'))
+      expect(formatTheDate('2005-07-11T11:30:47.000Z'))
         .to.be.equal('2005-07-11T11:30:47.000Z');
     });
 
@@ -198,10 +198,10 @@ describe('Hashing algorithm utils', () => {
     });
 
     it('Should return valid UTC dates without offsets', () => {
-      expect(formatTheDateToFollowTheAlgorithmRules('2005-04-03T20:33:31.116000-06:00'))
+      expect(formatTheDate('2005-04-03T20:33:31.116000-06:00'))
         .to.be.equal('2005-04-04T02:33:31.116Z');
-      expect(formatTheDateToFollowTheAlgorithmRules('2005-04-03T20:33:31.116')).to.be.equal('2005-04-03T20:33:31.116Z');
-      expect(formatTheDateToFollowTheAlgorithmRules('2019-10-21T11:00:30+01:00')).to.be.equal('2019-10-21T10:00:30.000Z');
+      expect(formatTheDate('2005-04-03T20:33:31.116')).to.be.equal('2005-04-03T20:33:31.116Z');
+      expect(formatTheDate('2019-10-21T11:00:30+01:00')).to.be.equal('2019-10-21T10:00:30.000Z');
     });
   });
 

@@ -274,10 +274,10 @@ Generating a hashed ID allows developers to uniquely identify an EPCIS event or 
 To generate a hashed ID of an event, you can call this function:
 
 ```js
-obj.generateHashID(context, throwError);
+event.generateHashID(context, throwError);
 ```
 
-**This method needs to be called once all your field are set since the hash id is generated according to all your 
+**This method needs to be called once all your field are set since the hash ID is generated according to all your 
 fields**
 
 - `context` is an object that has to contain all the contexts used in the event. For example, if you have a custom field
