@@ -25,7 +25,7 @@ import './App.css';
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
   EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: 1.2,
+  EPCISDocumentSchemaVersion: '1.2',
   headers: {
     'content-type': 'application/json',
     authorization: 'MY_API_KEY',
@@ -60,6 +60,8 @@ function App() {
       .setDisposition(dispositions.in_transit)
       .setReadPoint('urn:epc:id:sgln:0614141.07346.1234')
       .addBizTransaction(bizTransaction);
+
+    objectEvent.generateHashID({});
 
     epcisDocument
       .setCreationDate('2005-07-11T11:30:47+00:00')

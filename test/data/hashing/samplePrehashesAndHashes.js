@@ -4,7 +4,43 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-export const epcisDocHavingEventWithCommentPreHash = ['eventType=ObjectEventeventTime=2005-04-04T02:33:31.116ZeventTimeZoneOffset=-06:00epcListepc=https://id.gs1.org/01/10614141073464/21/2017epc=https://id.gs1.org/01/10614141073464/21/2018action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-shippingdisposition=https://ns.gs1.org/cbv/Disp-in_transitreadPointid=https://id.gs1.org/414/0614141073467/254/1234bizTransactionListbizTransaction=http://transaction.acme.com/po/12345678type=https://ns.gs1.org/cbv/BTT-po'];
+export const sampleObjectEvent = {
+  isA: 'ObjectEvent',
+  eventTime: '2020-03-04T11:00:30.000+01:00',
+  eventTimeZoneOffset: '+01:00',
+  recordTime: '2020-03-04T11:00:30.999+01:00',
+  epcList: [
+    'urn:epc:id:sscc:4012345.0000000333',
+    'urn:epc:id:sscc:4012345.0000000111',
+    'urn:epc:id:sscc:4012345.0000000222',
+  ],
+  action: 'OBSERVE',
+  bizStep: 'urn:epcglobal:cbv:bizstep:departing',
+  readPoint: { id: 'urn:epc:id:sgln:4012345.00011.987' },
+  'example:myField1': {
+    '@xmlns:example': 'https://ns.example.com/epcis',
+    'example:mySubField1': '2',
+    'example:mySubField2': '5',
+  },
+  'example:myField2': {
+    '@xmlns:example': 'https://ns.example.com/epcis',
+    '#text': '0',
+  },
+  'example:myField3': {
+    '@xmlns:example': 'https://ns.example.com/epcis',
+    'example:mySubField3': [
+      '3',
+      '1',
+    ],
+  },
+};
+export const sampleContext = {
+  example: 'http://ns.example.com/epcis/',
+};
+
+export const epcisDocHavingEventWithCommentPreHash = [
+  'eventType=ObjectEventeventTime=2005-04-04T02:33:31.116ZeventTimeZoneOffset=-06:00epcListepc=https://id.gs1.org/01/10614141073464/21/2017epc=https://id.gs1.org/01/10614141073464/21/2018action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-shippingdisposition=https://ns.gs1.org/cbv/Disp-in_transitreadPointid=https://id.gs1.org/414/0614141073467/254/1234bizTransactionListbizTransaction=http://transaction.acme.com/po/12345678type=https://ns.gs1.org/cbv/BTT-po',
+];
 
 export const epcisDocWithCustomSchemaInContextPreHash = [
   'eventType=ObjectEventeventTime=2005-04-04T02:33:31.116ZeventTimeZoneOffset=-06:00epcListepc=https://id.gs1.org/01/10614141073464/21/2017epc=https://id.gs1.org/01/10614141073464/21/2018action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-shippingdisposition=https://ns.gs1.org/cbv/Disp-in_transitreadPointid=https://id.gs1.org/414/0614141073467/254/1234bizTransactionListbizTransaction=http://transaction.acme.com/po/12345678type=https://ns.gs1.org/cbv/BTT-poid=_:event1{http://ns.example.com/epcis/}myField=myValue',
@@ -53,14 +89,14 @@ export const epcListNormalisationPreHash = [
   "eventType=ObjectEventeventTime=2019-04-02T14:00:00.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/00/3401234531111111110epc=https://id.gs1.org/01/01234567987651/235/51qIgY%29%3C%26Jp3%2Aj7'SDBepc=https://id.gs1.org/01/04012345111118/21/98%22epc=https://id.gs1.org/01/04012345111118/21/9876epc=https://id.gs1.org/01/04012345123456/10/Lot987epc=https://id.gs1.org/01/04150567890128/21/987654epc=https://id.gs1.org/01/09780345418913epc=https://id.gs1.org/01/09780345418913/21/765tzepc=https://id.gs1.org/01/80614141123458/21/6789%2F%26%25%22%21%3F%28%29epc=https://id.gs1.org/253/4012345000092PO-4711epc=https://id.gs1.org/253/98765999999929epc=https://id.gs1.org/401/0614141xyz47%2F11epc=https://id.gs1.org/402/40123452223334442epc=https://id.gs1.org/414/4012345000054epc=https://id.gs1.org/414/4012345000054/254/122epc=https://id.gs1.org/417/4000001000005epc=https://id.gs1.org/417/9999999999994epc=https://id.gs1.org/8003/04012345000221334455epc=https://id.gs1.org/8004/4012345ABC345epc=https://id.gs1.org/8006/040123451111180102/21/987epc=https://id.gs1.org/8010/061414111111111111111-A%23%2F/8011/1234epc=https://id.gs1.org/8017/401234500000000074epc=https://id.gs1.org/8018/401234500000067657action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-inspectingreadPointid=https://id.gs1.org/414/4012345000054",
 ];
 
-export const ReferenceEventHashAlgorithmPreHash = [
+export const referenceEventHashAlgorithmPreHash = [
   'eventType=ObjectEventeventTime=2020-03-04T10:00:30.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/00/0401234500000001118epc=https://id.gs1.org/00/0401234500000002221epc=https://id.gs1.org/00/0401234500000003334action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-departingreadPointid=https://id.gs1.org/414/4012345000115/254/987{https://ns.example.com/epcis}myField1{https://ns.example.com/epcis}mySubField1=2{https://ns.example.com/epcis}mySubField2=5{https://ns.example.com/epcis}myField2=0{https://ns.example.com/epcis}myField3{https://ns.example.com/epcis}mySubField3=1{https://ns.example.com/epcis}mySubField3=3',
 ];
 
-export const ReferenceEventHashAlgorithm2PreHash = [
+export const referenceEventHashAlgorithm2PreHash = [
   'eventType=ObjectEventeventTime=2020-04-01T14:00:00.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/04012345111118/21/9876action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-inspectingreadPointid=https://id.gs1.org/414/4012345000054sensorElementListsensorElementsensorMetadatadeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111sensorReporttype=gs1:MT-Humidityvalue=12.1uom=A93sensorReporttype=gs1:MT-Molar_concentrationchemicalSubstance=urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-Nvalue=0.18uom=C35sensorReporttype=gs1:MT-Molar_concentrationmicroorganism=https://www.ncbi.nlm.nih.gov/taxonomy/1126011value=0.05uom=C35sensorReporttype=gs1:MT-Temperaturevalue=26sDev=0.1uom=CEL',
 ];
 
-export const ReferenceEventHashAlgorithm3PreHash = [
+export const referenceEventHashAlgorithm3PreHash = [
   'eventType=ObjectEventeventTime=2020-03-04T10:00:30.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/00614141111114/21/987action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-departingdisposition=https://ns.gs1.org/cbv/Disp-in_transitreadPointid=https://id.gs1.org/414/4012345000115bizTransactionListbizTransaction=https://id.gs1.org/253/4012345111118123type=https://ns.gs1.org/cbv/BTT-posourceListsource=https://id.gs1.org/417/4012345000009type=https://ns.gs1.org/cbv/SDT-owning_partydestinationListdestination=https://id.gs1.org/417/0614141000005type=https://ns.gs1.org/cbv/SDT-owning_partyreadPoint{https://ns.example.com/epcis}myField1=AB-12{https://ns.example.com/epcis}userExt=CD-34',
 ];

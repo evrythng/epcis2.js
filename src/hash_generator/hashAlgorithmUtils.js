@@ -4,6 +4,9 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
+// The rules of the algorithm are defined here :
+// https://github.com/RalphTro/epcis-event-hash-generator#algorithm
+
 import { getTheTimeZoneOffsetFromDateString } from '../utils/utils';
 import { dlNormalizer } from './dlNormalizer';
 
@@ -90,7 +93,7 @@ export const isADate = (obj) => (isNaN(obj) && !isNaN(Date.parse(obj)) && obj.le
  * @param {string} date - a string representing an UTC date
  * @return {string} - the date without the timezone
  */
-export const removeTimeZonePropertyIfItIsNeeded = (date) => new Date(date).toISOString();
+export const removeTimeZoneProperty = (date) => new Date(date).toISOString();
 
 /**
  * If the UTC date passed in param hasn't any offset and hasn't a 'Z' at the end, it adds it
@@ -101,12 +104,10 @@ export const removeTimeZonePropertyIfItIsNeeded = (date) => new Date(date).toISO
  * @return {string} - the date with a 'Z' at the end if it needs to, the date without any
  * modification otherwise
  */
-export const addATrailingZIfItIsNeeded = (date) => {
+export const addATrailingZ = (date) => {
   if (getTheTimeZoneOffsetFromDateString(date)) return date;
 
-  if (date.endsWith('Z')) return date;
-
-  return `${date}Z`;
+  return date.endsWith('Z') ? date : `${date}Z`;
 };
 
 /**
@@ -116,8 +117,7 @@ export const addATrailingZIfItIsNeeded = (date) => {
  * @returns {string} the updated date
  */
 export const addMillisecondPrecisionToDate = (date) => {
-  const YearMonthDay = date.substring(0, date.indexOf('T'));
-  const time = date.substring(date.indexOf('T') + 1);
+  const [yearMonthDay, time] = date.split('T');
   const startTime = time.substring(0, 5);
   let endTime = time.substring(6);
   let ms;
@@ -144,7 +144,7 @@ export const addMillisecondPrecisionToDate = (date) => {
     ms = '000';
   }
 
-  return `${YearMonthDay}T${startTime}:${endTime}.${ms}${end}`;
+  return `${yearMonthDay}T${startTime}:${endTime}.${ms}${end}`;
 };
 
 /**
@@ -161,9 +161,9 @@ export const addMillisecondPrecisionToDate = (date) => {
 export const formatTheDate = (obj) => {
   if (!isADate(obj)) return obj;
 
-  let date = addATrailingZIfItIsNeeded(obj);
+  let date = addATrailingZ(obj);
 
-  date = removeTimeZonePropertyIfItIsNeeded(date);
+  date = removeTimeZoneProperty(date);
 
   date = addMillisecondPrecisionToDate(date);
 
@@ -175,15 +175,7 @@ export const formatTheDate = (obj) => {
  * @param {[]} strings - the list of string
  * @returns {string} string that concatenated all the string, ordered in lexical order
  */
-export const listOfStringToPreHashLexicalOrderedString = (strings) => {
-  let string = '';
-  strings.sort();
-
-  for (let i = 0; i < strings.length; i += 1) {
-    string += strings[i];
-  }
-  return string;
-};
+export const listOfStringToPreHashLexicalOrderedString = (strings) => strings.sort().reduce((acc, s) => `${acc}${s}`, '');
 
 /**
  * Read and returns all the contexts provided in the object
@@ -194,14 +186,14 @@ export const listOfStringToPreHashLexicalOrderedString = (strings) => {
  *    "example2": "http://ns.example2.com/epcis/",
  * }
  */
-export const readAllTheContextProvidedInTheObject = (object) => {
+export const getEventContexts = (object) => {
   let context = {};
 
-  Object.keys(object).forEach((key) => {
-    if (object[key].toString() === '[object Object]') {
-      context = { ...context, ...readAllTheContextProvidedInTheObject(object[key]) };
+  Object.entries(object).forEach(([key, value]) => {
+    if (typeof value === 'object') {
+      context = { ...context, ...getEventContexts(value) };
     } else if (key.startsWith('@xmlns:')) {
-      context[key.substring(7)] = object[key];
+      context[key.substring(7)] = value;
     }
   });
 

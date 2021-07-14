@@ -25,13 +25,16 @@ import {
   convertURNBasedVocabularyToURI,
   formatTheDate,
   listOfStringToPreHashLexicalOrderedString,
-  readAllTheContextProvidedInTheObject,
+  getEventContexts,
   removeWhiteSpaceAtTheBeginningOrEndOfString,
   toBeIgnored,
 } from './hashAlgorithmUtils';
 import {
   bizSteps, businessTransactionTypes, dispositions, errorReasonIdentifiers, sourceDestinationTypes,
 } from '../cbv/cbv';
+
+// The rules of the algorithm are defined here :
+// https://github.com/RalphTro/epcis-event-hash-generator#algorithm
 
 /**
  * Return the pre-hashed string corresponding to the field-value passed in parameter
@@ -300,7 +303,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     default:
       for (let i = 0; i < list.length; i += 1) {
-        customFields.push(getPreHashStringFromCustomFieldElement(fieldName, list[i], context, throwError));
+        customFields.push(
+          getPreHashStringFromCustomFieldElement(fieldName, list[i], context, throwError),
+        );
       }
       break;
   }
@@ -447,7 +452,7 @@ export const getOrderedPreHashString =
 export const eventToPreHashedString = (event, context, throwError = true) => {
   // this field contains the context defined in the "context" field and the context defined directly
   // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
-  const extendedContext = { ...context, ...readAllTheContextProvidedInTheObject(event) };
+  const extendedContext = { ...context, ...getEventContexts(event) };
   const res = getOrderedPreHashString(
     event, extendedContext, canonicalPropertyOrder, throwError,
   );
