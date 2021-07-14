@@ -5,6 +5,7 @@
  */
 
 /* eslint-disable no-useless-escape */
+/* eslint-disable no-param-reassign */
 
 /**
  * it protects some character with '%..'
@@ -66,6 +67,105 @@ export const addCheckDigitAndZeroPad = (raw, throwError, length = 14) => {
   }
   return newRaw;
 };
+
+/**
+ * Replace all non numeric codes with numeric codes
+ * @param {string} uri - the string to update
+ * @returns {string} - the updated uri
+ */
+const replaceAllNonNumericCodes = (uri) => {
+  // Replace non-numeric codes by numeric codes
+  uri = uri.replace('/gtin/', '/01/')
+    .replace('/itip/', '/8006/')
+    .replace('/cpid/', '/8010/')
+    .replace('/gln/', '/414/')
+    .replace('/party/', '/417/')
+    .replace('/gsrnp/', '/8017/')
+    .replace('/gsrn/', '/8018/')
+    .replace('/gcn/', '/255/')
+    .replace('/sscc/', '/00/')
+    .replace('/gdti/', '/253/')
+    .replace('/ginc/', '/401/')
+    .replace('/gsin/', '/402/')
+    .replace('/grai/', '/8003/')
+    .replace('/giai/', '/8004/')
+    .replace('/cpv/', '/22/')
+    .replace('/lot/', '/10/')
+    .replace('/ser/', '/21/');
+
+  return uri;
+};
+
+/**
+ * Replace custom domain with the domain used by the algorithm
+ * @param {string} uri - the string to update
+ * @returns {string} - the updated uri
+ */
+const formatDomain = (uri) => {
+  if (!uri.match('^https:\/\/id.gs1.org\/(01|8006|8010|414|417|8017|8018|255|00|253|401|402|8003|8004)\/([0-9]{4}[^\/]+)(\/[^\/]+\/[^\/]+)?[\/]?(([^?\n]*))?(#([^\n]*))?|(\/[A-Za-z_-]{10}$)')) {
+    if (uri.includes('/00/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/00/'))}`;
+    else if (uri.includes('/01/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/01/'))}`;
+    else if (uri.includes('/253/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/253/'))}`;
+    else if (uri.includes('/255/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/255/'))}`;
+    else if (uri.includes('/401/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/401/'))}`;
+    else if (uri.includes('/402/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/402/'))}`;
+    else if (uri.includes('/414/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/414/'))}`;
+    else if (uri.includes('/417/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/417/'))}`;
+    else if (uri.includes('/8003/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8003/'))}`;
+    else if (uri.includes('/8004/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8004/'))}`;
+    else if (uri.includes('/8006/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8006/'))}`;
+    else if (uri.includes('/8010/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8010/'))}`;
+    else if (uri.includes('/8017/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8017/'))}`;
+    else if (uri.includes('/8018/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8018/'))}`;
+  }
+  return uri;
+};
+
+/**
+ * Format the uri to have a 14 digits GTIN
+ * @param {string} uri - the string to update
+ * @returns {string} - the updated uri
+ */
+const zeroPadGTIN = (uri) => {
+  if (!uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{14}')) {
+    if (
+      uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{13}') ||
+      uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{12}') ||
+      uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{8}')) {
+      while (!uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{14}')) {
+        uri = uri.replace('/01/', '/01/0');
+      }
+    }
+  }
+  return uri;
+};
+
+/**
+ * Checks if the parameter is a valid Digital Link URI
+ * @param {string} uri - the uri
+ * @returns {boolean} true if it is valid - false otherwise
+ */
+const isAValidDigitalLinkURI = (uri) => !!(uri.match('https:\/\/id.gs1.org\/00\/([0-9]{18})$') ||
+    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})\/21\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
+    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})\/10\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
+    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})$') ||
+    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})\/235\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,28})$') ||
+    uri.match('https:\/\/id.gs1.org\/253\/([0-9]{13})([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,17})$') ||
+    uri.match('https:\/\/id.gs1.org\/255\/([0-9]{13})([0-9]{0,12})$') ||
+    uri.match('https:\/\/id.gs1.org\/401\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,30})$') ||
+    uri.match('https:\/\/id.gs1.org\/402\/([0-9]{17})$') ||
+    uri.match('https:\/\/id.gs1.org\/414\/([0-9]{13})$') ||
+    uri.match('https:\/\/id.gs1.org\/414\/([0-9]{13})\/254\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
+    uri.match('https:\/\/id.gs1.org\/417\/([0-9]{13})$') ||
+    uri.match('https:\/\/id.gs1.org\/8003\/([0-9]{14})([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,16})$') ||
+    uri.match('https:\/\/id.gs1.org\/8004\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,30})$') ||
+    uri.match('https:\/\/id.gs1.org\/8006\/([0-9]{18})\/21\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
+    uri.match('https:\/\/id.gs1.org\/8006\/([0-9]{18})\/10\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
+    uri.match('https:\/\/id.gs1.org\/8006\/([0-9]{18})$') ||
+    uri.match('https:\/\/id.gs1.org\/8010\/([\x23\x2D\x2F\x30-\x39\x41-\x5A]{0,30})\/8011\/([0-9]{0,12})$') ||
+    uri.match('https:\/\/id.gs1.org\/8010\/([\x23\x2D\x2F\x30-\x39\x41-\x5A]{0,30})$') ||
+    uri.match('https:\/\/id.gs1.org\/8017\/([0-9]{18})$') ||
+    uri.match('https:\/\/id.gs1.org\/8018\/([0-9]{18})$'));
 
 /**
  * Converts any standard URI conveying a GS1 Key in Canonical GS1 DL URI.
@@ -304,52 +404,13 @@ export const normalizeDigitalLinks = (originalUri, throwError = true) => {
   }
 
   // Replace non-numeric codes by numeric codes
-  uri = uri.replace('/gtin/', '/01/')
-    .replace('/itip/', '/8006/')
-    .replace('/cpid/', '/8010/')
-    .replace('/gln/', '/414/')
-    .replace('/party/', '/417/')
-    .replace('/gsrnp/', '/8017/')
-    .replace('/gsrn/', '/8018/')
-    .replace('/gcn/', '/255/')
-    .replace('/sscc/', '/00/')
-    .replace('/gdti/', '/253/')
-    .replace('/ginc/', '/401/')
-    .replace('/gsin/', '/402/')
-    .replace('/grai/', '/8003/')
-    .replace('/giai/', '/8004/')
-    .replace('/cpv/', '/22/')
-    .replace('/lot/', '/10/')
-    .replace('/ser/', '/21/');
+  uri = replaceAllNonNumericCodes(uri);
 
-  if (!uri.match('^https:\/\/id.gs1.org\/(01|8006|8010|414|417|8017|8018|255|00|253|401|402|8003|8004)\/([0-9]{4}[^\/]+)(\/[^\/]+\/[^\/]+)?[\/]?(([^?\n]*))?(#([^\n]*))?|(\/[A-Za-z_-]{10}$)')) {
-    if (uri.includes('/00/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/00/'))}`;
-    else if (uri.includes('/01/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/01/'))}`;
-    else if (uri.includes('/253/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/253/'))}`;
-    else if (uri.includes('/255/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/255/'))}`;
-    else if (uri.includes('/401/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/401/'))}`;
-    else if (uri.includes('/402/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/402/'))}`;
-    else if (uri.includes('/414/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/414/'))}`;
-    else if (uri.includes('/417/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/417/'))}`;
-    else if (uri.includes('/8003/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8003/'))}`;
-    else if (uri.includes('/8004/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8004/'))}`;
-    else if (uri.includes('/8006/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8006/'))}`;
-    else if (uri.includes('/8010/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8010/'))}`;
-    else if (uri.includes('/8017/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8017/'))}`;
-    else if (uri.includes('/8018/')) uri = `https://id.gs1.org${uri.substring(uri.indexOf('/8018/'))}`;
-  }
+  // Replace the domain name
+  uri = formatDomain(uri);
 
   // Zero pad GTIN
-  if (!uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{14}')) {
-    if (
-      uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{13}') ||
-      uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{12}') ||
-      uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{8}')) {
-      while (!uri.match('^https:\/\/id.gs1.org\/01\/[0-9]{14}')) {
-        uri = uri.replace('/01/', '/01/0');
-      }
-    }
-  }
+  uri = zeroPadGTIN(uri);
 
   // remove cpv
   const x = uri.substring(uri.indexOf('/22/') + 4);
@@ -381,29 +442,7 @@ export const normalizeDigitalLinks = (originalUri, throwError = true) => {
 
   // Checks if the uri is now a valid one or still not. If it is still not a valid one,
   // it returns the original one. Otherwise, it returns the updated one.
-  if (
-    uri.match('https:\/\/id.gs1.org\/00\/([0-9]{18})$') ||
-    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})\/21\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
-    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})\/10\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
-    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})$') ||
-    uri.match('https:\/\/id.gs1.org\/01\/([0-9]{14})\/235\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,28})$') ||
-    uri.match('https:\/\/id.gs1.org\/253\/([0-9]{13})([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,17})$') ||
-    uri.match('https:\/\/id.gs1.org\/255\/([0-9]{13})([0-9]{0,12})$') ||
-    uri.match('https:\/\/id.gs1.org\/401\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,30})$') ||
-    uri.match('https:\/\/id.gs1.org\/402\/([0-9]{17})$') ||
-    uri.match('https:\/\/id.gs1.org\/414\/([0-9]{13})$') ||
-    uri.match('https:\/\/id.gs1.org\/414\/([0-9]{13})\/254\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
-    uri.match('https:\/\/id.gs1.org\/417\/([0-9]{13})$') ||
-    uri.match('https:\/\/id.gs1.org\/8003\/([0-9]{14})([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,16})$') ||
-    uri.match('https:\/\/id.gs1.org\/8004\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,30})$') ||
-    uri.match('https:\/\/id.gs1.org\/8006\/([0-9]{18})\/21\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
-    uri.match('https:\/\/id.gs1.org\/8006\/([0-9]{18})\/10\/([\x22\x27\x2D\x2E\x30-\x39\x3B-\x3F\x41-\x5A\x5F\x61-\x7A]{0,20})$') ||
-    uri.match('https:\/\/id.gs1.org\/8006\/([0-9]{18})$') ||
-    uri.match('https:\/\/id.gs1.org\/8010\/([\x23\x2D\x2F\x30-\x39\x41-\x5A]{0,30})\/8011\/([0-9]{0,12})$') ||
-    uri.match('https:\/\/id.gs1.org\/8010\/([\x23\x2D\x2F\x30-\x39\x41-\x5A]{0,30})$') ||
-    uri.match('https:\/\/id.gs1.org\/8017\/([0-9]{18})$') ||
-    uri.match('https:\/\/id.gs1.org\/8018\/([0-9]{18})$')
-  ) {
+  if (isAValidDigitalLinkURI(uri)) {
     return uri;
   }
 
