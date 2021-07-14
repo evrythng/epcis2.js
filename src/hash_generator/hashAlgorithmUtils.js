@@ -8,7 +8,7 @@
 // https://github.com/RalphTro/epcis-event-hash-generator#algorithm
 
 import { getTheTimeZoneOffsetFromDateString } from '../utils/utils';
-import { dlNormalizer } from './dlNormalizer';
+import { normalizeDigitalLinks } from './dlNormalizer';
 
 /**
  * The list of fields that will be ignored in the pre-hashed string
@@ -75,7 +75,7 @@ export const convertURNBasedVocabularyToURI = (obj) => {
 export const convertEpcUriToDlUri = (obj, throwError) => {
   if (!isAString(obj)) return obj;
 
-  return dlNormalizer(obj, throwError);
+  return normalizeDigitalLinks(obj, throwError);
 };
 
 /**

@@ -79,7 +79,7 @@ export const addCheckDigitAndZeroPad = (raw, throwError, length = 14) => {
  * @return a corresponding, constrained version of a canonical GS1 Digital Link URI, i.e. with the
  * lowest level of identification and without CPV/query string.
  */
-export const dlNormalizer = (originalUri, throwError = true) => {
+export const normalizeDigitalLinks = (originalUri, throwError = true) => {
   let uri = originalUri;
 
   if (!uri.includes('.')) {
