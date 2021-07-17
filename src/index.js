@@ -33,5 +33,7 @@ export { default as SensorReportElement } from './entity/model/sensor/SensorRepo
 export { default as setup } from './setup';
 export { default as capture } from './request/capture';
 
+export { eventToHashedId } from './hash_generator/EPCISEventToHashedString';
+
 export * from './cbv/cbv';
 export * from './settings';

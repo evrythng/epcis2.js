@@ -93,7 +93,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .be.equal(exampleObjectEvent['example:myField']);
   });
 
-  it('should create an ObjectEvent from json', async () => {
+  it('should create an ObjectEvent from json and generate a hashed ID', async () => {
     const obj = new ObjectEvent(exampleObjectEvent);
     expect(obj.getBizLocation()).to.be.instanceof(BizLocation);
     expect(obj.getBizTransactionList()[0]).to.be.instanceof(BizTransactionElement);
@@ -106,6 +106,11 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getSourceList()[0]).to.be.instanceof(SourceElement);
     expect(obj.getIlmd()).to.be.instanceof(Ilmd);
     expect(obj.toObject()).to.deep.equal(exampleObjectEvent);
+    expect(() => obj.generateHashID({})).to.throw();
+    expect(() => obj.generateHashID({
+      example: 'http://ns.example.com/epcis/',
+    })).to.not.throw();
+    expect(obj.getEventID().startsWith('ni:///')).to.be.equal(true);
   });
 
   it('should be able to set the time zone offset from number or string', async () => {

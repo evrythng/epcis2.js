@@ -22,7 +22,7 @@ const {
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
   EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: 1.2,
+  EPCISDocumentSchemaVersion: '1.2',
   headers: {
     'content-type': 'application/json',
     authorization: 'MY_API_KEY',
@@ -57,15 +57,12 @@ const sendACaptureRequestExample = async () => {
   console.log(`Action of the object event: ${objectEvent.getAction()}`);
   console.log('objectEvent: ');
   console.log(objectEvent.toObject());
-  console.log('epcisDocument (toString): ');
-  console.log(epcisDocument.toString());
+  console.log(`epcisDocument (toString): ${epcisDocument.toString()}`);
 
-  const res = (await capture(epcisDocument));
-  const text = (await res.text());
-  console.log('Request status: ');
-  console.log(res.status);
-  console.log('Request response: ');
-  console.log(text);
+  const res = await capture(epcisDocument);
+  const text = await res.text();
+  console.log(`Request status: ${res.status}`);
+  console.log(`Request response: ${text}`);
 };
 
 sendACaptureRequestExample();

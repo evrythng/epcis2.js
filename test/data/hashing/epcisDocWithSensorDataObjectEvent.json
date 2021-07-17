@@ -1,0 +1,114 @@
+{
+  "@context": ["https://id.gs1.org/epcis-context.jsonld",{"gs1": "https://gs1.org/voc/"}],
+  "isA": "EPCISDocument",
+  "creationDate": "2005-07-11T11:30:47+00:00",
+  "schemaVersion": "1.2",
+  "format": "application/ld+json",
+  "epcisBody": {
+    "eventList": [
+      {
+        "isA": "ObjectEvent",
+        "eventTime": "2019-04-02T15:00:00.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sgtin:4012345.011111.9876"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
+        "readPoint": {"id": "urn:epc:id:sgln:4012345.00005.0"},
+        "sensorElementList": [
+          {
+            "sensorMetadata": {
+              "time": "2019-04-02T14:05:00.000+01:00",
+              "deviceID": "urn:epc:id:giai:4000001.111",
+              "deviceMetadata": "https://id.gs1.org/giai/4000001111",
+              "rawData": "https://example.org/giai/401234599999"
+            },
+            "sensorReport": [
+              {
+                "type": "gs1:MT-Temperature",
+                "value": 26,
+                "uom": "CEL"
+              },
+              {
+                "type": "gs1:MT-Humidity",
+                "value": 12.1,
+                "uom": "A93"
+              },
+              {
+                "type": "gs1:MT-Speed",
+                "value": 160,
+                "uom": "KMH"
+              },
+              {
+                "type": "gs1:MT-Illuminance",
+                "value": 800,
+                "uom": "LUX"
+              }
+            ]
+          },
+          {
+            "sensorMetadata": {
+              "time": "2019-04-02T14:35:00.000+01:00",
+              "deviceID": "urn:epc:id:giai:4000001.111",
+              "deviceMetadata": "https://id.gs1.org/giai/4000001111",
+              "rawData": "https://example.org/giai/401234599999"
+            },
+            "sensorReport": [
+              {
+                "type": "gs1:MT-Temperature",
+                "value": 26.1,
+                "uom": "CEL"
+              },
+              {
+                "type": "gs1:MT-Humidity",
+                "value": 12.2,
+                "uom": "A93"
+              },
+              {
+                "type": "gs1:MT-Speed",
+                "value": 161,
+                "uom": "KMH"
+              },
+              {
+                "type": "gs1:MT-Illuminance",
+                "value": 801,
+                "uom": "LUX"
+              }
+            ]
+          },
+          {
+            "sensorMetadata": {
+              "time": "2019-04-02T14:55:00.000+01:00",
+              "deviceID": "urn:epc:id:giai:4000001.111",
+              "deviceMetadata": "https://id.gs1.org/giai/4000001111",
+              "rawData": "https://example.org/giai/401234599999"
+            },
+            "sensorReport": [
+              {
+                "type": "gs1:MT-Temperature",
+                "value": 26.2,
+                "uom": "CEL"
+              },
+              {
+                "type": "gs1:MT-Humidity",
+                "value": 12.2,
+                "uom": "A93"
+              },
+              {
+                "type": "gs1:MT-Speed",
+                "value": 162,
+                "uom": "KMH"
+              },
+              {
+                "type": "gs1:MT-Illuminance",
+                "value": 802,
+                "uom": "LUX"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

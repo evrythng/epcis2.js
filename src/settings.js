@@ -20,7 +20,7 @@
  * EPCISDocument
  * @property {string} EPCISDocumentContext - The default value of the '@context' parameter of an
  * EPCISDocument. Set it to undefined if you don't want the parameter in your EPCISDocument.
- * @property {number} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion'
+ * @property {string} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion'
  * parameter of an EPCISDocument. Set it to undefined if you don't want the parameter in your
  * EPCISDocument.
  * */
@@ -39,7 +39,7 @@ export const defaultSettings = {
   timeout: undefined,
   useEventListByDefault: true,
   EPCISDocumentContext: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: 2,
+  EPCISDocumentSchemaVersion: '2',
   documentValidation: true,
 };
 

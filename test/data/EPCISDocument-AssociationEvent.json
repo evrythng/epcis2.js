@@ -7,7 +7,7 @@
   ],
   "id": "_:document1",
   "isA": "EPCISDocument",
-  "schemaVersion": 2,
+  "schemaVersion": "2",
   "creationDate": "2019-11-01T14:00:00.000+01:00",
   "format": "application/ld+json",
   "epcisBody": {

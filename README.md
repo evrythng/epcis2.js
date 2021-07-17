@@ -98,7 +98,7 @@ This example would output:
 {
    "isA":"EPCISDocument",
    "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-   "schemaVersion":2,
+   "schemaVersion": "2",
    "epcisBody":{
       "eventList":[
          {
@@ -141,7 +141,7 @@ This example would output:
 {
    "isA":"EPCISDocument",
    "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-   "schemaVersion":2,
+   "schemaVersion": "2",
    "epcisBody":{
       "eventList":[
          {
@@ -185,7 +185,7 @@ This example would output:
 {
    "isA":"EPCISDocument",
    "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-   "schemaVersion":2,
+   "schemaVersion": "2",
    "epcisBody":{
       "event":{
          "isA":"ObjectEvent",
@@ -204,7 +204,7 @@ You can override the default values of EPCISDocument fields by providing them to
 You can configure the following fields:
 - `EPCISDocumentContext` - the '@context' property of an EPCISDocument. By default, the value is 
 `https://gs1.github.io/EPCIS/epcis-context.jsonld`
-- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is 2.
+- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is "2".
 
 ```js
 setup({ EPCISDocumentContext: 'value' }); // the '@context' field of the EPCISDocument that you will create will be 
@@ -264,6 +264,34 @@ o.clearEPCList();
 const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
 
+### Generating a hashed ID for an event
+
+You have the possibility to generate a hashed ID for each event you create. The generation algorithm is a pure 
+implementation of the one defined [here](https://github.com/RalphTro/epcis-event-hash-generator).
+
+Generating a hashed ID allows developers to uniquely identify an EPCIS event or validate the integrity thereof.
+
+To generate a hashed ID of an event, you can call this function:
+
+```js
+event.generateHashID(context, throwError);
+```
+
+**This method needs to be called once all your field are set since the hash ID is generated according to all your 
+fields**
+
+- `context` is an object that has to contain all the contexts used in the event. For example, if you have a custom field
+in your event defined like this : `"example:myField": "Example of a vendor/user extension"`, you will need to define a 
+context for `example`. It can be done like this : 
+```js
+obj.generateHashID({
+  example: 'http://ns.example.com/epcis/',
+}, throwError);
+```
+
+- `throwError` is a boolean. If it is set to true, the generation will throw an error if it encounters a problem 
+(e.g a context isn't provided for a field). If it is set to false, the generation won't throw any error.
+
 ## Sending a capture event
 
 ### Setup function
@@ -307,7 +335,7 @@ First, ensure you did not break anything with: `npm run test`.
 
 Then, run: `npm run build`.
 
-Finally, you can test the built library with: `node example/index.js`
+Finally, you can test the built library with: `node example/example_with_creation_from_setters.js`
 
 ### Deploy
 

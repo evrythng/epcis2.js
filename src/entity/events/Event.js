@@ -19,6 +19,7 @@ import SourceElement from '../model/SourceElement';
 import DestinationElement from '../model/DestinationElement';
 import SensorElement from '../model/sensor/SensorElement';
 import Ilmd from '../model/Ilmd';
+import { eventToHashedId } from '../../hash_generator/EPCISEventToHashedString';
 
 export const fieldToFunctions = {
   epcList: ['addEPC', 'addEPCList', 'clearEPCList', 'removeEPC', 'removeEPCList', 'getEPCList'],
@@ -200,7 +201,7 @@ export default class Event extends Entity {
   /** ************     COMMON TO ALL EVENTS    ********************** */
 
   /**
-   * Set the eventTime property
+   * Set the eventID property
    * @param {string} id
    * @return {Event} - the event instance
    */
@@ -215,6 +216,27 @@ export default class Event extends Entity {
    */
   getEventID() {
     return this.eventID;
+  }
+
+  /**
+   * Generate an event ID and set the eventID property
+   * This method needs to be called once all your field are set since the hash id is generated
+   * according to all your fields
+   *
+   * @param {{}} context - the list of context (e.g {
+   *    "example": "http://ns.example.com/epcis/",
+   *    "example2": "http://ns.example2.com/epcis/",
+   * })
+   * This param needs to contain all the contexts that are used in the event otherwise this function
+   * will throw an error (if throwError is set to true)
+   * @param {boolean} throwError - if set to true, it will throw an error if the event misses some
+   * fields for example. Otherwise, it won't throw an error and it will still return the
+   * generated id
+   * @return {Event} - the event instance
+   */
+  generateHashID(context, throwError = true) {
+    this.setEventID(eventToHashedId(this.toObject(), context, throwError));
+    return this;
   }
 
   /**
