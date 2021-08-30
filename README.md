@@ -227,7 +227,9 @@ value to the setup function.
     setup({ eventTimeZoneOffset: '-02:00' });
     ```
     
-    Now, the `eventTimeZoneOffset` will be `'-02:00'` by default.
+    Now, the `eventTimeZoneOffset` will be `'-02:00'` by default. However, once you set the `eventTime` field, the 
+    `eventTimeZoneOffset` will be overridden (except if `overrideTimeZoneOffset` is set to false when you call 
+    `setEventTime` function).
 
 ### Extensions
 

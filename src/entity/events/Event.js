@@ -107,8 +107,22 @@ export default class Event extends Entity {
       throw new Error('Abstract classes can\'t be instantiated.');
     }
 
+    // If the event timeZoneOffset isn't defined, set default values
     if (settings.eventTimeZoneOffset !== undefined) {
       this.setEventTimeZoneOffset(settings.eventTimeZoneOffset);
+    } else if (this.eventTimeZoneOffset === undefined) {
+      const date = new Date();
+      const timeZoneOffset = getTimeZoneOffsetFromStringOrNumber(date.getTimezoneOffset() / 60);
+      this.setEventTimeZoneOffset(timeZoneOffset);
+    }
+
+    // If the event time isn't defined, set default values
+    if (this.getEventTime() === undefined) {
+      const date = new Date();
+
+      let timeZoneOffset = this.getEventTimeZoneOffset();
+
+      this.setEventTime(date.toISOString().replace('Z', '').concat(timeZoneOffset));
     }
 
     if (!event) {
@@ -243,13 +257,15 @@ export default class Event extends Entity {
    * Set the eventTime property
    * @param {string} time - a string corresponding to the time
    *      If a timezone offset is provided in the string (e.g '2005-04-03T20:33:31.116-06:00')
-   *      and the timeZoneOffset field isn't defined, the timeZoneOffset field will be set with
+   *      and overrideTimeZoneOffset is set to true, the timeZoneOffset field will be set with
    *      the extracted offset (here: '-06:00')
+   * @param {boolean} [overrideTimeZoneOffset = true] - if set to true, the eventTimeZoneOffset
+   * field will be overridden with the offset of the given time. Otherwise, it doesn't update it.
    * @return {Event} - the event instance
    */
-  setEventTime(time) {
+  setEventTime(time, overrideTimeZoneOffset = true) {
     this.eventTime = time;
-    if (!this.eventTimeZoneOffset) {
+    if (overrideTimeZoneOffset) {
       const offset = getTheTimeZoneOffsetFromDateString(time);
       if (offset) {
         this.setEventTimeZoneOffset(offset);
