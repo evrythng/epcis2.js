@@ -196,10 +196,10 @@ export default class Event extends Entity {
           value.forEach((sensorElement) => this.addSensorElement(new SensorElement(sensorElement)));
           break;
         case 'readPoint':
-          this.setReadPoint(new ReadPoint(value));
+          this.setReadPoint(value);
           break;
         case 'bizLocation':
-          this.setBizLocation(new BizLocation(value));
+          this.setBizLocation(value);
           break;
         case 'errorDeclaration':
           this.setErrorDeclaration(new ErrorDeclaration(value));
@@ -548,6 +548,9 @@ export default class Event extends Entity {
     if ((typeof readPoint) === 'string') { // the param is the id of the readPoint
       this.readPoint = new ReadPoint().setId(readPoint);
       return this;
+    } else if (!(readPoint instanceof ReadPoint)) {
+      this.readPoint = new ReadPoint(readPoint);
+      return this;
     }
     // the param is the ReadPoint instance
     this.readPoint = readPoint;
@@ -570,6 +573,9 @@ export default class Event extends Entity {
   setBizLocation(bizLocation) {
     if ((typeof bizLocation) === 'string') { // the param is the id of the bizLocation
       this.bizLocation = new BizLocation().setId(bizLocation);
+      return this;
+    } else if (!(bizLocation instanceof BizLocation)) {
+      this.bizLocation = new BizLocation(bizLocation);
       return this;
     }
     // the param is the BizLocation instance
