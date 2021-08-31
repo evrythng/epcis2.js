@@ -88,3 +88,125 @@ export const getTheTimeZoneOffsetFromDateString = (date) => {
     return null;
   }
 };
+
+/**
+ * Build a SGTIN URI based on the parameters
+ * @param {String} gcp
+ * @param {String} itemRefAndIndicator
+ * @param {String} serialNumber
+ * @returns {String} The SGTIN URI
+ */
+export const buildSGTINUri = (gcp, itemRefAndIndicator, serialNumber) => `urn:epc:id:sgtin:${gcp}.${itemRefAndIndicator}.${serialNumber}`;
+
+/**
+ * Build a SGLN URI based on the parameters
+ * @param {String} gcp
+ * @param {String} locationReference
+ * @param {String} extension
+ * @returns {String} The SGLN URI
+ */
+export const buildSGLNUri = (gcp, locationReference, extension) => `urn:epc:id:sgln:${gcp}.${locationReference}.${extension}`;
+
+/**
+ * Build a SSCC URI based on the parameters
+ * @param {String} gcp
+ * @param {String} serialReference
+ * @returns {String} The SSCC URI
+ */
+export const buildSSCCUri = (gcp, serialReference) => `urn:epc:id:sscc:${gcp}.${serialReference}`;
+
+/**
+ * Build a GRAI URI based on the parameters
+ * @param {String} gcp
+ * @param {String} assetType
+ * @param {String} serialNumber
+ * @returns {String} The GRAI URI
+ */
+export const buildGRAIUri = (gcp, assetType, serialNumber) => `urn:epc:id:grai:${gcp}.${assetType}.${serialNumber}`;
+
+/**
+ * Build a GIAI URI based on the parameters
+ * @param {String} gcp
+ * @param {String} individualAssetReference
+ * @returns {String} The GIAI URI
+ */
+export const buildGIAIUri = (gcp, individualAssetReference) => `urn:epc:id:giai:${gcp}.${individualAssetReference}`;
+
+/**
+ * Build a GSRN URI based on the parameters
+ * @param {String} gcp
+ * @param {String} serviceReference
+ * @returns {String} The GSRN URI
+ */
+export const buildGSRNUri = (gcp, serviceReference) => `urn:epc:id:gsrn:${gcp}.${serviceReference}`;
+
+/**
+ * Build a GSRNP URI based on the parameters
+ * @param {String} gcp
+ * @param {String} serviceReference
+ * @returns {String} The GSRNP URI
+ */
+export const buildGSRNPUri = (gcp, serviceReference) => `urn:epc:id:gsrnp:${gcp}.${serviceReference}`;
+
+/**
+ * Build a GDTI URI based on the parameters
+ * @param {String} gcp
+ * @param {String} documentType
+ * @param {String} serialNumber
+ * @returns {String} The GDTI URI
+ */
+export const buildGDTIUri = (gcp, documentType, serialNumber) => `urn:epc:id:gdti:${gcp}.${documentType}.${serialNumber}`;
+
+/**
+ * Build a CPI URI based on the parameters
+ * @param {String} gcp
+ * @param {String} componentPartReference
+ * @param {String} serial
+ * @returns {String} The CPI URI
+ */
+export const buildCPIUri = (gcp, componentPartReference, serial) => `urn:epc:id:cpi:${gcp}.${componentPartReference}.${serial}`;
+
+/**
+ * Build a SGCN URI based on the parameters
+ * @param {String} gcp
+ * @param {String} couponReference
+ * @param {String} serialComponent
+ * @returns {String} The SGCN URI
+ */
+export const buildSGCNUri = (gcp, couponReference, serialComponent) => `urn:epc:id:sgcn:${gcp}.${couponReference}.${serialComponent}`;
+
+/**
+ * Build a GINC URI based on the parameters
+ * @param {String} gcp
+ * @param {String} consignmentReference
+ * @returns {String} The GINC URI
+ */
+export const buildGINCUri = (gcp, consignmentReference) => `urn:epc:id:ginc:${gcp}.${consignmentReference}`;
+
+/**
+ * Build a GSIN URI based on the parameters
+ * @param {String} gcp
+ * @param {String} shipperReference
+ * @returns {String} The GSIN URI
+ */
+export const buildGSINUri = (gcp, shipperReference) => `urn:epc:id:gsin:${gcp}.${shipperReference}`;
+
+/**
+ * Build an ITIP URI based on the parameters
+ * @param {String} gcp
+ * @param {String} itemRefAndIndicator
+ * @param {String} piece
+ * @param {String} total
+ * @param {String} serialNumber
+ * @returns {String} The ITIP URI
+ */
+export const buildITIPUri = (gcp, itemRefAndIndicator, piece, total, serialNumber) => `urn:epc:id:itip:${gcp}.${itemRefAndIndicator}.${piece}.${total}.${serialNumber}`;
+
+/**
+ * Build a GID URI based on the parameters
+ * @param {String} manageNumber
+ * @param {String} objectClass
+ * @param {String} serialNumber
+ * @returns {String} The GID URI
+ */
+export const buildGIDUri = (manageNumber, objectClass, serialNumber) => `urn:epc:id:gid:${manageNumber}.${objectClass}.${serialNumber}`;

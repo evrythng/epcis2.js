@@ -266,6 +266,20 @@ o.clearEPCList();
 const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
 
+### Building the URN
+
+The SDK allows developers to build easily gs1 URI. 
+
+For example, you can easily build a SGTIN URI:``
+```js
+const urn = buildSGTINUri('0614141', '112345', '400'); // returns 'urn:epc:id:sgtin:0614141.112345.400'
+```
+
+Similar function are available for `SGLN`, `SSCC`, `GRAI`, `GIAI`, `GSRN`, `GSRNP`, `GDTI`, `CPI`, `SGCN`, `GINC`
+, `GSIN`, `ITIP`, `GID`.
+
+Each function are based on the fields defined in the [gs1 official documentation](https://www.gs1.org/sites/default/files/docs/epc/GS1_EPC_TDS_i1_11.pdf).
+
 ### Generating a hashed ID for an event
 
 You have the possibility to generate a hashed ID for each event you create. The generation algorithm is a pure 

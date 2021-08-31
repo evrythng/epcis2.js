@@ -120,7 +120,7 @@ export default class Event extends Entity {
     if (this.getEventTime() === undefined) {
       const date = new Date();
 
-      let timeZoneOffset = this.getEventTimeZoneOffset();
+      const timeZoneOffset = this.getEventTimeZoneOffset();
 
       this.setEventTime(date.toISOString().replace('Z', '').concat(timeZoneOffset));
     }
@@ -548,7 +548,7 @@ export default class Event extends Entity {
     if ((typeof readPoint) === 'string') { // the param is the id of the readPoint
       this.readPoint = new ReadPoint().setId(readPoint);
       return this;
-    } else if (!(readPoint instanceof ReadPoint)) {
+    } if (!(readPoint instanceof ReadPoint)) {
       this.readPoint = new ReadPoint(readPoint);
       return this;
     }
@@ -574,7 +574,7 @@ export default class Event extends Entity {
     if ((typeof bizLocation) === 'string') { // the param is the id of the bizLocation
       this.bizLocation = new BizLocation().setId(bizLocation);
       return this;
-    } else if (!(bizLocation instanceof BizLocation)) {
+    } if (!(bizLocation instanceof BizLocation)) {
       this.bizLocation = new BizLocation(bizLocation);
       return this;
     }
