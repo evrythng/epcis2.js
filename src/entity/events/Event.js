@@ -6,7 +6,7 @@
 
 /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 
-import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffsetFromStringOrNumber } from '../../utils/utils';
+import { getTheTimeZoneOffsetFromDateString, getTimeZoneOffset } from '../../utils/utils';
 import settings from '../../settings';
 import ErrorDeclaration from '../model/ErrorDeclaration';
 import Entity from '../Entity';
@@ -110,14 +110,14 @@ export default class Event extends Entity {
     // If the event timeZoneOffset isn't defined, set default values
     if (settings.eventTimeZoneOffset !== undefined) {
       this.setEventTimeZoneOffset(settings.eventTimeZoneOffset);
-    } else if (this.eventTimeZoneOffset === undefined) {
+    } else if (!this.eventTimeZoneOffset) {
       const date = new Date();
-      const timeZoneOffset = getTimeZoneOffsetFromStringOrNumber(date.getTimezoneOffset() / 60);
+      const timeZoneOffset = getTimeZoneOffset(date.getTimezoneOffset() / 60);
       this.setEventTimeZoneOffset(timeZoneOffset);
     }
 
     // If the event time isn't defined, set default values
-    if (this.getEventTime() === undefined) {
+    if (!this.getEventTime()) {
       const date = new Date();
 
       const timeZoneOffset = this.getEventTimeZoneOffset();
@@ -289,7 +289,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setEventTimeZoneOffset(offset) {
-    this.eventTimeZoneOffset = getTimeZoneOffsetFromStringOrNumber(offset);
+    this.eventTimeZoneOffset = getTimeZoneOffset(offset);
     return this;
   }
 
@@ -548,7 +548,8 @@ export default class Event extends Entity {
     if ((typeof readPoint) === 'string') { // the param is the id of the readPoint
       this.readPoint = new ReadPoint().setId(readPoint);
       return this;
-    } if (!(readPoint instanceof ReadPoint)) {
+    }
+    if (!(readPoint instanceof ReadPoint)) {
       this.readPoint = new ReadPoint(readPoint);
       return this;
     }
@@ -574,7 +575,8 @@ export default class Event extends Entity {
     if ((typeof bizLocation) === 'string') { // the param is the id of the bizLocation
       this.bizLocation = new BizLocation().setId(bizLocation);
       return this;
-    } if (!(bizLocation instanceof BizLocation)) {
+    }
+    if (!(bizLocation instanceof BizLocation)) {
       this.bizLocation = new BizLocation(bizLocation);
       return this;
     }

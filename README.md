@@ -268,9 +268,9 @@ const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent a
 
 ### Building the URN
 
-The SDK allows developers to build easily gs1 URI. 
+The SDK allows developers to build easily a GS1 URI. 
 
-For example, you can easily build a SGTIN URI:``
+For example, you can easily build a SGTIN URI:
 ```js
 const urn = buildSGTINUri('0614141', '112345', '400'); // returns 'urn:epc:id:sgtin:0614141.112345.400'
 ```

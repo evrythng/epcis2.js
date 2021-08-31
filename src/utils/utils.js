@@ -38,7 +38,7 @@ export const offsetToString = (hours, minutes) => (hours >= 0
  * (e.g -6 or 2.5 if it is a number)
  * @return {string} a string corresponding to the offset (e.g "+02:00")
  */
-export const getTimeZoneOffsetFromStringOrNumber = (offset) => {
+export const getTimeZoneOffset = (offset) => {
   if (typeof offset === 'string') {
     const pattern = /^(\+|-)[0-9]{2}:[0-9]{2}/;
     const result = offset.match(pattern);
@@ -83,7 +83,7 @@ export const getTheTimeZoneOffsetFromDateString = (date) => {
   }
   const potentialOffset = date.substring(date.length - 6, date.length);
   try {
-    return getTimeZoneOffsetFromStringOrNumber(potentialOffset);
+    return getTimeZoneOffset(potentialOffset);
   } catch (e) {
     return null;
   }

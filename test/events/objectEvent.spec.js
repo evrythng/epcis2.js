@@ -19,7 +19,7 @@ import DestinationElement from '../../src/entity/model/DestinationElement';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import Ilmd from '../../src/entity/model/Ilmd';
 import { exampleObjectEvent } from '../data/eventExample';
-import { getTimeZoneOffsetFromStringOrNumber } from '../../src/utils/utils';
+import { getTimeZoneOffset } from '../../src/utils/utils';
 
 const epc1 = exampleObjectEvent.epcList[0];
 const epc2 = exampleObjectEvent.epcList[1];
@@ -41,7 +41,7 @@ describe('unit tests for the ObjectEvent class', () => {
       setup({});
       const o = new ObjectEvent();
       expect(o.eventTimeZoneOffset).to.be.equal(
-        getTimeZoneOffsetFromStringOrNumber((new Date()).getTimezoneOffset() / 60),
+        getTimeZoneOffset((new Date()).getTimezoneOffset() / 60),
       );
     });
 

@@ -7,7 +7,7 @@
 import { expect } from 'chai';
 import {
   getTheTimeZoneOffsetFromDateString,
-  getTimeZoneOffsetFromStringOrNumber,
+  getTimeZoneOffset,
   numberToZeroPadString,
   offsetToString,
   buildSGTINUri,
@@ -52,11 +52,11 @@ describe('unit tests for util functions', () => {
 
   describe('timezone functions', () => {
     it('should not accept invalid parameter in the constructor', async () => {
-      expect(() => getTimeZoneOffsetFromStringOrNumber('TEST')).to.throw('The TimeZoneOffset is invalid');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('123:08')).to.throw('The TimeZoneOffset is invalid');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('+1u:08')).to.throw('The TimeZoneOffset is invalid');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('+10:08')).to.not.throw();
-      expect(() => getTimeZoneOffsetFromStringOrNumber(new Date(Date.now()))).to.throw('The parameter provided in the constructor should be a number or a string');
+      expect(() => getTimeZoneOffset('TEST')).to.throw('The TimeZoneOffset is invalid');
+      expect(() => getTimeZoneOffset('123:08')).to.throw('The TimeZoneOffset is invalid');
+      expect(() => getTimeZoneOffset('+1u:08')).to.throw('The TimeZoneOffset is invalid');
+      expect(() => getTimeZoneOffset('+10:08')).to.not.throw();
+      expect(() => getTimeZoneOffset(new Date(Date.now()))).to.throw('The parameter provided in the constructor should be a number or a string');
     });
 
     it('should return the corresponding string of a time zone offset', async () => {
