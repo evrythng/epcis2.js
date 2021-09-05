@@ -227,7 +227,9 @@ value to the setup function.
     setup({ eventTimeZoneOffset: '-02:00' });
     ```
     
-    Now, the `eventTimeZoneOffset` will be `'-02:00'` by default.
+    Now, the `eventTimeZoneOffset` will be `'-02:00'` by default. However, once you set the `eventTime` field, the 
+    `eventTimeZoneOffset` will be overridden (except if `overrideTimeZoneOffset` is set to false when you call 
+    `setEventTime` function).
 
 ### Extensions
 
@@ -263,6 +265,20 @@ const object = o.toObject(); //{ isA: 'ObjectEvent', epcList: [] } -> the epcLis
 o.clearEPCList();
 const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
+
+### Building the URN
+
+The SDK allows developers to build easily a GS1 URI. 
+
+For example, you can easily build a SGTIN URI:
+```js
+const urn = buildSGTINUri('0614141', '112345', '400'); // returns 'urn:epc:id:sgtin:0614141.112345.400'
+```
+
+Similar function are available for `SGLN`, `SSCC`, `GRAI`, `GIAI`, `GSRN`, `GSRNP`, `GDTI`, `CPI`, `SGCN`, `GINC`
+, `GSIN`, `ITIP`, `GID`.
+
+Each function are based on the fields defined in the [gs1 official documentation](https://www.gs1.org/sites/default/files/docs/epc/GS1_EPC_TDS_i1_11.pdf).
 
 ### Generating a hashed ID for an event
 

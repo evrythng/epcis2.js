@@ -37,3 +37,4 @@ export { eventToHashedId } from './hash_generator/EPCISEventToHashedString';
 
 export * from './cbv/cbv';
 export * from './settings';
+export * from './utils/utils';

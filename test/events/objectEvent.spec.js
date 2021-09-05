@@ -19,6 +19,7 @@ import DestinationElement from '../../src/entity/model/DestinationElement';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import Ilmd from '../../src/entity/model/Ilmd';
 import { exampleObjectEvent } from '../data/eventExample';
+import { getTimeZoneOffset } from '../../src/utils/utils';
 
 const epc1 = exampleObjectEvent.epcList[0];
 const epc2 = exampleObjectEvent.epcList[1];
@@ -39,13 +40,15 @@ describe('unit tests for the ObjectEvent class', () => {
     it('should not use eventTimeZoneOffset from settings if it is not overridden', async () => {
       setup({});
       const o = new ObjectEvent();
-      expect(o.eventTimeZoneOffset).to.be.equal(undefined);
+      expect(o.eventTimeZoneOffset).to.be.equal(
+        getTimeZoneOffset((new Date()).getTimezoneOffset() / 60),
+      );
     });
 
     it('should use eventTimeZoneOffset from settings if it is overridden', async () => {
-      setup({ eventTimeZoneOffset: '+02:00' });
+      setup({ eventTimeZoneOffset: '+04:00' });
       const o = new ObjectEvent();
-      expect(o.eventTimeZoneOffset).to.be.equal('+02:00');
+      expect(o.eventTimeZoneOffset).to.be.equal('+04:00');
     });
   });
 
@@ -119,6 +122,20 @@ describe('unit tests for the ObjectEvent class', () => {
     o1.setEventTimeZoneOffset('-06:00');
     o2.setEventTimeZoneOffset(-6);
     expect(o1.toObject().eventTimeZoneOffset).to.be.equal(o2.toObject().eventTimeZoneOffset);
+  });
+
+  it('should override the eventTimeZoneOffset field', async () => {
+    const objectEvent = new ObjectEvent();
+    objectEvent.setEventTimeZoneOffset('+03:00');
+    objectEvent.setEventTime('2005-04-03T20:33:31.116-06:00');
+    expect(objectEvent.getEventTimeZoneOffset()).to.be.equal('-06:00');
+  });
+
+  it('should not override the eventTimeZoneOffset field', async () => {
+    const objectEvent = new ObjectEvent();
+    objectEvent.setEventTimeZoneOffset('+03:00');
+    objectEvent.setEventTime('2005-04-03T20:33:31.116-06:00', false);
+    expect(objectEvent.getEventTimeZoneOffset()).to.be.equal('+03:00');
   });
 
   it('should add a custom field', async () => {

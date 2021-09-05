@@ -7,8 +7,22 @@
 import { expect } from 'chai';
 import {
   getTheTimeZoneOffsetFromDateString,
-  getTimeZoneOffsetFromStringOrNumber,
-  numberToZeroPadString, offsetToString,
+  getTimeZoneOffset,
+  numberToZeroPadString,
+  offsetToString,
+  buildSGTINUri,
+  buildSGLNUri,
+  buildSSCCUri,
+  buildGRAIUri,
+  buildGIAIUri,
+  buildGSRNUri,
+  buildGSRNPUri,
+  buildGDTIUri,
+  buildCPIUri,
+  buildSGCNUri,
+  buildGINCUri,
+  buildGSINUri,
+  buildITIPUri, buildGIDUri,
 } from '../src/utils/utils';
 import objectToEvent from '../src/utils/entityUtils';
 import ObjectEvent from '../src/entity/events/ObjectEvent';
@@ -38,11 +52,11 @@ describe('unit tests for util functions', () => {
 
   describe('timezone functions', () => {
     it('should not accept invalid parameter in the constructor', async () => {
-      expect(() => getTimeZoneOffsetFromStringOrNumber('TEST')).to.throw('The TimeZoneOffset is invalid');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('123:08')).to.throw('The TimeZoneOffset is invalid');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('+1u:08')).to.throw('The TimeZoneOffset is invalid');
-      expect(() => getTimeZoneOffsetFromStringOrNumber('+10:08')).to.not.throw();
-      expect(() => getTimeZoneOffsetFromStringOrNumber(new Date(Date.now()))).to.throw('The parameter provided in the constructor should be a number or a string');
+      expect(() => getTimeZoneOffset('TEST')).to.throw('The TimeZoneOffset is invalid');
+      expect(() => getTimeZoneOffset('123:08')).to.throw('The TimeZoneOffset is invalid');
+      expect(() => getTimeZoneOffset('+1u:08')).to.throw('The TimeZoneOffset is invalid');
+      expect(() => getTimeZoneOffset('+10:08')).to.not.throw();
+      expect(() => getTimeZoneOffset(new Date(Date.now()))).to.throw('The parameter provided in the constructor should be a number or a string');
     });
 
     it('should return the corresponding string of a time zone offset', async () => {
@@ -89,6 +103,78 @@ describe('unit tests for util functions', () => {
     it('should return an AssociationEvent', async () => {
       const o = objectToEvent({ isA: 'AssociationEvent' });
       expect(o).to.be.instanceof(AssociationEvent);
+    });
+  });
+
+  describe('build URI functions', () => {
+    it('should build sgtin uri', async () => {
+      expect(buildSGTINUri('0195500', '500406', '123456786703'))
+        .to.be.equal('urn:epc:id:sgtin:0195500.500406.123456786703');
+    });
+
+    it('should build sgln uri', async () => {
+      expect(buildSGLNUri('0195500', '00001', '0'))
+        .to.be.equal('urn:epc:id:sgln:0195500.00001.0');
+    });
+
+    it('should build sscc uri', async () => {
+      expect(buildSSCCUri('0614141', '1234567890'))
+        .to.be.equal('urn:epc:id:sscc:0614141.1234567890');
+    });
+
+    it('should build GRAI uri', async () => {
+      expect(buildGRAIUri('0614141', '12345', '400'))
+        .to.be.equal('urn:epc:id:grai:0614141.12345.400');
+    });
+
+    it('should build giai uri', async () => {
+      expect(buildGIAIUri('0614141', '12345400'))
+        .to.be.equal('urn:epc:id:giai:0614141.12345400');
+    });
+
+    it('should build gsrn uri', async () => {
+      expect(buildGSRNUri('0614141', '1234567890'))
+        .to.be.equal('urn:epc:id:gsrn:0614141.1234567890');
+    });
+
+    it('should build gsrnp uri', async () => {
+      expect(buildGSRNPUri('0614141', '1234567890'))
+        .to.be.equal('urn:epc:id:gsrnp:0614141.1234567890');
+    });
+
+    it('should build gdti uri', async () => {
+      expect(buildGDTIUri('0614141', '12345', '400'))
+        .to.be.equal('urn:epc:id:gdti:0614141.12345.400');
+    });
+
+    it('should build cpi uri', async () => {
+      expect(buildCPIUri('0614141', '123ABC', '123456789'))
+        .to.be.equal('urn:epc:id:cpi:0614141.123ABC.123456789');
+    });
+
+    it('should build sgcn uri', async () => {
+      expect(buildSGCNUri('4012345', '67890', '04711'))
+        .to.be.equal('urn:epc:id:sgcn:4012345.67890.04711');
+    });
+
+    it('should build ginc uri', async () => {
+      expect(buildGINCUri('0614141', 'xyz3311cba'))
+        .to.be.equal('urn:epc:id:ginc:0614141.xyz3311cba');
+    });
+
+    it('should build gsin uri', async () => {
+      expect(buildGSINUri('0614141', '123456789'))
+        .to.be.equal('urn:epc:id:gsin:0614141.123456789');
+    });
+
+    it('should build itip uri', async () => {
+      expect(buildITIPUri('4012345', '012345', '01', '02', '987'))
+        .to.be.equal('urn:epc:id:itip:4012345.012345.01.02.987');
+    });
+
+    it('should build gid uri', async () => {
+      expect(buildGIDUri('95100000', '12345', '400'))
+        .to.be.equal('urn:epc:id:gid:95100000.12345.400');
     });
   });
 });
