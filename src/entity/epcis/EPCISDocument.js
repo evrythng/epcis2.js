@@ -21,8 +21,6 @@ export default class EPCISDocument extends Entity {
     super(epcisDocument);
     this.type = 'EPCISDocument';
 
-    this.setUseEventListByDefault(settings.useEventListByDefault);
-
     if (!this.getContext()) {
       this.setContext(settings.EPCISDocumentContext);
     }
@@ -137,24 +135,6 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
-   * Set the useEventListByDefault property
-   * @param {boolean} useEventListByDefault
-   * @return {EPCISDocument} - the epcisDocument instance
-   */
-  setUseEventListByDefault(useEventListByDefault) {
-    this.useEventListByDefault = useEventListByDefault;
-    return this;
-  }
-
-  /**
-   * Getter for the useEventListByDefault property
-   * @return {boolean} - the useEventListByDefault
-   */
-  getUseEventListByDefault() {
-    return this.useEventListByDefault;
-  }
-
-  /**
    * Set the epcisHeader property
    * @param {EPCISHeader} epcisHeader
    * @return {EPCISDocument} - the epcisDocument instance
@@ -252,24 +232,12 @@ export default class EPCISDocument extends Entity {
    */
   toObject() {
     const output = super.toObject();
-    delete output.useEventListByDefault;
-
-    // check the settings to know if a single event has to be in the event field or eventList field.
-    if (!this.useEventListByDefault && this.eventList.length < 2) {
-      delete output.eventList;
-      output.event = this.eventList.length ? this.eventList[0].toObject() : {};
-    }
 
     // the event or event list has to be in the epcisBody field
-    if (output.event || output.eventList) {
+    if (output.eventList) {
       const body = {};
-      if (output.event) {
-        body.event = output.event;
-        delete output.event;
-      } else {
-        body.eventList = output.eventList;
-        delete output.eventList;
-      }
+      body.eventList = output.eventList;
+      delete output.eventList;
       output.epcisBody = body;
     }
 
