@@ -29,7 +29,7 @@ export default class TransformationEvent extends Event {
    */
   constructor(transformationEvent) {
     super(transformationEvent);
-    this.isA = 'TransformationEvent';
+    this.type = 'TransformationEvent';
 
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];

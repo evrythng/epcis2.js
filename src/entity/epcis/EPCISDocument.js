@@ -19,7 +19,7 @@ export default class EPCISDocument extends Entity {
    */
   constructor(epcisDocument) {
     super(epcisDocument);
-    this.isA = 'EPCISDocument';
+    this.type = 'EPCISDocument';
 
     this.setUseEventListByDefault(settings.useEventListByDefault);
 
@@ -42,8 +42,8 @@ export default class EPCISDocument extends Entity {
     // Create classes for sub-objects that are provided
     Object.entries(epcisDocument).forEach(([key, value]) => {
       switch (key) {
-        case 'isA':
-          this.isA = value;
+        case 'type':
+          this.type = value;
           break;
         case 'epcisHeader':
           this.setEPCISHeader(new EPCISHeader(value));
@@ -65,21 +65,21 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
-   * Set the isA property
-   * @param {string} isA
+   * Set the type property
+   * @param {string} type
    * @return {EPCISDocument} - the epcisDocument instance
    */
-  setIsA(isA) {
-    this.isA = isA;
+  setIsA(type) {
+    this.type = type;
     return this;
   }
 
   /**
-   * Getter for the isA property
-   * @return {string} - the isA property
+   * Getter for the type property
+   * @return {string} - the type property
    */
-  getIsA() {
-    return this.isA;
+  getType() {
+    return this.type;
   }
 
   /**

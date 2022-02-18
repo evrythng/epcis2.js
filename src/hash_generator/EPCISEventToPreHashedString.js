@@ -345,8 +345,8 @@ export const getOrderedPreHashString =
           strings.push(...res.customFields);
         } else {
           switch (orderList[i]) {
-            case 'isA':
-            // we replace 'isA' by 'eventType'
+            case 'type':
+            // we replace 'type' by 'eventType'
               string += getPreHashStringOfField('eventType', object[orderList[i]], throwError);
               break;
             case 'errorDeclaration':

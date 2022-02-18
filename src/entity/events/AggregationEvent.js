@@ -20,7 +20,7 @@ export default class AggregationEvent extends Event {
    */
   constructor(aggregationEvent) {
     super(aggregationEvent);
-    this.isA = 'AggregationEvent';
+    this.type = 'AggregationEvent';
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
       functions.forEach((func) => {

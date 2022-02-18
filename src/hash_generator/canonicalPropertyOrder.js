@@ -10,7 +10,7 @@
  * @type {string[]}
  */
 export const canonicalPropertyOrder = [
-  'isA',
+  'type',
   'eventTime',
   'eventTimeZoneOffset',
   'errorDeclaration',

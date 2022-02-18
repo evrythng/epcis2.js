@@ -19,7 +19,7 @@ import TransformationEvent from '../entity/events/TransformationEvent';
  * @return {Event} - an event corresponding to the parameter
  */
 const objectToEvent = (obj) => {
-  switch (obj.isA) {
+  switch (obj.type) {
     case 'ObjectEvent':
       return new ObjectEvent(obj);
     case 'AggregationEvent':
@@ -32,7 +32,7 @@ const objectToEvent = (obj) => {
       return new TransformationEvent(obj);
     default:
       throw new Error("The object passed in parameter isn't valid. " +
-        'The isA field should be set to a valid value');
+        'The type field should be set to a valid value');
   }
 };
 

@@ -20,7 +20,7 @@ export default class AssociationEvent extends Event {
    */
   constructor(associationEvent) {
     super(associationEvent);
-    this.isA = 'AssociationEvent';
+    this.type = 'AssociationEvent';
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
       functions.forEach((func) => {
