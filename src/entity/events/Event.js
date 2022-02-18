@@ -207,12 +207,33 @@ export default class Event extends Entity {
         case 'ilmd':
           this.setIlmd(new Ilmd(value));
           break;
+        case '@context':
+          this['@context'] = value;
+          break;
         // no default
       }
     });
   }
 
   /** ************     COMMON TO ALL EVENTS    ********************** */
+
+  /**
+   * Set the context property
+   * @param {string|Object|Array<string>|Array<Object>} context
+   * @return {Event} - the event instance
+   */
+  setContext(context) {
+    this['@context'] = context;
+    return this;
+  }
+
+  /**
+   * Getter for the context property
+   * @return {string|Object|Array<string>|Array<Object>} - the context
+   */
+  getContext() {
+    return this['@context'];
+  }
 
   /**
    * Set the eventID property
