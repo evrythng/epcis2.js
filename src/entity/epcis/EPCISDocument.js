@@ -69,7 +69,7 @@ export default class EPCISDocument extends Entity {
    * @param {string} type
    * @return {EPCISDocument} - the epcisDocument instance
    */
-  setIsA(type) {
+  setType(type) {
     this.type = type;
     return this;
   }
@@ -134,24 +134,6 @@ export default class EPCISDocument extends Entity {
    */
   getCreationDate() {
     return this.creationDate;
-  }
-
-  /**
-   * Set the format property
-   * @param {string} format
-   * @return {EPCISDocument} - the epcisDocument instance
-   */
-  setFormat(format) {
-    this.format = format;
-    return this;
-  }
-
-  /**
-   * Getter for the format property
-   * @return {string} - the format
-   */
-  getFormat() {
-    return this.format;
   }
 
   /**
