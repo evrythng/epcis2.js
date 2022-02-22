@@ -9,6 +9,7 @@ import TransactionEvent from '../entity/events/TransactionEvent';
 import AggregationEvent from '../entity/events/AggregationEvent';
 import AssociationEvent from '../entity/events/AssociationEvent';
 import TransformationEvent from '../entity/events/TransformationEvent';
+import ExtendedEvent from '../entity/events/ExtendedEvent';
 
 /**
  * Returns an instance of an Event object corresponding to the object passed in param
@@ -31,8 +32,7 @@ const objectToEvent = (obj) => {
     case 'TransformationEvent':
       return new TransformationEvent(obj);
     default:
-      throw new Error("The object passed in parameter isn't valid. " +
-        'The type field should be set to a valid value');
+      return new ExtendedEvent(obj);
   }
 };
 
