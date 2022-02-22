@@ -13,7 +13,9 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addSet(set) {
-    if (!this.set) { this.set = []; }
+    if (!this.set) {
+      this.set = [];
+    }
     this.set.push(set);
     return this;
   }
@@ -24,7 +26,9 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addSetList(setList) {
-    if (!this.set) { this.set = []; }
+    if (!this.set) {
+      this.set = [];
+    }
     this.set = [...this.set, ...setList];
     return this;
   }
@@ -72,7 +76,9 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addUnset(unset) {
-    if (!this.unset) { this.unset = []; }
+    if (!this.unset) {
+      this.unset = [];
+    }
     this.unset.push(unset);
     return this;
   }
@@ -83,7 +89,9 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addUnsetList(unsetList) {
-    if (!this.unset) { this.unset = []; }
+    if (!this.unset) {
+      this.unset = [];
+    }
     this.unset = [...this.unset, ...unsetList];
     return this;
   }

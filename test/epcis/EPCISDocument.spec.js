@@ -58,7 +58,9 @@ describe('unit tests for the EPCISDocument class', () => {
     expect(e.getContext()).to.be.equal(EPCISDocumentObjectEvent['@context']);
     expect(e.getCreationDate()).to.be.equal(EPCISDocumentObjectEvent.creationDate);
     expect(e.getSchemaVersion()).to.be.equal(EPCISDocumentObjectEvent.schemaVersion);
-    expect(e.getEPCISHeader().toObject()).to.deep.equal(exampleEPCISDocumentWithEPCISHeader.epcisHeader);
+    expect(e.getEPCISHeader().toObject()).to.deep.equal(
+      exampleEPCISDocumentWithEPCISHeader.epcisHeader,
+    );
     expect(e.getEventList()).to.deep.equal(events);
   });
 
@@ -133,7 +135,10 @@ describe('unit tests for the EPCISDocument class', () => {
     });
 
     it('context can be an array of object', async () => {
-      const context = [{ key3: 'value3', key2: 'value2' }, { key: 'value', key2: 'value2' }];
+      const context = [
+        { key3: 'value3', key2: 'value2' },
+        { key: 'value', key2: 'value2' },
+      ];
       let e = new EPCISDocument({ '@context': context });
       expect(e.toObject()['@context']).to.deep.equal(context);
       e = new EPCISDocument().setContext(context);

@@ -14,7 +14,7 @@ import PersistentDisposition from '../../src/entity/model/PersistentDisposition'
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import ErrorDeclaration from '../../src/entity/model/ErrorDeclaration';
 import { extendedEvent } from '../data/eventExample';
-import { EPCISDocument } from '../../src';
+import { EPCISDocument, Ilmd } from '../../src';
 
 describe('unit tests for the ExtendedEvent class', () => {
   it('setters should set the variables correctly', async () => {
@@ -39,14 +39,12 @@ describe('unit tests for the ExtendedEvent class', () => {
 
   it('should create a valid ExtendedEvent from json EPCISDocument', async () => {
     const doc = {
-      'type': 'EPCISDocument',
-      "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
-      'schemaVersion': '2',
-      'creationDate': "2022-02-21T16:28:08.813Z",
-      'epcisBody': {
-        'eventList': [
-          extendedEvent
-        ],
+      type: 'EPCISDocument',
+      '@context': 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+      schemaVersion: '2',
+      creationDate: '2022-02-21T16:28:08.813Z',
+      epcisBody: {
+        eventList: [extendedEvent],
       },
     };
     const obj = new EPCISDocument(doc);

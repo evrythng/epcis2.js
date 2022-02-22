@@ -122,11 +122,7 @@
               {
                 "ext1:object": {
                   "ext1:object": {
-                    "ext2:array": [
-                      "14",
-                      "23.0",
-                      "stringInArrayInObjectInArray"
-                    ],
+                    "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
                     "ext2:object": {
                       "ext2:object": {
                         "ext3:string": "stringInObjectInObjectInArray"
@@ -140,11 +136,7 @@
             ],
             "ext1:boolean": "true",
             "ext1:object": {
-              "ext2:array": [
-                "11",
-                "21",
-                "stringInArrayInObject"
-              ],
+              "ext2:array": ["11", "21", "stringInArrayInObject"],
               "ext2:object": {
                 "ext2:object": {
                   "ext3:string": "stringInObjectInObject"
@@ -158,12 +150,8 @@
           }
         ],
         "persistentDisposition": {
-          "set": [
-            "completeness_verified"
-          ],
-          "unset": [
-            "completeness_inferred"
-          ]
+          "set": ["completeness_verified"],
+          "unset": ["completeness_inferred"]
         },
         "ext1:float": "20",
         "ext1:time": "2013-06-08T14:58:56.591Z",
@@ -176,11 +164,7 @@
           {
             "ext1:object": {
               "ext1:object": {
-                "ext2:array": [
-                  "14",
-                  "23.0",
-                  "stringInArrayInObjectInArray"
-                ],
+                "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
                 "ext2:object": {
                   "ext2:object": {
                     "ext3:string": "stringInObjectInObjectInArray"
@@ -194,11 +178,7 @@
         ],
         "ext1:boolean": "true",
         "ext1:object": {
-          "ext2:array": [
-            "11",
-            "21",
-            "stringInArrayInObject"
-          ],
+          "ext2:array": ["11", "21", "stringInArrayInObject"],
           "ext2:object": {
             "ext2:object": {
               "ext3:string": "stringInObjectInObject"

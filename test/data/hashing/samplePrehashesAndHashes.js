@@ -28,10 +28,7 @@ export const sampleObjectEvent = {
   },
   'example:myField3': {
     '@xmlns:example': 'https://ns.example.com/epcis',
-    'example:mySubField3': [
-      '3',
-      '1',
-    ],
+    'example:mySubField3': ['3', '1'],
   },
 };
 export const sampleContext = {

@@ -17,7 +17,7 @@
         ],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:departing",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00011.987"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00011.987" },
         "example:myField1": {
           "@xmlns:example": "https://ns.example.com/epcis",
           "example:mySubField1": "2",
@@ -29,10 +29,7 @@
         },
         "example:myField3": {
           "@xmlns:example": "https://ns.example.com/epcis",
-          "example:mySubField3": [
-            "3",
-            "1"
-          ]
+          "example:mySubField3": ["3", "1"]
         }
       }
     ]

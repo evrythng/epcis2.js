@@ -48,8 +48,7 @@ export default class EPCISDocument extends Entity {
           break;
         case 'epcisBody':
           if (value.eventList) {
-            value.eventList.forEach((event) => this
-              .addEvent(objectToEvent(event)));
+            value.eventList.forEach((event) => this.addEvent(objectToEvent(event)));
           }
           break;
         // no default
@@ -188,8 +187,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   removeEvent(event) {
-    this.eventList = this.eventList
-      .filter((elem) => elem !== event);
+    this.eventList = this.eventList.filter((elem) => elem !== event);
     return this;
   }
 

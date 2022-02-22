@@ -43,9 +43,7 @@
             "action": "OBSERVE",
             "bizStep": "receiving",
             "disposition": "in_progress",
-            "epcList": [
-              "urn:epc:id:sgtin:0614141.107346.2018"
-            ],
+            "epcList": ["urn:epc:id:sgtin:0614141.107346.2018"],
             "eventTime": "2005-04-04T20:33:31.116-06:00",
             "eventTimeZoneOffset": "-06:00",
             "readPoint": {

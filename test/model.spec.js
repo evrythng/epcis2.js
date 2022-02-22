@@ -47,8 +47,9 @@ describe('unit tests for model Objects', () => {
       expect(errorDeclaration.getReason()).to.be.equal(reason);
       expect(errorDeclaration.getDeclarationTime()).to.be.equal(anotherDate);
       expect(errorDeclaration.getExtension('example:vendorExtension')).to.be.equal('Test1');
-      expect(errorDeclaration.getCorrectiveEventIDs().toString()).to.be
-        .equal([correctiveEventID1, correctiveEventID2].toString());
+      expect(errorDeclaration.getCorrectiveEventIDs().toString()).to.be.equal(
+        [correctiveEventID1, correctiveEventID2].toString(),
+      );
     });
 
     it('should create a valid ErrorDeclaration object from JSON', async () => {
@@ -56,7 +57,7 @@ describe('unit tests for model Objects', () => {
         declarationTime: anotherDate,
         correctiveEventIDs: [correctiveEventID1, correctiveEventID2, correctiveEventID3],
         reason,
-        'example:vendorExtension': 'Test1'
+        'example:vendorExtension': 'Test1',
       };
 
       const errorDeclaration = new ErrorDeclaration(exampleErrorDeclaration);
@@ -65,8 +66,7 @@ describe('unit tests for model Objects', () => {
 
     it('should create a valid declarationTime', async () => {
       const errorDeclaration = new ErrorDeclaration();
-      errorDeclaration
-        .setDeclarationTime(anotherDate);
+      errorDeclaration.setDeclarationTime(anotherDate);
 
       const json = errorDeclaration.toObject();
       expect(json.declarationTime).to.be.equal(anotherDate);
@@ -75,66 +75,68 @@ describe('unit tests for model Objects', () => {
     it('should add and remove correctiveEventIDs', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addCorrectiveEventID(correctiveEventID1);
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be
-        .equal([correctiveEventID1].toString());
+      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal(
+        [correctiveEventID1].toString(),
+      );
       errorDeclaration.addCorrectiveEventID(correctiveEventID2);
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be
-        .equal([correctiveEventID1, correctiveEventID2].toString());
+      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal(
+        [correctiveEventID1, correctiveEventID2].toString(),
+      );
       errorDeclaration.removeCorrectiveEventID(correctiveEventID1);
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be
-        .equal([correctiveEventID2].toString());
+      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal(
+        [correctiveEventID2].toString(),
+      );
       errorDeclaration.removeCorrectiveEventID(correctiveEventID2);
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be
-        .equal([].toString());
+      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal([].toString());
     });
 
     it('should add a correctiveEventID List', async () => {
       const errorDeclaration = new ErrorDeclaration();
-      errorDeclaration.addCorrectiveEventIDList(
-        [correctiveEventID1, correctiveEventID2],
+      errorDeclaration.addCorrectiveEventIDList([correctiveEventID1, correctiveEventID2]);
+      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal(
+        [correctiveEventID1, correctiveEventID2].toString(),
       );
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be
-        .equal([correctiveEventID1, correctiveEventID2].toString());
       errorDeclaration.removeCorrectiveEventID(correctiveEventID2);
-      errorDeclaration.addCorrectiveEventIDList(
-        [correctiveEventID2, correctiveEventID3],
+      errorDeclaration.addCorrectiveEventIDList([correctiveEventID2, correctiveEventID3]);
+      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal(
+        [correctiveEventID1, correctiveEventID2, correctiveEventID3].toString(),
       );
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be
-        .equal([correctiveEventID1, correctiveEventID2, correctiveEventID3].toString());
     });
 
     it('should remove a correctiveEventID List', async () => {
       const errorDeclaration = new ErrorDeclaration();
-      errorDeclaration.addCorrectiveEventIDList(
-        [correctiveEventID1, correctiveEventID2, correctiveEventID3],
+      errorDeclaration.addCorrectiveEventIDList([
+        correctiveEventID1,
+        correctiveEventID2,
+        correctiveEventID3,
+      ]);
+      errorDeclaration.removeCorrectiveEventIDList([correctiveEventID1, correctiveEventID2]);
+      expect(errorDeclaration.correctiveEventIDs.toString()).to.be.equal(
+        [correctiveEventID3].toString(),
       );
-      errorDeclaration.removeCorrectiveEventIDList(
-        [correctiveEventID1, correctiveEventID2],
-      );
-      expect(errorDeclaration.correctiveEventIDs.toString()).to.be
-        .equal([correctiveEventID3].toString());
     });
 
     it('should clear the correctiveEventID List', async () => {
       const errorDeclaration = new ErrorDeclaration();
-      errorDeclaration.addCorrectiveEventIDList(
-        [correctiveEventID1, correctiveEventID2, correctiveEventID3],
-      );
+      errorDeclaration.addCorrectiveEventIDList([
+        correctiveEventID1,
+        correctiveEventID2,
+        correctiveEventID3,
+      ]);
       errorDeclaration.clearCorrectiveEventIDList();
       expect(errorDeclaration.correctiveEventIDs).to.be.equal(undefined);
     });
 
-    it('should not add the correctiveEventID list to JSON if it is not defined',
-      async () => {
-        const errorDeclaration = new ErrorDeclaration();
-        const json = errorDeclaration.toObject();
-        expect(json.correctiveEventIDs).to.be.equal(undefined);
-      });
+    it('should not add the correctiveEventID list to JSON if it is not defined', async () => {
+      const errorDeclaration = new ErrorDeclaration();
+      const json = errorDeclaration.toObject();
+      expect(json.correctiveEventIDs).to.be.equal(undefined);
+    });
 
     it('should add a custom field', async () => {
       const errorDeclaration = new ErrorDeclaration();
       errorDeclaration.addExtension('key', 'value');
-      expect(errorDeclaration.toObject().key).to.be.equal(('value'));
+      expect(errorDeclaration.toObject().key).to.be.equal('value');
     });
 
     it('should remove a custom field', async () => {
@@ -142,8 +144,9 @@ describe('unit tests for model Objects', () => {
       errorDeclaration.addExtension('key', 'value');
       errorDeclaration.setReason(reason);
       errorDeclaration.removeExtension('key');
-      expect(errorDeclaration.toObject().toString()).to.be
-        .equal({ reason, correctiveEventIDs: [] }.toString());
+      expect(errorDeclaration.toObject().toString()).to.be.equal(
+        { reason, correctiveEventIDs: [] }.toString(),
+      );
     });
   });
 
@@ -177,8 +180,7 @@ describe('unit tests for model Objects', () => {
   describe('ReadPoint.js', () => {
     it('should create a valid ReadPoint object from setters', async () => {
       const readPoint = new ReadPoint();
-      readPoint
-        .setId('id');
+      readPoint.setId('id');
 
       expect(readPoint.getId()).to.be.equal('id');
     });
@@ -202,8 +204,7 @@ describe('unit tests for model Objects', () => {
   describe('BizLocation.js', () => {
     it('should create a valid BizLocation object from setters', async () => {
       const bizLocation = new BizLocation();
-      bizLocation
-        .setId('id');
+      bizLocation.setId('id');
 
       expect(bizLocation.getId()).to.be.equal('id');
     });
@@ -232,8 +233,9 @@ describe('unit tests for model Objects', () => {
         .setBizTransaction(exampleBizTransactionElement.bizTransaction);
 
       expect(bizTransaction.getType()).to.be.equal(exampleBizTransactionElement.type);
-      expect(bizTransaction.getBizTransaction()).to.be
-        .equal(exampleBizTransactionElement.bizTransaction);
+      expect(bizTransaction.getBizTransaction()).to.be.equal(
+        exampleBizTransactionElement.bizTransaction,
+      );
     });
 
     it('should create a valid BizTransactionElement object from JSON', async () => {
@@ -256,9 +258,7 @@ describe('unit tests for model Objects', () => {
   describe('SourceElement.js', () => {
     it('should create a valid SourceElement object from setters', async () => {
       const sourceElement = new SourceElement();
-      sourceElement
-        .setType(exampleSourceElement.type)
-        .setSource(exampleSourceElement.source);
+      sourceElement.setType(exampleSourceElement.type).setSource(exampleSourceElement.source);
 
       expect(sourceElement.getType()).to.be.equal(exampleSourceElement.type);
       expect(sourceElement.getSource()).to.be.equal(exampleSourceElement.source);
@@ -289,8 +289,9 @@ describe('unit tests for model Objects', () => {
         .setDestination(exampleDestinationElement.destination);
 
       expect(destinationElement.getType()).to.be.equal(exampleDestinationElement.type);
-      expect(destinationElement.getDestination())
-        .to.be.equal(exampleDestinationElement.destination);
+      expect(destinationElement.getDestination()).to.be.equal(
+        exampleDestinationElement.destination,
+      );
     });
 
     it('should create a valid DestinationElement object from JSON', async () => {
@@ -322,10 +323,12 @@ describe('unit tests for model Objects', () => {
 
       const persistentDisposition = new PersistentDisposition(persistentDispositionJSON);
 
-      expect(persistentDisposition.getSet().toString()).to.be
-        .equal(persistentDispositionJSON.set.toString());
-      expect(persistentDisposition.getUnset().toString()).to.be
-        .equal(persistentDispositionJSON.unset.toString());
+      expect(persistentDisposition.getSet().toString()).to.be.equal(
+        persistentDispositionJSON.set.toString(),
+      );
+      expect(persistentDisposition.getUnset().toString()).to.be.equal(
+        persistentDispositionJSON.unset.toString(),
+      );
     });
 
     it('should add and remove set', async () => {
@@ -356,12 +359,11 @@ describe('unit tests for model Objects', () => {
       expect(persistentDisposition.set).to.be.equal(undefined);
     });
 
-    it('should not add the set list to JSON if it is not defined',
-      async () => {
-        const persistentDisposition = new PersistentDisposition();
-        const json = persistentDisposition.toObject();
-        expect(json.set).to.be.equal(undefined);
-      });
+    it('should not add the set list to JSON if it is not defined', async () => {
+      const persistentDisposition = new PersistentDisposition();
+      const json = persistentDisposition.toObject();
+      expect(json.set).to.be.equal(undefined);
+    });
 
     it('should add and remove unset', async () => {
       const persistentDisposition = new PersistentDisposition();
@@ -391,12 +393,11 @@ describe('unit tests for model Objects', () => {
       expect(persistentDisposition.unset).to.be.equal(undefined);
     });
 
-    it('should not add the unset list to JSON if it is not defined',
-      async () => {
-        const persistentDisposition = new PersistentDisposition();
-        const json = persistentDisposition.toObject();
-        expect(json.unset).to.be.equal(undefined);
-      });
+    it('should not add the unset list to JSON if it is not defined', async () => {
+      const persistentDisposition = new PersistentDisposition();
+      const json = persistentDisposition.toObject();
+      expect(json.unset).to.be.equal(undefined);
+    });
 
     it('should add and remove custom fields', async () => {
       const obj = new PersistentDisposition();
@@ -417,16 +418,16 @@ describe('unit tests for model Objects', () => {
         .addVocabularyElementList(exampleVocabulary.vocabularyElementList);
 
       expect(vocabulary.getType()).to.be.equal(exampleVocabulary.type);
-      expect(vocabulary.getVocabularyElementList().length).to
-        .be.equal(exampleVocabulary.vocabularyElementList.length);
+      expect(vocabulary.getVocabularyElementList().length).to.be.equal(
+        exampleVocabulary.vocabularyElementList.length,
+      );
     });
 
     it('should create a valid Vocabulary object from JSON', async () => {
       const vocabulary = new Vocabulary(exampleVocabulary);
 
       expect(vocabulary.getVocabularyElementList()[0]).to.be.instanceof(VocabularyElement);
-      expect(vocabulary.toObject()).to.deep
-        .equal(exampleVocabulary);
+      expect(vocabulary.toObject()).to.deep.equal(exampleVocabulary);
     });
 
     it('should add and remove vocabulary element', async () => {
@@ -434,8 +435,10 @@ describe('unit tests for model Objects', () => {
       vocabulary.addVocabularyElement(vocabularyElement[0]);
       expect(vocabulary.getVocabularyElementList()).to.deep.equal([vocabularyElement[0]]);
       vocabulary.addVocabularyElement(vocabularyElement[1]);
-      expect(vocabulary.getVocabularyElementList()).to.deep
-        .equal([vocabularyElement[0], vocabularyElement[1]]);
+      expect(vocabulary.getVocabularyElementList()).to.deep.equal([
+        vocabularyElement[0],
+        vocabularyElement[1],
+      ]);
       vocabulary.removeVocabularyElement(vocabularyElement[0]);
       expect(vocabulary.getVocabularyElementList()).to.deep.equal([vocabularyElement[1]]);
       vocabulary.removeVocabularyElement(vocabularyElement[1]);
@@ -458,12 +461,11 @@ describe('unit tests for model Objects', () => {
       expect(vocabulary.toObject().vocabularyElementList).to.be.equal(undefined);
     });
 
-    it('should not add the vocabulary element list to JSON if it is not defined',
-      async () => {
-        const vocabulary = new Vocabulary();
-        const json = vocabulary.toObject();
-        expect(json.vocabularyElementList).to.be.equal(undefined);
-      });
+    it('should not add the vocabulary element list to JSON if it is not defined', async () => {
+      const vocabulary = new Vocabulary();
+      const json = vocabulary.toObject();
+      expect(json.vocabularyElementList).to.be.equal(undefined);
+    });
   });
 
   describe('VocabularyElement.js', () => {
@@ -482,10 +484,12 @@ describe('unit tests for model Objects', () => {
         .addAttributeList(attributeList);
 
       expect(vocabularyE.getId()).to.be.equal(exampleVocabulary.vocabularyElementList[2].id);
-      expect(vocabularyE.getChildren().length).to
-        .be.equal(exampleVocabulary.vocabularyElementList[2].children.length);
-      expect(vocabularyE.getAttributes().length).to
-        .be.equal(exampleVocabulary.vocabularyElementList[2].attributes.length);
+      expect(vocabularyE.getChildren().length).to.be.equal(
+        exampleVocabulary.vocabularyElementList[2].children.length,
+      );
+      expect(vocabularyE.getAttributes().length).to.be.equal(
+        exampleVocabulary.vocabularyElementList[2].attributes.length,
+      );
     });
 
     it('should create a valid VocabularyElement object from JSON', async () => {
@@ -500,8 +504,7 @@ describe('unit tests for model Objects', () => {
       vocabularyElement.addAttribute(attributeList[0]);
       expect(vocabularyElement.getAttributes()[0]).to.deep.equal(attributeList[0]);
       vocabularyElement.addAttribute(attributeList[1]);
-      expect(vocabularyElement.getAttributes()).to.deep
-        .equal([attributeList[0], attributeList[1]]);
+      expect(vocabularyElement.getAttributes()).to.deep.equal([attributeList[0], attributeList[1]]);
       vocabularyElement.removeAttribute(attributeList[0]);
       expect(vocabularyElement.getAttributes()).to.deep.equal([attributeList[1]]);
       vocabularyElement.removeAttribute(attributeList[1]);
@@ -524,12 +527,11 @@ describe('unit tests for model Objects', () => {
       expect(vocabularyElement.getAttributes()).to.be.equal(undefined);
     });
 
-    it('should not add the attributes list to JSON if it is not defined',
-      async () => {
-        const vocabularyElement = new VocabularyElement();
-        const json = vocabularyElement.toObject();
-        expect(json.attributes).to.be.equal(undefined);
-      });
+    it('should not add the attributes list to JSON if it is not defined', async () => {
+      const vocabularyElement = new VocabularyElement();
+      const json = vocabularyElement.toObject();
+      expect(json.attributes).to.be.equal(undefined);
+    });
 
     it('should add and remove child', async () => {
       const vocabularyElement = new VocabularyElement();
@@ -559,23 +561,21 @@ describe('unit tests for model Objects', () => {
       expect(vocabularyElement.getChildren()).to.be.equal(undefined);
     });
 
-    it('should not add the child list to JSON if it is not defined',
-      async () => {
-        const vocabularyElement = new VocabularyElement();
-        const json = vocabularyElement.toObject();
-        expect(json.children).to.be.equal(undefined);
-      });
+    it('should not add the child list to JSON if it is not defined', async () => {
+      const vocabularyElement = new VocabularyElement();
+      const json = vocabularyElement.toObject();
+      expect(json.children).to.be.equal(undefined);
+    });
   });
 
   describe('AttributeElement.js', () => {
-    const exampleAttribute =
-      new AttributeElement(exampleVocabulary.vocabularyElementList[2].attributes[0]);
+    const exampleAttribute = new AttributeElement(
+      exampleVocabulary.vocabularyElementList[2].attributes[0],
+    );
 
     it('should create a valid AttributeElement object from setters', async () => {
       const attributeElement = new AttributeElement();
-      attributeElement
-        .setId(exampleAttribute.id)
-        .setAttribute(exampleAttribute.attribute);
+      attributeElement.setId(exampleAttribute.id).setAttribute(exampleAttribute.attribute);
 
       expect(attributeElement.getId()).to.be.equal(exampleAttribute.id);
       expect(attributeElement.getAttribute()).to.be.equal(exampleAttribute.attribute);
@@ -588,12 +588,9 @@ describe('unit tests for model Objects', () => {
   });
 
   describe('Ilmd.js', () => {
-
     it('should create a valid AttributeElement object from setters', async () => {
       const ilmd = new Ilmd();
-      ilmd
-        .setType(exampleIlmd.type)
-        .setFormat(exampleIlmd.format);
+      ilmd.setType(exampleIlmd.type).setFormat(exampleIlmd.format);
 
       expect(ilmd.getType()).to.be.equal(exampleIlmd.type);
       expect(ilmd.getFormat()).to.be.equal(exampleIlmd.format);

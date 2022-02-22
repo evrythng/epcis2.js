@@ -22,12 +22,10 @@ export default class VocabularyElement extends Entity {
     Object.entries(vocabularyElement).forEach(([key, value]) => {
       switch (key) {
         case 'attributes':
-          value.forEach((attribute) => this
-            .addAttribute(new AttributeElement(attribute)));
+          value.forEach((attribute) => this.addAttribute(new AttributeElement(attribute)));
           break;
         case 'children':
-          value.forEach((child) => this
-            .addChild(child));
+          value.forEach((child) => this.addChild(child));
           break;
         // no default
       }

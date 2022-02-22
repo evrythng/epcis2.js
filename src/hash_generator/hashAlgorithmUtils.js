@@ -53,7 +53,8 @@ export const removeWhiteSpaceAtTheBeginningOrEndOfString = (obj) => {
 export const convertURNBasedVocabularyToURI = (obj) => {
   if (!isAString(obj)) return obj;
 
-  return obj.replace('urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/cbv/BizStep-')
+  return obj
+    .replace('urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/cbv/BizStep-')
     .replace('urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/cbv/Disp-')
     .replace('urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/cbv/BTT-')
     .replace('urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/cbv/SDT-')
@@ -84,7 +85,7 @@ export const convertEpcUriToDlUri = (obj, throwError) => {
  * @return true if the parameter is a date, false otherwise
  */
 // eslint-disable-next-line  no-restricted-globals
-export const isADate = (obj) => (isNaN(obj) && !isNaN(Date.parse(obj)) && obj.length > 17);
+export const isADate = (obj) => isNaN(obj) && !isNaN(Date.parse(obj)) && obj.length > 17;
 
 /**
  * If the UTC date passed in param contains a timezone, it removes it

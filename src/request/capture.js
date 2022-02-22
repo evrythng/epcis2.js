@@ -18,8 +18,9 @@ import settings from '../settings';
  * @returns {Promise} - Response promise
  */
 const capture = (epcisDocument, customOptions = {}) => {
-  const validate = customOptions.documentValidation
-    || (customOptions.documentValidation !== false && settings.documentValidation);
+  const validate =
+    customOptions.documentValidation ||
+    (customOptions.documentValidation !== false && settings.documentValidation);
 
   if (validate) {
     epcisDocument.isValid(); // throws an error if it is invalid

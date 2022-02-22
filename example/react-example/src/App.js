@@ -95,9 +95,7 @@ function App() {
           code example for react
         </h2>
       </div>
-      <p className="App-intro">
-        {state}
-      </p>
+      <p className="App-intro">{state}</p>
     </div>
   );
 }

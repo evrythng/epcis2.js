@@ -24,7 +24,9 @@ describe('requests utils', () => {
   it('should build a valid url', () => {
     expect(buildUrl(initialSettings, '')).to.be.equal(initialSettings.apiUrl);
     expect(buildUrl(initialSettings, 'capture')).to.be.equal(`${initialSettings.apiUrl}capture`);
-    expect(buildUrl({ apiUrl: 'https://example.com' }, 'capture')).to.be.equal('https://example.com/capture');
+    expect(buildUrl({ apiUrl: 'https://example.com' }, 'capture')).to.be.equal(
+      'https://example.com/capture',
+    );
   });
 });
 
@@ -59,8 +61,7 @@ describe('requests', () => {
           apiUrl: 'https://evrythng.com',
         }).then(() => {
           expect(fetchMock.lastUrl()).to.be.equal('https://evrythng.com/');
-          expect(fetchMock.lastOptions().headers['content-type']).to
-            .be.equal('application/json');
+          expect(fetchMock.lastOptions().headers['content-type']).to.be.equal('application/json');
           expect(fetchMock.lastOptions().headers.Authorization).to.be.equal('key');
         });
       });
@@ -111,15 +112,14 @@ describe('requests', () => {
       });
     });
 
-    it('should send an invalid EPCISDocument via POST (override documentValidation locally)',
-      () => {
-        const doc = new EPCISDocument();
-        delete doc['@context'];
-        req = capture(doc, { documentValidation: false }).then(() => {
-          const docSent = JSON.parse(fetchMock.lastOptions().body);
-          expect(docSent).to.deep.equal(doc.toObject());
-        });
+    it('should send an invalid EPCISDocument via POST (override documentValidation locally)', () => {
+      const doc = new EPCISDocument();
+      delete doc['@context'];
+      req = capture(doc, { documentValidation: false }).then(() => {
+        const docSent = JSON.parse(fetchMock.lastOptions().body);
+        expect(docSent).to.deep.equal(doc.toObject());
       });
+    });
 
     it('should send an invalid EPCISDocument via POST (override documentValidation globally)', () => {
       const doc = new EPCISDocument();

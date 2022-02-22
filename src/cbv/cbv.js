@@ -207,7 +207,7 @@ export const sensorMeasurementTypes = {
   volume_flow_rate: 'VolumeFlowRate',
   volume_fraction: 'VolumeFraction',
   volumetric_flux: 'VolumetricFlux',
-  wave_number: 'Wavenumber'
+  wave_number: 'Wavenumber',
 };
 
 /**
@@ -234,18 +234,18 @@ export const actionTypes = {
  * More info here: https://www.gs1.org/standards/epcis
  */
 export const components = {
-  x: "x",
-  y: "y",
-  z: "z",
-  axial_distance: "axial_distance",
-  azimuth: "azimuth",
-  height: "height",
-  spherical_radius: "spherical_radius",
-  polar_angle: "polar_angle",
-  elevation_angle: "elevation_angle",
-  easting: "easting",
-  northing: "northing",
-  latitude: "latitude",
-  longitude: "longitude",
-  altitude: "altitude"
+  x: 'x',
+  y: 'y',
+  z: 'z',
+  axial_distance: 'axial_distance',
+  azimuth: 'azimuth',
+  height: 'height',
+  spherical_radius: 'spherical_radius',
+  polar_angle: 'polar_angle',
+  elevation_angle: 'elevation_angle',
+  easting: 'easting',
+  northing: 'northing',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  altitude: 'altitude',
 };

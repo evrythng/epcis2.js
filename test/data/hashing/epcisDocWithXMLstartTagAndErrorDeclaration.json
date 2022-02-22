@@ -10,12 +10,8 @@
         "eventTime": "2020-01-14T00:00:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "eventID": "urn:uuid:374d95fc-9457-4a51-bd6a-0bba133845a8",
-        "inputEPCList": [
-          "urn:epc:id:sgtin:4012345.011111.987"
-        ],
-        "outputEPCList": [
-          "urn:epc:id:sgtin:4012345.033333.AGHFG"
-        ],
+        "inputEPCList": ["urn:epc:id:sgtin:4012345.011111.987"],
+        "outputEPCList": ["urn:epc:id:sgtin:4012345.033333.AGHFG"],
         "inputQuantityList": [
           {
             "epcClass": "urn:epc:class:lgtin:4012345.022222.87545GHGH"
@@ -29,7 +25,7 @@
           }
         ],
         "bizStep": "urn:epcglobal:cbv:bizstep:commissioning",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00000.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00000.0" },
         "errorDeclaration": {
           "declarationTime": "2020-01-15T00:00:00.000+01:00",
           "reason": "urn:epcglobal:cbv:er:incorrect_data",

@@ -31,8 +31,9 @@ export default class SensorElement extends Entity {
           this.setSensorMetadata(new SensorMetadata(value));
           break;
         case 'sensorReport':
-          value.forEach((sensorReport) => this
-            .addSensorReport(new SensorReportElement(sensorReport)));
+          value.forEach(
+            (sensorReport) => this.addSensorReport(new SensorReportElement(sensorReport)),
+          );
           break;
         // no default
       }

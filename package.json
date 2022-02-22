@@ -25,32 +25,6 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "mocha": true
-    },
-    "extends": [
-      "airbnb"
-    ],
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "ecmaVersion": 12
-    },
-    "rules": {
-      "no-prototype-builtins": "off",
-      "prefer-promise-reject-errors": "off",
-      "operator-linebreak": "off"
-    }
-  },
-  "eslintIgnore": [
-    "node_modules",
-    "reports",
-    "mochawesome-report",
-    ".nyc_output",
-    "dist"
-  ],
   "babel": {
     "presets": [
       "@babel/preset-env"

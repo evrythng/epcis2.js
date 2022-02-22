@@ -26,8 +26,7 @@ export default class EPCISMasterData extends Entity {
     // Create classes for sub-objects that are provided
     Object.entries(epcisMasterData).forEach(([key, value]) => {
       if (key === 'vocabularyList') {
-        value.forEach((vocabulary) => this
-          .addVocabulary(new Vocabulary(vocabulary)));
+        value.forEach((vocabulary) => this.addVocabulary(new Vocabulary(vocabulary)));
       }
     });
   }
@@ -73,8 +72,7 @@ export default class EPCISMasterData extends Entity {
    * @return {EPCISMasterData} - the epcis master data instance
    */
   removeVocabulary(vocabulary) {
-    this.vocabularyList = this.vocabularyList
-      .filter((elem) => elem !== vocabulary);
+    this.vocabularyList = this.vocabularyList.filter((elem) => elem !== vocabulary);
     return this;
   }
 

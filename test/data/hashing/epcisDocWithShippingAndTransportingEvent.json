@@ -9,12 +9,10 @@
         "type": "ObjectEvent",
         "eventTime": "2020-02-20T12:50:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
-        "epcList": [
-          "urn:epc:id:sscc:4012345.1112223334"
-        ],
+        "epcList": ["urn:epc:id:sscc:4012345.1112223334"],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:departing",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00022.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00022.0" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:desadv",
@@ -38,12 +36,10 @@
         "type": "ObjectEvent",
         "eventTime": "2020-02-20T16:50:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
-        "epcList": [
-          "urn:epc:id:sscc:4012345.1112223334"
-        ],
+        "epcList": ["urn:epc:id:sscc:4012345.1112223334"],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:transporting",
-        "readPoint": {"id": "geo:47.506694,11.104301"}
+        "readPoint": { "id": "geo:47.506694,11.104301" }
       }
     ]
   }

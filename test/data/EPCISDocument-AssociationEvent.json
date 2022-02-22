@@ -9,10 +9,7 @@
         "eventTime": "2019-11-01T13:00:00.000Z",
         "eventTimeZoneOffset": "+01:00",
         "parentID": "urn:epc:id:grai:4012345.55555.987",
-        "childEPCs": [
-          "urn:epc:id:giai:4000001.12345",
-          "urn:epc:id:giai:4000001.12346"
-        ],
+        "childEPCs": ["urn:epc:id:giai:4000001.12345", "urn:epc:id:giai:4000001.12346"],
         "childQuantityList": [
           {
             "epcClass": "urn:epc:idpat:sgtin:4012345.098765.*",
@@ -122,11 +119,7 @@
               {
                 "ext1:object": {
                   "ext1:object": {
-                    "ext2:array": [
-                      "14",
-                      "23.0",
-                      "stringInArrayInObjectInArray"
-                    ],
+                    "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
                     "ext2:object": {
                       "ext2:object": {
                         "ext3:string": "stringInObjectInObjectInArray"
@@ -140,11 +133,7 @@
             ],
             "ext1:boolean": "true",
             "ext1:object": {
-              "ext2:array": [
-                "11",
-                "21",
-                "stringInArrayInObject"
-              ],
+              "ext2:array": ["11", "21", "stringInArrayInObject"],
               "ext2:object": {
                 "ext2:object": {
                   "ext3:string": "stringInObjectInObject"
@@ -158,12 +147,8 @@
           }
         ],
         "persistentDisposition": {
-          "set": [
-            "completeness_verified"
-          ],
-          "unset": [
-            "completeness_inferred"
-          ]
+          "set": ["completeness_verified"],
+          "unset": ["completeness_inferred"]
         },
         "ext1:float": "20",
         "ext1:time": "2013-06-08T14:58:56.591Z",
@@ -176,11 +161,7 @@
           {
             "ext1:object": {
               "ext1:object": {
-                "ext2:array": [
-                  "14",
-                  "23.0",
-                  "stringInArrayInObjectInArray"
-                ],
+                "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
                 "ext2:object": {
                   "ext2:object": {
                     "ext3:string": "stringInObjectInObjectInArray"
@@ -194,11 +175,7 @@
         ],
         "ext1:boolean": "true",
         "ext1:object": {
-          "ext2:array": [
-            "11",
-            "21",
-            "stringInArrayInObject"
-          ],
+          "ext2:array": ["11", "21", "stringInArrayInObject"],
           "ext2:object": {
             "ext2:object": {
               "ext3:string": "stringInObjectInObject"

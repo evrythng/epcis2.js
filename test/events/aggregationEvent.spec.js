@@ -23,7 +23,8 @@ const exampleAggregationEvent = EPCISDocumentAggregationEvent.epcisBody.eventLis
 describe('unit tests for the AggregationEvent class', () => {
   it('setters should set the variables correctly', async () => {
     const obj = new AggregationEvent();
-    obj.setEventID(exampleAggregationEvent.eventID)
+    obj
+      .setEventID(exampleAggregationEvent.eventID)
       .addChildEPCList(exampleAggregationEvent.childEPCs)
       .setEventTime(exampleAggregationEvent.eventTime)
       .setRecordTime(exampleAggregationEvent.recordTime)
@@ -35,8 +36,9 @@ describe('unit tests for the AggregationEvent class', () => {
       .setBizLocation(exampleAggregationEvent.bizLocation.id)
       .setParentId(exampleAggregationEvent.parentID);
 
-    expect(obj.getChildEPCList().toString()).to.be
-      .equal(exampleAggregationEvent.childEPCs.toString());
+    expect(obj.getChildEPCList().toString()).to.be.equal(
+      exampleAggregationEvent.childEPCs.toString(),
+    );
     expect(obj.getEventID()).to.be.equal(exampleAggregationEvent.eventID);
     expect(obj.getEventTime()).to.be.equal(exampleAggregationEvent.eventTime);
     expect(obj.getRecordTime()).to.be.equal(exampleAggregationEvent.recordTime);

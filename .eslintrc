@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "mocha": true
+  },
+  "extends": [
+    "airbnb"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 12
+  },
+  "rules": {
+    "no-prototype-builtins": "off",
+    "prefer-promise-reject-errors": "off",
+    "operator-linebreak": "off"
+  }
+}

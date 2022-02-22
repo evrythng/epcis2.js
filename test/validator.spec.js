@@ -25,7 +25,7 @@ const testData = {
   TransformationEvent: EPCISDocumentTransformationEvent,
   AssociationEvent: EPCISDocumentAssociationEvent,
   QueryDocument: EPCISDocumentQueryDocument,
-  TransactionEvent: EPCISDocumentTransactionEvent
+  TransactionEvent: EPCISDocumentTransactionEvent,
 };
 
 describe('validation of an EPCIS document', () => {
@@ -53,9 +53,7 @@ describe('validation of an EPCIS document', () => {
         .setReadPoint('urn:epc:id:sgln:0614141.07346.1234')
         .addBizTransaction(bizTransaction);
 
-      epcisDocument
-        .setCreationDate('2005-07-11T11:30:47+00:00')
-        .addEvent(objectEvent);
+      epcisDocument.setCreationDate('2005-07-11T11:30:47+00:00').addEvent(objectEvent);
 
       assert.doesNotThrow(() => epcisDocument.isValid());
     });
@@ -79,7 +77,6 @@ describe('validation of an EPCIS document', () => {
     it('should accept a valid EPCISQueryDocument', () => {
       assert.doesNotThrow(() => validateSchema(testData.QueryDocument));
     });
-
   });
 
   describe('schema validation: invalid', () => {

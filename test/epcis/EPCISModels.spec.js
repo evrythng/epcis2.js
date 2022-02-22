@@ -13,15 +13,16 @@ import Entity from '../../src/entity/Entity';
 
 describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () => {
   describe('EPCISMasterData.js', () => {
-    const vocabularyList = exampleEPCISHeader.epcisMasterData
-      .vocabularyList.map((v) => new Vocabulary(v));
+    const vocabularyList = exampleEPCISHeader.epcisMasterData.vocabularyList.map(
+      (v) => new Vocabulary(v),
+    );
 
     it('setters should set the variables correctly', async () => {
-      const e = new EPCISMasterData()
-        .addVocabularyList(vocabularyList);
+      const e = new EPCISMasterData().addVocabularyList(vocabularyList);
 
-      expect(e.getVocabularyList()).to.deep
-        .equal(exampleEPCISHeader.epcisMasterData.vocabularyList);
+      expect(e.getVocabularyList()).to.deep.equal(
+        exampleEPCISHeader.epcisMasterData.vocabularyList,
+      );
     });
 
     it('creation from object should set the variables correctly', async () => {
@@ -57,21 +58,20 @@ describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () =
       expect(e.getVocabularyList()).to.be.equal(undefined);
     });
 
-    it('should not add the vocabulary list to JSON if it is not defined',
-      async () => {
-        const e = new EPCISMasterData();
-        const json = e.toObject();
-        expect(json.vocabularyList).to.be.equal(undefined);
-      });
+    it('should not add the vocabulary list to JSON if it is not defined', async () => {
+      const e = new EPCISMasterData();
+      const json = e.toObject();
+      expect(json.vocabularyList).to.be.equal(undefined);
+    });
   });
 
   describe('EPCISHeader.js', () => {
     it('setters should set the variables correctly', async () => {
-      const e = new EPCISHeader()
-        .setEPCISMasterData(new EPCISMasterData(exampleEPCISHeader.epcisMasterData));
+      const e = new EPCISHeader().setEPCISMasterData(
+        new EPCISMasterData(exampleEPCISHeader.epcisMasterData),
+      );
 
-      expect(e.getEPCISMasterData()).to.deep
-        .equal(exampleEPCISHeader.epcisMasterData);
+      expect(e.getEPCISMasterData()).to.deep.equal(exampleEPCISHeader.epcisMasterData);
     });
 
     it('creation from object should set the variables correctly', async () => {
@@ -81,10 +81,8 @@ describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () =
   });
 
   describe('Entity.js', () => {
-
     it("shouldn't instantiate an entity", async () => {
       expect(() => new Entity()).to.throw();
     });
-
   });
 });

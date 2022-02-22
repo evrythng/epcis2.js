@@ -1,11 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 
-const {
-  setup,
-  EPCISDocument,
-  capture,
-} = require('epcis2.js');
+const { setup, EPCISDocument, capture } = require('epcis2.js');
 
 // you can override the global parameter with the setup function
 setup({
@@ -38,10 +34,7 @@ const sendACaptureRequestExample = async () => {
           action: 'OBSERVE',
           bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
           disposition: 'urn:epcglobal:cbv:disp:in_transit',
-          epcList: [
-            'urn:epc:id:sgtin:0614141.107346.2017',
-            'urn:epc:id:sgtin:0614141.107346.2018',
-          ],
+          epcList: ['urn:epc:id:sgtin:0614141.107346.2017', 'urn:epc:id:sgtin:0614141.107346.2018'],
           eventTime: '2005-04-03T20:33:31.116-06:00',
           eventTimeZoneOffset: '-06:00',
           readPoint: {

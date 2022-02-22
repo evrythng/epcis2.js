@@ -42,7 +42,7 @@ describe('unit tests for the ObjectEvent class', () => {
       setup({});
       const o = new ObjectEvent();
       expect(o.eventTimeZoneOffset).to.be.equal(
-        getTimeZoneOffset((new Date()).getTimezoneOffset() / 60),
+        getTimeZoneOffset(new Date().getTimezoneOffset() / 60),
       );
     });
 
@@ -55,7 +55,8 @@ describe('unit tests for the ObjectEvent class', () => {
 
   it('setters should set the variables correctly', async () => {
     const obj = new ObjectEvent();
-    obj.setEventID(exampleObjectEvent.eventID)
+    obj
+      .setEventID(exampleObjectEvent.eventID)
       .addEPCList(exampleObjectEvent.epcList)
       .setEventTime(exampleObjectEvent.eventTime)
       .setEventTimeZoneOffset(exampleObjectEvent.eventTimeZoneOffset)
@@ -78,26 +79,32 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getRecordTime()).to.be.equal(exampleObjectEvent.recordTime);
     expect(obj.getContext()).to.be.equal('https://gs1.github.io/EPCIS/epcis-context.jsonld');
     expect(obj['example:myField']).to.be.equal(exampleObjectEvent['example:myField']);
-    expect(obj.getErrorDeclaration().getDeclarationTime()).to
-      .be.equal(exampleObjectEvent.errorDeclaration.declarationTime);
-    expect(obj.getErrorDeclaration().getReason()).to
-      .be.equal(exampleObjectEvent.errorDeclaration.reason);
-    expect(obj.getErrorDeclaration().getCorrectiveEventIDs().toString())
-      .to.be.equal(exampleObjectEvent.errorDeclaration.correctiveEventIDs.toString());
-    expect(obj.getErrorDeclaration()['example:vendorExtension']).to
-      .be.equal(exampleObjectEvent.errorDeclaration['example:vendorExtension']);
+    expect(obj.getErrorDeclaration().getDeclarationTime()).to.be.equal(
+      exampleObjectEvent.errorDeclaration.declarationTime,
+    );
+    expect(obj.getErrorDeclaration().getReason()).to.be.equal(
+      exampleObjectEvent.errorDeclaration.reason,
+    );
+    expect(obj.getErrorDeclaration().getCorrectiveEventIDs().toString()).to.be.equal(
+      exampleObjectEvent.errorDeclaration.correctiveEventIDs.toString(),
+    );
+    expect(obj.getErrorDeclaration()['example:vendorExtension']).to.be.equal(
+      exampleObjectEvent.errorDeclaration['example:vendorExtension'],
+    );
     expect(obj.getAction()).to.be.equal(exampleObjectEvent.action);
     expect(obj.getDisposition()).to.be.equal(exampleObjectEvent.disposition);
     expect(obj.getBizStep()).to.be.equal(exampleObjectEvent.bizStep);
-    expect(obj.getPersistentDisposition().getUnset().toString()).to
-      .be.equal(exampleObjectEvent.persistentDisposition.unset.toString());
-    expect(obj.getPersistentDisposition().getSet().toString()).to
-      .be.equal(exampleObjectEvent.persistentDisposition.set.toString());
+    expect(obj.getPersistentDisposition().getUnset().toString()).to.be.equal(
+      exampleObjectEvent.persistentDisposition.unset.toString(),
+    );
+    expect(obj.getPersistentDisposition().getSet().toString()).to.be.equal(
+      exampleObjectEvent.persistentDisposition.set.toString(),
+    );
     expect(obj.getReadPoint().getId()).to.be.equal(exampleObjectEvent.readPoint.id);
-    expect(obj.getIlmd()['example:bestBeforeDate']).to
-      .be.equal(exampleObjectEvent.ilmd['example:bestBeforeDate']);
-    expect(obj.getExtension('example:myField')).to
-      .be.equal(exampleObjectEvent['example:myField']);
+    expect(obj.getIlmd()['example:bestBeforeDate']).to.be.equal(
+      exampleObjectEvent.ilmd['example:bestBeforeDate'],
+    );
+    expect(obj.getExtension('example:myField')).to.be.equal(exampleObjectEvent['example:myField']);
   });
 
   it('should create an ObjectEvent from json and generate a hashed ID', async () => {
@@ -149,7 +156,7 @@ describe('unit tests for the ObjectEvent class', () => {
   it('should add a custom field', async () => {
     const objectEvent = new ObjectEvent();
     objectEvent.addExtension('key', 'value');
-    expect(objectEvent.toObject().key).to.be.equal(('value'));
+    expect(objectEvent.toObject().key).to.be.equal('value');
   });
 
   it('should remove a custom field', async () => {
@@ -297,8 +304,9 @@ describe('unit tests for the ObjectEvent class', () => {
       o.addBizTransaction(bizTransaction1);
       expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction1].toString());
       o.addBizTransaction(bizTransaction2);
-      expect(o.bizTransactionList.toString()).to.be
-        .equal([bizTransaction1, bizTransaction2].toString());
+      expect(o.bizTransactionList.toString()).to.be.equal(
+        [bizTransaction1, bizTransaction2].toString(),
+      );
       o.removeBizTransaction(bizTransaction1);
       expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction2].toString());
       o.removeBizTransaction(bizTransaction2);
@@ -308,15 +316,17 @@ describe('unit tests for the ObjectEvent class', () => {
     it('should add a bizTransaction list', async () => {
       const o = new ObjectEvent();
       o.addBizTransactionList([bizTransaction1, bizTransaction2]);
-      expect(o.bizTransactionList.toString()).to.be
-        .equal([bizTransaction1, bizTransaction2].toString());
+      expect(o.bizTransactionList.toString()).to.be.equal(
+        [bizTransaction1, bizTransaction2].toString(),
+      );
     });
 
     it('should remove a bizTransaction list', async () => {
       const o = new ObjectEvent();
       o.addBizTransactionList([bizTransaction1, bizTransaction2]);
-      expect(o.bizTransactionList.toString()).to.be
-        .equal([bizTransaction1, bizTransaction2].toString());
+      expect(o.bizTransactionList.toString()).to.be.equal(
+        [bizTransaction1, bizTransaction2].toString(),
+      );
       o.removeBizTransactionList([bizTransaction1, bizTransaction2]);
       expect(o.bizTransactionList.toString()).to.be.equal([].toString());
     });
@@ -432,8 +442,9 @@ describe('unit tests for the ObjectEvent class', () => {
       o.addSensorElement(sensorElement1);
       expect(o.sensorElementList.toString()).to.be.equal([sensorElement1].toString());
       o.addSensorElement(sensorElement2);
-      expect(o.sensorElementList.toString()).to.be
-        .equal([sensorElement1, sensorElement2].toString());
+      expect(o.sensorElementList.toString()).to.be.equal(
+        [sensorElement1, sensorElement2].toString(),
+      );
       o.removeSensorElement(sensorElement1);
       expect(o.sensorElementList.toString()).to.be.equal([sensorElement2].toString());
       o.removeSensorElement(sensorElement2);
@@ -443,15 +454,17 @@ describe('unit tests for the ObjectEvent class', () => {
     it('should add a sensorElement list', async () => {
       const o = new ObjectEvent();
       o.addSensorElementList([sensorElement1, sensorElement2]);
-      expect(o.sensorElementList.toString()).to.be
-        .equal([sensorElement1, sensorElement2].toString());
+      expect(o.sensorElementList.toString()).to.be.equal(
+        [sensorElement1, sensorElement2].toString(),
+      );
     });
 
     it('should remove a sensorElement list', async () => {
       const o = new ObjectEvent();
       o.addSensorElementList([sensorElement1, sensorElement2]);
-      expect(o.sensorElementList.toString()).to.be
-        .equal([sensorElement1, sensorElement2].toString());
+      expect(o.sensorElementList.toString()).to.be.equal(
+        [sensorElement1, sensorElement2].toString(),
+      );
       o.removeSensorElementList([sensorElement1, sensorElement2]);
       expect(o.sensorElementList.toString()).to.be.equal([].toString());
     });

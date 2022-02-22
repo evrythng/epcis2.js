@@ -9,12 +9,10 @@
         "type": "ObjectEvent",
         "eventTime": "2019-10-21T11:00:30.000+01:00",
         "eventTimeZoneOffset": "+01:00",
-        "epcList": [
-          "urn:epc:id:sscc:5200001.0111111146"
-        ],
+        "epcList": ["urn:epc:id:sscc:5200001.0111111146"],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:departing",
-        "readPoint": {"id": "urn:epc:id:sgln:5200001.99901.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:5200001.99901.0" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:desadv",
@@ -46,12 +44,10 @@
         "type": "ObjectEvent",
         "eventTime": "2019-10-21T12:00:30.000+01:00",
         "eventTimeZoneOffset": "+01:00",
-        "epcList": [
-          "urn:epc:id:sscc:5200001.0111111146"
-        ],
+        "epcList": ["urn:epc:id:sscc:5200001.0111111146"],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:receiving",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00012.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00012.0" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:desadv",
@@ -91,13 +87,11 @@
         "type": "ObjectEvent",
         "eventTime": "2019-10-21T15:45:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
-        "epcList": [
-          "urn:epc:id:sscc:4012345.0111111111"
-        ],
+        "epcList": ["urn:epc:id:sscc:4012345.0111111111"],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
         "disposition": "urn:epcglobal:cbv:disp:in_progress",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00024.0"}
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00024.0" }
       },
       {
         "type": "ObjectEvent",
@@ -112,7 +106,7 @@
         ],
         "action": "ADD",
         "bizStep": "urn:epcglobal:cbv:bizstep:commissioning",
-        "readPoint": {"id": "urn:epc:id:sgln:4054739.00001.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4054739.00001.0" },
         "ilmd": {
           "cbvmda:bestBeforeDate": {
             "@xmlns:cbvmda": "urn:epcglobal:cbv:mda",
@@ -133,7 +127,7 @@
         ],
         "action": "ADD",
         "bizStep": "urn:epcglobal:cbv:bizstep:packing",
-        "readPoint": {"id": "urn:epc:id:sgln:4047023.00012.0"}
+        "readPoint": { "id": "urn:epc:id:sgln:4047023.00012.0" }
       },
       {
         "type": "AggregationEvent",
@@ -153,7 +147,7 @@
         ],
         "action": "ADD",
         "bizStep": "urn:epcglobal:cbv:bizstep:packing",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00025.0"}
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00025.0" }
       },
       {
         "type": "AggregationEvent",
@@ -162,7 +156,7 @@
         "parentID": "urn:epc:id:sscc:4012344.0111111144",
         "action": "DELETE",
         "bizStep": "urn:epcglobal:cbv:bizstep:unpacking",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00025.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00025.0" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:inv",
@@ -182,7 +176,7 @@
         ],
         "action": "DELETE",
         "bizStep": "urn:epcglobal:cbv:bizstep:unpacking",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00077.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00077.0" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:inv",
@@ -194,14 +188,11 @@
         "type": "TransactionEvent",
         "eventTime": "2019-10-21T00:05:00-06:00",
         "eventTimeZoneOffset": "-06:00",
-        "epcList": [
-          "urn:epc:id:sgtin:0614141.107340.1",
-          "urn:epc:id:sgtin:0614141.107340.2"
-        ],
+        "epcList": ["urn:epc:id:sgtin:0614141.107340.1", "urn:epc:id:sgtin:0614141.107340.2"],
         "action": "ADD",
         "bizStep": "urn:epcglobal:cbv:bizstep:shipping",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00000.5"},
-        "bizLocation": {"id": "urn:epc:id:sgln:4012345.00000.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00000.5" },
+        "bizLocation": { "id": "urn:epc:id:sgln:4012345.00000.0" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:po",
@@ -222,8 +213,8 @@
         ],
         "action": "ADD",
         "bizStep": "urn:epcglobal:cbv:bizstep:holding",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00025.0"},
-        "bizLocation": {"id": "urn:epc:id:sgln:4012345.00002.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00025.0" },
+        "bizLocation": { "id": "urn:epc:id:sgln:4012345.00002.0" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:inv",
@@ -247,7 +238,7 @@
         ],
         "transformationID": "urn:epc:id:gdti:4012345.55555.1234",
         "bizStep": "urn:epcglobal:cbv:bizstep:commissioning",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00001.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00001.0" },
         "ilmd": {
           "example:bestBeforeDate": {
             "@xmlns:example": "http://ns.example.com/epcis",
@@ -289,7 +280,7 @@
           }
         ],
         "bizStep": "urn:epcglobal:cbv:bizstep:commissioning",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00001.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00001.0" },
         "ilmd": {
           "example:bestBeforeDate": {
             "@xmlns:example": "http://ns.example.com/epcis",
@@ -317,7 +308,7 @@
         ],
         "transformationID": "urn:epc:id:gdti:4012345.55555.1234",
         "bizStep": "http://epcis.example.com/user/vocab/bizstep/commissioning",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00001.0"}
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00001.0" }
       }
     ]
   }

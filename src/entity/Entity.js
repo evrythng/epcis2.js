@@ -24,7 +24,7 @@ export default class Entity {
    */
   constructor(entity) {
     if (new.target === Entity) {
-      throw new Error('Abstract classes can\'t be instantiated.');
+      throw new Error("Abstract classes can't be instantiated.");
     }
 
     if (!entity) {

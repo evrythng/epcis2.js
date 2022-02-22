@@ -7,7 +7,6 @@
 import Entity from '../Entity';
 
 export default class Ilmd extends Entity {
-
   /**
    * Set the type property
    * @param {string} type
@@ -43,5 +42,4 @@ export default class Ilmd extends Entity {
   getFormat() {
     return this.format;
   }
-
 }

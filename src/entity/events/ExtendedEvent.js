@@ -4,7 +4,6 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-unused-vars */
 
@@ -26,7 +25,7 @@ const invalidFields = [
   'destinationList',
   'sensorElementList',
   'childEPCs',
-  'childQuantityList'
+  'childQuantityList',
 ];
 
 export default class ExtendedEvent extends Event {

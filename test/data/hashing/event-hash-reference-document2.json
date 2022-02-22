@@ -1,5 +1,5 @@
 {
-  "@context": ["https://id.gs1.org/epcis-context.jsonld",{"gs1": "https://gs1.org/voc/"}],
+  "@context": ["https://id.gs1.org/epcis-context.jsonld", { "gs1": "https://gs1.org/voc/" }],
   "type": "EPCISDocument",
   "creationDate": "2020-04-01T15:00:00+01:00",
   "schemaVersion": "2",
@@ -9,12 +9,10 @@
         "type": "ObjectEvent",
         "eventTime": "2020-04-01T15:00:00+01:00",
         "eventTimeZoneOffset": "+01:00",
-        "epcList": [
-          "urn:epc:id:sgtin:4012345.011111.9876"
-        ],
+        "epcList": ["urn:epc:id:sgtin:4012345.011111.9876"],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00005.0"},
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00005.0" },
         "sensorElementList": [
           {
             "sensorMetadata": {

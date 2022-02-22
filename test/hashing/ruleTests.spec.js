@@ -5,7 +5,10 @@
  */
 
 import { expect } from 'chai';
-import { eventToPreHashedString, getPreHashStringOfField } from '../../src/hash_generator/EPCISEventToPreHashedString';
+import {
+  eventToPreHashedString,
+  getPreHashStringOfField,
+} from '../../src/hash_generator/EPCISEventToPreHashedString';
 
 describe('rule tests', () => {
   // The rules are defined here : https://github.com/RalphTro/epcis-event-hash-generator#algorithm
@@ -25,7 +28,7 @@ describe('rule tests', () => {
     expect(str).to.be.equal('field=10');
     str = getPreHashStringOfField('field', 10.1, true);
     expect(str).to.be.equal('field=10.1');
-    str = getPreHashStringOfField('field', 10.100, true);
+    str = getPreHashStringOfField('field', 10.1, true);
     expect(str).to.be.equal('field=10.1');
   });
 
@@ -50,16 +53,17 @@ describe('rule tests', () => {
   });
 
   it('should follow rule n°14', () => {
-    const str = eventToPreHashedString({
-      bizStep: 'urn:epcglobal:cbv:bizstep:repairing',
-    }, {});
+    const str = eventToPreHashedString(
+      {
+        bizStep: 'urn:epcglobal:cbv:bizstep:repairing',
+      },
+      {},
+    );
     expect(str).to.be.equal('bizStep=https://ns.gs1.org/cbv/BizStep-repairing');
   });
 
   it('should follow rule n°15', () => {
-    const str = getPreHashStringOfField(
-      'field', 'urn:epc:id:sgtin:0614141.011111.987', true,
-    );
+    const str = getPreHashStringOfField('field', 'urn:epc:id:sgtin:0614141.011111.987', true);
     expect(str).to.be.equal('field=https://id.gs1.org/01/00614141111114/21/987');
   });
 

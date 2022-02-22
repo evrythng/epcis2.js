@@ -8,10 +8,7 @@
         "type": "ObjectEvent",
         "eventTime": "2005-04-05T02:33:31.116Z",
         "eventTimeZoneOffset": "-06:00",
-        "epcList": [
-          "urn:epc:id:sgtin:0614141.107346.2018",
-          "urn:epc:id:sgtin:0614141.107346.2017"
-        ],
+        "epcList": ["urn:epc:id:sgtin:0614141.107346.2018", "urn:epc:id:sgtin:0614141.107346.2017"],
         "action": "ADD",
         "bizStep": "receiving",
         "disposition": "in_progress",
@@ -117,11 +114,7 @@
               {
                 "ext1:object": {
                   "ext1:object": {
-                    "ext2:array": [
-                      "14",
-                      "23.0",
-                      "stringInArrayInObjectInArray"
-                    ],
+                    "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
                     "ext2:object": {
                       "ext2:object": {
                         "ext3:string": "stringInObjectInObjectInArray"
@@ -135,11 +128,7 @@
             ],
             "ext1:boolean": "true",
             "ext1:object": {
-              "ext2:array": [
-                "11",
-                "21",
-                "stringInArrayInObject"
-              ],
+              "ext2:array": ["11", "21", "stringInArrayInObject"],
               "ext2:object": {
                 "ext2:object": {
                   "ext3:string": "stringInObjectInObject"
@@ -153,12 +142,8 @@
           }
         ],
         "persistentDisposition": {
-          "set": [
-            "completeness_verified"
-          ],
-          "unset": [
-            "completeness_inferred"
-          ]
+          "set": ["completeness_verified"],
+          "unset": ["completeness_inferred"]
         },
         "ilmd": {
           "ext1:float": "20",
@@ -171,11 +156,7 @@
             {
               "ext1:object": {
                 "ext1:object": {
-                  "ext2:array": [
-                    "14",
-                    "23.0",
-                    "stringInArrayInObjectInArray"
-                  ],
+                  "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
                   "ext2:object": {
                     "ext2:object": {
                       "ext3:string": "stringInObjectInObjectInArray"
@@ -188,11 +169,7 @@
             }
           ],
           "ext1:object": {
-            "ext2:array": [
-              "11",
-              "21",
-              "stringInArrayInObject"
-            ],
+            "ext2:array": ["11", "21", "stringInArrayInObject"],
             "ext2:object": {
               "ext2:object": {
                 "ext3:string": "stringInObjectInObject"
@@ -216,9 +193,7 @@
           "declarationTime": "2020-01-15T00:00:00+01:00",
           "reason": "incorrect_data",
           "example:vendorExtension": "Test1",
-          "correctiveEventIDs": [
-            "urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"
-          ]
+          "correctiveEventIDs": ["urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"]
         },
         "ext1:float": "20",
         "ext1:time": "2013-06-08T14:58:56.591Z",
@@ -231,11 +206,7 @@
           {
             "ext1:object": {
               "ext1:object": {
-                "ext2:array": [
-                  "14",
-                  "23.0",
-                  "stringInArrayInObjectInArray"
-                ],
+                "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
                 "ext2:object": {
                   "ext2:object": {
                     "ext3:string": "stringInObjectInObjectInArray"
@@ -249,11 +220,7 @@
         ],
         "ext1:boolean": "true",
         "ext1:object": {
-          "ext2:array": [
-            "11",
-            "21",
-            "stringInArrayInObject"
-          ],
+          "ext2:array": ["11", "21", "stringInArrayInObject"],
           "ext2:object": {
             "ext2:object": {
               "ext3:string": "stringInObjectInObject"
