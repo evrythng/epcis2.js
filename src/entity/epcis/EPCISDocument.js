@@ -47,14 +47,9 @@ export default class EPCISDocument extends Entity {
           this.setEPCISHeader(new EPCISHeader(value));
           break;
         case 'epcisBody':
-          if (value.event) {
-            this.addEvent(objectToEvent(value.event));
-            break;
-          }
           if (value.eventList) {
             value.eventList.forEach((event) => this
               .addEvent(objectToEvent(event)));
-            break;
           }
           break;
         // no default
