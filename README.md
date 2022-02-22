@@ -96,19 +96,19 @@ This example would output:
 
 ```json
 {
-   "isA":"EPCISDocument",
+   "type":"EPCISDocument",
    "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
    "schemaVersion": "2",
    "epcisBody":{
       "eventList":[
          {
-            "isA":"ObjectEvent",
+            "type":"ObjectEvent",
             "action":"OBSERVE",
             "eventTime":"2005-04-03T20:33:31.116-06:00",
             "eventTimeZoneOffset":"-06:00"
          },
          {
-            "isA":"ObjectEvent",
+            "type":"ObjectEvent",
             "action":"OBSERVE",
             "eventTime":"2005-04-03T21:33:31.116-06:00",
             "eventTimeZoneOffset":"-06:00"
