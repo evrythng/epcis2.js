@@ -1,19 +1,11 @@
 {
-  "@context": [
-    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
-    {
-      "example": "http://ns.example.com/epcis/"
-    }
-  ],
-  "id": "_:document1",
-  "isA": "EPCISDocument",
-  "schemaVersion": "2",
-  "creationDate": "2005-07-11T11:30:47.0Z",
-  "format": "application/ld+json",
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2013-06-04T14:59:02.099+02:00",
   "epcisBody": {
     "eventList": [
       {
-        "isA": "AggregationEvent",
+        "type": "AggregationEvent",
         "eventTime": "2013-06-08T14:58:56.591Z",
         "eventTimeZoneOffset": "+02:00",
         "parentID": "urn:epc:id:sscc:0614141.1234567890",
@@ -22,14 +14,24 @@
           "urn:epc:id:sgtin:0614141.107346.2018"
         ],
         "action": "OBSERVE",
-        "bizStep": "urn:epcglobal:cbv:bizstep:receiving",
-        "disposition": "urn:epcglobal:cbv:disp:in_progress",
+        "bizStep": "receiving",
+        "disposition": "in_progress",
         "readPoint": {
-          "id": "urn:epc:id:sgln:0614141.00777.0"
+          "id": "urn:epc:id:sgln:0037000.00729.8202"
         },
         "bizLocation": {
-          "id": "urn:epc:id:sgln:0614141.00888.0"
+          "id": "urn:epc:id:sgln:0037000.00729.8202"
         },
+        "bizTransactionList": [
+          {
+            "type": "po",
+            "bizTransaction": "urn:epc:id:gdti:0614141.00001.1618034"
+          },
+          {
+            "type": "pedigree",
+            "bizTransaction": "urn:epc:id:gsrn:0614141.0000010253"
+          }
+        ],
         "childQuantityList": [
           {
             "epcClass": "urn:epc:idpat:sgtin:4012345.098765.*",
@@ -41,8 +43,185 @@
             "uom": "KGM"
           }
         ],
-        "example:myField": "Example of a vendor/user extension"
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4012345.00225.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4012345.00225"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4012345.00225"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:0614141.00777.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:0614141.00777"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:0614141.00777"
+          }
+        ],
+        "sensorElementList": [
+          {
+            "type": "epcis:SensorElement",
+            "sensorMetadata": {
+              "time": "2019-04-02T13:05:00.000Z",
+              "deviceID": "urn:epc:id:giai:4000001.111",
+              "deviceMetadata": "https://id.gs1.org/giai/4000001111",
+              "rawData": "https://example.org/giai/401234599999",
+              "startTime": "2019-04-02T12:55:01.000Z",
+              "endTime": "2019-04-02T13:55:00.000Z",
+              "dataProcessingMethod": "https://example.com/gdti/4012345000054987",
+              "bizRules": "https://example.com/gdti/4012345000054987",
+              "ext1:someFurtherMetadata": "someText"
+            },
+            "sensorReport": [
+              {
+                "type": "gs1:Temperature",
+                "deviceID": "urn:epc:id:giai:4000001.111",
+                "rawData": "https://example.org/giai/401234599999",
+                "dataProcessingMethod": "https://example.com/gdti/4012345000054987",
+                "time": "2019-07-19T13:00:00.000Z",
+                "microorganism": "https://www.ncbi.nlm.nih.gov/taxonomy/1126011",
+                "chemicalSubstance": "https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
+                "value": 26,
+                "component": "example:x",
+                "stringValue": "SomeString",
+                "booleanValue": true,
+                "hexBinaryValue": "f0f0f0",
+                "uriValue": "https://id.gs1.org/giai/4000001111",
+                "minValue": 26,
+                "maxValue": 26.2,
+                "meanValue": 13.2,
+                "percRank": 50,
+                "percValue": 12.7,
+                "uom": "CEL",
+                "sDev": 0.1,
+                "ext1:someFurtherReportData": "someText",
+                "deviceMetadata": "https://id.gs1.org/giai/4000001111"
+              }
+            ],
+            "ext1:float": "20",
+            "ext1:time": "2013-06-08T14:58:56.591Z",
+            "ext1:array": [
+              "12",
+              "22",
+              "2013-06-08T14:58:56.591Z",
+              "true",
+              "stringInArray",
+              {
+                "ext1:object": {
+                  "ext1:object": {
+                    "ext2:array": [
+                      "14",
+                      "23.0",
+                      "stringInArrayInObjectInArray"
+                    ],
+                    "ext2:object": {
+                      "ext2:object": {
+                        "ext3:string": "stringInObjectInObjectInArray"
+                      }
+                    },
+                    "ext2:int": "13",
+                    "ext2:string": "stringInObjectInArray"
+                  }
+                }
+              }
+            ],
+            "ext1:boolean": "true",
+            "ext1:object": {
+              "ext2:array": [
+                "11",
+                "21",
+                "stringInArrayInObject"
+              ],
+              "ext2:object": {
+                "ext2:object": {
+                  "ext3:string": "stringInObjectInObject"
+                }
+              },
+              "ext2:string": "stringInObject"
+            },
+            "ext1:default": "stringAsDefaultValue",
+            "ext1:int": "10",
+            "ext1:string": "string"
+          }
+        ],
+        "persistentDisposition": {
+          "set": [
+            "completeness_verified"
+          ],
+          "unset": [
+            "completeness_inferred"
+          ]
+        },
+        "ext1:float": "20",
+        "ext1:time": "2013-06-08T14:58:56.591Z",
+        "ext1:array": [
+          "12",
+          "22",
+          "2013-06-08T14:58:56.591Z",
+          "true",
+          "stringInArray",
+          {
+            "ext1:object": {
+              "ext1:object": {
+                "ext2:array": [
+                  "14",
+                  "23.0",
+                  "stringInArrayInObjectInArray"
+                ],
+                "ext2:object": {
+                  "ext2:object": {
+                    "ext3:string": "stringInObjectInObjectInArray"
+                  }
+                },
+                "ext2:int": "13",
+                "ext2:string": "stringInObjectInArray"
+              }
+            }
+          }
+        ],
+        "ext1:boolean": "true",
+        "ext1:object": {
+          "ext2:array": [
+            "11",
+            "21",
+            "stringInArrayInObject"
+          ],
+          "ext2:object": {
+            "ext2:object": {
+              "ext3:string": "stringInObjectInObject"
+            }
+          },
+          "ext2:string": "stringInObject"
+        },
+        "ext1:default": "stringAsDefaultValue",
+        "ext1:int": "10",
+        "ext1:string": "string"
       }
     ]
-  }
+  },
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "ext3": "http://example.com/ext3/"
+    },
+    {
+      "ext2": "http://example.com/ext2/"
+    },
+    {
+      "ext1": "http://example.com/ext1/"
+    }
+  ]
 }

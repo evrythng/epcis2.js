@@ -5,7 +5,7 @@
  */
 
 export const sampleObjectEvent = {
-  isA: 'ObjectEvent',
+  type: 'ObjectEvent',
   eventTime: '2020-03-04T11:00:30.000+01:00',
   eventTimeZoneOffset: '+01:00',
   recordTime: '2020-03-04T11:00:30.999+01:00',

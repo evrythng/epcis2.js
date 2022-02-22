@@ -13,10 +13,14 @@ import BizLocation from '../../src/entity/model/BizLocation';
 import BizTransactionElement from '../../src/entity/model/BizTransactionElement';
 import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
-import { exampleAssociationEvent, exampleObjectEvent } from '../data/eventExample';
+import EPCISDocumentAssociationEvent from '../data/EPCISDocument-AssociationEvent.json';
+import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
 import Ilmd from '../../src/entity/model/Ilmd';
 import PersistentDisposition from '../../src/entity/model/PersistentDisposition';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
+
+const exampleAssociationEvent = EPCISDocumentAssociationEvent.epcisBody.eventList[0];
+const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 
 const epc1 = exampleObjectEvent.epcList[0];
 const epc2 = exampleObjectEvent.epcList[1];
@@ -28,6 +32,7 @@ describe('unit tests for the AssociationEvent class', () => {
     obj.setEventID(exampleAssociationEvent.eventID)
       .addChildEPCList(exampleAssociationEvent.childEPCs)
       .setEventTime(exampleAssociationEvent.eventTime)
+      .setEventTimeZoneOffset(exampleAssociationEvent.eventTimeZoneOffset)
       .setRecordTime(exampleAssociationEvent.recordTime)
       .setErrorDeclaration(new ErrorDeclaration(exampleAssociationEvent.errorDeclaration))
       .setAction(exampleAssociationEvent.action)

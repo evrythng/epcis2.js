@@ -2,15 +2,14 @@
     "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
 
     "id": "_:document1",
-    "isA": "EPCISDocument",
+    "type": "EPCISDocument",
     "schemaVersion":"2.0",
     "creationDate":"2005-07-11T11:30:47.0Z",
-    "format":"application/ld+json",
     "epcisBody": {
      "eventList": [
        {
             "id": "_:event1",
-            "isA": "ObjectEvent",
+            "type": "ObjectEvent",
             "action": "OBSERVE",
             "bizStep": "urn:epcglobal:cbv:bizstep:shipping",
             "disposition": "urn:epcglobal:cbv:disp:in_transit",
@@ -22,7 +21,7 @@
        },
        {
             "id": "_:event2",
-            "isA": "ObjectEvent",
+            "type": "ObjectEvent",
             "action": "OBSERVE",
             "bizStep": "urn:epcglobal:cbv:bizstep:receiving",
             "disposition": "urn:epcglobal:cbv:disp:in_progress",

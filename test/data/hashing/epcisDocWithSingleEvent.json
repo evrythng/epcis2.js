@@ -5,13 +5,13 @@
       "example": "http://ns.example.com/epcis/"
     }
   ],
-  "isA": "EPCISDocument",
+  "type": "EPCISDocument",
   "schemaVersion": "2.0",
   "creationDate": "2005-07-11T11:30:47.0Z",
   "epcisBody": {
     "event": {
       "eventID": "_:event1",
-      "isA": "ObjectEvent",
+      "type": "ObjectEvent",
       "action": "OBSERVE",
       "bizStep": "urn:epcglobal:cbv:bizstep:shipping",
       "disposition": "urn:epcglobal:cbv:disp:in_transit",

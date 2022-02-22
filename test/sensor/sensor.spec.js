@@ -59,6 +59,7 @@ describe('unit tests for sensor relative Objects', () => {
       const sensorReport = new SensorReportElement();
       sensorReport
         .setType(exampleSensorReportElement.type)
+        .setException(exampleSensorReportElement.exception)
         .setDeviceID(exampleSensorReportElement.deviceID)
         .setDeviceMetadata(exampleSensorReportElement.deviceMetadata)
         .setRawData(exampleSensorReportElement.rawData)
@@ -105,6 +106,7 @@ describe('unit tests for sensor relative Objects', () => {
       expect(sensorReport.getPercRank()).to.be.equal(exampleSensorReportElement.percRank);
       expect(sensorReport.getPercValue()).to.be.equal(exampleSensorReportElement.percValue);
       expect(sensorReport.getUom()).to.be.equal(exampleSensorReportElement.uom);
+      expect(sensorReport.getException()).to.be.equal(exampleSensorReportElement.exception);
     });
 
     it('should create a valid SensorReportElement object from JSON', async () => {

@@ -18,9 +18,10 @@ import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import Ilmd from '../../src/entity/model/Ilmd';
-import { exampleObjectEvent } from '../data/eventExample';
 import { getTimeZoneOffset } from '../../src/utils/utils';
+import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
 
+const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 const epc1 = exampleObjectEvent.epcList[0];
 const epc2 = exampleObjectEvent.epcList[1];
 const epc3 = 'urn:epc:id:sgtin:0614141.107346.2019';
@@ -34,7 +35,7 @@ describe('unit tests for the ObjectEvent class', () => {
 
     it('should use default values', async () => {
       const o = new ObjectEvent();
-      expect(o.isA).to.be.equal('ObjectEvent');
+      expect(o.type).to.be.equal('ObjectEvent');
     });
 
     it('should not use eventTimeZoneOffset from settings if it is not overridden', async () => {
@@ -57,6 +58,7 @@ describe('unit tests for the ObjectEvent class', () => {
     obj.setEventID(exampleObjectEvent.eventID)
       .addEPCList(exampleObjectEvent.epcList)
       .setEventTime(exampleObjectEvent.eventTime)
+      .setEventTimeZoneOffset(exampleObjectEvent.eventTimeZoneOffset)
       .setRecordTime(exampleObjectEvent.recordTime)
       .setErrorDeclaration(new ErrorDeclaration(exampleObjectEvent.errorDeclaration))
       .addExtension('example:myField', exampleObjectEvent['example:myField'])
@@ -66,6 +68,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setPersistentDisposition(new PersistentDisposition(exampleObjectEvent.persistentDisposition))
       .setReadPoint(exampleObjectEvent.readPoint.id)
       .setBizLocation(exampleObjectEvent.bizLocation.id)
+      .setContext('https://gs1.github.io/EPCIS/epcis-context.jsonld')
       .setIlmd(new Ilmd(exampleObjectEvent.ilmd));
 
     expect(obj.getEPCList().toString()).to.be.equal(exampleObjectEvent.epcList.toString());
@@ -73,6 +76,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getEventTime()).to.be.equal(exampleObjectEvent.eventTime);
     expect(obj.getEventTimeZoneOffset()).to.be.equal(exampleObjectEvent.eventTimeZoneOffset);
     expect(obj.getRecordTime()).to.be.equal(exampleObjectEvent.recordTime);
+    expect(obj.getContext()).to.be.equal('https://gs1.github.io/EPCIS/epcis-context.jsonld');
     expect(obj['example:myField']).to.be.equal(exampleObjectEvent['example:myField']);
     expect(obj.getErrorDeclaration().getDeclarationTime()).to
       .be.equal(exampleObjectEvent.errorDeclaration.declarationTime);
@@ -112,6 +116,10 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(() => obj.generateHashID({})).to.throw();
     expect(() => obj.generateHashID({
       example: 'http://ns.example.com/epcis/',
+      ext1: 'http://ns.example.com/epcis/',
+      ext2: 'http://ns.example.com/epcis/',
+      ext3: 'http://ns.example.com/epcis/',
+      cbvmda: 'http://ns.example.com/epcis/',
     })).to.not.throw();
     expect(obj.getEventID().startsWith('ni:///')).to.be.equal(true);
   });

@@ -1,13 +1,12 @@
 {
   "@context": ["https://id.gs1.org/epcis-context.jsonld",{"gs1": "https://gs1.org/voc/"}],
-  "isA": "EPCISDocument",
+  "type": "EPCISDocument",
   "creationDate": "2020-04-01T15:00:00+01:00",
   "schemaVersion": "2",
-  "format": "application/ld+json",
   "epcisBody": {
     "eventList": [
       {
-        "isA": "ObjectEvent",
+        "type": "ObjectEvent",
         "eventTime": "2020-04-01T15:00:00+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [

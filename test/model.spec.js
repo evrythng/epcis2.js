@@ -5,7 +5,7 @@
  */
 
 import { expect } from 'chai';
-import { dispositions } from '../src';
+import { dispositions, Ilmd } from '../src';
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';
 import QuantityElement from '../src/entity/model/QuantityElement';
 import PersistentDisposition from '../src/entity/model/PersistentDisposition';
@@ -24,6 +24,7 @@ import {
   exampleSourceElement,
   exampleDestinationElement,
   exampleVocabularyElements,
+  exampleIlmd,
 } from './data/eventExample';
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00';
@@ -40,10 +41,12 @@ describe('unit tests for model Objects', () => {
         .setDeclarationTime(anotherDate)
         .setReason(reason)
         .addCorrectiveEventID(correctiveEventID1)
-        .addCorrectiveEventID(correctiveEventID2);
+        .addCorrectiveEventID(correctiveEventID2)
+        .addExtension('example:vendorExtension', 'Test1');
 
       expect(errorDeclaration.getReason()).to.be.equal(reason);
       expect(errorDeclaration.getDeclarationTime()).to.be.equal(anotherDate);
+      expect(errorDeclaration.getExtension('example:vendorExtension')).to.be.equal('Test1');
       expect(errorDeclaration.getCorrectiveEventIDs().toString()).to.be
         .equal([correctiveEventID1, correctiveEventID2].toString());
     });
@@ -53,6 +56,7 @@ describe('unit tests for model Objects', () => {
         declarationTime: anotherDate,
         correctiveEventIDs: [correctiveEventID1, correctiveEventID2, correctiveEventID3],
         reason,
+        'example:vendorExtension': 'Test1'
       };
 
       const errorDeclaration = new ErrorDeclaration(exampleErrorDeclaration);
@@ -580,6 +584,24 @@ describe('unit tests for model Objects', () => {
     it('should create a valid AttributeElement object from JSON', async () => {
       const attributeElement = new AttributeElement(exampleAttribute);
       expect(attributeElement.toObject()).to.deep.equal(exampleAttribute);
+    });
+  });
+
+  describe('Ilmd.js', () => {
+
+    it('should create a valid AttributeElement object from setters', async () => {
+      const ilmd = new Ilmd();
+      ilmd
+        .setType(exampleIlmd.type)
+        .setFormat(exampleIlmd.format);
+
+      expect(ilmd.getType()).to.be.equal(exampleIlmd.type);
+      expect(ilmd.getFormat()).to.be.equal(exampleIlmd.format);
+    });
+
+    it('should create a valid AttributeElement object from JSON', async () => {
+      const ilmd = new Ilmd(exampleIlmd);
+      expect(ilmd.toObject()).to.deep.equal(exampleIlmd);
     });
   });
 });

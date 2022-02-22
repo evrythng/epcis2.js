@@ -7,7 +7,9 @@
 import { assert, expect } from 'chai';
 import { eventToPreHashedString } from '../../../src/hash_generator/EPCISEventToPreHashedString';
 import { sampleContext, sampleObjectEvent } from '../../data/hashing/samplePrehashesAndHashes';
-import { exampleObjectEvent } from '../../data/eventExample';
+import EPCISDocumentObjectEvent from '../../data/EPCISDocument-ObjectEvent.json';
+
+const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 
 describe('unit tests for pre-hashing', () => {
   it('Should return a valid pre-hash', () => {
@@ -501,14 +503,22 @@ describe('unit tests for pre-hashing', () => {
   });
 
   it('Should return the same pre-hash (URN voc to URI equivalent)', () => {
-    const str = eventToPreHashedString(exampleObjectEvent, sampleContext);
+    const context = {
+      ...sampleContext,
+      ext1: 'http://ns.example.com/epcis/',
+      ext2: 'http://ns.example.com/epcis/',
+      ext3: 'http://ns.example.com/epcis/',
+      cbvmda: 'http://ns.example.com/epcis/',
+    };
+    const str = eventToPreHashedString(exampleObjectEvent, context);
     const obj2 = exampleObjectEvent;
-    obj2.bizStep = 'https://ns.gs1.org/cbv/BizStep-shipping';
-    obj2.disposition = 'https://ns.gs1.org/cbv/Disp-in_transit';
+    obj2.bizStep = 'https://ns.gs1.org/cbv/BizStep-receiving';
+    obj2.disposition = 'https://ns.gs1.org/cbv/Disp-in_progress';
     obj2.bizTransactionList[0].type = 'https://ns.gs1.org/cbv/BTT-po';
-    obj2.destinationList[0].type = 'https://ns.gs1.org/cbv/SDT-owning_party';
+    obj2.destinationList[0].type = 'https://ns.gs1.org/cbv/SDT-location';
+    obj2.sourceList[0].type = 'https://ns.gs1.org/cbv/SDT-location';
     obj2.errorDeclaration.reason = 'https://ns.gs1.org/cbv/ER-incorrect_data';
-    const str2 = eventToPreHashedString(obj2, sampleContext);
+    const str2 = eventToPreHashedString(obj2, context);
     expect(str2).to.be.equal(str);
   });
 
@@ -606,7 +616,7 @@ describe('unit tests for pre-hashing', () => {
 
   it('should pre-hash the event Type field', () => {
     const str = eventToPreHashedString({
-      isA: 'TransformationEvent',
+      type: 'TransformationEvent',
     }, {});
     expect(str).to.be.equal('eventType=TransformationEvent');
   });

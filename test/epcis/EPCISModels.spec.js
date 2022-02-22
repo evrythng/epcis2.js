@@ -9,6 +9,7 @@ import EPCISMasterData from '../../src/entity/epcis/EPCISMasterData';
 import Vocabulary from '../../src/entity/model/Vocabulary';
 import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
 import { exampleEPCISHeader } from '../data/eventExample';
+import Entity from '../../src/entity/Entity';
 
 describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () => {
   describe('EPCISMasterData.js', () => {
@@ -77,5 +78,13 @@ describe('unit tests for the EPCIS classes in the src/entity/epcis folder', () =
       const e = new EPCISHeader(exampleEPCISHeader);
       expect(e.toObject()).to.deep.equal(exampleEPCISHeader);
     });
+  });
+
+  describe('Entity.js', () => {
+
+    it("shouldn't instantiate an entity", async () => {
+      expect(() => new Entity()).to.throw();
+    });
+
   });
 });

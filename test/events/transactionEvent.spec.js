@@ -15,8 +15,10 @@ import BizTransactionElement from '../../src/entity/model/BizTransactionElement'
 import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
-import { exampleTransactionEvent } from '../data/eventExample';
 import Ilmd from '../../src/entity/model/Ilmd';
+import EPCISDocumentTransactionEvent from '../data/EPCISDocument-TransactionEvent.json';
+
+const exampleTransactionEvent = EPCISDocumentTransactionEvent.epcisBody.eventList[0];
 
 describe('unit tests for the TransactionEvent class', () => {
   it('setters should set the variables correctly', async () => {
@@ -33,6 +35,7 @@ describe('unit tests for the TransactionEvent class', () => {
       .setPersistentDisposition(
         new PersistentDisposition(exampleTransactionEvent.persistentDisposition),
       )
+      .setEventTimeZoneOffset(exampleTransactionEvent.eventTimeZoneOffset)
       .setReadPoint(exampleTransactionEvent.readPoint.id)
       .setBizLocation(exampleTransactionEvent.bizLocation.id)
       .setParentId(exampleTransactionEvent.parentID);

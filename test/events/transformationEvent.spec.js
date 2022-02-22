@@ -10,11 +10,15 @@ import QuantityElement from '../../src/entity/model/QuantityElement';
 import BizTransactionElement from '../../src/entity/model/BizTransactionElement';
 import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
-import { exampleObjectEvent, exampleTransformationEvent } from '../data/eventExample';
+import EPCISDocumentTransformationEvent from '../data/EPCISDocument-TransformationEvent.json';
+import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
 import Ilmd from '../../src/entity/model/Ilmd';
 import PersistentDisposition from '../../src/entity/model/PersistentDisposition';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import TransformationEvent from '../../src/entity/events/TransformationEvent';
+
+const exampleTransformationEvent = EPCISDocumentTransformationEvent.epcisBody.eventList[0];
+const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 
 const epc1 = exampleObjectEvent.epcList[0];
 const epc2 = exampleObjectEvent.epcList[1];

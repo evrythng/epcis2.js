@@ -13,10 +13,12 @@ import BizLocation from '../../src/entity/model/BizLocation';
 import BizTransactionElement from '../../src/entity/model/BizTransactionElement';
 import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
-import { exampleAggregationEvent } from '../data/eventExample';
+import EPCISDocumentAggregationEvent from '../data/EPCISDocument-AggregationEvent.json';
 import Ilmd from '../../src/entity/model/Ilmd';
 import PersistentDisposition from '../../src/entity/model/PersistentDisposition';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
+
+const exampleAggregationEvent = EPCISDocumentAggregationEvent.epcisBody.eventList[0];
 
 describe('unit tests for the AggregationEvent class', () => {
   it('setters should set the variables correctly', async () => {

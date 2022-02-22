@@ -5,21 +5,16 @@
   "epcisBody": {
     "eventList": [
       {
-        "type": "ObjectEvent",
-        "eventTime": "2005-04-05T02:33:31.116Z",
+        "type": "TransactionEvent",
+        "eventTime": "2005-04-04T02:33:31.116Z",
         "eventTimeZoneOffset": "-06:00",
-        "epcList": [
-          "urn:epc:id:sgtin:0614141.107346.2018",
-          "urn:epc:id:sgtin:0614141.107346.2017"
-        ],
-        "action": "ADD",
-        "bizStep": "receiving",
-        "disposition": "in_progress",
-        "readPoint": {
-          "id": "urn:epc:id:sgln:0012345.11111.400"
-        },
-        "bizLocation": {
-          "id": "urn:epc:id:sgln:0012345.11111.0"
+        "errorDeclaration": {
+          "declarationTime": "2020-01-15T00:00:00+01:00",
+          "reason": "incorrect_data",
+          "example:vendorExtension": "Test1",
+          "correctiveEventIDs": [
+            "urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"
+          ]
         },
         "bizTransactionList": [
           {
@@ -31,10 +26,24 @@
             "bizTransaction": "urn:epc:id:gsrn:0614141.0000010253"
           }
         ],
+        "parentID": "urn:epc:id:sscc:0614141.1234567890",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.2017",
+          "urn:epc:id:sgtin:0614141.107346.2018"
+        ],
+        "action": "ADD",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:0614141.07346.1234"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:0614141.00888.0"
+        },
         "quantityList": [
           {
-            "epcClass": "urn:epc:class:lgtin:4012345.012345.998877",
-            "quantity": 200,
+            "epcClass": "urn:epc:class:lgtin:4012345.011111.4444",
+            "quantity": 10,
             "uom": "KGM"
           }
         ],
@@ -82,7 +91,7 @@
             },
             "sensorReport": [
               {
-                "type": "Temperature",
+                "type": "gs1:Temperature",
                 "deviceID": "urn:epc:id:giai:4000001.111",
                 "rawData": "https://example.org/giai/401234599999",
                 "dataProcessingMethod": "https://example.com/gdti/4012345000054987",
@@ -158,66 +167,6 @@
           ],
           "unset": [
             "completeness_inferred"
-          ]
-        },
-        "ilmd": {
-          "ext1:float": "20",
-          "ext1:array": [
-            "12",
-            "22",
-            "2013-06-08T14:58:56.591Z",
-            "true",
-            "stringInArray",
-            {
-              "ext1:object": {
-                "ext1:object": {
-                  "ext2:array": [
-                    "14",
-                    "23.0",
-                    "stringInArrayInObjectInArray"
-                  ],
-                  "ext2:object": {
-                    "ext2:object": {
-                      "ext3:string": "stringInObjectInObjectInArray"
-                    }
-                  },
-                  "ext2:int": "13",
-                  "ext2:string": "stringInObjectInArray"
-                }
-              }
-            }
-          ],
-          "ext1:object": {
-            "ext2:array": [
-              "11",
-              "21",
-              "stringInArrayInObject"
-            ],
-            "ext2:object": {
-              "ext2:object": {
-                "ext3:string": "stringInObjectInObject"
-              }
-            },
-            "ext2:string": "stringInObject"
-          },
-          "cbvmda:countryOfExport": "KR",
-          "cbvmda:grossWeight": "3.5",
-          "ext1:int": "10",
-          "cbvmda:netWeight": "3.5",
-          "ext1:time": "2013-06-08T14:58:56.591Z",
-          "ext1:boolean": "true",
-          "ext1:default": "stringAsDefaultValue",
-          "ext1:string": "string",
-          "cbvmda:countryOfOrigin": "GB",
-          "cbvmda:drainedWeight": "3.5",
-          "cbvmda:lotNumber": "ABC123"
-        },
-        "errorDeclaration": {
-          "declarationTime": "2020-01-15T00:00:00+01:00",
-          "reason": "incorrect_data",
-          "example:vendorExtension": "Test1",
-          "correctiveEventIDs": [
-            "urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"
           ]
         },
         "ext1:float": "20",

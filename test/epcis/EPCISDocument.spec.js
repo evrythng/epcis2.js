@@ -9,18 +9,17 @@ import setup from '../../src/setup';
 import settings, { defaultSettings } from '../../src/settings';
 import EPCISDocument from '../../src/entity/epcis/EPCISDocument';
 import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
-import { ObjectEvent } from '../../src';
-import { exampleEPCISDocument } from '../data/eventExample';
+import { AssociationEvent, ObjectEvent } from '../../src';
 import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
 import EPCISDocumentAggregationEvent from '../data/EPCISDocument-AggregationEvent.json';
 import EPCISDocumentTransformationEvent from '../data/EPCISDocument-TransformationEvent.json';
 import EPCISDocumentAssociationEvent from '../data/EPCISDocument-AssociationEvent.json';
-import EPCISDocumentMasterDataDocument from '../data/EPCISMasterDataDocument.json';
+import { exampleEPCISDocumentWithEPCISHeader } from '../data/eventExample';
 
 describe('unit tests for the EPCISDocument class', () => {
   const events = [
-    new ObjectEvent(exampleEPCISDocument.epcisBody.eventList[0]),
-    new ObjectEvent(exampleEPCISDocument.epcisBody.eventList[1]),
+    new ObjectEvent(EPCISDocumentObjectEvent.epcisBody.eventList[0]),
+    new AssociationEvent(EPCISDocumentAssociationEvent.epcisBody.eventList[0]),
   ];
 
   describe('setup function and EPCISDocument class', () => {
@@ -31,23 +30,10 @@ describe('unit tests for the EPCISDocument class', () => {
 
     it('should use default values', async () => {
       const e = new EPCISDocument();
-      expect(e.getIsA()).to.be.equal('EPCISDocument');
-      expect(e.getUseEventListByDefault()).to.be.equal(true);
+      expect(e.getType()).to.be.equal('EPCISDocument');
       expect(e.getSchemaVersion()).to.be.equal('2');
       expect(e.getContext()).to.be.equal(settings.EPCISDocumentContext);
       expect(e.getCreationDate().length).to.not.be.equal(0);
-    });
-
-    it('should set the object event in the event field', async () => {
-      setup({ useEventListByDefault: false });
-      const o = new ObjectEvent();
-      const e = new EPCISDocument().addEvent(o);
-      expect(e.getUseEventListByDefault()).to.be.equal(false);
-      expect(e.toObject().epcisBody.eventList).to.be.equal(undefined);
-      expect(e.toObject().epcisBody.event).to.deep.equal(o.toObject());
-      e.addEvent(events[0]);
-      expect(e.toObject().epcisBody.eventList.length).to.be.equal(2);
-      expect(e.toObject().epcisBody.event).to.deep.equal(undefined);
     });
 
     it('should set the correct context and schema version', async () => {
@@ -64,41 +50,34 @@ describe('unit tests for the EPCISDocument class', () => {
 
   it('setters should set the variables correctly', async () => {
     const e = new EPCISDocument()
-      .setContext(exampleEPCISDocument['@context'])
-      .setCreationDate(exampleEPCISDocument.creationDate)
-      .setSchemaVersion(exampleEPCISDocument.schemaVersion)
-      .setFormat(exampleEPCISDocument.format)
-      .setEPCISHeader(new EPCISHeader(exampleEPCISDocument.epcisHeader))
+      .setContext(EPCISDocumentObjectEvent['@context'])
+      .setCreationDate(EPCISDocumentObjectEvent.creationDate)
+      .setSchemaVersion(EPCISDocumentObjectEvent.schemaVersion)
+      .setEPCISHeader(new EPCISHeader(exampleEPCISDocumentWithEPCISHeader.epcisHeader))
       .addEventList(events);
-    expect(e.getContext()).to.be.equal(exampleEPCISDocument['@context']);
-    expect(e.getCreationDate()).to.be.equal(exampleEPCISDocument.creationDate);
-    expect(e.getSchemaVersion()).to.be.equal(exampleEPCISDocument.schemaVersion);
-    expect(e.getFormat()).to.be.equal(exampleEPCISDocument.format);
-    expect(e.getEPCISHeader().toObject()).to.deep.equal(exampleEPCISDocument.epcisHeader);
+    expect(e.getContext()).to.be.equal(EPCISDocumentObjectEvent['@context']);
+    expect(e.getCreationDate()).to.be.equal(EPCISDocumentObjectEvent.creationDate);
+    expect(e.getSchemaVersion()).to.be.equal(EPCISDocumentObjectEvent.schemaVersion);
+    expect(e.getEPCISHeader().toObject()).to.deep.equal(exampleEPCISDocumentWithEPCISHeader.epcisHeader);
     expect(e.getEventList()).to.deep.equal(events);
   });
 
   it('creation from object should set the variables correctly', async () => {
-    const e = new EPCISDocument(exampleEPCISDocument);
+    const e = new EPCISDocument(EPCISDocumentObjectEvent);
     expect(e.getEventList()[0]).to.be.instanceof(ObjectEvent);
-    expect(e.toObject()).to.deep.equal(exampleEPCISDocument);
+    expect(e.toObject()).to.deep.equal(EPCISDocumentObjectEvent);
   });
 
   it('should set the object event in the eventList field', async () => {
     const o = new ObjectEvent();
     const e = new EPCISDocument().addEvent(o);
-    expect(e.getUseEventListByDefault()).to.be.equal(true);
-    expect(e.toObject().epcisBody.event).to.be.equal(undefined);
     expect(e.toObject().epcisBody.eventList).to.deep.equal([o.toObject()]);
   });
 
   it('should set the object event in the event field', async () => {
     const o = new ObjectEvent();
     const e = new EPCISDocument().addEvent(o);
-    e.setUseEventListByDefault(false);
-    expect(e.getUseEventListByDefault()).to.be.equal(false);
-    expect(e.toObject().epcisBody.eventList).to.be.equal(undefined);
-    expect(e.toObject().epcisBody.event).to.deep.equal(o.toObject());
+    expect(e.toObject().epcisBody.eventList).to.deep.equal([o.toObject()]);
   });
 
   it('should not validate the document', async () => {
@@ -111,8 +90,6 @@ describe('unit tests for the EPCISDocument class', () => {
     expect(e.isValid()).to.be.equal(true);
     const e2 = new EPCISDocument(EPCISDocumentAggregationEvent);
     expect(e2.isValid()).to.be.equal(true);
-    const e3 = new EPCISDocument(EPCISDocumentMasterDataDocument);
-    expect(e3.isValid()).to.be.equal(true);
     const e4 = new EPCISDocument(EPCISDocumentTransformationEvent);
     expect(e4.isValid()).to.be.equal(true);
     const e5 = new EPCISDocument(EPCISDocumentAssociationEvent);
@@ -124,8 +101,6 @@ describe('unit tests for the EPCISDocument class', () => {
     expect(e.toObject()).to.deep.equal(EPCISDocumentObjectEvent);
     const e2 = new EPCISDocument(EPCISDocumentAggregationEvent);
     expect(e2.toObject()).to.deep.equal(EPCISDocumentAggregationEvent);
-    const e3 = new EPCISDocument(EPCISDocumentMasterDataDocument);
-    expect(e3.toObject()).to.deep.equal(EPCISDocumentMasterDataDocument);
     const e4 = new EPCISDocument(EPCISDocumentTransformationEvent);
     expect(e4.toObject()).to.deep.equal(EPCISDocumentTransformationEvent);
     const e5 = new EPCISDocument(EPCISDocumentAssociationEvent);

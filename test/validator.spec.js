@@ -11,9 +11,9 @@ import {
 import EPCISDocumentObjectEvent from './data/EPCISDocument-ObjectEvent.json';
 import EPCISDocumentAggregationEvent from './data/EPCISDocument-AggregationEvent.json';
 import EPCISDocumentTransformationEvent from './data/EPCISDocument-TransformationEvent.json';
+import EPCISDocumentTransactionEvent from './data/EPCISDocument-TransactionEvent.json';
 import EPCISDocumentAssociationEvent from './data/EPCISDocument-AssociationEvent.json';
 import EPCISDocumentQueryDocument from './data/EPCISQueryDocument.json';
-import EPCISDocumentMasterDataDocument from './data/EPCISMasterDataDocument.json';
 import EPCISDocument from '../src/entity/epcis/EPCISDocument';
 import BizTransactionElement from '../src/entity/model/BizTransactionElement';
 
@@ -25,7 +25,7 @@ const testData = {
   TransformationEvent: EPCISDocumentTransformationEvent,
   AssociationEvent: EPCISDocumentAssociationEvent,
   QueryDocument: EPCISDocumentQueryDocument,
-  MasterDataDocument: EPCISDocumentMasterDataDocument,
+  TransactionEvent: EPCISDocumentTransactionEvent
 };
 
 describe('validation of an EPCIS document', () => {
@@ -55,7 +55,6 @@ describe('validation of an EPCIS document', () => {
 
       epcisDocument
         .setCreationDate('2005-07-11T11:30:47+00:00')
-        .setFormat('application/ld+json')
         .addEvent(objectEvent);
 
       assert.doesNotThrow(() => epcisDocument.isValid());
@@ -65,7 +64,9 @@ describe('validation of an EPCIS document', () => {
       assert.doesNotThrow(() => validateSchema(testData.AggregationEvent));
     });
 
-    it('should accept a valid EPCISDocument containing TransactionEvent');
+    it('should accept a valid EPCISDocument containing TransactionEvent', () => {
+      assert.doesNotThrow(() => validateSchema(testData.TransactionEvent));
+    });
 
     it('should accept a valid EPCISDocument containing TransformationEvent', () => {
       assert.doesNotThrow(() => validateSchema(testData.TransformationEvent));
@@ -79,13 +80,6 @@ describe('validation of an EPCIS document', () => {
       assert.doesNotThrow(() => validateSchema(testData.QueryDocument));
     });
 
-    it('should accept a valid EPCISMasterDataDocument', () => {
-      assert.doesNotThrow(() => validateSchema(testData.MasterDataDocument));
-    });
-
-    // Not currently fully defined at the vocabulary level
-    // See: https://github.com/gs1/EPCIS/blob/master/REST%20Bindings/openapi.yaml#L3842
-    it('should accept a valid EPCISMasterDataDocument and validate the vocabulary');
   });
 
   describe('schema validation: invalid', () => {
@@ -120,7 +114,14 @@ describe('validation of an EPCIS document', () => {
       assert.throws(() => validateSchema(instance));
     });
 
-    it('should reject a valid EPCISDocument containing an invalid TransactionEvent');
+    it('should reject a valid EPCISDocument containing an invalid TransactionEvent', () => {
+      const instance = { ...testData.TransactionEvent };
+
+      // Introduce some error
+      instance.epcisBody.eventList[0].action = 'NOT_VALID_ACTION_TYPE';
+
+      assert.throws(() => validateSchema(instance));
+    });
 
     it('should reject a valid EPCISDocument containing an invalid TransformationEvent', () => {
       const instance = { ...testData.TransformationEvent };
@@ -151,18 +152,5 @@ describe('validation of an EPCIS document', () => {
 
       assert.throws(() => validateSchema(instance));
     });
-
-    it('should reject an invalid EPCISMasterDataDocument', () => {
-      const copy = { ...testData.MasterDataDocument };
-
-      // Omit the header
-      const { epcisHeader, ...instance } = copy;
-
-      assert.throws(() => validateSchema(instance));
-    });
-
-    // See 'should accept a valid EPCISMasterDataDocument and validate the vocabulary'
-    // equivalent test for details
-    it('should reject a valid EPCISMasterDataDocument containing invalid vocabulary');
   });
 });
