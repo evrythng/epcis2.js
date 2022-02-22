@@ -140,6 +140,7 @@ export const sensorMetadataCanonicalPropertyOrder = [
  */
 export const sensorReportCanonicalPropertyOrder = [
   'type',
+  'exception',
   'deviceID',
   'deviceMetadata',
   'rawData',
