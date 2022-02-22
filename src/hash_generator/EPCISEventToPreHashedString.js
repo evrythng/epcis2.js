@@ -250,7 +250,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         // if, for example, the field is equal to 'bol' instead of
         // 'urn:epcglobal:cbv:btt:bol', we need to complete it
         if (businessTransactionTypes[list[i].type] !== undefined) {
-          list[i].type = businessTransactionTypes[list[i].type];
+          list[i].type = `urn:epcglobal:cbv:btt:${businessTransactionTypes[list[i].type]}`;
         }
         res = getOrderedPreHashString(list[i], context,
           bizTransactionCanonicalPropertyOrder, throwError);
@@ -260,6 +260,11 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'sourceList':
       for (let i = 0; i < list.length; i += 1) {
+        // if, for example, the field is equal to 'location' instead of
+        // 'urn:epcglobal:cbv:sdt:location', we need to complete it
+        if (sourceDestinationTypes[list[i].type] !== undefined) {
+          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
+        }
         res = getOrderedPreHashString(list[i], context,
           sourceCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
@@ -271,7 +276,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         // if, for example, the field is equal to 'location' instead of
         // 'urn:epcglobal:cbv:sdt:location', we need to complete it
         if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = sourceDestinationTypes[list[i].type];
+          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
         }
         res = getOrderedPreHashString(list[i], context,
           destinationCanonicalPropertyOrder, throwError);
@@ -327,11 +332,13 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
  * @param {[]} orderList
  * @param {boolean} throwError - if set to true, it will throw an error if the event misses some
  * fields for example. Otherwise, it won't throw an error and it will still return the generated id
+ * @param {boolean} recursive - false if it is the first call of the function - true if it is being
+ * called from inside the function
  * @returns {{preHashed: string, customFields: []}} the object passed in parameter with its field
  * ordered
  */
 export const getOrderedPreHashString =
-  (object, context, orderList, throwError) => {
+  (object, context, orderList, throwError, recursive = true) => {
     let string = '';
     const strings = [];
     let res;
@@ -346,14 +353,18 @@ export const getOrderedPreHashString =
         } else {
           switch (orderList[i]) {
             case 'type':
-            // we replace 'type' by 'eventType'
-              string += getPreHashStringOfField('eventType', object[orderList[i]], throwError);
+              // if it is the root 'type' (i.e the type of the event) we replace 'type' by 'eventType'
+              // else - it is the type of a subfield, we don't replace it.
+              string += getPreHashStringOfField(
+                recursive ? 'type' : 'eventType', object[orderList[i]], throwError
+              );
               break;
             case 'errorDeclaration':
             // if, for example, the field is equal to 'did_not_occur' instead of
             // 'urn:epcglobal:cbv:er:did_not_occur', we need to complete it
               if (errorReasonIdentifiers[object[orderList[i]].reason] !== undefined) {
-                object[orderList[i]].reason = errorReasonIdentifiers[object[orderList[i]].reason];
+                object[orderList[i]].reason =
+                  `urn:epcglobal:cbv:er:${errorReasonIdentifiers[object[orderList[i]].reason]}`;
               }
               res = getOrderedPreHashString(object[orderList[i]], context,
                 errorDeclarationCanonicalPropertyOrder, throwError);
@@ -397,7 +408,7 @@ export const getOrderedPreHashString =
               // if, for example, the field is equal to 'accepting' instead of
               // 'urn:epcglobal:cbv:bizstep:accepting' for example, we need to complete it
               if (bizSteps[res] !== undefined) {
-                res = bizSteps[res];
+                res = `urn:epcglobal:cbv:bizstep:${bizSteps[res]}`;
               }
 
               string += getPreHashStringOfField(orderList[i], res, throwError);
@@ -407,7 +418,7 @@ export const getOrderedPreHashString =
               // if, for example, the field is equal to 'active' instead of
               // 'urn:epcglobal:cbv:disp:active', we need to complete it
               if (dispositions[res] !== undefined) {
-                res = dispositions[res];
+                res = `urn:epcglobal:cbv:disp:${dispositions[res]}`;
               }
 
               string += getPreHashStringOfField(orderList[i], res, throwError);
@@ -454,7 +465,7 @@ export const eventToPreHashedString = (event, context, throwError = true) => {
   // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
   const extendedContext = { ...context, ...getEventContexts(event) };
   const res = getOrderedPreHashString(
-    event, extendedContext, canonicalPropertyOrder, throwError,
+    event, extendedContext, canonicalPropertyOrder, throwError, false
   );
   return res.preHashed + listOfStringToPreHashLexicalOrderedString(res.customFields);
 };
