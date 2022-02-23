@@ -7,7 +7,7 @@ const { setup, EPCISDocument, capture } = require('epcis2.js');
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
   EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: '1.2',
+  EPCISDocumentSchemaVersion: '2.0',
   headers: {
     'content-type': 'application/json',
     authorization: 'MY_API_KEY',
@@ -22,18 +22,16 @@ const sendACaptureRequestExample = async () => {
         example: 'http://ns.example.com/epcis/',
       },
     ],
-    isA: 'EPCISDocument',
-    schemaVersion: '1.2',
+    type: 'EPCISDocument',
     creationDate: '2005-07-11T11:30:47.0Z',
-    format: 'application/ld+json',
     epcisBody: {
       eventList: [
         {
-          isA: 'ObjectEvent',
+          type: 'ObjectEvent',
           eventID: 'test-sdk-demo:2',
           action: 'OBSERVE',
-          bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-          disposition: 'urn:epcglobal:cbv:disp:in_transit',
+          bizStep: 'shipping',
+          disposition: 'in_transit',
           epcList: ['urn:epc:id:sgtin:0614141.107346.2017', 'urn:epc:id:sgtin:0614141.107346.2018'],
           eventTime: '2005-04-03T20:33:31.116-06:00',
           eventTimeZoneOffset: '-06:00',
@@ -42,11 +40,10 @@ const sendACaptureRequestExample = async () => {
           },
           bizTransactionList: [
             {
-              type: 'urn:epcglobal:cbv:btt:po',
+              type: 'po',
               bizTransaction: 'http://transaction.acme.com/po/12345678',
             },
           ],
-          'example:field': 'customFieldValue',
         },
       ],
     },

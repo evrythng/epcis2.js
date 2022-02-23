@@ -22,7 +22,7 @@ const {
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
   EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: '1.2',
+  EPCISDocumentSchemaVersion: '2.0',
   headers: {
     'content-type': 'application/json',
     authorization: 'MY_API_KEY',
@@ -33,7 +33,7 @@ const sendACaptureRequestExample = async () => {
   const objectEvent = new ObjectEvent();
   const epcisDocument = new EPCISDocument();
   const bizTransaction = new BizTransactionElement({
-    type: 'urn:epcglobal:cbv:btt:po',
+    type: 'po',
     bizTransaction: 'http://transaction.acme.com/po/12345678',
   });
 
@@ -50,7 +50,6 @@ const sendACaptureRequestExample = async () => {
 
   epcisDocument
     .setCreationDate('2005-07-11T11:30:47+00:00')
-    .setFormat('application/ld+json')
     .addEvent(objectEvent);
 
   console.log(`BizStep of the object event: ${objectEvent.getBizStep()}`);
