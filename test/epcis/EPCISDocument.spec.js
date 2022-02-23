@@ -38,7 +38,7 @@ describe('unit tests for the EPCISDocument class', () => {
     it('should use default values', async () => {
       const e = new EPCISDocument();
       expect(e.getType()).to.be.equal('EPCISDocument');
-      expect(e.getSchemaVersion()).to.be.equal('2');
+      expect(e.getSchemaVersion()).to.be.equal('2.0');
       expect(e.getContext()).to.be.equal(settings.EPCISDocumentContext);
       expect(e.getCreationDate().length).to.not.be.equal(0);
     });
