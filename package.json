@@ -1,6 +1,6 @@
 {
   "name": "epcis2.js",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Javascript SDK for the EPCIS 2.0 standard",
   "main": "dist/epcis2.node.js",
   "scripts": {
