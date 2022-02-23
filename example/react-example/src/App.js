@@ -18,7 +18,7 @@ import {
   capture,
   dispositions,
   BizTransactionElement,
-  businessTransactionTypes
+  businessTransactionTypes,
 } from 'epcis2.js';
 import './App.css';
 

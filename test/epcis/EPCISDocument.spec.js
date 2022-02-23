@@ -136,84 +136,84 @@ describe('unit tests for the EPCISDocument class', () => {
       .setBizLocation(new BizLocation().setId(ov.bizLocation.id))
       .addBizTransactionList([
         new BizTransactionElement({
-          'type': 'po',
-          'bizTransaction': 'urn:epc:id:gdti:0614141.00001.1618034',
+          type: 'po',
+          bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
         }),
         new BizTransactionElement({
-          'type': 'pedigree',
-          'bizTransaction': 'urn:epc:id:gsrn:0614141.0000010253',
+          type: 'pedigree',
+          bizTransaction: 'urn:epc:id:gsrn:0614141.0000010253',
         }),
       ])
       .addQuantity(new QuantityElement({
-        'epcClass': 'urn:epc:class:lgtin:4012345.012345.998877',
-        'quantity': 200,
-        'uom': 'KGM',
+        epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
+        quantity: 200,
+        uom: 'KGM',
       }))
       .addSourceList([
         new SourceElement({
-          'type': 'location',
-          'source': 'urn:epc:id:sgln:4012345.00225.0',
+          type: 'location',
+          source: 'urn:epc:id:sgln:4012345.00225.0',
         }),
         new SourceElement({
-          'type': 'possessing_party',
-          'source': 'urn:epc:id:pgln:4012345.00225',
+          type: 'possessing_party',
+          source: 'urn:epc:id:pgln:4012345.00225',
         }),
         new SourceElement({
-          'type': 'owning_party',
-          'source': 'urn:epc:id:pgln:4012345.00225',
+          type: 'owning_party',
+          source: 'urn:epc:id:pgln:4012345.00225',
         }),
       ])
       .addDestinationList([
         new DestinationElement({
-          'type': 'location',
-          'destination': 'urn:epc:id:sgln:0614141.00777.0',
+          type: 'location',
+          destination: 'urn:epc:id:sgln:0614141.00777.0',
         }),
         new DestinationElement({
-          'type': 'possessing_party',
-          'destination': 'urn:epc:id:pgln:0614141.00777',
+          type: 'possessing_party',
+          destination: 'urn:epc:id:pgln:0614141.00777',
         }),
         new DestinationElement({
-          'type': 'owning_party',
-          'destination': 'urn:epc:id:pgln:0614141.00777',
+          type: 'owning_party',
+          destination: 'urn:epc:id:pgln:0614141.00777',
         }),
       ])
       .addSensorElement(new SensorElement({
-        'type': 'epcis:SensorElement',
-        'sensorMetadata': {
-          'time': '2019-04-02T13:05:00.000Z',
-          'deviceID': 'urn:epc:id:giai:4000001.111',
-          'deviceMetadata': 'https://id.gs1.org/giai/4000001111',
-          'rawData': 'https://example.org/giai/401234599999',
-          'startTime': '2019-04-02T12:55:01.000Z',
-          'endTime': '2019-04-02T13:55:00.000Z',
-          'dataProcessingMethod': 'https://example.com/gdti/4012345000054987',
-          'bizRules': 'https://example.com/gdti/4012345000054987',
+        type: 'epcis:SensorElement',
+        sensorMetadata: {
+          time: '2019-04-02T13:05:00.000Z',
+          deviceID: 'urn:epc:id:giai:4000001.111',
+          deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+          rawData: 'https://example.org/giai/401234599999',
+          startTime: '2019-04-02T12:55:01.000Z',
+          endTime: '2019-04-02T13:55:00.000Z',
+          dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
+          bizRules: 'https://example.com/gdti/4012345000054987',
           'ext1:someFurtherMetadata': 'someText',
         },
-        'sensorReport': [
+        sensorReport: [
           {
-            'type': 'Temperature',
-            'deviceID': 'urn:epc:id:giai:4000001.111',
-            'rawData': 'https://example.org/giai/401234599999',
-            'dataProcessingMethod': 'https://example.com/gdti/4012345000054987',
-            'time': '2019-07-19T13:00:00.000Z',
-            'microorganism': 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
-            'chemicalSubstance': 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
-            'value': 26,
-            'component': 'example:x',
-            'stringValue': 'SomeString',
-            'booleanValue': true,
-            'hexBinaryValue': 'f0f0f0',
-            'uriValue': 'https://id.gs1.org/giai/4000001111',
-            'minValue': 26,
-            'maxValue': 26.2,
-            'meanValue': 13.2,
-            'percRank': 50,
-            'percValue': 12.7,
-            'uom': 'CEL',
-            'sDev': 0.1,
+            type: 'Temperature',
+            deviceID: 'urn:epc:id:giai:4000001.111',
+            rawData: 'https://example.org/giai/401234599999',
+            dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
+            time: '2019-07-19T13:00:00.000Z',
+            microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
+            chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
+            value: 26,
+            component: 'example:x',
+            stringValue: 'SomeString',
+            booleanValue: true,
+            hexBinaryValue: 'f0f0f0',
+            uriValue: 'https://id.gs1.org/giai/4000001111',
+            minValue: 26,
+            maxValue: 26.2,
+            meanValue: 13.2,
+            percRank: 50,
+            percValue: 12.7,
+            uom: 'CEL',
+            sDev: 0.1,
             'ext1:someFurtherReportData': 'someText',
-            'deviceMetadata': 'https://id.gs1.org/giai/4000001111',
+            deviceMetadata: 'https://id.gs1.org/giai/4000001111',
           },
         ],
         'ext1:float': '20',
@@ -304,12 +304,11 @@ describe('unit tests for the EPCISDocument class', () => {
       }).removeExtension('cbvmda:lotNumber')
         .addExtension('cbvmda:lotNumber', 'ABC123'))
       .setErrorDeclaration(new ErrorDeclaration({
-        'declarationTime': '2020-01-15T00:00:00+01:00',
-        'reason': 'incorrect_data',
+        declarationTime: '2020-01-15T00:00:00+01:00',
+        reason: 'incorrect_data',
         'example:vendorExtension': 'Test1',
-        'correctiveEventIDs': ['urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'],
-      }))
-
+        correctiveEventIDs: ['urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'],
+      }));
 
     e = new EPCISDocument();
     e.setSchemaVersion(o.schemaVersion)
