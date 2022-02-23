@@ -308,7 +308,43 @@ describe('unit tests for the EPCISDocument class', () => {
         reason: 'incorrect_data',
         'example:vendorExtension': 'Test1',
         correctiveEventIDs: ['urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'],
-      }));
+      }))
+      .addExtension('ext1:float', '20')
+      .addExtension('ext1:time', '2013-06-08T14:58:56.591Z')
+      .addExtension('ext1:array', [
+        '12',
+        '22',
+        '2013-06-08T14:58:56.591Z',
+        'true',
+        'stringInArray',
+        {
+          'ext1:object': {
+            'ext1:object': {
+              'ext2:array': ['14', '23.0', 'stringInArrayInObjectInArray'],
+              'ext2:object': {
+                'ext2:object': {
+                  'ext3:string': 'stringInObjectInObjectInArray',
+                },
+              },
+              'ext2:int': '13',
+              'ext2:string': 'stringInObjectInArray',
+            },
+          },
+        },
+      ])
+      .addExtension('ext1:boolean', 'true')
+      .addExtension('ext1:object', {
+        'ext2:array': ['11', '21', 'stringInArrayInObject'],
+        'ext2:object': {
+          'ext2:object': {
+            'ext3:string': 'stringInObjectInObject',
+          },
+        },
+        'ext2:string': 'stringInObject',
+      })
+      .addExtension('ext1:default', 'stringAsDefaultValue')
+      .addExtension('ext1:int', '10')
+      .addExtension('ext1:string', 'string');
 
     e = new EPCISDocument();
     e.setSchemaVersion(o.schemaVersion)
