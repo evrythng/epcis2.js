@@ -35,7 +35,7 @@ export const defaultSettings = {
   eventTimeZoneOffset: undefined,
   timeout: undefined,
   EPCISDocumentContext: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: '2',
+  EPCISDocumentSchemaVersion: '2.0',
   documentValidation: true,
 };
 
