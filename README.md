@@ -179,8 +179,8 @@ readPoint.removeExtension('evt:serial_number');
 
 ### List Fields
 
-Whenever using fields that are arrays (e.g, `epcList` in an `ObjectEvent`), the list won't be sent in the request by 
-default. If you add an element to the list, the list will be sent. If you add some elements, and then remove them, the 
+Whenever using fields that are arrays (e.g, `epcList` in an `ObjectEvent`), the list won't be sent in the request by
+default. If you add an element to the list, the list will be sent. If you add some elements, and then remove them, the
 list will be sent even if it is empty. You can override this and choose to not send the empty list by clearing the list.
 
 ```js

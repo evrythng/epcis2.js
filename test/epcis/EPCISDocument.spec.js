@@ -12,10 +12,16 @@ import EPCISHeader from '../../src/entity/epcis/EPCISHeader';
 import {
   AssociationEvent,
   BizLocation,
-  BizTransactionElement, DestinationElement, ErrorDeclaration, Ilmd,
-  ObjectEvent, PersistentDisposition,
+  BizTransactionElement,
+  DestinationElement,
+  ErrorDeclaration,
+  Ilmd,
+  ObjectEvent,
+  PersistentDisposition,
   QuantityElement,
-  ReadPoint, SensorElement, SourceElement,
+  ReadPoint,
+  SensorElement,
+  SourceElement,
 } from '../../src';
 import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
 import EPCISDocumentAggregationEvent from '../data/EPCISDocument-AggregationEvent.json';
@@ -144,11 +150,13 @@ describe('unit tests for the EPCISDocument class', () => {
           bizTransaction: 'urn:epc:id:gsrn:0614141.0000010253',
         }),
       ])
-      .addQuantity(new QuantityElement({
-        epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
-        quantity: 200,
-        uom: 'KGM',
-      }))
+      .addQuantity(
+        new QuantityElement({
+          epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
+          quantity: 200,
+          uom: 'KGM',
+        }),
+      )
       .addSourceList([
         new SourceElement({
           type: 'location',
@@ -177,138 +185,145 @@ describe('unit tests for the EPCISDocument class', () => {
           destination: 'urn:epc:id:pgln:0614141.00777',
         }),
       ])
-      .addSensorElement(new SensorElement({
-        type: 'epcis:SensorElement',
-        sensorMetadata: {
-          time: '2019-04-02T13:05:00.000Z',
-          deviceID: 'urn:epc:id:giai:4000001.111',
-          deviceMetadata: 'https://id.gs1.org/giai/4000001111',
-          rawData: 'https://example.org/giai/401234599999',
-          startTime: '2019-04-02T12:55:01.000Z',
-          endTime: '2019-04-02T13:55:00.000Z',
-          dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
-          bizRules: 'https://example.com/gdti/4012345000054987',
-          'ext1:someFurtherMetadata': 'someText',
-        },
-        sensorReport: [
-          {
-            type: 'Temperature',
+      .addSensorElement(
+        new SensorElement({
+          type: 'epcis:SensorElement',
+          sensorMetadata: {
+            time: '2019-04-02T13:05:00.000Z',
             deviceID: 'urn:epc:id:giai:4000001.111',
-            rawData: 'https://example.org/giai/401234599999',
-            dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
-            time: '2019-07-19T13:00:00.000Z',
-            microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
-            chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
-            value: 26,
-            component: 'example:x',
-            stringValue: 'SomeString',
-            booleanValue: true,
-            hexBinaryValue: 'f0f0f0',
-            uriValue: 'https://id.gs1.org/giai/4000001111',
-            minValue: 26,
-            maxValue: 26.2,
-            meanValue: 13.2,
-            percRank: 50,
-            percValue: 12.7,
-            uom: 'CEL',
-            sDev: 0.1,
-            'ext1:someFurtherReportData': 'someText',
             deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+            rawData: 'https://example.org/giai/401234599999',
+            startTime: '2019-04-02T12:55:01.000Z',
+            endTime: '2019-04-02T13:55:00.000Z',
+            dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
+            bizRules: 'https://example.com/gdti/4012345000054987',
+            'ext1:someFurtherMetadata': 'someText',
           },
-        ],
-        'ext1:float': '20',
-        'ext1:time': '2013-06-08T14:58:56.591Z',
-        'ext1:array': [
-          '12',
-          '22',
-          '2013-06-08T14:58:56.591Z',
-          'true',
-          'stringInArray',
-          {
-            'ext1:object': {
+          sensorReport: [
+            {
+              type: 'Temperature',
+              deviceID: 'urn:epc:id:giai:4000001.111',
+              rawData: 'https://example.org/giai/401234599999',
+              dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
+              time: '2019-07-19T13:00:00.000Z',
+              microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
+              chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
+              value: 26,
+              component: 'example:x',
+              stringValue: 'SomeString',
+              booleanValue: true,
+              hexBinaryValue: 'f0f0f0',
+              uriValue: 'https://id.gs1.org/giai/4000001111',
+              minValue: 26,
+              maxValue: 26.2,
+              meanValue: 13.2,
+              percRank: 50,
+              percValue: 12.7,
+              uom: 'CEL',
+              sDev: 0.1,
+              'ext1:someFurtherReportData': 'someText',
+              deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+            },
+          ],
+          'ext1:float': '20',
+          'ext1:time': '2013-06-08T14:58:56.591Z',
+          'ext1:array': [
+            '12',
+            '22',
+            '2013-06-08T14:58:56.591Z',
+            'true',
+            'stringInArray',
+            {
               'ext1:object': {
-                'ext2:array': ['14', '23.0', 'stringInArrayInObjectInArray'],
-                'ext2:object': {
+                'ext1:object': {
+                  'ext2:array': ['14', '23.0', 'stringInArrayInObjectInArray'],
                   'ext2:object': {
-                    'ext3:string': 'stringInObjectInObjectInArray',
+                    'ext2:object': {
+                      'ext3:string': 'stringInObjectInObjectInArray',
+                    },
                   },
+                  'ext2:int': '13',
+                  'ext2:string': 'stringInObjectInArray',
                 },
-                'ext2:int': '13',
-                'ext2:string': 'stringInObjectInArray',
               },
             },
-          },
-        ],
-        'ext1:boolean': 'true',
-        'ext1:object': {
-          'ext2:array': ['11', '21', 'stringInArrayInObject'],
-          'ext2:object': {
+          ],
+          'ext1:boolean': 'true',
+          'ext1:object': {
+            'ext2:array': ['11', '21', 'stringInArrayInObject'],
             'ext2:object': {
-              'ext3:string': 'stringInObjectInObject',
+              'ext2:object': {
+                'ext3:string': 'stringInObjectInObject',
+              },
             },
+            'ext2:string': 'stringInObject',
           },
-          'ext2:string': 'stringInObject',
-        },
-        'ext1:default': 'stringAsDefaultValue',
-        'ext1:int': '10',
-        'ext1:string': 'string',
-      }))
+          'ext1:default': 'stringAsDefaultValue',
+          'ext1:int': '10',
+          'ext1:string': 'string',
+        }),
+      )
       .setPersistentDisposition(
         new PersistentDisposition()
           .addSet('completeness_verified')
           .addUnset('completeness_inferred'),
       )
-      .setIlmd(new Ilmd({
-        'ext1:float': '20',
-        'ext1:array': [
-          '12',
-          '22',
-          '2013-06-08T14:58:56.591Z',
-          'true',
-          'stringInArray',
-          {
-            'ext1:object': {
+      .setIlmd(
+        new Ilmd({
+          'ext1:float': '20',
+          'ext1:array': [
+            '12',
+            '22',
+            '2013-06-08T14:58:56.591Z',
+            'true',
+            'stringInArray',
+            {
               'ext1:object': {
-                'ext2:array': ['14', '23.0', 'stringInArrayInObjectInArray'],
-                'ext2:object': {
+                'ext1:object': {
+                  'ext2:array': ['14', '23.0', 'stringInArrayInObjectInArray'],
                   'ext2:object': {
-                    'ext3:string': 'stringInObjectInObjectInArray',
+                    'ext2:object': {
+                      'ext3:string': 'stringInObjectInObjectInArray',
+                    },
                   },
+                  'ext2:int': '13',
+                  'ext2:string': 'stringInObjectInArray',
                 },
-                'ext2:int': '13',
-                'ext2:string': 'stringInObjectInArray',
               },
             },
-          },
-        ],
-        'ext1:object': {
-          'ext2:array': ['11', '21', 'stringInArrayInObject'],
-          'ext2:object': {
+          ],
+          'ext1:object': {
+            'ext2:array': ['11', '21', 'stringInArrayInObject'],
             'ext2:object': {
-              'ext3:string': 'stringInObjectInObject',
+              'ext2:object': {
+                'ext3:string': 'stringInObjectInObject',
+              },
             },
+            'ext2:string': 'stringInObject',
           },
-          'ext2:string': 'stringInObject',
-        },
-        'cbvmda:countryOfExport': 'KR',
-        'cbvmda:grossWeight': '3.5',
-        'ext1:int': '10',
-        'cbvmda:netWeight': '3.5',
-        'ext1:time': '2013-06-08T14:58:56.591Z',
-        'ext1:boolean': 'true',
-        'ext1:default': 'stringAsDefaultValue',
-        'ext1:string': 'string',
-        'cbvmda:countryOfOrigin': 'GB',
-        'cbvmda:drainedWeight': '3.5',
-        'cbvmda:lotNumber': 'ABC123',
-      }).removeExtension('cbvmda:lotNumber')
-        .addExtension('cbvmda:lotNumber', 'ABC123'))
-      .setErrorDeclaration(new ErrorDeclaration({
-        declarationTime: '2020-01-15T00:00:00+01:00',
-        reason: 'incorrect_data',
-        'example:vendorExtension': 'Test1',
-        correctiveEventIDs: ['urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'],
-      }))
+          'cbvmda:countryOfExport': 'KR',
+          'cbvmda:grossWeight': '3.5',
+          'ext1:int': '10',
+          'cbvmda:netWeight': '3.5',
+          'ext1:time': '2013-06-08T14:58:56.591Z',
+          'ext1:boolean': 'true',
+          'ext1:default': 'stringAsDefaultValue',
+          'ext1:string': 'string',
+          'cbvmda:countryOfOrigin': 'GB',
+          'cbvmda:drainedWeight': '3.5',
+          'cbvmda:lotNumber': 'ABC123',
+        })
+          .removeExtension('cbvmda:lotNumber')
+          .addExtension('cbvmda:lotNumber', 'ABC123'),
+      )
+      .setErrorDeclaration(
+        new ErrorDeclaration({
+          declarationTime: '2020-01-15T00:00:00+01:00',
+          reason: 'incorrect_data',
+          'example:vendorExtension': 'Test1',
+          correctiveEventIDs: ['urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'],
+        }),
+      )
       .addExtension('ext1:float', '20')
       .addExtension('ext1:time', '2013-06-08T14:58:56.591Z')
       .addExtension('ext1:array', [

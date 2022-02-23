@@ -64,9 +64,7 @@ function App() {
 
     objectEvent.generateHashID({});
 
-    epcisDocument
-      .setCreationDate('2005-07-11T11:30:47+00:00')
-      .addEvent(objectEvent);
+    epcisDocument.setCreationDate('2005-07-11T11:30:47+00:00').addEvent(objectEvent);
 
     await delay(2000);
 

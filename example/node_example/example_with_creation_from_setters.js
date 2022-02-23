@@ -48,9 +48,7 @@ const sendACaptureRequestExample = async () => {
     .setReadPoint('urn:epc:id:sgln:0614141.07346.1234')
     .addBizTransaction(bizTransaction);
 
-  epcisDocument
-    .setCreationDate('2005-07-11T11:30:47+00:00')
-    .addEvent(objectEvent);
+  epcisDocument.setCreationDate('2005-07-11T11:30:47+00:00').addEvent(objectEvent);
 
   console.log(`BizStep of the object event: ${objectEvent.getBizStep()}`);
   console.log(`Action of the object event: ${objectEvent.getAction()}`);
