@@ -8,6 +8,7 @@ export { default as EPCISDocument } from './entity/epcis/EPCISDocument';
 export { default as EPCISMasterData } from './entity/epcis/EPCISMasterData';
 export { default as EPCISHeader } from './entity/epcis/EPCISHeader';
 export { default as ObjectEvent } from './entity/events/ObjectEvent';
+export { default as ExtendedEvent } from './entity/events/ObjectEvent';
 export { default as TransformationEvent } from './entity/events/TransformationEvent';
 export { default as AggregationEvent } from './entity/events/AggregationEvent';
 export { default as AssociationEvent } from './entity/events/AssociationEvent';
