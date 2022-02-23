@@ -60,7 +60,7 @@ For each object you instantiate with this library, you can create it from setter
 ```js
 const epcisDocument = new EPCISDocument();
 
-epcisDocument.setCreationDate('2005-07-11T11:30:47+00:00').setFormat('application/ld+json');
+epcisDocument.setCreationDate('2005-07-11T11:30:47+00:00').setSchemaVersion('2.0');
 ```
 
 Or create it from another object:
@@ -68,7 +68,7 @@ Or create it from another object:
 ```js
 const epcisDocument = new EPCISDocument({
   creationDate: '2005-07-11T11:30:47+00:00',
-  format: 'application/ld+json',
+  schemaVersion: '2.0',
 });
 ```
 
@@ -130,7 +130,7 @@ You can configure the following fields:
 
 - `EPCISDocumentContext` - the '@context' property of an EPCISDocument. By default, the value is
   `https://gs1.github.io/EPCIS/epcis-context.jsonld`
-- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is "2".
+- `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is "2.0".
 
 ```js
 setup({ EPCISDocumentContext: 'value' }); // the '@context' field of the EPCISDocument that you will create will be
@@ -149,13 +149,13 @@ You have multiple ways to set the `eventTimeZoneOffset` property of an event (e.
 - If you don't want to set the `eventTimeZoneOffset` property for each event you create, you can provide its default
   value to the setup function.
 
-      ```js
-      setup({ eventTimeZoneOffset: '-02:00' });
-      ```
+  ```js
+  setup({ eventTimeZoneOffset: '-02:00' });
+  ```
 
-      Now, the `eventTimeZoneOffset` will be `'-02:00'` by default. However, once you set the `eventTime` field, the
-      `eventTimeZoneOffset` will be overridden (except if `overrideTimeZoneOffset` is set to false when you call
-      `setEventTime` function).
+  Now, the `eventTimeZoneOffset` will be `'-02:00'` by default. However, once you set the `eventTime` field, the
+  `eventTimeZoneOffset` will be overridden (except if `overrideTimeZoneOffset` is set to false when you call
+  `setEventTime` function).
 
 ### Extensions
 
@@ -179,21 +179,21 @@ readPoint.removeExtension('evt:serial_number');
 
 ### List Fields
 
-Whenever using fields that are arrays (e.g, `epcList` in an `ObjectEvent`), the list won't be sent in the request by default.
-If you add an element to the list, the list will be sent. If you add some elements, and then remove them, the list will
-be sent even if it is empty. You can override this and choose to not send the empty list by clearing the list.
+Whenever using fields that are arrays (e.g, `epcList` in an `ObjectEvent`), the list won't be sent in the request by 
+default. If you add an element to the list, the list will be sent. If you add some elements, and then remove them, the 
+list will be sent even if it is empty. You can override this and choose to not send the empty list by clearing the list.
 
 ```js
 const o = new ObjectEvent();
-const object = o.toObject(); // { isA: 'ObjectEvent' } -> the epcList isn't sent
+const object = o.toObject(); // { type: 'ObjectEvent' } -> the epcList isn't sent
 
 const o = new ObjectEvent().addEPC('...');
-const object = o.toObject(); //{ isA: 'ObjectEvent', epcList: [ '...' ] } -> the epcList is sent
+const object = o.toObject(); //{ type: 'ObjectEvent', epcList: [ '...' ] } -> the epcList is sent
 
 const o = new ObjectEvent().addEPC('...').removeEPC('...');
-const object = o.toObject(); //{ isA: 'ObjectEvent', epcList: [] } -> the epcList is sent as an empty array
+const object = o.toObject(); //{ type: 'ObjectEvent', epcList: [] } -> the epcList is sent as an empty array
 o.clearEPCList();
-const object = o.toObject(); //{ isA: 'ObjectEvent'} -> the epcList isn't sent anymore
+const object = o.toObject(); //{ type: 'ObjectEvent'} -> the epcList isn't sent anymore
 ```
 
 ### Building the URN
