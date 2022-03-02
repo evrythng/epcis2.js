@@ -8,6 +8,16 @@ import Entity from '../Entity';
 
 export default class SourceElement extends Entity {
   /**
+   * You can either create an empty SourceElement or provide an already existing one via Object
+   * @param {Object} [sourceElement] - The object that will be used to create the source element
+   */
+  constructor(sourceElement) {
+    super(sourceElement);
+    this.addExtension = () => throw new Error('Extensions are not supported in a source element');
+    this.removeExtension = () => throw new Error('Extensions are not supported in a source element');
+  }
+
+  /**
    * Set the source property
    * @param {string} source
    * @return {SourceElement} - the source instance

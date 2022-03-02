@@ -4,7 +4,7 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { dispositions, Ilmd } from '../src';
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';
 import QuantityElement from '../src/entity/model/QuantityElement';
@@ -272,11 +272,11 @@ describe('unit tests for model Objects', () => {
       expect(json.source).to.be.equal(exampleSourceElement.source);
     });
 
-    it('should add and remove custom fields', async () => {
+    it('should not add and remove custom fields', async () => {
       const obj = new SourceElement();
-      obj.addExtension('key', 'value');
-      expect(obj.toObject().key).to.be.equal('value');
-      obj.removeExtension('key');
+      assert.throws(() => obj.addExtension('key', 'value'));
+      expect(obj.toObject().key).to.be.equal(undefined);
+      assert.throws(() => obj.removeExtension('key'));
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
@@ -302,11 +302,11 @@ describe('unit tests for model Objects', () => {
       expect(json.destination).to.be.equal(exampleDestinationElement.destination);
     });
 
-    it('should add and remove custom fields', async () => {
+    it('should not add and remove custom fields', async () => {
       const obj = new DestinationElement();
-      obj.addExtension('key', 'value');
-      expect(obj.toObject().key).to.be.equal('value');
-      obj.removeExtension('key');
+      assert.throws(() => obj.addExtension('key', 'value'));
+      expect(obj.toObject().key).to.be.equal(undefined);
+      assert.throws(() => obj.removeExtension('key'));
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
