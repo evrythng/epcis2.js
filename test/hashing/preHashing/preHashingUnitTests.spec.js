@@ -72,17 +72,6 @@ describe('unit tests for pre-hashing', () => {
       expect(str3).to.be.equal(str);
     });
 
-    it('Should remove offset', () => {
-      const str = eventToPreHashedString(
-        {
-          errorDeclaration: {
-            declarationTime: '2020-01-15T00:00:00.000+01:00',
-          },
-        },
-        sampleContext,
-      );
-      expect(str).to.be.equal('errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Z');
-    });
   });
 
   describe('lists pre-has tests', () => {
@@ -880,7 +869,7 @@ describe('unit tests for pre-hashing', () => {
     expect(str).to.be.equal('eventTimeZoneOffset=+01:00');
   });
 
-  it('should pre-hash an error Declaration', () => {
+  it('should not pre-hash an error Declaration', () => {
     const str = eventToPreHashedString(
       {
         errorDeclaration: {
@@ -895,7 +884,7 @@ describe('unit tests for pre-hashing', () => {
       {},
     );
     expect(str).to.be.equal(
-      'errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Zreason=https://ns.gs1.org/cbv/ER-incorrect_dataerrorDeclaration{http://ns.example.com/epcis}vendorExtension=Test1',
+      '',
     );
   });
 
@@ -984,22 +973,6 @@ describe('unit tests for pre-hashing', () => {
     );
     expect(str4).to.be.equal(
       'destinationListdestination=https://id.gs1.org/414/4012345000122type=https://ns.gs1.org/cbv/SDT-locationdestination=https://id.gs1.org/417/4012345000009type=https://ns.gs1.org/cbv/SDT-owning_partydestination=https://id.gs1.org/417/4012345000009type=https://ns.gs1.org/cbv/SDT-possessing_party',
-    );
-    const str5 = eventToPreHashedString(
-      {
-        errorDeclaration: {
-          declarationTime: '2020-01-15T00:00:00.000+01:00',
-          reason: 'incorrect_data',
-          'example:vendorExtension': {
-            '@xmlns:example': 'http://ns.example.com/epcis',
-            '#text': 'Test1',
-          },
-        },
-      },
-      {},
-    );
-    expect(str5).to.be.equal(
-      'errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Zreason=https://ns.gs1.org/cbv/ER-incorrect_dataerrorDeclaration{http://ns.example.com/epcis}vendorExtension=Test1',
     );
   });
 });

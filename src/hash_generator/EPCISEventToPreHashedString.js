@@ -12,7 +12,6 @@ import {
   bizTransactionCanonicalPropertyOrder,
   canonicalPropertyOrder,
   destinationCanonicalPropertyOrder,
-  errorDeclarationCanonicalPropertyOrder,
   persistentDispositionCanonicalPropertyOrder,
   quantityElementCanonicalPropertyOrder,
   readPointCanonicalPropertyOrder,
@@ -34,7 +33,6 @@ import {
   bizSteps,
   businessTransactionTypes,
   dispositions,
-  errorReasonIdentifiers,
   sourceDestinationTypes,
 } from '../cbv/cbv';
 
@@ -336,11 +334,6 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         customFields.push(...res.customFields.map((j) => `sensorReport${j}`));
       }
       break;
-    case 'correctiveEventIDs':
-      for (let i = 0; i < list.length; i += 1) {
-        strings.push(getPreHashStringOfField('correctiveEventID', list[i], throwError));
-      }
-      break;
     default:
       for (let i = 0; i < list.length; i += 1) {
         customFields.push(
@@ -400,23 +393,6 @@ export const getOrderedPreHashString = (
               object[orderList[i]],
               throwError,
             );
-            break;
-          case 'errorDeclaration':
-            // if, for example, the field is equal to 'did_not_occur' instead of
-            // 'urn:epcglobal:cbv:er:did_not_occur', we need to complete it
-            if (errorReasonIdentifiers[object[orderList[i]].reason] !== undefined) {
-              object[orderList[i]].reason = `urn:epcglobal:cbv:er:${
-                errorReasonIdentifiers[object[orderList[i]].reason]
-              }`;
-            }
-            res = getOrderedPreHashString(
-              object[orderList[i]],
-              context,
-              errorDeclarationCanonicalPropertyOrder,
-              throwError,
-            );
-            string += `errorDeclaration${res.preHashed}`;
-            strings.push(...res.customFields.map((j) => `errorDeclaration${j}`));
             break;
           case 'readPoint':
             string += 'readPoint';

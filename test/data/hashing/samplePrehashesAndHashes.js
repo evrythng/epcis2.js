@@ -79,7 +79,7 @@ export const epcisDocWithVariousEventTypesPreHash = [
 ];
 
 export const epcisDocWithXMLStartTagAndErrorDeclarationPreHash = [
-  'eventType=TransformationEventeventTime=2020-01-13T23:00:00.000ZeventTimeZoneOffset=+01:00errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Zreason=https://ns.gs1.org/cbv/ER-incorrect_datainputEPCListepc=https://id.gs1.org/01/04012345111118/21/987inputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345222227/10/87545GHGHoutputEPCListepc=https://id.gs1.org/01/04012345333336/21/AGHFGoutputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345444445quantity=452uom=KGMbizStep=https://ns.gs1.org/cbv/BizStep-commissioningreadPointid=https://id.gs1.org/414/4012345000009errorDeclaration{http://ns.example.com/epcis}vendorExtension=Test1',
+  'eventType=TransformationEventeventTime=2020-01-13T23:00:00.000ZeventTimeZoneOffset=+01:00inputEPCListepc=https://id.gs1.org/01/04012345111118/21/987inputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345222227/10/87545GHGHoutputEPCListepc=https://id.gs1.org/01/04012345333336/21/AGHFGoutputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345444445quantity=452uom=KGMbizStep=https://ns.gs1.org/cbv/BizStep-commissioningreadPointid=https://id.gs1.org/414/4012345000009',
 ];
 
 export const epcListNormalisationPreHash = [

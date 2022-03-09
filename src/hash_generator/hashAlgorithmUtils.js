@@ -14,7 +14,7 @@ import { normalizeDigitalLinks } from './dlNormalizer';
  * The list of fields that will be ignored in the pre-hashed string
  * @type {string[]}
  */
-export const toBeIgnored = ['recordTime', 'eventID'];
+export const toBeIgnored = ['recordTime', 'eventID', 'errorDeclaration'];
 
 /**
  * Check if the parameter is a string
@@ -58,7 +58,6 @@ export const convertURNBasedVocabularyToURI = (obj) => {
     .replace('urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/cbv/Disp-')
     .replace('urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/cbv/BTT-')
     .replace('urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/cbv/SDT-')
-    .replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/cbv/ER-');
 };
 
 /**
