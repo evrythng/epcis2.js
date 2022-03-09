@@ -40,7 +40,7 @@ export default class ErrorDeclaration extends Entity {
 
   /**
    * Set the reason property
-   * @param {string} reason - the reason (e.g 'urn:epcglobal:cbv:er:incorrect_data')
+   * @param {string} reason - the reason (e.g 'incorrect_data')
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   setReason(reason) {
