@@ -1,46 +1,45 @@
 {
-    "@context": "https://id.gs1.org/epcis-context.jsonld",
-    "isA": "EPCISDocument",
-    "creationDate": "2005-07-11T11:30:47+00:00",
-    "schemaVersion": "1.2",
-    "format": "application/ld+json",
-    "epcisBody": {
-        "eventList": [
-            {
-                "isA": "ObjectEvent",
-                "eventTime": "2019-04-02T15:00:00.000+01:00",
-                "eventTimeZoneOffset": "+01:00",
-                "epcList": [
-                    "urn:epc:id:sgtin:4012345.011111.9876",
-                    "urn:epc:id:sgtin:4012345.011111.98%22",
-                    "urn:epc:id:sgtin:415056789012.0.987654",
-                    "urn:epc:id:sgtin:0614141.812345.6789%2F%26%25%22!%3F()",
-                    "urn:epc:id:sscc:4012345.3111111111",
-                    "urn:epc:id:sgln:4012345.00005.122",
-                    "urn:epc:id:sgln:4012345.00005.0",
-                    "urn:epc:id:grai:4012345.00022.334455",
-                    "urn:epc:id:giai:4012345.ABC345",
-                    "urn:epc:id:gsrn:4012345.0000006765",
-                    "urn:epc:id:gsrnp:4012345.0000000007",
-                    "urn:epc:id:gdti:4012345.00009.PO-4711",
-                    "urn:epc:id:gdti:987659999999..9",
-                    "urn:epc:id:cpi:0614141.11111111111111-A%23%2F.1234",
-                    "urn:epc:id:ginc:0614141.xyz47%2F11",
-                    "urn:epc:id:gsin:4012345.222333444",
-                    "urn:epc:id:itip:4012345.011111.01.02.987",
-                    "urn:epc:id:upui:1234567.098765.51qIgY)%3C%26Jp3*j7'SDB",
-                    "urn:epc:id:pgln:4000001.00000",
-                    "urn:epc:id:pgln:999999999999.",
-                    "urn:epc:class:lgtin:4012345.012345.Lot987",
-                    "https://id.gs1.org/gtin/09780345418913",
-                    "https://example.com/gtin/09780345418913/21/765tz?abc=211121"
-                ],
-                "action": "OBSERVE",
-                "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
-                "readPoint": {
-                    "id": "urn:epc:id:sgln:4012345.00005.0"
-                }
-            }
-        ]
-    }
+  "@context": "https://id.gs1.org/epcis-context.jsonld",
+  "type": "EPCISDocument",
+  "creationDate": "2005-07-11T11:30:47+00:00",
+  "schemaVersion": "1.2",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2019-04-02T15:00:00.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sgtin:4012345.011111.9876",
+          "urn:epc:id:sgtin:4012345.011111.98%22",
+          "urn:epc:id:sgtin:415056789012.0.987654",
+          "urn:epc:id:sgtin:0614141.812345.6789%2F%26%25%22!%3F()",
+          "urn:epc:id:sscc:4012345.3111111111",
+          "urn:epc:id:sgln:4012345.00005.122",
+          "urn:epc:id:sgln:4012345.00005.0",
+          "urn:epc:id:grai:4012345.00022.334455",
+          "urn:epc:id:giai:4012345.ABC345",
+          "urn:epc:id:gsrn:4012345.0000006765",
+          "urn:epc:id:gsrnp:4012345.0000000007",
+          "urn:epc:id:gdti:4012345.00009.PO-4711",
+          "urn:epc:id:gdti:987659999999..9",
+          "urn:epc:id:cpi:0614141.11111111111111-A%23%2F.1234",
+          "urn:epc:id:ginc:0614141.xyz47%2F11",
+          "urn:epc:id:gsin:4012345.222333444",
+          "urn:epc:id:itip:4012345.011111.01.02.987",
+          "urn:epc:id:upui:1234567.098765.51qIgY)%3C%26Jp3*j7'SDB",
+          "urn:epc:id:pgln:4000001.00000",
+          "urn:epc:id:pgln:999999999999.",
+          "urn:epc:class:lgtin:4012345.012345.Lot987",
+          "https://id.gs1.org/gtin/09780345418913",
+          "https://example.com/gtin/09780345418913/21/765tz?abc=211121"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00005.0"
+        }
+      }
+    ]
+  }
 }

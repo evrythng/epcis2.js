@@ -1,25 +1,22 @@
 {
-  "@context": ["https://gs1.github.io/EPCIS/epcis-context.jsonld",{"example": "https://ns.example.com/epcis"}],
-  "isA": "EPCISDocument",
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    { "example": "https://ns.example.com/epcis" }
+  ],
+  "type": "EPCISDocument",
   "creationDate": "2020-12-10T15:45:00+01:00",
   "schemaVersion": 2,
-  "format": "application/ld+json",
   "epcisBody": {
     "eventList": [
       {
-        "isA": "ObjectEvent",
+        "type": "ObjectEvent",
         "eventTime": "2020-03-04T11:00:30+01:00",
         "eventTimeZoneOffset": "+01:00",
-        "epcList": [
-          "urn:epc:id:sgtin:0614141.011111.987"
-        ],
+        "epcList": ["urn:epc:id:sgtin:0614141.011111.987"],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:departing",
         "disposition": "urn:epcglobal:cbv:disp:in_transit",
-        "readPoint": 
-          {"id": "urn:epc:id:sgln:4012345.00011.0",
-           "example:myField1": "AB-12"}
-        ,
+        "readPoint": { "id": "urn:epc:id:sgln:4012345.00011.0", "example:myField1": "AB-12" },
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:po",

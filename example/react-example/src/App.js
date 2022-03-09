@@ -18,6 +18,7 @@ import {
   capture,
   dispositions,
   BizTransactionElement,
+  businessTransactionTypes,
 } from 'epcis2.js';
 import './App.css';
 
@@ -25,7 +26,7 @@ import './App.css';
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
   EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: '1.2',
+  EPCISDocumentSchemaVersion: '2.0',
   headers: {
     'content-type': 'application/json',
     authorization: 'MY_API_KEY',
@@ -46,7 +47,7 @@ function App() {
     const objectEvent = new ObjectEvent();
     const epcisDocument = new EPCISDocument();
     const bizTransaction = new BizTransactionElement({
-      type: 'urn:epcglobal:cbv:btt:po',
+      type: businessTransactionTypes.po,
       bizTransaction: 'http://transaction.acme.com/po/12345678',
     });
 
@@ -63,10 +64,7 @@ function App() {
 
     objectEvent.generateHashID({});
 
-    epcisDocument
-      .setCreationDate('2005-07-11T11:30:47+00:00')
-      .setFormat('application/ld+json')
-      .addEvent(objectEvent);
+    epcisDocument.setCreationDate('2005-07-11T11:30:47+00:00').addEvent(objectEvent);
 
     await delay(2000);
 
@@ -95,9 +93,7 @@ function App() {
           code example for react
         </h2>
       </div>
-      <p className="App-intro">
-        {state}
-      </p>
+      <p className="App-intro">{state}</p>
     </div>
   );
 }

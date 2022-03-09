@@ -26,6 +26,24 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
+   * Set the exception property
+   * @param {string} exception
+   * @return {SensorReportElement} - the sensorReport instance
+   */
+  setException(exception) {
+    this.exception = exception;
+    return this;
+  }
+
+  /**
+   * Getter for the exception property
+   * @return {string} - the exception
+   */
+  getException() {
+    return this.exception;
+  }
+
+  /**
    * Set the deviceID property
    * @param {string} deviceID
    * @return {SensorReportElement} - the sensorReport instance

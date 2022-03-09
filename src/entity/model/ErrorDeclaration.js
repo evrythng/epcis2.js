@@ -63,7 +63,9 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   addCorrectiveEventID(correctiveEventID) {
-    if (!this.correctiveEventIDs) { this.correctiveEventIDs = []; }
+    if (!this.correctiveEventIDs) {
+      this.correctiveEventIDs = [];
+    }
     this.correctiveEventIDs.push(correctiveEventID);
     return this;
   }
@@ -76,7 +78,9 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   addCorrectiveEventIDList(correctiveEventIDList) {
-    if (!this.correctiveEventIDs) { this.correctiveEventIDs = []; }
+    if (!this.correctiveEventIDs) {
+      this.correctiveEventIDs = [];
+    }
     this.correctiveEventIDs = [...this.correctiveEventIDs, ...correctiveEventIDList];
     return this;
   }
@@ -97,8 +101,7 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   removeCorrectiveEventID(correctiveEventID) {
-    this.correctiveEventIDs = this.correctiveEventIDs
-      .filter((elem) => elem !== correctiveEventID);
+    this.correctiveEventIDs = this.correctiveEventIDs.filter((elem) => elem !== correctiveEventID);
     return this;
   }
 
@@ -110,8 +113,9 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   removeCorrectiveEventIDList(correctiveEventIDList) {
-    correctiveEventIDList.forEach((correctiveEventID) => this
-      .removeCorrectiveEventID(correctiveEventID));
+    correctiveEventIDList.forEach(
+      (correctiveEventID) => this.removeCorrectiveEventID(correctiveEventID),
+    );
     return this;
   }
 

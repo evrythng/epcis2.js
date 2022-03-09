@@ -10,9 +10,15 @@ import { sampleContext } from '../data/hashing/samplePrehashesAndHashes';
 
 describe('hashing of an EPCIS Event', () => {
   it('should hash the event', () => {
-    const str = eventToHashedId({
-      isA: 'ObjectEvent',
-    }, sampleContext, true);
-    expect(str).to.be.equal('ni:///sha-256;7aa6d15415d4b429d7c4f7b3f1aaebcdbd9a12ad5c6ff4951247b61e621b9659?ver=CBV2.0');
+    const str = eventToHashedId(
+      {
+        type: 'ObjectEvent',
+      },
+      sampleContext,
+      true,
+    );
+    expect(str).to.be.equal(
+      'ni:///sha-256;7aa6d15415d4b429d7c4f7b3f1aaebcdbd9a12ad5c6ff4951247b61e621b9659?ver=CBV2.0',
+    );
   });
 });

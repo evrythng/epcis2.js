@@ -12,7 +12,6 @@ import {
   exampleSensorElement,
   exampleSensorMetadata,
   exampleSensorReportElement,
-  exampleSensorReportElement2,
 } from '../data/eventExample';
 
 describe('unit tests for sensor relative Objects', () => {
@@ -35,8 +34,9 @@ describe('unit tests for sensor relative Objects', () => {
       expect(sensorMetadata.getRawData()).to.be.equal(exampleSensorMetadata.rawData);
       expect(sensorMetadata.getStartTime()).to.be.equal(exampleSensorMetadata.startTime);
       expect(sensorMetadata.getEndTime()).to.be.equal(exampleSensorMetadata.endTime);
-      expect(sensorMetadata.getDataProcessingMethod()).to
-        .be.equal(exampleSensorMetadata.dataProcessingMethod);
+      expect(sensorMetadata.getDataProcessingMethod()).to.be.equal(
+        exampleSensorMetadata.dataProcessingMethod,
+      );
       expect(sensorMetadata.getBizRules()).to.be.equal(exampleSensorMetadata.bizRules);
     });
 
@@ -59,6 +59,7 @@ describe('unit tests for sensor relative Objects', () => {
       const sensorReport = new SensorReportElement();
       sensorReport
         .setType(exampleSensorReportElement.type)
+        .setException(exampleSensorReportElement.exception)
         .setDeviceID(exampleSensorReportElement.deviceID)
         .setDeviceMetadata(exampleSensorReportElement.deviceMetadata)
         .setRawData(exampleSensorReportElement.rawData)
@@ -82,21 +83,25 @@ describe('unit tests for sensor relative Objects', () => {
 
       expect(sensorReport.getType()).to.be.equal(exampleSensorReportElement.type);
       expect(sensorReport.getDeviceID()).to.be.equal(exampleSensorReportElement.deviceID);
-      expect(sensorReport.getDeviceMetadata()).to.be
-        .equal(exampleSensorReportElement.deviceMetadata);
+      expect(sensorReport.getDeviceMetadata()).to.be.equal(
+        exampleSensorReportElement.deviceMetadata,
+      );
       expect(sensorReport.getRawData()).to.be.equal(exampleSensorReportElement.rawData);
-      expect(sensorReport.getDataProcessingMethod()).to
-        .be.equal(exampleSensorReportElement.dataProcessingMethod);
+      expect(sensorReport.getDataProcessingMethod()).to.be.equal(
+        exampleSensorReportElement.dataProcessingMethod,
+      );
       expect(sensorReport.getTime()).to.be.equal(exampleSensorReportElement.time);
       expect(sensorReport.getMicroorganism()).to.be.equal(exampleSensorReportElement.microorganism);
-      expect(sensorReport.getChemicalSubstance()).to
-        .be.equal(exampleSensorReportElement.chemicalSubstance);
+      expect(sensorReport.getChemicalSubstance()).to.be.equal(
+        exampleSensorReportElement.chemicalSubstance,
+      );
       expect(sensorReport.getValue()).to.be.equal(exampleSensorReportElement.value);
       expect(sensorReport.getComponent()).to.be.equal(exampleSensorReportElement.component);
       expect(sensorReport.getStringValue()).to.be.equal(exampleSensorReportElement.stringValue);
       expect(sensorReport.getBooleanValue()).to.be.equal(exampleSensorReportElement.booleanValue);
-      expect(sensorReport.getHexBinaryValue()).to.be
-        .equal(exampleSensorReportElement.hexBinaryValue);
+      expect(sensorReport.getHexBinaryValue()).to.be.equal(
+        exampleSensorReportElement.hexBinaryValue,
+      );
       expect(sensorReport.getUriValue()).to.be.equal(exampleSensorReportElement.uriValue);
       expect(sensorReport.getMinValue()).to.be.equal(exampleSensorReportElement.minValue);
       expect(sensorReport.getMaxValue()).to.be.equal(exampleSensorReportElement.maxValue);
@@ -105,6 +110,7 @@ describe('unit tests for sensor relative Objects', () => {
       expect(sensorReport.getPercRank()).to.be.equal(exampleSensorReportElement.percRank);
       expect(sensorReport.getPercValue()).to.be.equal(exampleSensorReportElement.percValue);
       expect(sensorReport.getUom()).to.be.equal(exampleSensorReportElement.uom);
+      expect(sensorReport.getException()).to.be.equal(exampleSensorReportElement.exception);
     });
 
     it('should create a valid SensorReportElement object from JSON', async () => {
@@ -124,18 +130,20 @@ describe('unit tests for sensor relative Objects', () => {
   describe('SensorElement.js', () => {
     it('should create a valid SensorElement object from setters', async () => {
       const sensorElement = new SensorElement();
-      sensorElement
-        .setSensorMetadata(new SensorMetadata(exampleSensorElement.sensorMetadata));
+      sensorElement.setSensorMetadata(new SensorMetadata(exampleSensorElement.sensorMetadata));
 
       const json = sensorElement.toObject();
       expect(json.sensorMetadata.time).to.be.equal(exampleSensorElement.sensorMetadata.time);
-      expect(json.sensorMetadata.deviceID).to.be
-        .equal(exampleSensorElement.sensorMetadata.deviceID);
+      expect(json.sensorMetadata.deviceID).to.be.equal(
+        exampleSensorElement.sensorMetadata.deviceID,
+      );
       expect(json.sensorMetadata.rawData).to.be.equal(exampleSensorElement.sensorMetadata.rawData);
-      expect(json.sensorMetadata.dataProcessingMethod)
-        .to.be.equal(exampleSensorElement.sensorMetadata.dataProcessingMethod);
-      expect(json.sensorMetadata.bizRules).to.be
-        .equal(exampleSensorElement.sensorMetadata.bizRules);
+      expect(json.sensorMetadata.dataProcessingMethod).to.be.equal(
+        exampleSensorElement.sensorMetadata.dataProcessingMethod,
+      );
+      expect(json.sensorMetadata.bizRules).to.be.equal(
+        exampleSensorElement.sensorMetadata.bizRules,
+      );
     });
 
     it('should create a valid SensorElement object from JSON', async () => {
@@ -154,6 +162,8 @@ describe('unit tests for sensor relative Objects', () => {
     });
 
     describe('sensorReport field', () => {
+      const exampleSensorReportElement2 = { ...exampleSensorElement };
+      exampleSensorReportElement2.type = 'foo';
       const s1 = new SensorReportElement(exampleSensorReportElement);
       const s2 = new SensorReportElement(exampleSensorReportElement2);
 

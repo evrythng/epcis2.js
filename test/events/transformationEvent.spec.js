@@ -10,11 +10,15 @@ import QuantityElement from '../../src/entity/model/QuantityElement';
 import BizTransactionElement from '../../src/entity/model/BizTransactionElement';
 import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
-import { exampleObjectEvent, exampleTransformationEvent } from '../data/eventExample';
+import EPCISDocumentTransformationEvent from '../data/EPCISDocument-TransformationEvent.json';
+import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
 import Ilmd from '../../src/entity/model/Ilmd';
 import PersistentDisposition from '../../src/entity/model/PersistentDisposition';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import TransformationEvent from '../../src/entity/events/TransformationEvent';
+
+const exampleTransformationEvent = EPCISDocumentTransformationEvent.epcisBody.eventList[0];
+const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 
 const epc1 = exampleObjectEvent.epcList[0];
 const epc2 = exampleObjectEvent.epcList[1];
@@ -23,15 +27,17 @@ const epc3 = 'urn:epc:id:sgtin:0614141.107346.2019';
 describe('unit tests for the TransformationEvent class', () => {
   it('setters should set the variables correctly', async () => {
     const obj = new TransformationEvent();
-    obj.setEventID(exampleTransformationEvent.eventID)
+    obj
+      .setEventID(exampleTransformationEvent.eventID)
       .addInputEPCList(exampleTransformationEvent.inputEPCList)
       .setDisposition(exampleTransformationEvent.disposition)
       .setBizStep(exampleTransformationEvent.bizStep)
       .setReadPoint(exampleTransformationEvent.readPoint.id)
       .setIlmd(new Ilmd(exampleTransformationEvent.ilmd));
 
-    expect(obj.getInputEPCList().toString()).to.be
-      .equal(exampleTransformationEvent.inputEPCList.toString());
+    expect(obj.getInputEPCList().toString()).to.be.equal(
+      exampleTransformationEvent.inputEPCList.toString(),
+    );
     expect(obj.getEventID()).to.be.equal(exampleTransformationEvent.eventID);
     expect(obj.getDisposition()).to.be.equal(exampleTransformationEvent.disposition);
     expect(obj.getBizStep()).to.be.equal(exampleTransformationEvent.bizStep);
@@ -128,8 +134,9 @@ describe('unit tests for the TransformationEvent class', () => {
       o.addInputQuantity(quantity3);
       expect(o.getInputQuantityList().toString()).to.be.equal([quantity3].toString());
       o.addInputQuantityList([quantity1, quantity2]);
-      expect(o.getInputQuantityList().toString()).to.be
-        .equal([quantity3, quantity1, quantity2].toString());
+      expect(o.getInputQuantityList().toString()).to.be.equal(
+        [quantity3, quantity1, quantity2].toString(),
+      );
     });
 
     it('should remove a quantity list', async () => {
@@ -239,8 +246,9 @@ describe('unit tests for the TransformationEvent class', () => {
       o.addOutputQuantity(quantity3);
       expect(o.getOutputQuantityList().toString()).to.be.equal([quantity3].toString());
       o.addOutputQuantityList([quantity1, quantity2]);
-      expect(o.getOutputQuantityList().toString()).to.be
-        .equal([quantity3, quantity1, quantity2].toString());
+      expect(o.getOutputQuantityList().toString()).to.be.equal(
+        [quantity3, quantity1, quantity2].toString(),
+      );
     });
 
     it('should remove a quantity list', async () => {

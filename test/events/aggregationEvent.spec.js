@@ -13,15 +13,18 @@ import BizLocation from '../../src/entity/model/BizLocation';
 import BizTransactionElement from '../../src/entity/model/BizTransactionElement';
 import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
-import { exampleAggregationEvent } from '../data/eventExample';
+import EPCISDocumentAggregationEvent from '../data/EPCISDocument-AggregationEvent.json';
 import Ilmd from '../../src/entity/model/Ilmd';
 import PersistentDisposition from '../../src/entity/model/PersistentDisposition';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
 
+const exampleAggregationEvent = EPCISDocumentAggregationEvent.epcisBody.eventList[0];
+
 describe('unit tests for the AggregationEvent class', () => {
   it('setters should set the variables correctly', async () => {
     const obj = new AggregationEvent();
-    obj.setEventID(exampleAggregationEvent.eventID)
+    obj
+      .setEventID(exampleAggregationEvent.eventID)
       .addChildEPCList(exampleAggregationEvent.childEPCs)
       .setEventTime(exampleAggregationEvent.eventTime)
       .setRecordTime(exampleAggregationEvent.recordTime)
@@ -33,8 +36,9 @@ describe('unit tests for the AggregationEvent class', () => {
       .setBizLocation(exampleAggregationEvent.bizLocation.id)
       .setParentId(exampleAggregationEvent.parentID);
 
-    expect(obj.getChildEPCList().toString()).to.be
-      .equal(exampleAggregationEvent.childEPCs.toString());
+    expect(obj.getChildEPCList().toString()).to.be.equal(
+      exampleAggregationEvent.childEPCs.toString(),
+    );
     expect(obj.getEventID()).to.be.equal(exampleAggregationEvent.eventID);
     expect(obj.getEventTime()).to.be.equal(exampleAggregationEvent.eventTime);
     expect(obj.getRecordTime()).to.be.equal(exampleAggregationEvent.recordTime);

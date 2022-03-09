@@ -19,7 +19,7 @@ export default class ObjectEvent extends Event {
    */
   constructor(objectEvent) {
     super(objectEvent);
-    this.isA = 'ObjectEvent';
+    this.type = 'ObjectEvent';
 
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];

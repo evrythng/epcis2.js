@@ -29,7 +29,7 @@ export default class TransformationEvent extends Event {
    */
   constructor(transformationEvent) {
     super(transformationEvent);
-    this.isA = 'TransformationEvent';
+    this.type = 'TransformationEvent';
 
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
@@ -56,13 +56,15 @@ export default class TransformationEvent extends Event {
           break;
         case 'outputQuantityList':
           this.clearOutputQuantityList();
-          value.forEach((quantityElement) => this
-            .addOutputQuantity(new QuantityElement(quantityElement)));
+          value.forEach(
+            (quantityElement) => this.addOutputQuantity(new QuantityElement(quantityElement)),
+          );
           break;
         case 'inputQuantityList':
           this.clearInputQuantityList();
-          value.forEach((quantityElement) => this
-            .addInputQuantity(new QuantityElement(quantityElement)));
+          value.forEach(
+            (quantityElement) => this.addInputQuantity(new QuantityElement(quantityElement)),
+          );
           break;
         // no default
       }

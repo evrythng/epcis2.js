@@ -12,7 +12,8 @@ import {
   bizTransactionCanonicalPropertyOrder,
   canonicalPropertyOrder,
   destinationCanonicalPropertyOrder,
-  errorDeclarationCanonicalPropertyOrder, persistentDispositionCanonicalPropertyOrder,
+  errorDeclarationCanonicalPropertyOrder,
+  persistentDispositionCanonicalPropertyOrder,
   quantityElementCanonicalPropertyOrder,
   readPointCanonicalPropertyOrder,
   sensorElementCanonicalPropertyOrder,
@@ -30,7 +31,11 @@ import {
   toBeIgnored,
 } from './hashAlgorithmUtils';
 import {
-  bizSteps, businessTransactionTypes, dispositions, errorReasonIdentifiers, sourceDestinationTypes,
+  bizSteps,
+  businessTransactionTypes,
+  dispositions,
+  errorReasonIdentifiers,
+  sourceDestinationTypes,
 } from '../cbv/cbv';
 
 // The rules of the algorithm are defined here :
@@ -110,8 +115,7 @@ export const getPreHashStringFromCustomFieldElement = (key, value, context, thro
       return '';
     }
 
-    field =
-      key.replace(`${splitKey[0]}:`, `{${context[splitKey[0]]}}`);
+    field = key.replace(`${splitKey[0]}:`, `{${context[splitKey[0]]}}`);
   } else if (key.startsWith('#')) {
     // if the key is '#text' for example, we don't want ot add the
     // key to the pre-hashed string
@@ -215,32 +219,48 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'quantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getOrderedPreHashString(list[i], context,
-          quantityElementCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          quantityElementCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
       }
       break;
     case 'childQuantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getOrderedPreHashString(list[i], context,
-          quantityElementCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          quantityElementCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
       }
       break;
     case 'inputQuantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getOrderedPreHashString(list[i], context,
-          quantityElementCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          quantityElementCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
       }
       break;
     case 'outputQuantityList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getOrderedPreHashString(list[i], context,
-          quantityElementCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          quantityElementCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(`quantityElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `quantityElement${j}`));
       }
@@ -250,18 +270,26 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         // if, for example, the field is equal to 'bol' instead of
         // 'urn:epcglobal:cbv:btt:bol', we need to complete it
         if (businessTransactionTypes[list[i].type] !== undefined) {
-          list[i].type = businessTransactionTypes[list[i].type];
+          list[i].type = `urn:epcglobal:cbv:btt:${businessTransactionTypes[list[i].type]}`;
         }
-        res = getOrderedPreHashString(list[i], context,
-          bizTransactionCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          bizTransactionCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(res.preHashed);
         customFields.push(...res.customFields.map((j) => `bizTransaction${j}`));
       }
       break;
     case 'sourceList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getOrderedPreHashString(list[i], context,
-          sourceCanonicalPropertyOrder, throwError);
+        // if, for example, the field is equal to 'location' instead of
+        // 'urn:epcglobal:cbv:sdt:location', we need to complete it
+        if (sourceDestinationTypes[list[i].type] !== undefined) {
+          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
+        }
+        res = getOrderedPreHashString(list[i], context, sourceCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
         customFields.push(...res.customFields.map((j) => `source${j}`));
       }
@@ -271,18 +299,26 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         // if, for example, the field is equal to 'location' instead of
         // 'urn:epcglobal:cbv:sdt:location', we need to complete it
         if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = sourceDestinationTypes[list[i].type];
+          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
         }
-        res = getOrderedPreHashString(list[i], context,
-          destinationCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          destinationCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(res.preHashed);
         customFields.push(...res.customFields.map((j) => `destination${j}`));
       }
       break;
     case 'sensorElementList':
       for (let i = 0; i < list.length; i += 1) {
-        res = getOrderedPreHashString(list[i], context,
-          sensorElementCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          sensorElementCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(`sensorElement${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `sensorElement${j}`));
       }
@@ -290,8 +326,12 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'sensorReport':
       string = '';
       for (let i = 0; i < list.length; i += 1) {
-        res = getOrderedPreHashString(list[i], context,
-          sensorReportCanonicalPropertyOrder, throwError);
+        res = getOrderedPreHashString(
+          list[i],
+          context,
+          sensorReportCanonicalPropertyOrder,
+          throwError,
+        );
         strings.push(`sensorReport${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `sensorReport${j}`));
       }
@@ -327,116 +367,153 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
  * @param {[]} orderList
  * @param {boolean} throwError - if set to true, it will throw an error if the event misses some
  * fields for example. Otherwise, it won't throw an error and it will still return the generated id
+ * @param {boolean} recursive - false if it is the first call of the function - true if it is being
+ * called from inside the function
  * @returns {{preHashed: string, customFields: []}} the object passed in parameter with its field
  * ordered
  */
-export const getOrderedPreHashString =
-  (object, context, orderList, throwError) => {
-    let string = '';
-    const strings = [];
-    let res;
+export const getOrderedPreHashString = (
+  object,
+  context,
+  orderList,
+  throwError,
+  recursive = true,
+) => {
+  let string = '';
+  const strings = [];
+  let res;
 
-    // First, we add the fields that are defined in the order list
-    for (let i = 0; i < orderList.length; i += 1) {
-      if (object.hasOwnProperty(orderList[i])) {
-        if (Array.isArray(object[orderList[i]])) {
-          res = preHashStringTheList(object[orderList[i]], context, orderList[i], throwError);
-          string += res.preHashed;
-          strings.push(...res.customFields);
-        } else {
-          switch (orderList[i]) {
-            case 'isA':
-            // we replace 'isA' by 'eventType'
-              string += getPreHashStringOfField('eventType', object[orderList[i]], throwError);
-              break;
-            case 'errorDeclaration':
+  // First, we add the fields that are defined in the order list
+  for (let i = 0; i < orderList.length; i += 1) {
+    if (object.hasOwnProperty(orderList[i])) {
+      if (Array.isArray(object[orderList[i]])) {
+        res = preHashStringTheList(object[orderList[i]], context, orderList[i], throwError);
+        string += res.preHashed;
+        strings.push(...res.customFields);
+      } else {
+        switch (orderList[i]) {
+          case 'type':
+            // if it is the root 'type' (i.e the type of the event) we replace 'type' by 'eventType'
+            // else - it is the type of a subfield, we don't replace it.
+            string += getPreHashStringOfField(
+              recursive ? 'type' : 'eventType',
+              object[orderList[i]],
+              throwError,
+            );
+            break;
+          case 'errorDeclaration':
             // if, for example, the field is equal to 'did_not_occur' instead of
             // 'urn:epcglobal:cbv:er:did_not_occur', we need to complete it
-              if (errorReasonIdentifiers[object[orderList[i]].reason] !== undefined) {
-                object[orderList[i]].reason = errorReasonIdentifiers[object[orderList[i]].reason];
-              }
-              res = getOrderedPreHashString(object[orderList[i]], context,
-                errorDeclarationCanonicalPropertyOrder, throwError);
-              string += `errorDeclaration${res.preHashed}`;
-              strings.push(...res.customFields.map((j) => `errorDeclaration${j}`));
-              break;
-            case 'readPoint':
-              string += 'readPoint';
-              res = getOrderedPreHashString(object[orderList[i]], context,
-                readPointCanonicalPropertyOrder, throwError);
-              string += res.preHashed;
-              strings.push(...res.customFields.map((j) => `readPoint${j}`));
-              break;
-            case 'bizLocation':
-              string += 'bizLocation';
-              res = getOrderedPreHashString(object[orderList[i]], context,
-                bizLocationCanonicalPropertyOrder, throwError);
-              string += res.preHashed;
-              strings.push(...res.customFields.map((j) => `bizLocation${j}`));
-              break;
-            case 'sensorMetadata':
-              string += 'sensorMetadata';
-              res = getOrderedPreHashString(object[orderList[i]], context,
-                sensorMetadataCanonicalPropertyOrder, throwError);
-              string += res.preHashed;
-              strings.push(...res.customFields.map((j) => `sensorMetadata${j}`));
-              break;
-            case 'persistentDisposition':
-              string += 'persistentDisposition';
-              res = getOrderedPreHashString(object[orderList[i]], context,
-                persistentDispositionCanonicalPropertyOrder, throwError);
-              string += res.preHashed;
-              strings.push(...res.customFields.map((j) => `persistentDisposition${j}`));
-              break;
-            case 'ilmd':
-              string += `ilmd${
-                getPreHashStringOfElementWithChildren(object[orderList[i]], context, throwError)}`;
-              break;
-            case 'bizStep':
-              res = object[orderList[i]];
-              // if, for example, the field is equal to 'accepting' instead of
-              // 'urn:epcglobal:cbv:bizstep:accepting' for example, we need to complete it
-              if (bizSteps[res] !== undefined) {
-                res = bizSteps[res];
-              }
+            if (errorReasonIdentifiers[object[orderList[i]].reason] !== undefined) {
+              object[orderList[i]].reason = `urn:epcglobal:cbv:er:${
+                errorReasonIdentifiers[object[orderList[i]].reason]
+              }`;
+            }
+            res = getOrderedPreHashString(
+              object[orderList[i]],
+              context,
+              errorDeclarationCanonicalPropertyOrder,
+              throwError,
+            );
+            string += `errorDeclaration${res.preHashed}`;
+            strings.push(...res.customFields.map((j) => `errorDeclaration${j}`));
+            break;
+          case 'readPoint':
+            string += 'readPoint';
+            res = getOrderedPreHashString(
+              object[orderList[i]],
+              context,
+              readPointCanonicalPropertyOrder,
+              throwError,
+            );
+            string += res.preHashed;
+            strings.push(...res.customFields.map((j) => `readPoint${j}`));
+            break;
+          case 'bizLocation':
+            string += 'bizLocation';
+            res = getOrderedPreHashString(
+              object[orderList[i]],
+              context,
+              bizLocationCanonicalPropertyOrder,
+              throwError,
+            );
+            string += res.preHashed;
+            strings.push(...res.customFields.map((j) => `bizLocation${j}`));
+            break;
+          case 'sensorMetadata':
+            string += 'sensorMetadata';
+            res = getOrderedPreHashString(
+              object[orderList[i]],
+              context,
+              sensorMetadataCanonicalPropertyOrder,
+              throwError,
+            );
+            string += res.preHashed;
+            strings.push(...res.customFields.map((j) => `sensorMetadata${j}`));
+            break;
+          case 'persistentDisposition':
+            string += 'persistentDisposition';
+            res = getOrderedPreHashString(
+              object[orderList[i]],
+              context,
+              persistentDispositionCanonicalPropertyOrder,
+              throwError,
+            );
+            string += res.preHashed;
+            strings.push(...res.customFields.map((j) => `persistentDisposition${j}`));
+            break;
+          case 'ilmd':
+            string += `ilmd${getPreHashStringOfElementWithChildren(
+              object[orderList[i]],
+              context,
+              throwError,
+            )}`;
+            break;
+          case 'bizStep':
+            res = object[orderList[i]];
+            // if, for example, the field is equal to 'accepting' instead of
+            // 'urn:epcglobal:cbv:bizstep:accepting' for example, we need to complete it
+            if (bizSteps[res] !== undefined) {
+              res = `urn:epcglobal:cbv:bizstep:${bizSteps[res]}`;
+            }
 
-              string += getPreHashStringOfField(orderList[i], res, throwError);
-              break;
-            case 'disposition':
-              res = object[orderList[i]];
-              // if, for example, the field is equal to 'active' instead of
-              // 'urn:epcglobal:cbv:disp:active', we need to complete it
-              if (dispositions[res] !== undefined) {
-                res = dispositions[res];
-              }
+            string += getPreHashStringOfField(orderList[i], res, throwError);
+            break;
+          case 'disposition':
+            res = object[orderList[i]];
+            // if, for example, the field is equal to 'active' instead of
+            // 'urn:epcglobal:cbv:disp:active', we need to complete it
+            if (dispositions[res] !== undefined) {
+              res = `urn:epcglobal:cbv:disp:${dispositions[res]}`;
+            }
 
-              string += getPreHashStringOfField(orderList[i], res, throwError);
-              break;
-            default:
-              string += getPreHashStringOfField(orderList[i], object[orderList[i]], throwError);
-              break;
-          }
+            string += getPreHashStringOfField(orderList[i], res, throwError);
+            break;
+          default:
+            string += getPreHashStringOfField(orderList[i], object[orderList[i]], throwError);
+            break;
         }
       }
     }
+  }
 
-    // Then, we look for the fields that are not defined in the order list
-    const fieldsToAdd = {};
+  // Then, we look for the fields that are not defined in the order list
+  const fieldsToAdd = {};
 
-    Object.keys(object).forEach((prop) => {
-      if (!orderList.includes(prop) && !toBeIgnored.includes(prop)) {
-        fieldsToAdd[prop] = object[prop];
-      }
-    });
+  Object.keys(object).forEach((prop) => {
+    if (!orderList.includes(prop) && !toBeIgnored.includes(prop)) {
+      fieldsToAdd[prop] = object[prop];
+    }
+  });
 
-    Object.keys(fieldsToAdd).forEach((prop) => {
-      strings.push(
-        getPreHashStringFromCustomFieldElement(prop, fieldsToAdd[prop], context, throwError),
-      );
-    });
+  Object.keys(fieldsToAdd).forEach((prop) => {
+    strings.push(
+      getPreHashStringFromCustomFieldElement(prop, fieldsToAdd[prop], context, throwError),
+    );
+  });
 
-    return { preHashed: string, customFields: strings };
-  };
+  return { preHashed: string, customFields: strings };
+};
 
 /**
  * Convert the epcis event passed in parameter into a pre-hashed string
@@ -454,7 +531,11 @@ export const eventToPreHashedString = (event, context, throwError = true) => {
   // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
   const extendedContext = { ...context, ...getEventContexts(event) };
   const res = getOrderedPreHashString(
-    event, extendedContext, canonicalPropertyOrder, throwError,
+    event,
+    extendedContext,
+    canonicalPropertyOrder,
+    throwError,
+    false,
   );
   return res.preHashed + listOfStringToPreHashLexicalOrderedString(res.customFields);
 };

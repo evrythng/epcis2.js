@@ -5,22 +5,14 @@
   "epcisBody": {
     "eventList": [
       {
-        "type": "AggregationEvent",
-        "eventTime": "2013-06-08T14:58:56.591Z",
-        "eventTimeZoneOffset": "+02:00",
-        "parentID": "urn:epc:id:sscc:0614141.1234567890",
-        "childEPCs": [
-          "urn:epc:id:sgtin:0614141.107346.2017",
-          "urn:epc:id:sgtin:0614141.107346.2018"
-        ],
-        "action": "OBSERVE",
-        "bizStep": "receiving",
-        "disposition": "in_progress",
-        "readPoint": {
-          "id": "urn:epc:id:sgln:0037000.00729.8202"
-        },
-        "bizLocation": {
-          "id": "urn:epc:id:sgln:0037000.00729.8202"
+        "type": "TransactionEvent",
+        "eventTime": "2005-04-04T02:33:31.116Z",
+        "eventTimeZoneOffset": "-06:00",
+        "errorDeclaration": {
+          "declarationTime": "2020-01-15T00:00:00+01:00",
+          "reason": "incorrect_data",
+          "example:vendorExtension": "Test1",
+          "correctiveEventIDs": ["urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"]
         },
         "bizTransactionList": [
           {
@@ -32,14 +24,21 @@
             "bizTransaction": "urn:epc:id:gsrn:0614141.0000010253"
           }
         ],
-        "childQuantityList": [
+        "parentID": "urn:epc:id:sscc:0614141.1234567890",
+        "epcList": ["urn:epc:id:sgtin:0614141.107346.2017", "urn:epc:id:sgtin:0614141.107346.2018"],
+        "action": "ADD",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:0614141.07346.1234"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:0614141.00888.0"
+        },
+        "quantityList": [
           {
-            "epcClass": "urn:epc:idpat:sgtin:4012345.098765.*",
-            "quantity": 10
-          },
-          {
-            "epcClass": "urn:epc:class:lgtin:4012345.012345.998877",
-            "quantity": 200.5,
+            "epcClass": "urn:epc:class:lgtin:4012345.011111.4444",
+            "quantity": 10,
             "uom": "KGM"
           }
         ],

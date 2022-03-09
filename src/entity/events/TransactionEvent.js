@@ -20,7 +20,7 @@ export default class TransactionEvent extends Event {
    */
   constructor(transactionEvent) {
     super(transactionEvent);
-    this.isA = 'TransactionEvent';
+    this.type = 'TransactionEvent';
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
       functions.forEach((func) => {

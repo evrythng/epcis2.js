@@ -15,9 +15,6 @@
  * @property {number} timeout - Timeout for request in ms
  * @property {boolean} documentValidation - whether the EPCISDocument has to be validated or not
  * before sending it via the capture interface
- * @property {boolean} useEventListByDefault - if true, a single event will be in the eventList
- * field of the EPCISDocument by default. Otherwise, it will be in the event field of the
- * EPCISDocument
  * @property {string} EPCISDocumentContext - The default value of the '@context' parameter of an
  * EPCISDocument. Set it to undefined if you don't want the parameter in your EPCISDocument.
  * @property {string} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion'
@@ -37,9 +34,8 @@ export const defaultSettings = {
   },
   eventTimeZoneOffset: undefined,
   timeout: undefined,
-  useEventListByDefault: true,
   EPCISDocumentContext: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: '2',
+  EPCISDocumentSchemaVersion: '2.0',
   documentValidation: true,
 };
 

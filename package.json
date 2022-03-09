@@ -1,6 +1,6 @@
 {
   "name": "epcis2.js",
-  "version": "1.1.0",
+  "version": "2.0.0-beta.0",
   "description": "Javascript SDK for the EPCIS 2.0 standard",
   "main": "dist/epcis2.node.js",
   "scripts": {
@@ -25,32 +25,6 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "mocha": true
-    },
-    "extends": [
-      "airbnb"
-    ],
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "ecmaVersion": 12
-    },
-    "rules": {
-      "no-prototype-builtins": "off",
-      "prefer-promise-reject-errors": "off",
-      "operator-linebreak": "off"
-    }
-  },
-  "eslintIgnore": [
-    "node_modules",
-    "reports",
-    "mochawesome-report",
-    ".nyc_output",
-    "dist"
-  ],
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -101,7 +75,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "fetch-mock": "^9.11.0",
     "husky": "^6.0.0",
-    "mocha": "^8.3.2",
+    "mocha": "^9.2.1",
     "nyc": "^15.1.0",
     "prettier": "^2.2.1",
     "webpack": "^5.30.0",

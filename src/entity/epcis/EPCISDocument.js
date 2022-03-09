@@ -19,9 +19,7 @@ export default class EPCISDocument extends Entity {
    */
   constructor(epcisDocument) {
     super(epcisDocument);
-    this.isA = 'EPCISDocument';
-
-    this.setUseEventListByDefault(settings.useEventListByDefault);
+    this.type = 'EPCISDocument';
 
     if (!this.getContext()) {
       this.setContext(settings.EPCISDocumentContext);
@@ -42,21 +40,15 @@ export default class EPCISDocument extends Entity {
     // Create classes for sub-objects that are provided
     Object.entries(epcisDocument).forEach(([key, value]) => {
       switch (key) {
-        case 'isA':
-          this.isA = value;
+        case 'type':
+          this.type = value;
           break;
         case 'epcisHeader':
           this.setEPCISHeader(new EPCISHeader(value));
           break;
         case 'epcisBody':
-          if (value.event) {
-            this.addEvent(objectToEvent(value.event));
-            break;
-          }
           if (value.eventList) {
-            value.eventList.forEach((event) => this
-              .addEvent(objectToEvent(event)));
-            break;
+            value.eventList.forEach((event) => this.addEvent(objectToEvent(event)));
           }
           break;
         // no default
@@ -65,21 +57,21 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
-   * Set the isA property
-   * @param {string} isA
+   * Set the type property
+   * @param {string} type
    * @return {EPCISDocument} - the epcisDocument instance
    */
-  setIsA(isA) {
-    this.isA = isA;
+  setType(type) {
+    this.type = type;
     return this;
   }
 
   /**
-   * Getter for the isA property
-   * @return {string} - the isA property
+   * Getter for the type property
+   * @return {string} - the type property
    */
-  getIsA() {
-    return this.isA;
+  getType() {
+    return this.type;
   }
 
   /**
@@ -134,42 +126,6 @@ export default class EPCISDocument extends Entity {
    */
   getCreationDate() {
     return this.creationDate;
-  }
-
-  /**
-   * Set the format property
-   * @param {string} format
-   * @return {EPCISDocument} - the epcisDocument instance
-   */
-  setFormat(format) {
-    this.format = format;
-    return this;
-  }
-
-  /**
-   * Getter for the format property
-   * @return {string} - the format
-   */
-  getFormat() {
-    return this.format;
-  }
-
-  /**
-   * Set the useEventListByDefault property
-   * @param {boolean} useEventListByDefault
-   * @return {EPCISDocument} - the epcisDocument instance
-   */
-  setUseEventListByDefault(useEventListByDefault) {
-    this.useEventListByDefault = useEventListByDefault;
-    return this;
-  }
-
-  /**
-   * Getter for the useEventListByDefault property
-   * @return {boolean} - the useEventListByDefault
-   */
-  getUseEventListByDefault() {
-    return this.useEventListByDefault;
   }
 
   /**
@@ -231,8 +187,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   removeEvent(event) {
-    this.eventList = this.eventList
-      .filter((elem) => elem !== event);
+    this.eventList = this.eventList.filter((elem) => elem !== event);
     return this;
   }
 
@@ -270,24 +225,12 @@ export default class EPCISDocument extends Entity {
    */
   toObject() {
     const output = super.toObject();
-    delete output.useEventListByDefault;
-
-    // check the settings to know if a single event has to be in the event field or eventList field.
-    if (!this.useEventListByDefault && this.eventList.length < 2) {
-      delete output.eventList;
-      output.event = this.eventList.length ? this.eventList[0].toObject() : {};
-    }
 
     // the event or event list has to be in the epcisBody field
-    if (output.event || output.eventList) {
+    if (output.eventList) {
       const body = {};
-      if (output.event) {
-        body.event = output.event;
-        delete output.event;
-      } else {
-        body.eventList = output.eventList;
-        delete output.eventList;
-      }
+      body.eventList = output.eventList;
+      delete output.eventList;
       output.epcisBody = body;
     }
 

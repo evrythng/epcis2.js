@@ -13,10 +13,14 @@ import BizLocation from '../../src/entity/model/BizLocation';
 import BizTransactionElement from '../../src/entity/model/BizTransactionElement';
 import SourceElement from '../../src/entity/model/SourceElement';
 import DestinationElement from '../../src/entity/model/DestinationElement';
-import { exampleAssociationEvent, exampleObjectEvent } from '../data/eventExample';
+import EPCISDocumentAssociationEvent from '../data/EPCISDocument-AssociationEvent.json';
+import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
 import Ilmd from '../../src/entity/model/Ilmd';
 import PersistentDisposition from '../../src/entity/model/PersistentDisposition';
 import SensorElement from '../../src/entity/model/sensor/SensorElement';
+
+const exampleAssociationEvent = EPCISDocumentAssociationEvent.epcisBody.eventList[0];
+const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 
 const epc1 = exampleObjectEvent.epcList[0];
 const epc2 = exampleObjectEvent.epcList[1];
@@ -25,9 +29,11 @@ const epc3 = 'urn:epc:id:sgtin:0614141.107346.2019';
 describe('unit tests for the AssociationEvent class', () => {
   it('setters should set the variables correctly', async () => {
     const obj = new AssociationEvent();
-    obj.setEventID(exampleAssociationEvent.eventID)
+    obj
+      .setEventID(exampleAssociationEvent.eventID)
       .addChildEPCList(exampleAssociationEvent.childEPCs)
       .setEventTime(exampleAssociationEvent.eventTime)
+      .setEventTimeZoneOffset(exampleAssociationEvent.eventTimeZoneOffset)
       .setRecordTime(exampleAssociationEvent.recordTime)
       .setErrorDeclaration(new ErrorDeclaration(exampleAssociationEvent.errorDeclaration))
       .setAction(exampleAssociationEvent.action)
@@ -37,8 +43,9 @@ describe('unit tests for the AssociationEvent class', () => {
       .setBizLocation(exampleAssociationEvent.bizLocation.id)
       .setParentId(exampleAssociationEvent.parentID);
 
-    expect(obj.getChildEPCList().toString()).to.be
-      .equal(exampleAssociationEvent.childEPCs.toString());
+    expect(obj.getChildEPCList().toString()).to.be.equal(
+      exampleAssociationEvent.childEPCs.toString(),
+    );
     expect(obj.getEventID()).to.be.equal(exampleAssociationEvent.eventID);
     expect(obj.getEventTime()).to.be.equal(exampleAssociationEvent.eventTime);
     expect(obj.getEventTimeZoneOffset()).to.be.equal(exampleAssociationEvent.eventTimeZoneOffset);
@@ -142,8 +149,9 @@ describe('unit tests for the AssociationEvent class', () => {
       o.addChildQuantity(quantity3);
       expect(o.getChildQuantityList().toString()).to.be.equal([quantity3].toString());
       o.addChildQuantityList([quantity1, quantity2]);
-      expect(o.getChildQuantityList().toString()).to.be
-        .equal([quantity3, quantity1, quantity2].toString());
+      expect(o.getChildQuantityList().toString()).to.be.equal(
+        [quantity3, quantity1, quantity2].toString(),
+      );
     });
 
     it('should remove a quantity list', async () => {

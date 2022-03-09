@@ -56,20 +56,20 @@ export const fieldToFunctions = {
     'getSourceList',
   ],
   destinationList: [
+    'addDestination',
     'addDestinationList',
-    'addDestinationListList',
-    'clearDestinationListList',
+    'clearDestinationList',
+    'removeDestination',
     'removeDestinationList',
-    'removeDestinationListList',
-    'getDestinationListList',
+    'getDestinationList',
   ],
   sensorElementList: [
+    'addSensorElement',
     'addSensorElementList',
-    'addSensorElementListList',
-    'clearSensorElementListList',
+    'clearSensorElementList',
+    'removeSensorElement',
     'removeSensorElementList',
-    'removeSensorElementListList',
-    'getSensorElementListList',
+    'getSensorElementList',
   ],
   childEPCs: [
     'addChildEPC',
@@ -104,7 +104,7 @@ export default class Event extends Entity {
   constructor(event) {
     super(event);
     if (new.target === Event) {
-      throw new Error('Abstract classes can\'t be instantiated.');
+      throw new Error("Abstract classes can't be instantiated.");
     }
 
     // If the event timeZoneOffset isn't defined, set default values
@@ -139,60 +139,55 @@ export default class Event extends Entity {
         case 'epcList':
           try {
             this.clearEPCList();
-          } catch (e) {
-          }
+          } catch (e) {}
           value.forEach((epc) => this.addEPC(epc));
           break;
         case 'childEPCs':
           try {
             this.clearChildEPCList();
-          } catch (e) {
-          }
+          } catch (e) {}
           value.forEach((epc) => this.addChildEPC(epc));
           break;
         case 'quantityList':
           try {
             this.clearQuantityList();
-          } catch (e) {
-          }
-          value.forEach((quantityElement) => this
-            .addQuantity(new QuantityElement(quantityElement)));
+          } catch (e) {}
+          value.forEach(
+            (quantityElement) => this.addQuantity(new QuantityElement(quantityElement)),
+          );
           break;
         case 'childQuantityList':
           try {
             this.clearChildQuantityList();
-          } catch (e) {
-          }
-          value.forEach((quantityElement) => this
-            .addChildQuantity(new QuantityElement(quantityElement)));
+          } catch (e) {}
+          value.forEach(
+            (quantityElement) => this.addChildQuantity(new QuantityElement(quantityElement)),
+          );
           break;
         case 'bizTransactionList':
           try {
             this.clearBizTransactionList();
-          } catch (e) {
-          }
-          value.forEach((bizTransaction) => this
-            .addBizTransaction(new BizTransactionElement(bizTransaction)));
+          } catch (e) {}
+          value.forEach(
+            (bizTransaction) => this.addBizTransaction(new BizTransactionElement(bizTransaction)),
+          );
           break;
         case 'sourceList':
           try {
             this.clearSourceList();
-          } catch (e) {
-          }
+          } catch (e) {}
           value.forEach((source) => this.addSource(new SourceElement(source)));
           break;
         case 'destinationList':
           try {
             this.clearDestinationList();
-          } catch (e) {
-          }
+          } catch (e) {}
           value.forEach((destination) => this.addDestination(new DestinationElement(destination)));
           break;
         case 'sensorElementList':
           try {
             this.clearSensorElementList();
-          } catch (e) {
-          }
+          } catch (e) {}
           value.forEach((sensorElement) => this.addSensorElement(new SensorElement(sensorElement)));
           break;
         case 'readPoint':
@@ -213,6 +208,24 @@ export default class Event extends Entity {
   }
 
   /** ************     COMMON TO ALL EVENTS    ********************** */
+
+  /**
+   * Set the context property
+   * @param {string|Object|Array<string>|Array<Object>} context
+   * @return {Event} - the event instance
+   */
+  setContext(context) {
+    this['@context'] = context;
+    return this;
+  }
+
+  /**
+   * Getter for the context property
+   * @return {string|Object|Array<string>|Array<Object>} - the context
+   */
+  getContext() {
+    return this['@context'];
+  }
 
   /**
    * Set the eventID property
@@ -545,7 +558,8 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setReadPoint(readPoint) {
-    if ((typeof readPoint) === 'string') { // the param is the id of the readPoint
+    if (typeof readPoint === 'string') {
+      // the param is the id of the readPoint
       this.readPoint = new ReadPoint().setId(readPoint);
       return this;
     }
@@ -572,7 +586,8 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setBizLocation(bizLocation) {
-    if ((typeof bizLocation) === 'string') { // the param is the id of the bizLocation
+    if (typeof bizLocation === 'string') {
+      // the param is the id of the bizLocation
       this.bizLocation = new BizLocation().setId(bizLocation);
       return this;
     }
@@ -644,8 +659,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   removeBizTransactionList(bizTransactionList) {
-    bizTransactionList
-      .forEach((bizTransaction) => this.removeBizTransaction(bizTransaction));
+    bizTransactionList.forEach((bizTransaction) => this.removeBizTransaction(bizTransaction));
     return this;
   }
 
@@ -771,8 +785,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   removeDestinationList(destinationList) {
-    destinationList
-      .forEach((destinationElement) => this.removeDestination(destinationElement));
+    destinationList.forEach((destinationElement) => this.removeDestination(destinationElement));
     return this;
   }
 
@@ -835,8 +848,9 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   removeSensorElementList(sensorElementList) {
-    sensorElementList
-      .forEach((sensorElementElement) => this.removeSensorElement(sensorElementElement));
+    sensorElementList.forEach(
+      (sensorElementElement) => this.removeSensorElement(sensorElementElement),
+    );
     return this;
   }
 
