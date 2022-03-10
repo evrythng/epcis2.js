@@ -33,7 +33,8 @@ import {
   businessTransactionTypes,
   dispositions,
   sourceDestinationTypes,
-  sensorMeasurementTypes
+  sensorMeasurementTypes,
+  alarmTypes
 } from '../cbv/cbv';
 
 // The rules of the algorithm are defined here :
@@ -480,6 +481,16 @@ export const getOrderedPreHashString = (
             // 'https://ns.gs1.org/cbv/Disp-active', we need to complete it
             if (dispositions[res] !== undefined) {
               res = `https://ns.gs1.org/cbv/Disp-${dispositions[res]}`;
+            }
+
+            string += getPreHashStringOfField(orderList[i], res, throwError);
+            break;
+          case 'exception':
+            res = object[orderList[i]];
+            // if, for example, the field is equal to 'ALARM_CONDITION' instead of
+            // 'https://ns.gs1.org/cbv/SensorAlertType-ALARM_CONDITION' we need to complete it
+            if (Object.values(alarmTypes).includes(res) !== undefined) {
+              res = `https://ns.gs1.org/cbv/SensorAlertType-${res}`;
             }
 
             string += getPreHashStringOfField(orderList[i], res, throwError);

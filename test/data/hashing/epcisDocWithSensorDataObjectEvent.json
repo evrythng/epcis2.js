@@ -25,10 +25,12 @@
               {
                 "type": "Temperature",
                 "value": 26,
+                "exception": "ERROR_CONDITION",
                 "uom": "CEL"
               },
               {
                 "type": "AbsoluteHumidity",
+                "exception": "ALARM_CONDITION",
                 "value": 12.1,
                 "uom": "A93"
               },

@@ -9,6 +9,7 @@
     "build": "rm dist/*; webpack --config webpack.config.js --mode production",
     "build:dev": "rm dist/*; webpack --config webpack.config.js --mode development",
     "test": "nyc ./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/**/*.spec.js'",
+    "testlocal": "./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/hashing/**/*.spec.js'",
     "prepublishOnly": "npm run build && npm test"
   },
   "husky": {
