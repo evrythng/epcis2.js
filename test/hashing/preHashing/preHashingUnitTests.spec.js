@@ -13,7 +13,7 @@ import {
   businessTransactionTypes,
   bizSteps,
   dispositions,
-  errorReasonIdentifiers, sensorMeasurementTypes,
+  errorReasonIdentifiers, sensorMeasurementTypes, components,
 } from '../../../src';
 
 const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
@@ -513,8 +513,9 @@ describe('unit tests for pre-hashing', () => {
             {
               type: sensorMeasurementTypes.temperature,
               value: 26,
-              exception: "ERROR_CONDITION",
+              exception: 'ERROR_CONDITION',
               uom: 'CEL',
+              component: components.easting,
             },
             {
               type: sensorMeasurementTypes.absolute_humidity,
@@ -609,7 +610,7 @@ describe('unit tests for pre-hashing', () => {
       );
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=800uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=160uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperatureexception=https://ns.gs1.org/cbv/SensorAlertType-ERROR_CONDITIONvalue=26uom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=801uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=161uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=802uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=162uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperaturevalue=26.2uom=CEL',
+        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=800uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=160uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperatureexception=https://ns.gs1.org/cbv/SensorAlertType-ERROR_CONDITIONvalue=26component=https://ns.gs1.org/cbv/Comp-eastinguom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=801uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=161uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=802uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=162uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperaturevalue=26.2uom=CEL',
       );
     });
   });

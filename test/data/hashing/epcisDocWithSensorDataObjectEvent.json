@@ -32,7 +32,8 @@
                 "type": "AbsoluteHumidity",
                 "exception": "ALARM_CONDITION",
                 "value": 12.1,
-                "uom": "A93"
+                "uom": "A93",
+                "component": "x"
               },
               {
                 "type": "Speed",

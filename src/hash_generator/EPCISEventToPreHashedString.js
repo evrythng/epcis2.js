@@ -34,7 +34,8 @@ import {
   dispositions,
   sourceDestinationTypes,
   sensorMeasurementTypes,
-  alarmTypes
+  alarmTypes,
+  components,
 } from '../cbv/cbv';
 
 // The rules of the algorithm are defined here :
@@ -495,6 +496,17 @@ export const getOrderedPreHashString = (
 
             string += getPreHashStringOfField(orderList[i], res, throwError);
             break;
+          case 'component':
+            res = object[orderList[i]];
+            // if, for example, the field is equal to 'x' instead of
+            // 'https://ns.gs1.org/cbv/Comp-x' we need to complete it
+            if (Object.values(components).includes(res) !== undefined) {
+              res = `https://ns.gs1.org/cbv/Comp-${res}`;
+            }
+
+            string += getPreHashStringOfField(orderList[i], res, throwError);
+            break;
+
           default:
             string += getPreHashStringOfField(orderList[i], object[orderList[i]], throwError);
             break;
