@@ -8,6 +8,13 @@ import { assert, expect } from 'chai';
 import { eventToPreHashedString } from '../../../src/hash_generator/EPCISEventToPreHashedString';
 import { sampleContext, sampleObjectEvent } from '../../data/hashing/samplePrehashesAndHashes';
 import EPCISDocumentObjectEvent from '../../data/EPCISDocument-ObjectEvent.json';
+import {
+  sourceDestinationTypes,
+  businessTransactionTypes,
+  bizSteps,
+  dispositions,
+  errorReasonIdentifiers,
+} from '../../../src';
 
 const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 
@@ -71,7 +78,6 @@ describe('unit tests for pre-hashing', () => {
       expect(str2).to.be.equal(str);
       expect(str3).to.be.equal(str);
     });
-
   });
 
   describe('lists pre-has tests', () => {
@@ -215,11 +221,11 @@ describe('unit tests for pre-hashing', () => {
         {
           bizTransactionList: [
             {
-              type: 'urn:epcglobal:cbv:btt:desadv',
+              type: businessTransactionTypes.desadv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:4711',
             },
             {
-              type: 'urn:epcglobal:cbv:btt:inv',
+              type: businessTransactionTypes.inv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:RE1099',
             },
           ],
@@ -230,12 +236,12 @@ describe('unit tests for pre-hashing', () => {
         {
           bizTransactionList: [
             {
-              type: 'urn:epcglobal:cbv:btt:inv',
+              type: businessTransactionTypes.inv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:RE1099',
             },
             {
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:4711',
-              type: 'urn:epcglobal:cbv:btt:desadv',
+              type: businessTransactionTypes.desadv,
             },
           ],
         },
@@ -252,11 +258,11 @@ describe('unit tests for pre-hashing', () => {
         {
           sourceList: [
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
           ],
@@ -268,10 +274,10 @@ describe('unit tests for pre-hashing', () => {
           sourceList: [
             {
               source: 'urn:epc:id:pgln:4000001.00012',
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
           ],
@@ -290,15 +296,15 @@ describe('unit tests for pre-hashing', () => {
         {
           destinationList: [
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:location',
+              type: sourceDestinationTypes.location,
               destination: 'urn:epc:id:sgln:4012345.00012.0',
             },
           ],
@@ -310,14 +316,14 @@ describe('unit tests for pre-hashing', () => {
           destinationList: [
             {
               destination: 'urn:epc:id:sgln:4012345.00012.0',
-              type: 'urn:epcglobal:cbv:sdt:location',
+              type: sourceDestinationTypes.location,
             },
             {
               destination: 'urn:epc:id:pgln:4012345.00000',
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
           ],
@@ -761,7 +767,7 @@ describe('unit tests for pre-hashing', () => {
   it('should pre-hash a bizStep', () => {
     const str = eventToPreHashedString(
       {
-        bizStep: 'urn:epcglobal:cbv:bizstep:repairing',
+        bizStep: bizSteps.repairing,
       },
       {},
     );
@@ -771,7 +777,7 @@ describe('unit tests for pre-hashing', () => {
   it('should pre-hash a disposition', () => {
     const str = eventToPreHashedString(
       {
-        disposition: 'urn:epcglobal:cbv:disp:damaged',
+        disposition: dispositions.damaged,
       },
       {},
     );
@@ -783,12 +789,12 @@ describe('unit tests for pre-hashing', () => {
       {
         persistentDisposition: {
           set: [
-            'urn:epcglobal:cbv:disp:completeness_inferred',
-            'urn:epcglobal:cbv:disp:completeness_verified',
+            dispositions.completeness_inferred,
+            dispositions.completeness_verified,
           ],
           unset: [
-            'urn:epcglobal:cbv:disp:completeness_verified',
-            'urn:epcglobal:cbv:disp:completeness_inferred',
+            dispositions.completeness_verified,
+            dispositions.completeness_inferred,
           ],
         },
       },
@@ -874,7 +880,7 @@ describe('unit tests for pre-hashing', () => {
       {
         errorDeclaration: {
           declarationTime: '2020-01-15T00:00:00.000+01:00',
-          reason: 'urn:epcglobal:cbv:er:incorrect_data',
+          reason: errorReasonIdentifiers.incorrect_data,
           'example:vendorExtension': {
             '@xmlns:example': 'http://ns.example.com/epcis',
             '#text': 'Test1',

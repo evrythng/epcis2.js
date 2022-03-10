@@ -22,7 +22,6 @@ import {
 } from './canonicalPropertyOrder';
 import {
   convertEpcUriToDlUri,
-  convertURNBasedVocabularyToURI,
   formatTheDate,
   listOfStringToPreHashLexicalOrderedString,
   getEventContexts,
@@ -50,7 +49,6 @@ import {
 export const getPreHashStringOfField = (field, value, throwError) => {
   value = removeWhiteSpaceAtTheBeginningOrEndOfString(value); // rule n°5
   value = formatTheDate(value); // rule n°8 and rule n°9
-  value = convertURNBasedVocabularyToURI(value); // rule n°14
   value = convertEpcUriToDlUri(value, throwError); // rule n°15
   return `${field}=${value}`;
 };
@@ -266,9 +264,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'bizTransactionList':
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'bol' instead of
-        // 'urn:epcglobal:cbv:btt:bol', we need to complete it
+        // 'https://ns.gs1.org/cbv/BTT-bol', we need to complete it
         if (businessTransactionTypes[list[i].type] !== undefined) {
-          list[i].type = `urn:epcglobal:cbv:btt:${businessTransactionTypes[list[i].type]}`;
+          list[i].type = `https://ns.gs1.org/cbv/BTT-${businessTransactionTypes[list[i].type]}`;
         }
         res = getOrderedPreHashString(
           list[i],
@@ -283,9 +281,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'sourceList':
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'location' instead of
-        // 'urn:epcglobal:cbv:sdt:location', we need to complete it
+        // 'https://ns.gs1.org/cbv/SDT-location', we need to complete it
         if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
+          list[i].type = `https://ns.gs1.org/cbv/SDT-${sourceDestinationTypes[list[i].type]}`;
         }
         res = getOrderedPreHashString(list[i], context, sourceCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
@@ -295,9 +293,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'destinationList':
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'location' instead of
-        // 'urn:epcglobal:cbv:sdt:location', we need to complete it
+        // 'https://ns.gs1.org/cbv/SDT-location', we need to complete it
         if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
+          list[i].type = `https://ns.gs1.org/cbv/SDT-${sourceDestinationTypes[list[i].type]}`;
         }
         res = getOrderedPreHashString(
           list[i],
@@ -448,9 +446,9 @@ export const getOrderedPreHashString = (
           case 'bizStep':
             res = object[orderList[i]];
             // if, for example, the field is equal to 'accepting' instead of
-            // 'urn:epcglobal:cbv:bizstep:accepting' for example, we need to complete it
+            // 'https://ns.gs1.org/cbv/BizStep-accepting' for example, we need to complete it
             if (bizSteps[res] !== undefined) {
-              res = `urn:epcglobal:cbv:bizstep:${bizSteps[res]}`;
+              res = `https://ns.gs1.org/cbv/BizStep-${bizSteps[res]}`;
             }
 
             string += getPreHashStringOfField(orderList[i], res, throwError);
@@ -458,9 +456,9 @@ export const getOrderedPreHashString = (
           case 'disposition':
             res = object[orderList[i]];
             // if, for example, the field is equal to 'active' instead of
-            // 'urn:epcglobal:cbv:disp:active', we need to complete it
+            // 'https://ns.gs1.org/cbv/Disp-active', we need to complete it
             if (dispositions[res] !== undefined) {
-              res = `urn:epcglobal:cbv:disp:${dispositions[res]}`;
+              res = `https://ns.gs1.org/cbv/Disp-${dispositions[res]}`;
             }
 
             string += getPreHashStringOfField(orderList[i], res, throwError);

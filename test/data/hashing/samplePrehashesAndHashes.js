@@ -15,7 +15,7 @@ export const sampleObjectEvent = {
     'urn:epc:id:sscc:4012345.0000000222',
   ],
   action: 'OBSERVE',
-  bizStep: 'urn:epcglobal:cbv:bizstep:departing',
+  bizStep: 'departing',
   readPoint: { id: 'urn:epc:id:sgln:4012345.00011.987' },
   'example:myField1': {
     '@xmlns:example': 'https://ns.example.com/epcis',

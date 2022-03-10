@@ -55,7 +55,7 @@ describe('rule tests', () => {
   it('should follow rule n°14', () => {
     const str = eventToPreHashedString(
       {
-        bizStep: 'urn:epcglobal:cbv:bizstep:repairing',
+        bizStep: 'repairing',
       },
       {},
     );
