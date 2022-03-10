@@ -13,7 +13,7 @@ import {
   businessTransactionTypes,
   bizSteps,
   dispositions,
-  errorReasonIdentifiers,
+  errorReasonIdentifiers, sensorMeasurementTypes,
 } from '../../../src';
 
 const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
@@ -511,22 +511,22 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: 'gs1:MT-Temperature',
+              type: sensorMeasurementTypes.temperature,
               value: 26,
               uom: 'CEL',
             },
             {
-              type: 'gs1:MT-Humidity',
+              type: sensorMeasurementTypes.absolute_humidity,
               value: 12.1,
               uom: 'A93',
             },
             {
-              type: 'gs1:MT-Speed',
+              type: sensorMeasurementTypes.speed,
               value: 160,
               uom: 'KMH',
             },
             {
-              type: 'gs1:MT-Illuminance',
+              type: sensorMeasurementTypes.illuminance,
               value: 800,
               uom: 'LUX',
             },
@@ -541,22 +541,22 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: 'gs1:MT-Temperature',
+              type: sensorMeasurementTypes.temperature,
               value: 26.1,
               uom: 'CEL',
             },
             {
-              type: 'gs1:MT-Humidity',
+              type: sensorMeasurementTypes.absolute_humidity,
               value: 12.2,
               uom: 'A93',
             },
             {
-              type: 'gs1:MT-Speed',
+              type: sensorMeasurementTypes.speed,
               value: 161,
               uom: 'KMH',
             },
             {
-              type: 'gs1:MT-Illuminance',
+              type: sensorMeasurementTypes.illuminance,
               value: 801,
               uom: 'LUX',
             },
@@ -571,22 +571,22 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: 'gs1:MT-Temperature',
+              type: sensorMeasurementTypes.temperature,
               value: 26.2,
               uom: 'CEL',
             },
             {
-              type: 'gs1:MT-Humidity',
+              type: sensorMeasurementTypes.absolute_humidity,
               value: 12.2,
               uom: 'A93',
             },
             {
-              type: 'gs1:MT-Speed',
+              type: sensorMeasurementTypes.speed,
               value: 162,
               uom: 'KMH',
             },
             {
-              type: 'gs1:MT-Illuminance',
+              type: sensorMeasurementTypes.illuminance,
               value: 802,
               uom: 'LUX',
             },
@@ -608,7 +608,7 @@ describe('unit tests for pre-hashing', () => {
       );
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.1uom=A93sensorReporttype=gs1:MT-Illuminancevalue=800uom=LUXsensorReporttype=gs1:MT-Speedvalue=160uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26uom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.2uom=A93sensorReporttype=gs1:MT-Illuminancevalue=801uom=LUXsensorReporttype=gs1:MT-Speedvalue=161uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.2uom=A93sensorReporttype=gs1:MT-Illuminancevalue=802uom=LUXsensorReporttype=gs1:MT-Speedvalue=162uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26.2uom=CEL',
+        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=800uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=160uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperaturevalue=26uom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=801uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=161uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Illuminancevalue=802uom=LUXsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Speedvalue=162uom=KMHsensorReporttype=https://ns.gs1.org/cbv/MeasurementType-Temperaturevalue=26.2uom=CEL',
       );
     });
   });

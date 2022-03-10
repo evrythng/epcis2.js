@@ -33,6 +33,7 @@ import {
   businessTransactionTypes,
   dispositions,
   sourceDestinationTypes,
+  sensorMeasurementTypes
 } from '../cbv/cbv';
 
 // The rules of the algorithm are defined here :
@@ -392,6 +393,18 @@ export const getOrderedPreHashString = (
       } else {
         switch (orderList[i]) {
           case 'type':
+            // if the type field is a subtype of a sensor report element
+            if (orderList === sensorReportCanonicalPropertyOrder) {
+              res = object[orderList[i]];
+              // if, for example, the field is equal to 'Temperature' instead of
+              // 'https://ns.gs1.org/cbv/MeasurementType-Temperature' we need to complete it
+              if (Object.values(sensorMeasurementTypes).includes(res) !== undefined) {
+                res = `https://ns.gs1.org/cbv/MeasurementType-${res}`;
+              }
+
+              string += getPreHashStringOfField(orderList[i], res, throwError);
+              break;
+            }
             // if it is the root 'type' (i.e the type of the event) we replace 'type' by 'eventType'
             // else - it is the type of a subfield, we don't replace it.
             string += getPreHashStringOfField(
