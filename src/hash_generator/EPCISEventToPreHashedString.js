@@ -199,18 +199,26 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'set':
       string = '';
-      // todo: see if we need to replace 'completeness_inferred'
-      // by 'urn:epcglobal:cbv:disp:completeness_inferred' for example
       for (let i = 0; i < list.length; i += 1) {
-        strings.push(getPreHashStringOfField('set', list[i], throwError));
+        let res = list[i];
+        // if, for example, the field is equal to 'completeness_inferred' instead of
+        // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
+        if (dispositions[res] !== undefined) {
+          res = `https://ns.gs1.org/cbv/Disp-${dispositions[res]}`;
+        }
+        strings.push(getPreHashStringOfField('set', res, throwError));
       }
       break;
     case 'unset':
       string = '';
-      // todo: see if we need to replace 'completeness_inferred'
-      // by 'urn:epcglobal:cbv:disp:completeness_inferred' for example
       for (let i = 0; i < list.length; i += 1) {
-        strings.push(getPreHashStringOfField('unset', list[i], throwError));
+        let res = list[i];
+        // if, for example, the field is equal to 'completeness_inferred' instead of
+        // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
+        if (dispositions[res] !== undefined) {
+          res = `https://ns.gs1.org/cbv/Disp-${dispositions[res]}`;
+        }
+        strings.push(getPreHashStringOfField('unset', res, throwError));
       }
       break;
     case 'quantityList':
