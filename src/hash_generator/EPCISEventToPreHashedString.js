@@ -203,7 +203,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'set':
       string = '';
       for (let i = 0; i < list.length; i += 1) {
-        let res = list[i];
+        res = list[i];
         // if, for example, the field is equal to 'completeness_inferred' instead of
         // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
         if (Object.values(dispositions).includes(res)) {
@@ -215,7 +215,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'unset':
       string = '';
       for (let i = 0; i < list.length; i += 1) {
-        let res = list[i];
+        res = list[i];
         // if, for example, the field is equal to 'completeness_inferred' instead of
         // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
         if (Object.values(dispositions).includes(res)) {
