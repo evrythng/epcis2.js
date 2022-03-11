@@ -206,8 +206,8 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         let res = list[i];
         // if, for example, the field is equal to 'completeness_inferred' instead of
         // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
-        if (dispositions[res] !== undefined) {
-          res = `https://ns.gs1.org/cbv/Disp-${dispositions[res]}`;
+        if (Object.values(dispositions).includes(res)) {
+          res = `https://ns.gs1.org/cbv/Disp-${res}`;
         }
         strings.push(getPreHashStringOfField('set', res, throwError));
       }
@@ -218,8 +218,8 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         let res = list[i];
         // if, for example, the field is equal to 'completeness_inferred' instead of
         // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
-        if (dispositions[res] !== undefined) {
-          res = `https://ns.gs1.org/cbv/Disp-${dispositions[res]}`;
+        if (Object.values(dispositions).includes(res)) {
+          res = `https://ns.gs1.org/cbv/Disp-${res}`;
         }
         strings.push(getPreHashStringOfField('unset', res, throwError));
       }
@@ -276,8 +276,8 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'bol' instead of
         // 'https://ns.gs1.org/cbv/BTT-bol', we need to complete it
-        if (businessTransactionTypes[list[i].type] !== undefined) {
-          list[i].type = `https://ns.gs1.org/cbv/BTT-${businessTransactionTypes[list[i].type]}`;
+        if (Object.values(businessTransactionTypes).includes(list[i].type)) {
+          list[i].type = `https://ns.gs1.org/cbv/BTT-${list[i].type}`;
         }
         res = getOrderedPreHashString(
           list[i],
@@ -293,8 +293,8 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'location' instead of
         // 'https://ns.gs1.org/cbv/SDT-location', we need to complete it
-        if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = `https://ns.gs1.org/cbv/SDT-${sourceDestinationTypes[list[i].type]}`;
+        if (Object.values(sourceDestinationTypes).includes(list[i].type)) {
+          list[i].type = `https://ns.gs1.org/cbv/SDT-${list[i].type}`;
         }
         res = getOrderedPreHashString(list[i], context, sourceCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
@@ -305,8 +305,8 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'location' instead of
         // 'https://ns.gs1.org/cbv/SDT-location', we need to complete it
-        if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = `https://ns.gs1.org/cbv/SDT-${sourceDestinationTypes[list[i].type]}`;
+        if (Object.values(sourceDestinationTypes).includes(list[i].type)) {
+          list[i].type = `https://ns.gs1.org/cbv/SDT-${list[i].type}`;
         }
         res = getOrderedPreHashString(
           list[i],
@@ -333,6 +333,24 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'sensorReport':
       string = '';
       for (let i = 0; i < list.length; i += 1) {
+        // if, for example, the field is equal to 'Temperature' instead of
+        // 'https://ns.gs1.org/cbv/MeasurementType-Temperature' we need to complete it
+        if (Object.values(sensorMeasurementTypes).includes(list[i].type)) {
+          list[i].type = `https://ns.gs1.org/cbv/MeasurementType-${list[i].type}`;
+        }
+
+        // if, for example, the field is equal to 'ALARM_CONDITION' instead of
+        // 'https://ns.gs1.org/cbv/SensorAlertType-ALARM_CONDITION' we need to complete it
+        if (Object.values(alarmTypes).includes(list[i].exception)) {
+          list[i].exception = `https://ns.gs1.org/cbv/SensorAlertType-${list[i].exception}`;
+        }
+
+        // if, for example, the field is equal to 'x' instead of
+        // 'https://ns.gs1.org/cbv/Comp-x' we need to complete it
+        if (Object.values(components).includes(list[i].component)) {
+          list[i].component = `https://ns.gs1.org/cbv/Comp-${list[i].component}`;
+        }
+
         res = getOrderedPreHashString(
           list[i],
           context,
@@ -395,18 +413,6 @@ export const getOrderedPreHashString = (
       } else {
         switch (orderList[i]) {
           case 'type':
-            // if the type field is a subtype of a sensor report element
-            if (orderList === sensorReportCanonicalPropertyOrder) {
-              res = object[orderList[i]];
-              // if, for example, the field is equal to 'Temperature' instead of
-              // 'https://ns.gs1.org/cbv/MeasurementType-Temperature' we need to complete it
-              if (Object.values(sensorMeasurementTypes).includes(res) !== undefined) {
-                res = `https://ns.gs1.org/cbv/MeasurementType-${res}`;
-              }
-
-              string += getPreHashStringOfField(orderList[i], res, throwError);
-              break;
-            }
             // if it is the root 'type' (i.e the type of the event) we replace 'type' by 'eventType'
             // else - it is the type of a subfield, we don't replace it.
             string += getPreHashStringOfField(
@@ -470,8 +476,8 @@ export const getOrderedPreHashString = (
             res = object[orderList[i]];
             // if, for example, the field is equal to 'accepting' instead of
             // 'https://ns.gs1.org/cbv/BizStep-accepting' for example, we need to complete it
-            if (bizSteps[res] !== undefined) {
-              res = `https://ns.gs1.org/cbv/BizStep-${bizSteps[res]}`;
+            if (Object.values(bizSteps).includes(res)) {
+              res = `https://ns.gs1.org/cbv/BizStep-${res}`;
             }
 
             string += getPreHashStringOfField(orderList[i], res, throwError);
@@ -480,33 +486,12 @@ export const getOrderedPreHashString = (
             res = object[orderList[i]];
             // if, for example, the field is equal to 'active' instead of
             // 'https://ns.gs1.org/cbv/Disp-active', we need to complete it
-            if (dispositions[res] !== undefined) {
-              res = `https://ns.gs1.org/cbv/Disp-${dispositions[res]}`;
+            if (Object.values(dispositions).includes(res)) {
+              res = `https://ns.gs1.org/cbv/Disp-${res}`;
             }
 
             string += getPreHashStringOfField(orderList[i], res, throwError);
             break;
-          case 'exception':
-            res = object[orderList[i]];
-            // if, for example, the field is equal to 'ALARM_CONDITION' instead of
-            // 'https://ns.gs1.org/cbv/SensorAlertType-ALARM_CONDITION' we need to complete it
-            if (Object.values(alarmTypes).includes(res) !== undefined) {
-              res = `https://ns.gs1.org/cbv/SensorAlertType-${res}`;
-            }
-
-            string += getPreHashStringOfField(orderList[i], res, throwError);
-            break;
-          case 'component':
-            res = object[orderList[i]];
-            // if, for example, the field is equal to 'x' instead of
-            // 'https://ns.gs1.org/cbv/Comp-x' we need to complete it
-            if (Object.values(components).includes(res) !== undefined) {
-              res = `https://ns.gs1.org/cbv/Comp-${res}`;
-            }
-
-            string += getPreHashStringOfField(orderList[i], res, throwError);
-            break;
-
           default:
             string += getPreHashStringOfField(orderList[i], object[orderList[i]], throwError);
             break;
