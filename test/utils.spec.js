@@ -80,7 +80,7 @@ describe('unit tests for util functions', () => {
       expect(o).to.be.instanceOf(ExtendedEvent);
       const type = o.getType();
       expect(type).to.be.undefined;
-      const o1 = objectToEvent({ type: 'foo' })
+      const o1 = objectToEvent({ type: 'foo' });
       expect(o1).to.be.instanceOf(ExtendedEvent);
       const type1 = o1.getType();
       expect(type1).to.be.a('string');

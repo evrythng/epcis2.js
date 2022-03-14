@@ -231,8 +231,8 @@ export default class Event extends Entity {
    * Getter for the type property
    * @return {string} - the event type
    */
-   getType() {
-    return this['type'];
+  getType() {
+    return this.type;
   }
 
   /**
