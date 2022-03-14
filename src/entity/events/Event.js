@@ -228,6 +228,14 @@ export default class Event extends Entity {
   }
 
   /**
+   * Getter for the type property
+   * @return {string} - the event type
+   */
+   getType() {
+    return this['type'];
+  }
+
+  /**
    * Set the eventID property
    * @param {string} id
    * @return {Event} - the event instance
