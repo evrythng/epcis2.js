@@ -13,8 +13,12 @@ export default class SourceElement extends Entity {
    */
   constructor(sourceElement) {
     super(sourceElement);
-    this.addExtension = () => throw new Error('Extensions are not supported in a source element');
-    this.removeExtension = () => throw new Error('Extensions are not supported in a source element');
+    this.addExtension = () => {
+      throw new Error('Extensions are not supported in a source element');
+    };
+    this.removeExtension = () => {
+      throw new Error('Extensions are not supported in a source element');
+    };
   }
 
   /**

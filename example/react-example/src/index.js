@@ -1,14 +1,11 @@
-/**
- * (c) Copyright Reserved EVRYTHNG Limited 2021. All rights reserved.
- * Use of this material is subject to license.
- * Copying and unauthorised use of this material strictly prohibited.
- */
-
-/* eslint-disable react/jsx-filename-extension */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import './index.css';
+import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root'),
+);

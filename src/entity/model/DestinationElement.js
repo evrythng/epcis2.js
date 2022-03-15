@@ -14,8 +14,12 @@ export default class DestinationElement extends Entity {
    */
   constructor(destinationElement) {
     super(destinationElement);
-    this.addExtension = () => throw new Error('Extensions are not supported in a destination element');
-    this.removeExtension = () => throw new Error('Extensions are not supported in a destination element');
+    this.addExtension = () => {
+      throw new Error('Extensions are not supported in a destination element');
+    };
+    this.removeExtension = () => {
+      throw new Error('Extensions are not supported in a destination element');
+    };
   }
 
   /**
