@@ -8,6 +8,13 @@ import { assert, expect } from 'chai';
 import { eventToPreHashedString } from '../../../src/hash_generator/EPCISEventToPreHashedString';
 import { sampleContext, sampleObjectEvent } from '../../data/hashing/samplePrehashesAndHashes';
 import EPCISDocumentObjectEvent from '../../data/EPCISDocument-ObjectEvent.json';
+import {
+  sourceDestinationTypes,
+  businessTransactionTypes,
+  bizSteps,
+  dispositions,
+  errorReasonIdentifiers, sensorMeasurementTypes, components,
+} from '../../../src';
 
 const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 
@@ -70,18 +77,6 @@ describe('unit tests for pre-hashing', () => {
       const str3 = eventToPreHashedString(obj3, sampleContext);
       expect(str2).to.be.equal(str);
       expect(str3).to.be.equal(str);
-    });
-
-    it('Should remove offset', () => {
-      const str = eventToPreHashedString(
-        {
-          errorDeclaration: {
-            declarationTime: '2020-01-15T00:00:00.000+01:00',
-          },
-        },
-        sampleContext,
-      );
-      expect(str).to.be.equal('errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Z');
     });
   });
 
@@ -226,11 +221,11 @@ describe('unit tests for pre-hashing', () => {
         {
           bizTransactionList: [
             {
-              type: 'urn:epcglobal:cbv:btt:desadv',
+              type: businessTransactionTypes.desadv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:4711',
             },
             {
-              type: 'urn:epcglobal:cbv:btt:inv',
+              type: businessTransactionTypes.inv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:RE1099',
             },
           ],
@@ -241,12 +236,12 @@ describe('unit tests for pre-hashing', () => {
         {
           bizTransactionList: [
             {
-              type: 'urn:epcglobal:cbv:btt:inv',
+              type: businessTransactionTypes.inv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:RE1099',
             },
             {
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:4711',
-              type: 'urn:epcglobal:cbv:btt:desadv',
+              type: businessTransactionTypes.desadv,
             },
           ],
         },
@@ -263,11 +258,11 @@ describe('unit tests for pre-hashing', () => {
         {
           sourceList: [
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
           ],
@@ -279,10 +274,10 @@ describe('unit tests for pre-hashing', () => {
           sourceList: [
             {
               source: 'urn:epc:id:pgln:4000001.00012',
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
           ],
@@ -301,15 +296,15 @@ describe('unit tests for pre-hashing', () => {
         {
           destinationList: [
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:location',
+              type: sourceDestinationTypes.location,
               destination: 'urn:epc:id:sgln:4012345.00012.0',
             },
           ],
@@ -321,14 +316,14 @@ describe('unit tests for pre-hashing', () => {
           destinationList: [
             {
               destination: 'urn:epc:id:sgln:4012345.00012.0',
-              type: 'urn:epcglobal:cbv:sdt:location',
+              type: sourceDestinationTypes.location,
             },
             {
               destination: 'urn:epc:id:pgln:4012345.00000',
-              type: 'urn:epcglobal:cbv:sdt:owning_party',
+              type: sourceDestinationTypes.owning_party,
             },
             {
-              type: 'urn:epcglobal:cbv:sdt:possessing_party',
+              type: sourceDestinationTypes.possessing_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
           ],
@@ -516,22 +511,24 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: 'gs1:MT-Temperature',
+              type: sensorMeasurementTypes.temperature,
               value: 26,
+              exception: 'ERROR_CONDITION',
               uom: 'CEL',
+              component: components.easting,
             },
             {
-              type: 'gs1:MT-Humidity',
+              type: sensorMeasurementTypes.absolute_humidity,
               value: 12.1,
               uom: 'A93',
             },
             {
-              type: 'gs1:MT-Speed',
+              type: sensorMeasurementTypes.speed,
               value: 160,
               uom: 'KMH',
             },
             {
-              type: 'gs1:MT-Illuminance',
+              type: sensorMeasurementTypes.illuminance,
               value: 800,
               uom: 'LUX',
             },
@@ -546,22 +543,22 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: 'gs1:MT-Temperature',
+              type: sensorMeasurementTypes.temperature,
               value: 26.1,
               uom: 'CEL',
             },
             {
-              type: 'gs1:MT-Humidity',
+              type: sensorMeasurementTypes.absolute_humidity,
               value: 12.2,
               uom: 'A93',
             },
             {
-              type: 'gs1:MT-Speed',
+              type: sensorMeasurementTypes.speed,
               value: 161,
               uom: 'KMH',
             },
             {
-              type: 'gs1:MT-Illuminance',
+              type: sensorMeasurementTypes.illuminance,
               value: 801,
               uom: 'LUX',
             },
@@ -576,22 +573,22 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: 'gs1:MT-Temperature',
+              type: sensorMeasurementTypes.temperature,
               value: 26.2,
               uom: 'CEL',
             },
             {
-              type: 'gs1:MT-Humidity',
+              type: sensorMeasurementTypes.absolute_humidity,
               value: 12.2,
               uom: 'A93',
             },
             {
-              type: 'gs1:MT-Speed',
+              type: sensorMeasurementTypes.speed,
               value: 162,
               uom: 'KMH',
             },
             {
-              type: 'gs1:MT-Illuminance',
+              type: sensorMeasurementTypes.illuminance,
               value: 802,
               uom: 'LUX',
             },
@@ -613,7 +610,7 @@ describe('unit tests for pre-hashing', () => {
       );
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.1uom=A93sensorReporttype=gs1:MT-Illuminancevalue=800uom=LUXsensorReporttype=gs1:MT-Speedvalue=160uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26uom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.2uom=A93sensorReporttype=gs1:MT-Illuminancevalue=801uom=LUXsensorReporttype=gs1:MT-Speedvalue=161uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.2uom=A93sensorReporttype=gs1:MT-Illuminancevalue=802uom=LUXsensorReporttype=gs1:MT-Speedvalue=162uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26.2uom=CEL',
+        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=800uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=160uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperatureexception=https://gs1.org/voc/SensorAlertType-ERROR_CONDITIONvalue=26component=https://ns.gs1.org/cbv/Comp-eastinguom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=801uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=161uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=802uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=162uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperaturevalue=26.2uom=CEL',
       );
     });
   });
@@ -772,7 +769,7 @@ describe('unit tests for pre-hashing', () => {
   it('should pre-hash a bizStep', () => {
     const str = eventToPreHashedString(
       {
-        bizStep: 'urn:epcglobal:cbv:bizstep:repairing',
+        bizStep: bizSteps.repairing,
       },
       {},
     );
@@ -782,7 +779,7 @@ describe('unit tests for pre-hashing', () => {
   it('should pre-hash a disposition', () => {
     const str = eventToPreHashedString(
       {
-        disposition: 'urn:epcglobal:cbv:disp:damaged',
+        disposition: dispositions.damaged,
       },
       {},
     );
@@ -794,12 +791,12 @@ describe('unit tests for pre-hashing', () => {
       {
         persistentDisposition: {
           set: [
-            'urn:epcglobal:cbv:disp:completeness_inferred',
-            'urn:epcglobal:cbv:disp:completeness_verified',
+            dispositions.completeness_inferred,
+            dispositions.completeness_verified,
           ],
           unset: [
-            'urn:epcglobal:cbv:disp:completeness_verified',
-            'urn:epcglobal:cbv:disp:completeness_inferred',
+            dispositions.completeness_verified,
+            dispositions.completeness_inferred,
           ],
         },
       },
@@ -880,12 +877,12 @@ describe('unit tests for pre-hashing', () => {
     expect(str).to.be.equal('eventTimeZoneOffset=+01:00');
   });
 
-  it('should pre-hash an error Declaration', () => {
+  it('should not pre-hash an error Declaration', () => {
     const str = eventToPreHashedString(
       {
         errorDeclaration: {
           declarationTime: '2020-01-15T00:00:00.000+01:00',
-          reason: 'urn:epcglobal:cbv:er:incorrect_data',
+          reason: errorReasonIdentifiers.incorrect_data,
           'example:vendorExtension': {
             '@xmlns:example': 'http://ns.example.com/epcis',
             '#text': 'Test1',
@@ -895,7 +892,7 @@ describe('unit tests for pre-hashing', () => {
       {},
     );
     expect(str).to.be.equal(
-      'errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Zreason=https://ns.gs1.org/cbv/ER-incorrect_dataerrorDeclaration{http://ns.example.com/epcis}vendorExtension=Test1',
+      '',
     );
   });
 
@@ -984,22 +981,6 @@ describe('unit tests for pre-hashing', () => {
     );
     expect(str4).to.be.equal(
       'destinationListdestination=https://id.gs1.org/414/4012345000122type=https://ns.gs1.org/cbv/SDT-locationdestination=https://id.gs1.org/417/4012345000009type=https://ns.gs1.org/cbv/SDT-owning_partydestination=https://id.gs1.org/417/4012345000009type=https://ns.gs1.org/cbv/SDT-possessing_party',
-    );
-    const str5 = eventToPreHashedString(
-      {
-        errorDeclaration: {
-          declarationTime: '2020-01-15T00:00:00.000+01:00',
-          reason: 'incorrect_data',
-          'example:vendorExtension': {
-            '@xmlns:example': 'http://ns.example.com/epcis',
-            '#text': 'Test1',
-          },
-        },
-      },
-      {},
-    );
-    expect(str5).to.be.equal(
-      'errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Zreason=https://ns.gs1.org/cbv/ER-incorrect_dataerrorDeclaration{http://ns.example.com/epcis}vendorExtension=Test1',
     );
   });
 });

@@ -53,13 +53,20 @@ describe('rule tests', () => {
   });
 
   it('should follow rule n°14', () => {
-    const str = eventToPreHashedString(
+    let str = eventToPreHashedString(
       {
-        bizStep: 'urn:epcglobal:cbv:bizstep:repairing',
+        bizStep: 'repairing',
       },
       {},
     );
     expect(str).to.be.equal('bizStep=https://ns.gs1.org/cbv/BizStep-repairing');
+    str = eventToPreHashedString(
+      {
+        bizStep: 'not_a_valid_cbv',
+      },
+      {},
+    );
+    expect(str).to.be.equal('bizStep=not_a_valid_cbv');
   });
 
   it('should follow rule n°15', () => {

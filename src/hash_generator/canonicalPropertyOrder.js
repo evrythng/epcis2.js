@@ -13,7 +13,6 @@ export const canonicalPropertyOrder = [
   'type',
   'eventTime',
   'eventTimeZoneOffset',
-  'errorDeclaration',
   'parentID',
   'epcList',
   'inputEPCList',

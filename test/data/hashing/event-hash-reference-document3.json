@@ -14,24 +14,24 @@
         "eventTimeZoneOffset": "+01:00",
         "epcList": ["urn:epc:id:sgtin:0614141.011111.987"],
         "action": "OBSERVE",
-        "bizStep": "urn:epcglobal:cbv:bizstep:departing",
-        "disposition": "urn:epcglobal:cbv:disp:in_transit",
+        "bizStep": "departing",
+        "disposition": "in_transit",
         "readPoint": { "id": "urn:epc:id:sgln:4012345.00011.0", "example:myField1": "AB-12" },
         "bizTransactionList": [
           {
-            "type": "urn:epcglobal:cbv:btt:po",
+            "type": "po",
             "bizTransaction": "urn:epc:id:gdti:4012345.11111.123"
           }
         ],
         "sourceList": [
           {
-            "type": "urn:epcglobal:cbv:sdt:owning_party",
+            "type": "owning_party",
             "source": "urn:epc:id:pgln:4012345.00000"
           }
         ],
         "destinationList": [
           {
-            "type": "urn:epcglobal:cbv:sdt:owning_party",
+            "type": "owning_party",
             "destination": "urn:epc:id:pgln:0614141.00000"
           }
         ],

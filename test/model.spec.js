@@ -31,7 +31,7 @@ const anotherDate = '2005-04-03T20:33:31.116-06:00';
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8';
 const correctiveEventID2 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a7';
 const correctiveEventID3 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a6';
-const reason = 'urn:epcglobal:cbv:er:incorrect_data';
+const reason = 'incorrect_data';
 
 describe('unit tests for model Objects', () => {
   describe('ErrorDeclaration.js', () => {

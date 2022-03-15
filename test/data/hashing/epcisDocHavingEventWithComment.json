@@ -15,15 +15,15 @@
         "type": "ObjectEvent",
         "action": "OBSERVE",
         "rdfs:comment": "An ObjectEvent may be used for reporting an observation..123",
-        "bizStep": "urn:epcglobal:cbv:bizstep:shipping",
-        "disposition": "urn:epcglobal:cbv:disp:in_transit",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
         "epcList": ["urn:epc:id:sgtin:0614141.107346.2017", "urn:epc:id:sgtin:0614141.107346.2018"],
         "eventTime": "2005-04-03T20:33:31.116000-06:00",
         "eventTimeZoneOffset": "-06:00",
         "readPoint": { "id": "urn:epc:id:sgln:0614141.07346.1234" },
         "bizTransactionList": [
           {
-            "type": "urn:epcglobal:cbv:btt:po",
+            "type": "po",
             "bizTransaction": "http://transaction.acme.com/po/12345678"
           }
         ]

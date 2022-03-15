@@ -14,7 +14,7 @@ import { normalizeDigitalLinks } from './dlNormalizer';
  * The list of fields that will be ignored in the pre-hashed string
  * @type {string[]}
  */
-export const toBeIgnored = ['recordTime', 'eventID'];
+export const toBeIgnored = ['recordTime', 'eventID', 'errorDeclaration'];
 
 /**
  * Check if the parameter is a string
@@ -38,27 +38,6 @@ export const removeWhiteSpaceAtTheBeginningOrEndOfString = (obj) => {
   if (!isAString(obj)) return obj;
 
   return obj.trim();
-};
-
-/**
- * If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be
- * expressed in its corresponding GS1 Web Vocabulary URI equivalent
- * (starting with ‘https://ns.gs1.org’). Example: ‘urn:epcglobal:cbv:bizstep:receiving’ -->
- * ‘https://ns.gs1.org/cbv/BizStep-receiving’
- *
- * @param obj
- * @returns {*} the obj if it isn't a string, the parameter updated to follow the rules if it is
- * a string
- */
-export const convertURNBasedVocabularyToURI = (obj) => {
-  if (!isAString(obj)) return obj;
-
-  return obj
-    .replace('urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/cbv/BizStep-')
-    .replace('urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/cbv/Disp-')
-    .replace('urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/cbv/BTT-')
-    .replace('urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/cbv/SDT-')
-    .replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/cbv/ER-');
 };
 
 /**

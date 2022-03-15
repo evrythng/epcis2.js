@@ -12,7 +12,6 @@ import {
   bizTransactionCanonicalPropertyOrder,
   canonicalPropertyOrder,
   destinationCanonicalPropertyOrder,
-  errorDeclarationCanonicalPropertyOrder,
   persistentDispositionCanonicalPropertyOrder,
   quantityElementCanonicalPropertyOrder,
   readPointCanonicalPropertyOrder,
@@ -23,7 +22,6 @@ import {
 } from './canonicalPropertyOrder';
 import {
   convertEpcUriToDlUri,
-  convertURNBasedVocabularyToURI,
   formatTheDate,
   listOfStringToPreHashLexicalOrderedString,
   getEventContexts,
@@ -34,8 +32,10 @@ import {
   bizSteps,
   businessTransactionTypes,
   dispositions,
-  errorReasonIdentifiers,
   sourceDestinationTypes,
+  sensorMeasurementTypes,
+  alarmTypes,
+  components,
 } from '../cbv/cbv';
 
 // The rules of the algorithm are defined here :
@@ -52,7 +52,6 @@ import {
 export const getPreHashStringOfField = (field, value, throwError) => {
   value = removeWhiteSpaceAtTheBeginningOrEndOfString(value); // rule n°5
   value = formatTheDate(value); // rule n°8 and rule n°9
-  value = convertURNBasedVocabularyToURI(value); // rule n°14
   value = convertEpcUriToDlUri(value, throwError); // rule n°15
   return `${field}=${value}`;
 };
@@ -203,18 +202,26 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       break;
     case 'set':
       string = '';
-      // todo: see if we need to replace 'completeness_inferred'
-      // by 'urn:epcglobal:cbv:disp:completeness_inferred' for example
       for (let i = 0; i < list.length; i += 1) {
-        strings.push(getPreHashStringOfField('set', list[i], throwError));
+        res = list[i];
+        // if, for example, the field is equal to 'completeness_inferred' instead of
+        // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
+        if (Object.values(dispositions).includes(res)) {
+          res = `https://ns.gs1.org/cbv/Disp-${res}`;
+        }
+        strings.push(getPreHashStringOfField('set', res, throwError));
       }
       break;
     case 'unset':
       string = '';
-      // todo: see if we need to replace 'completeness_inferred'
-      // by 'urn:epcglobal:cbv:disp:completeness_inferred' for example
       for (let i = 0; i < list.length; i += 1) {
-        strings.push(getPreHashStringOfField('unset', list[i], throwError));
+        res = list[i];
+        // if, for example, the field is equal to 'completeness_inferred' instead of
+        // 'https://ns.gs1.org/cbv/Disp-completeness_inferred' for example, we need to complete it
+        if (Object.values(dispositions).includes(res)) {
+          res = `https://ns.gs1.org/cbv/Disp-${res}`;
+        }
+        strings.push(getPreHashStringOfField('unset', res, throwError));
       }
       break;
     case 'quantityList':
@@ -268,9 +275,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'bizTransactionList':
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'bol' instead of
-        // 'urn:epcglobal:cbv:btt:bol', we need to complete it
-        if (businessTransactionTypes[list[i].type] !== undefined) {
-          list[i].type = `urn:epcglobal:cbv:btt:${businessTransactionTypes[list[i].type]}`;
+        // 'https://ns.gs1.org/cbv/BTT-bol', we need to complete it
+        if (Object.values(businessTransactionTypes).includes(list[i].type)) {
+          list[i].type = `https://ns.gs1.org/cbv/BTT-${list[i].type}`;
         }
         res = getOrderedPreHashString(
           list[i],
@@ -285,9 +292,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'sourceList':
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'location' instead of
-        // 'urn:epcglobal:cbv:sdt:location', we need to complete it
-        if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
+        // 'https://ns.gs1.org/cbv/SDT-location', we need to complete it
+        if (Object.values(sourceDestinationTypes).includes(list[i].type)) {
+          list[i].type = `https://ns.gs1.org/cbv/SDT-${list[i].type}`;
         }
         res = getOrderedPreHashString(list[i], context, sourceCanonicalPropertyOrder, throwError);
         strings.push(res.preHashed);
@@ -297,9 +304,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'destinationList':
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'location' instead of
-        // 'urn:epcglobal:cbv:sdt:location', we need to complete it
-        if (sourceDestinationTypes[list[i].type] !== undefined) {
-          list[i].type = `urn:epcglobal:cbv:sdt:${sourceDestinationTypes[list[i].type]}`;
+        // 'https://ns.gs1.org/cbv/SDT-location', we need to complete it
+        if (Object.values(sourceDestinationTypes).includes(list[i].type)) {
+          list[i].type = `https://ns.gs1.org/cbv/SDT-${list[i].type}`;
         }
         res = getOrderedPreHashString(
           list[i],
@@ -326,6 +333,24 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'sensorReport':
       string = '';
       for (let i = 0; i < list.length; i += 1) {
+        // if, for example, the field is equal to 'Temperature' instead of
+        // 'https://gs1.org/voc/MeasurementType-Temperature' we need to complete it
+        if (Object.values(sensorMeasurementTypes).includes(list[i].type)) {
+          list[i].type = `https://gs1.org/voc/MeasurementType-${list[i].type}`;
+        }
+
+        // if, for example, the field is equal to 'ALARM_CONDITION' instead of
+        // 'https://gs1.org/voc/SensorAlertType-ALARM_CONDITION' we need to complete it
+        if (Object.values(alarmTypes).includes(list[i].exception)) {
+          list[i].exception = `https://gs1.org/voc/SensorAlertType-${list[i].exception}`;
+        }
+
+        // if, for example, the field is equal to 'x' instead of
+        // 'https://ns.gs1.org/cbv/Comp-x' we need to complete it
+        if (Object.values(components).includes(list[i].component)) {
+          list[i].component = `https://ns.gs1.org/cbv/Comp-${list[i].component}`;
+        }
+
         res = getOrderedPreHashString(
           list[i],
           context,
@@ -334,11 +359,6 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         );
         strings.push(`sensorReport${res.preHashed}`);
         customFields.push(...res.customFields.map((j) => `sensorReport${j}`));
-      }
-      break;
-    case 'correctiveEventIDs':
-      for (let i = 0; i < list.length; i += 1) {
-        strings.push(getPreHashStringOfField('correctiveEventID', list[i], throwError));
       }
       break;
     default:
@@ -401,23 +421,6 @@ export const getOrderedPreHashString = (
               throwError,
             );
             break;
-          case 'errorDeclaration':
-            // if, for example, the field is equal to 'did_not_occur' instead of
-            // 'urn:epcglobal:cbv:er:did_not_occur', we need to complete it
-            if (errorReasonIdentifiers[object[orderList[i]].reason] !== undefined) {
-              object[orderList[i]].reason = `urn:epcglobal:cbv:er:${
-                errorReasonIdentifiers[object[orderList[i]].reason]
-              }`;
-            }
-            res = getOrderedPreHashString(
-              object[orderList[i]],
-              context,
-              errorDeclarationCanonicalPropertyOrder,
-              throwError,
-            );
-            string += `errorDeclaration${res.preHashed}`;
-            strings.push(...res.customFields.map((j) => `errorDeclaration${j}`));
-            break;
           case 'readPoint':
             string += 'readPoint';
             res = getOrderedPreHashString(
@@ -472,9 +475,9 @@ export const getOrderedPreHashString = (
           case 'bizStep':
             res = object[orderList[i]];
             // if, for example, the field is equal to 'accepting' instead of
-            // 'urn:epcglobal:cbv:bizstep:accepting' for example, we need to complete it
-            if (bizSteps[res] !== undefined) {
-              res = `urn:epcglobal:cbv:bizstep:${bizSteps[res]}`;
+            // 'https://ns.gs1.org/cbv/BizStep-accepting' for example, we need to complete it
+            if (Object.values(bizSteps).includes(res)) {
+              res = `https://ns.gs1.org/cbv/BizStep-${res}`;
             }
 
             string += getPreHashStringOfField(orderList[i], res, throwError);
@@ -482,9 +485,9 @@ export const getOrderedPreHashString = (
           case 'disposition':
             res = object[orderList[i]];
             // if, for example, the field is equal to 'active' instead of
-            // 'urn:epcglobal:cbv:disp:active', we need to complete it
-            if (dispositions[res] !== undefined) {
-              res = `urn:epcglobal:cbv:disp:${dispositions[res]}`;
+            // 'https://ns.gs1.org/cbv/Disp-active', we need to complete it
+            if (Object.values(dispositions).includes(res)) {
+              res = `https://ns.gs1.org/cbv/Disp-${res}`;
             }
 
             string += getPreHashStringOfField(orderList[i], res, throwError);

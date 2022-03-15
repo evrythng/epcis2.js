@@ -59,8 +59,8 @@ export const bizSteps = {
 export const dispositions = {
   active: 'active',
   available: 'available',
-  completeness_verified: 'completeness_inferred',
-  completeness_inferred: 'completeness_verified',
+  completeness_inferred: 'completeness_inferred',
+  completeness_verified: 'completeness_verified',
   conformant: 'conformant',
   container_closed: 'container_closed',
   container_open: 'container_open',

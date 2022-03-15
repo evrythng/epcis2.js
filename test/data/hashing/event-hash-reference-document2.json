@@ -11,7 +11,7 @@
         "eventTimeZoneOffset": "+01:00",
         "epcList": ["urn:epc:id:sgtin:4012345.011111.9876"],
         "action": "OBSERVE",
-        "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
+        "bizStep": "inspecting",
         "readPoint": { "id": "urn:epc:id:sgln:4012345.00005.0" },
         "sensorElementList": [
           {
@@ -21,24 +21,24 @@
             },
             "sensorReport": [
               {
-                "type": "gs1:MT-Temperature",
+                "type": "Temperature",
                 "value": 26,
                 "sDev": 0.1,
                 "uom": "CEL"
               },
               {
-                "type": "gs1:MT-Humidity",
+                "type": "AbsoluteHumidity",
                 "value": 12.1,
                 "uom": "A93"
               },
               {
-                "type": "gs1:MT-Molar_concentration",
+                "type": "MolarVolume",
                 "microorganism": "https://www.ncbi.nlm.nih.gov/taxonomy/1126011",
                 "value": 0.05,
                 "uom": "C35"
               },
               {
-                "type": "gs1:MT-Molar_concentration",
+                "type": "MolarVolume",
                 "chemicalSubstance": "urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
                 "value": 0.18,
                 "uom": "C35"

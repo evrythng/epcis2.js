@@ -15,7 +15,7 @@ export const sampleObjectEvent = {
     'urn:epc:id:sscc:4012345.0000000222',
   ],
   action: 'OBSERVE',
-  bizStep: 'urn:epcglobal:cbv:bizstep:departing',
+  bizStep: 'departing',
   readPoint: { id: 'urn:epc:id:sgln:4012345.00011.987' },
   'example:myField1': {
     '@xmlns:example': 'https://ns.example.com/epcis',
@@ -50,7 +50,7 @@ export const epcisDocWithDefaultSchemaInContextPreHash = [
 ];
 
 export const epcisDocWithSensorDataObjectEventPreHash = [
-  'eventType=ObjectEventeventTime=2019-04-02T14:00:00.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/04012345111118/21/9876action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-inspectingreadPointid=https://id.gs1.org/414/4012345000054sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.1uom=A93sensorReporttype=gs1:MT-Illuminancevalue=800uom=LUXsensorReporttype=gs1:MT-Speedvalue=160uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26uom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.2uom=A93sensorReporttype=gs1:MT-Illuminancevalue=801uom=LUXsensorReporttype=gs1:MT-Speedvalue=161uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=gs1:MT-Humidityvalue=12.2uom=A93sensorReporttype=gs1:MT-Illuminancevalue=802uom=LUXsensorReporttype=gs1:MT-Speedvalue=162uom=KMHsensorReporttype=gs1:MT-Temperaturevalue=26.2uom=CEL',
+  'eventType=ObjectEventeventTime=2019-04-02T14:00:00.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/04012345111118/21/9876action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-inspectingreadPointid=https://id.gs1.org/414/4012345000054sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityexception=https://gs1.org/voc/SensorAlertType-ALARM_CONDITIONvalue=12.1component=https://ns.gs1.org/cbv/Comp-xuom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=800uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=160uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperatureexception=https://gs1.org/voc/SensorAlertType-ERROR_CONDITIONvalue=26uom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=801uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=161uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=802uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=162uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperaturevalue=26.2uom=CEL',
 ];
 
 export const epcisDocWithShippingAndTransportingEventPreHash = [
@@ -79,7 +79,7 @@ export const epcisDocWithVariousEventTypesPreHash = [
 ];
 
 export const epcisDocWithXMLStartTagAndErrorDeclarationPreHash = [
-  'eventType=TransformationEventeventTime=2020-01-13T23:00:00.000ZeventTimeZoneOffset=+01:00errorDeclarationdeclarationTime=2020-01-14T23:00:00.000Zreason=https://ns.gs1.org/cbv/ER-incorrect_datainputEPCListepc=https://id.gs1.org/01/04012345111118/21/987inputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345222227/10/87545GHGHoutputEPCListepc=https://id.gs1.org/01/04012345333336/21/AGHFGoutputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345444445quantity=452uom=KGMbizStep=https://ns.gs1.org/cbv/BizStep-commissioningreadPointid=https://id.gs1.org/414/4012345000009errorDeclaration{http://ns.example.com/epcis}vendorExtension=Test1',
+  'eventType=TransformationEventeventTime=2020-01-13T23:00:00.000ZeventTimeZoneOffset=+01:00inputEPCListepc=https://id.gs1.org/01/04012345111118/21/987inputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345222227/10/87545GHGHoutputEPCListepc=https://id.gs1.org/01/04012345333336/21/AGHFGoutputQuantityListquantityElementepcClass=https://id.gs1.org/01/04012345444445quantity=452uom=KGMbizStep=https://ns.gs1.org/cbv/BizStep-commissioningreadPointid=https://id.gs1.org/414/4012345000009',
 ];
 
 export const epcListNormalisationPreHash = [
@@ -91,7 +91,7 @@ export const referenceEventHashAlgorithmPreHash = [
 ];
 
 export const referenceEventHashAlgorithm2PreHash = [
-  'eventType=ObjectEventeventTime=2020-04-01T14:00:00.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/04012345111118/21/9876action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-inspectingreadPointid=https://id.gs1.org/414/4012345000054sensorElementListsensorElementsensorMetadatadeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111sensorReporttype=gs1:MT-Humidityvalue=12.1uom=A93sensorReporttype=gs1:MT-Molar_concentrationchemicalSubstance=urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-Nvalue=0.18uom=C35sensorReporttype=gs1:MT-Molar_concentrationmicroorganism=https://www.ncbi.nlm.nih.gov/taxonomy/1126011value=0.05uom=C35sensorReporttype=gs1:MT-Temperaturevalue=26sDev=0.1uom=CEL',
+  'eventType=ObjectEventeventTime=2020-04-01T14:00:00.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/04012345111118/21/9876action=OBSERVEbizStep=https://ns.gs1.org/cbv/BizStep-inspectingreadPointid=https://id.gs1.org/414/4012345000054sensorElementListsensorElementsensorMetadatadeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-MolarVolumechemicalSubstance=urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-Nvalue=0.18uom=C35sensorReporttype=https://gs1.org/voc/MeasurementType-MolarVolumemicroorganism=https://www.ncbi.nlm.nih.gov/taxonomy/1126011value=0.05uom=C35sensorReporttype=https://gs1.org/voc/MeasurementType-Temperaturevalue=26sDev=0.1uom=CEL',
 ];
 
 export const referenceEventHashAlgorithm3PreHash = [
