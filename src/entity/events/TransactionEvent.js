@@ -24,7 +24,9 @@ export default class TransactionEvent extends Event {
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
       functions.forEach((func) => {
-        this[func] = () => throw new Error(`${name} is not a field of the TransactionEvent class`);
+        this[func] = () => {
+          throw new Error(`${name} is not a field of the TransactionEvent class`);
+        };
       });
     });
   }

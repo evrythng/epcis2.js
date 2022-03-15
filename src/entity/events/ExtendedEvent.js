@@ -40,7 +40,9 @@ export default class ExtendedEvent extends Event {
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
       functions.forEach((func) => {
-        this[func] = () => throw new Error(`${name} is not a field of the ExtendedEvent class`);
+        this[func] = () => {
+          throw new Error(`${name} is not a field of the ExtendedEvent class`);
+        };
       });
     });
   }

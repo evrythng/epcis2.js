@@ -34,7 +34,9 @@ export default class TransformationEvent extends Event {
     invalidFields.forEach((name) => {
       const functions = fieldToFunctions[name];
       functions.forEach((func) => {
-        this[func] = () => throw new Error(`${name} is not a field of the TransformationEvent class`);
+        this[func] = () => {
+          throw new Error(`${name} is not a field of the TransformationEvent class`);
+        };
       });
     });
 
