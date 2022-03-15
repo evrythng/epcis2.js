@@ -34,7 +34,7 @@ npm install --save-dev epcis2.js
 Then require it in any module:
 
 ```js
-const { setup } = require('epcis2.js');
+const { setup, actionTypes } = require('epcis2.js');
 
 setup({ apiUrl: 'https://api.evrythng.io/v2/epcis' });
 ```
@@ -82,12 +82,12 @@ const event2 = new ObjectEvent();
 const epcisDocument = new EPCISDocument();
 
 event
-  .setAction('OBSERVE')
+  .setAction(actionTypes.observe)
   .setEventTime('2005-04-03T20:33:31.116-06:00')
   .setEventTimeZoneOffset('-06:00');
 
 event2
-  .setAction('OBSERVE')
+  .setAction(actionTypes.observe)
   .setEventTime('2005-04-03T21:33:31.116-06:00')
   .setEventTimeZoneOffset('-06:00');
 
@@ -96,31 +96,36 @@ epcisDocument.addEvent(event).addEvent(event2);
 console.log(epcisDocument.toString());
 ```
 
-This example would output:
+This example would output (as a string):
 
 ```json
 {
-  "type": "EPCISDocument",
-  "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
-  "schemaVersion": "2",
+  "isA":"EPCISDocument",
+  "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
+  "schemaVersion":"2",
+  "creationDate":"2022-03-15T09:48:06.047Z",
   "epcisBody": {
-    "eventList": [
+    "eventList": [ 
       {
-        "type": "ObjectEvent",
-        "action": "OBSERVE",
-        "eventTime": "2005-04-03T20:33:31.116-06:00",
-        "eventTimeZoneOffset": "-06:00"
+        "eventTimeZoneOffset":"-06:00",
+        "eventTime":"2005-04-03T20:33:31.116-06:00",
+        "isA":"ObjectEvent",
+        "action":"OBSERVE" 
       },
       {
-        "type": "ObjectEvent",
-        "action": "OBSERVE",
-        "eventTime": "2005-04-03T21:33:31.116-06:00",
-        "eventTimeZoneOffset": "-06:00"
+        "eventTimeZoneOffset":"-06:00",
+        "eventTime":"2005-04-03T21:33:31.116-06:00",
+        "isA":"ObjectEvent",
+        "action":"OBSERVE"
       }
     ]
   }
 }
 ```
+
+The latest version of the SDK enables you to easily search among all attributes of each Common Business Vocabulary.
+In order to do this, for example, you can import `actionType` as we did in the script above. Then, by typing `actionType.` as a parameter of the `setAction` method of the `ObjectEvent` class, you will be displayed all the attributes associated to this particular CBV.
+The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.
 
 ### Default values
 
@@ -287,7 +292,7 @@ First, ensure you did not break anything with: `npm run test`.
 
 Then, run: `npm run build`.
 
-Finally, you can test the built library with: `node example/example_with_creation_from_setters.js`
+Finally, you can test the built library by first going into the directory: `./example/node_example`, running `npm install` and finally `node example_with_creation_from_setters.js`.
 
 ### Deploy
 
