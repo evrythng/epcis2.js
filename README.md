@@ -100,22 +100,22 @@ This example would output (as a string):
 
 ```json
 {
-  "isA":"EPCISDocument",
+  "type":"EPCISDocument",
   "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-  "schemaVersion":"2",
-  "creationDate":"2022-03-15T09:48:06.047Z",
+  "schemaVersion":"2.0",
+  "creationDate":"2022-03-15T13:08:27.309Z",
   "epcisBody": {
-    "eventList": [ 
+    "eventList": [
       {
         "eventTimeZoneOffset":"-06:00",
         "eventTime":"2005-04-03T20:33:31.116-06:00",
-        "isA":"ObjectEvent",
-        "action":"OBSERVE" 
+        "type":"ObjectEvent",
+        "action":"OBSERVE"
       },
       {
         "eventTimeZoneOffset":"-06:00",
         "eventTime":"2005-04-03T21:33:31.116-06:00",
-        "isA":"ObjectEvent",
+        "type":"ObjectEvent",
         "action":"OBSERVE"
       }
     ]
