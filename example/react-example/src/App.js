@@ -6,8 +6,20 @@ import {
   actionTypes,
   bizSteps,
   dispositions,
-  capture
+  capture,
+  setup
 } from 'epcis2.js/src';
+
+// you can override the global parameter with the setup function
+setup({
+  apiUrl: 'https://api.evrythng.io/v2/epcis/',
+  EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
+  EPCISDocumentSchemaVersion: '2.0',
+  headers: {
+    'content-type': 'application/json',
+    authorization: 'MY_API_KEY',
+  },
+});
 
 const App = () => {
 
