@@ -139,7 +139,7 @@ allows you to do so independently
 of the particular event type. To create such an event, you can do the following:
 
 ```js
-const { objectToEvent } = require('epcis2.js');
+const { objectToEvent, ObjectEvent, AggregationEvent } = require('epcis2.js');
 
 
 const object = {
@@ -164,10 +164,13 @@ const object = {
 
 const event = objectToEvent(object);
 
+console.log(event instanceof ObjectEvent)       // true
+console.log(event instanceof AggregationEvent)  // false
+
 console.log(event.toString());
 ```
 
-This should output (as a string):
+The latter should output (as a string):
 
 ```json
 {
