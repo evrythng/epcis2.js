@@ -100,23 +100,23 @@ This example would output (as a string):
 
 ```json
 {
-  "type":"EPCISDocument",
-  "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
-  "schemaVersion":"2.0",
-  "creationDate":"2022-03-15T13:08:27.309Z",
+  "type": "EPCISDocument",
+  "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+  "schemaVersion": "2.0",
+  "creationDate": "2022-03-15T13:08:27.309Z",
   "epcisBody": {
     "eventList": [
       {
-        "eventTimeZoneOffset":"-06:00",
-        "eventTime":"2005-04-03T20:33:31.116-06:00",
-        "type":"ObjectEvent",
-        "action":"OBSERVE"
+        "eventTimeZoneOffset": "-06:00",
+        "eventTime": "2005-04-03T20:33:31.116-06:00",
+        "type": "ObjectEvent",
+        "action": "OBSERVE"
       },
       {
-        "eventTimeZoneOffset":"-06:00",
-        "eventTime":"2005-04-03T21:33:31.116-06:00",
-        "type":"ObjectEvent",
-        "action":"OBSERVE"
+        "eventTimeZoneOffset": "-06:00",
+        "eventTime": "2005-04-03T21:33:31.116-06:00",
+        "type": "ObjectEvent",
+        "action": "OBSERVE"
       }
     ]
   }
@@ -126,8 +126,80 @@ This example would output (as a string):
 ### CBV attributes autocomplete
 
 The latest version of the SDK enables you to easily search among all attributes of each Core Business Vocabulary.
-In order to do this, for example, you can import `actionType` as we did in the script above. Then, by typing `actionType.` as a parameter of the `setAction` method of the `ObjectEvent` class, you will be displayed all the attributes associated to this particular CBV.
+In order to do this, for example, you can import `actionType` as we did in the script above.
+Then, by typing `actionType.` as a parameter of the `setAction` method of the `ObjectEvent` class, you will be displayed
+all the attributes associated to this particular CBV.
 The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.
+
+
+### Instantiating events from EPCIS 2.0 objects
+
+In case you have an EPCIS 2.0 object and want to instantiate an EPCIS 2.0 event based on it, the SDK
+allows you to do so independently
+of the particular event type. To create such an event, you can do the following:
+
+```js
+const { objectToEvent } = require('epcis2.js');
+
+
+const object = {
+  type: 'ObjectEvent',
+  eventID: 'test-sdk-demo:2',
+  action: 'OBSERVE',
+  bizStep: 'shipping',
+  disposition: 'in_transit',
+  epcList: ['urn:epc:id:sgtin:0614141.107346.2017', 'urn:epc:id:sgtin:0614141.107346.2018'],
+  eventTime: '2005-04-03T20:33:31.116-06:00',
+  eventTimeZoneOffset: '-06:00',
+  readPoint: {
+    id: 'urn:epc:id:sgln:0614141.07346.1234',
+  },
+  bizTransactionList: [
+    {
+      type: 'po',
+      bizTransaction: 'http://transaction.acme.com/po/12345678',
+    },
+  ],
+};
+
+const event = objectToEvent(object);
+
+console.log(event.toString());
+```
+
+This should output (as a string):
+
+```json
+{
+  "type": "ObjectEvent",
+  "eventID": "test-sdk-demo:2",
+  "action": "OBSERVE",
+  "bizStep": "shipping",
+  "disposition": "in_transit",
+  "eventTime": "2005-04-03T20:33:31.116-06:00",
+  "eventTimeZoneOffset": "-06:00",
+  "readPoint": {
+    "id": "urn:epc:id:sgln:0614141.07346.1234"
+  },
+  "epcList": [
+    "urn:epc:id:sgtin:0614141.107346.2017",
+    "urn:epc:id:sgtin:0614141.107346.2018"
+  ],
+  "bizTransactionList": [
+    {
+      "type": "po",
+      "bizTransaction": "http://transaction.acme.com/po/12345678"
+    }
+  ]
+}
+```
+
+The function `objectToEvent` returns an instance of a different class based on the `type` property of the EPCIS 2.0
+object you pass to it as a parameter. In the example above, as `type` is set to `ObjectEvent`, the `objectToEvent` function
+returns an instance of the `ObjectEvent` class. 
+Other event classes available are: `AggregationEvent`, `AssociationEvent`, `TransactionEvent` and `TransformationEvent`.
+In case the `type` property does not match any of these event types, `objectToEvent` will default to an instance of the
+`ExtendedEvent` class.
 
 ### Default values
 
