@@ -3,3 +3,4 @@ reports
 mochawesome-report
 .nyc_output
 dist
+example
