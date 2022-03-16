@@ -7,7 +7,7 @@ import {
   bizSteps,
   dispositions,
   capture,
-  setup
+  setup,
 } from 'epcis2.js/src';
 
 // you can override the global parameter with the setup function
@@ -22,7 +22,6 @@ setup({
 });
 
 const App = () => {
-
   useEffect(() => {
     const fn = async () => {
       const objectEvent = new ObjectEvent();
@@ -64,6 +63,6 @@ const App = () => {
       EPCIS test - Look in your console
     </div>
   );
-}
+};
 
 export default App;
