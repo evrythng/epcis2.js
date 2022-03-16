@@ -94,17 +94,19 @@ export default class Entity {
   toString() {
     return JSON.stringify(this.toObject());
   }
+
   /**
-   * generate a setter function
+   * Generate a setter function that throws if the parameter type is
+   * different from the expected one(s).
    * @param {string} field - the field that you want to set
    * @param {any} param - the variable that you to be setted
    * @param {Array<string|types>} expectedTypes - the list of the authorized types for the param
    * @return {function} - the setter function corresponding to the arguments
    */
-   generateSetterFunction(field, param, expectedTypes = []) {
-    // at the end if checked = false we should throw an error because
+  generateSetterFunction(field, param, expectedTypes = []) {
+    // at the end if paramHasAnExpectedType === false we should throw an error because
     // the param has not the expected type
-    let checked = false;
+    let paramHasAnExpectedType = false;
     if (expectedTypes.length === 0) { // we check if the array is not empty
       throw new Error('there must be at least one expected type');
     }
@@ -114,15 +116,15 @@ export default class Entity {
         if (typeof (type) === 'string') {
           if (expectedTypes.includes(typeof (param))) {
             // we check if the param has a right expected primitive Type
-            checked = true;
+            paramHasAnExpectedType = true;
           }
         } else if ((param instanceof type)) { // we check if the param has a right expected Type
           // the type is not a primitive type
-          checked = true;
+          paramHasAnExpectedType = true;
         }
       },
     );
-    if (!checked) {
+    if (!paramHasAnExpectedType) {
       throw new Error(`The parameter has an unexpected type. It should be one among this types : ${expectedTypes}`);
     }
     this[field] = param;
@@ -130,16 +132,17 @@ export default class Entity {
   }
 
   /**
-   * generate a add item to a list function
+   * Generate an add item to a list function function that throws if the parameter type
+   * is different from the expected one(s).
    * @param {string} field - the original list
    * @param {any} item - the item that you want to be added to the list
    * @param {Array<string|types>} expectedTypes - the list of the authorized types for item
    * @return {function} - the setter function corresponding to the arguments
    */
   generateAddItemToListFunction(field, item, expectedTypes = []) {
-    // at the end if checked = false we should throw an error because
+    // at the end if itemHasAnExpectedType === false we should throw an error because
     // the item has not the expected type
-    let checked = false;
+    let itemHasAnExpectedType = false;
     if (expectedTypes.length === 0) {
       throw new Error('there must be at least one expected type');
     }
@@ -149,16 +152,16 @@ export default class Entity {
         if (typeof (type) === 'string') {
           if (expectedTypes.includes(typeof (item))) {
             // we check if the item has a right expected primitive Type
-            checked = true;
+            itemHasAnExpectedType = true;
           }
           // the type is not a primitive type
         } else if ((item instanceof type)) { // we check if the item has a right expected Type
-          checked = true;
+          itemHasAnExpectedType = true;
         }
       },
     );
-    if (!checked) {
-      throw new Error(`The parameter has an unexpected type. It should be one among this types : ${expectedTypes}`);
+    if (!itemHasAnExpectedType) {
+      throw new Error(`The parameter has an unexpected type. It should be one among these types : ${expectedTypes}`);
     }
 
     if (!this[field]) {
@@ -169,7 +172,8 @@ export default class Entity {
   }
 
   /**
-   * generate a add list to an other list function
+   * Generate an add items to a list function function that throws if the parameter type
+   * is different from the expected one(s).
    * @param {string} field - the original list
    * @param {Array<any>} items - the items that you want to be added to the list
    * @param {Array<string|types>} expectedTypes - the list of the authorized types for items
@@ -216,6 +220,4 @@ export default class Entity {
     }
     throw new Error('A List is expected');
   }
-
-
 }

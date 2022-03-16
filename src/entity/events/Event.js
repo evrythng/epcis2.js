@@ -215,7 +215,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setContext(context) {
-    return this.generateSetterFunction('@context',context,['string',Object])
+    return this.generateSetterFunction('@context', context, ['string', Object]);
   }
 
   /**
@@ -241,7 +241,7 @@ export default class Event extends Entity {
    */
   setEventID(id) {
     this.eventID = id;
-    return this.generateSetterFunction('eventID',id,['string']);
+    return this.generateSetterFunction('eventID', id, ['string']);
   }
 
   /**
@@ -309,7 +309,8 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setEventTimeZoneOffset(offset) {
-    return this.generateSetterFunction('eventTimeZoneOffset',getTimeZoneOffset(offset),['number','string']);
+    this.eventTimeZoneOffset = getTimeZoneOffset(offset);
+    return this;
   }
 
   /**
@@ -326,7 +327,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setRecordTime(time) {
-    return this.generateSetterFunction('recordTime',time,['string']);
+    return this.generateSetterFunction('recordTime', time, ['string']);
   }
 
   /**
@@ -343,7 +344,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setErrorDeclaration(errorDeclaration) {
-    return this.generateSetterFunction('errorDeclaration',errorDeclaration,[ErrorDeclaration]);
+    return this.generateSetterFunction('errorDeclaration', errorDeclaration, [ErrorDeclaration]);
   }
 
   /**
@@ -362,7 +363,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addEPC(epc) {
-    return this.generateAddItemToListFunction('epcList',epc,['string']);
+    return this.generateAddItemToListFunction('epcList', epc, ['string']);
   }
 
   /**
@@ -372,7 +373,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addEPCList(epcList) {
-    return this.generateAddItemsToListFunction('epcList',epcList,['string']);
+    return this.generateAddItemsToListFunction('epcList', epcList, ['string']);
   }
 
   /**
@@ -419,7 +420,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addQuantity(quantity) {
-    return this.generateAddItemToListFunction('quantityList',quantity,[QuantityElement]);
+    return this.generateAddItemToListFunction('quantityList', quantity, [QuantityElement]);
   }
 
   /**
@@ -428,7 +429,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addQuantityList(quantityList) {
-    return this.generateAddItemsToListFunction('quantityList',quantityList,[QuantityElement]);
+    return this.generateAddItemsToListFunction('quantityList', quantityList, [QuantityElement]);
   }
 
   /**
@@ -474,7 +475,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setAction(action) {
-    return this.generateSetterFunction('action',action,['string']);
+    return this.generateSetterFunction('action', action, ['string']);
   }
 
   /**
@@ -491,7 +492,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setBizStep(bizStep) {
-    return this.generateSetterFunction('bizStep',bizStep,['string']);
+    return this.generateSetterFunction('bizStep', bizStep, ['string']);
   }
 
   /**
@@ -508,7 +509,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setDisposition(disposition) {
-    return this.generateSetterFunction('disposition',disposition,['string']);
+    return this.generateSetterFunction('disposition', disposition, ['string']);
   }
 
   /**
@@ -525,7 +526,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setPersistentDisposition(persistentDisposition) {
-    return this.generateSetterFunction('persistentDisposition',persistentDisposition,[PersistentDisposition]);
+    return this.generateSetterFunction('persistentDisposition', persistentDisposition, [PersistentDisposition]);
   }
 
   /**
@@ -598,7 +599,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addBizTransaction(bizTransaction) {
-    return this.generateAddItemToListFunction('bizTransactionList',bizTransaction,[BizTransactionElement]);
+    return this.generateAddItemToListFunction('bizTransactionList', bizTransaction, [BizTransactionElement]);
   }
 
   /**
@@ -607,7 +608,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addBizTransactionList(bizTransactionList) {
-    return this.generateAddItemsToListFunction('bizTransactionList',bizTransactionList,[BizTransactionElement]);
+    return this.generateAddItemsToListFunction('bizTransactionList', bizTransactionList, [BizTransactionElement]);
   }
 
   /**
@@ -653,7 +654,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addSource(source) {
-    return this.generateAddItemToListFunction('sourceList',source,[SourceElement]);
+    return this.generateAddItemToListFunction('sourceList', source, [SourceElement]);
   }
 
   /**
@@ -662,7 +663,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addSourceList(sourceList) {
-    return this.generateAddItemsToListFunction('sourceList',sourceList,[SourceElement]);
+    return this.generateAddItemsToListFunction('sourceList', sourceList, [SourceElement]);
   }
 
   /**
@@ -708,7 +709,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addDestination(destination) {
-    return this.generateAddItemToListFunction('destinationList',destination,[DestinationElement]);
+    return this.generateAddItemToListFunction('destinationList', destination, [DestinationElement]);
   }
 
   /**
@@ -717,7 +718,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addDestinationList(destinationList) {
-    return this.generateAddItemsToListFunction('destinationList',destinationList,[DestinationElement]);
+    return this.generateAddItemsToListFunction('destinationList', destinationList, [DestinationElement]);
   }
 
   /**
@@ -763,7 +764,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addSensorElement(sensorElement) {
-    return this.generateAddItemToListFunction('sensorElementList',sensorElement,[SensorElement]);
+    return this.generateAddItemToListFunction('sensorElementList', sensorElement, [SensorElement]);
   }
 
   /**
@@ -772,7 +773,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addSensorElementList(sensorElementList) {
-    return this.generateAddItemsToListFunction('sensorElementList',sensorElementList,[SensorElement]);
+    return this.generateAddItemsToListFunction('sensorElementList', sensorElementList, [SensorElement]);
   }
 
   /**
@@ -820,7 +821,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setIlmd(ilmd) {
-    return this.generateSetterFunction('ilmd',ilmd,[Ilmd]);
+    return this.generateSetterFunction('ilmd', ilmd, [Ilmd]);
   }
 
   /**
@@ -838,7 +839,7 @@ export default class Event extends Entity {
    */
   setParentId(parentID) {
     this.parentID = parentID;
-    return this.generateSetterFunction('parentID',parentID,['string'])
+    return this.generateSetterFunction('parentID', parentID, ['string']);
   }
 
   /**
@@ -855,8 +856,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addChildEPC(epc) {
-    return this.generateAddItemToListFunction('childEPCs',epc,['string']);
-
+    return this.generateAddItemToListFunction('childEPCs', epc, ['string']);
   }
 
   /**
@@ -866,7 +866,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addChildEPCList(epcList) {
-    return this.generateAddItemsToListFunction('childEPCs',epcList,['string']);
+    return this.generateAddItemsToListFunction('childEPCs', epcList, ['string']);
   }
 
   /**
@@ -913,7 +913,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addChildQuantity(quantity) {
-    return this.generateAddItemToListFunction('childQuantityList',quantity,[QuantityElement]);
+    return this.generateAddItemToListFunction('childQuantityList', quantity, [QuantityElement]);
   }
 
   /**
@@ -922,7 +922,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addChildQuantityList(quantityList) {
-    return this.generateAddItemsToListFunction('childQuantityList',quantityList,[QuantityElement]);
+    return this.generateAddItemsToListFunction('childQuantityList', quantityList, [QuantityElement]);
   }
 
   /**
