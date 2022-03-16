@@ -51,7 +51,62 @@ import { setup } from 'epcis2.js';
 import * as epcis from 'epcis2.js';
 ```
 
-## Building an EPCIS 2.0 JSON document
+## Getting started example
+
+Creating an EPCIS 2.0 document is simple.
+
+```js
+// json object based on which we want to create an EPCIS 2.0 document
+const object = {
+  '@context': 'https://gs1.github.io/EPCIS/epcis-context.jsonld', // context property of an EPCIS document
+  type: 'EPCISDocument',  // type of the document (is always EPCISDocument)
+  epcisBody: {
+    eventList: [  // array of events associated to the EPCIS document
+      {
+        type: 'ObjectEvent',  // type of the event
+        action: 'OBSERVE',    // action associated to the event
+        bizStep: 'shipping',  // business step associated to the event
+      }
+    ]
+  }
+}
+
+const epcisDocument = new EPCISDocument(object);  // instantiate an EPCIS 2.0 document constructed from the given object
+
+console.log(JSON.stringify(epcisDocument, null, 1));  // pretty print nested object as a string
+
+```
+
+Running this script should result in the following EPCIS 2.0 document:
+
+```json
+{
+ "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+ "type": "EPCISDocument",
+ "epcisBody": {
+  "eventList": [
+   {
+    "type": "ObjectEvent",
+    "action": "OBSERVE",
+    "bizStep": "shipping"
+   }
+  ]
+ },
+ "schemaVersion": "2.0",
+ "creationDate": "2022-03-16T13:13:02.227Z",
+ "eventList": [
+  {
+   "type": "ObjectEvent",
+   "action": "OBSERVE",
+   "bizStep": "shipping",
+   "eventTimeZoneOffset": "-01:00",
+   "eventTime": "2022-03-16T13:13:02.231-01:00"
+  }
+ ]
+}
+```
+
+## Building complex EPCIS 2.0 JSON documents
 
 ### Instantiating an EPCIS 2.0 Document
 
