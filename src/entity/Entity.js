@@ -218,6 +218,6 @@ export default class Entity {
       this[field] = [...this[field], ...items];
       return this;
     }
-    throw new Error('A List is expected');
+    throw new Error('The provided parameter has to be a list');
   }
 }
