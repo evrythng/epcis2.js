@@ -309,8 +309,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setEventTimeZoneOffset(offset) {
-    this.eventTimeZoneOffset = getTimeZoneOffset(offset);
-    return this;
+    return this.generateSetterFunction('eventTimeZoneOffset',getTimeZoneOffset(offset),['number','string']);
   }
 
   /**
@@ -328,7 +327,7 @@ export default class Event extends Entity {
    */
   setRecordTime(time) {
     this.recordTime = time;
-    return this;
+    return this.generateSetterFunction('recordTime',time,['string']);
   }
 
   /**

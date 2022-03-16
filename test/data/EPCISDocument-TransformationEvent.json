@@ -7,6 +7,7 @@
       {
         "type": "TransformationEvent",
         "eventTime": "2013-10-31T14:58:56.591Z",
+        "recordTime": "2005-04-05T02:33:31.116Z",
         "eventID":"urn:epc:id:sgln:1234567.11111.400",
         "eventTimeZoneOffset": "+02:00",
         "inputEPCList": [

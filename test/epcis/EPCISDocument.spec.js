@@ -134,6 +134,7 @@ describe('unit tests for the EPCISDocument class', () => {
     ev.setEventTime(ov.eventTime)
       .setEventTimeZoneOffset(ov.eventTimeZoneOffset)
       .setEventID(ov.eventID)
+      .setRecordTime(ov.recordTime)
       .addEPC(ov.epcList[0])
       .addEPC(ov.epcList[1])
       .setAction(ov.action)

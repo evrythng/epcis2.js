@@ -8,6 +8,7 @@
         "type": "ObjectEvent",
         "eventID":"urn:epc:id:sgln:1234567.11111.400",
         "eventTime": "2005-04-05T02:33:31.116Z",
+        "recordTime": "2005-04-05T02:33:31.116Z",
         "eventTimeZoneOffset": "-06:00",
         "epcList": ["urn:epc:id:sgtin:0614141.107346.2018", "urn:epc:id:sgtin:0614141.107346.2017"],
         "action": "ADD",
