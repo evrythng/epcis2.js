@@ -692,8 +692,6 @@ describe('unit tests for model Objects', () => {
           field = 'bizTransactionList';
           items = [new BizTransactionElement(), new BizTransactionElement()];
           assert.doesNotThrow(() => o.generateAddItemsToListFunction(field, items, [BizTransactionElement, 'number']));
-          // assert.doesNotThrow(() => o.generateAddItemsToListFunction(
-          // field, items, ['number', BizTransactionElement]));
         });
         it('should throw an error if on of the items does not have the right expected type', async () => {
           let field = 'epcList';
