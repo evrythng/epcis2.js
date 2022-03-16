@@ -75,7 +75,7 @@ const object = {
 
 const epcisDocument = new EPCISDocument(object);  // instantiate an EPCIS 2.0 document constructed from the given object
 
-console.log(JSON.stringify(epcisDocument, null, 1));  // pretty print nested object as a string
+console.log(epcisDocument.toString());  // print EPCIS 2.0 document as a string
 
 ```
 
@@ -83,28 +83,21 @@ Running this script should result in the following EPCIS 2.0 document:
 
 ```json
 {
- "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
- "type": "EPCISDocument",
- "epcisBody": {
-  "eventList": [
-   {
-    "type": "ObjectEvent",
-    "action": "OBSERVE",
-    "bizStep": "shipping"
-   }
-  ]
- },
- "schemaVersion": "2.0",
- "creationDate": "2022-03-16T13:13:02.227Z",
- "eventList": [
-  {
-   "type": "ObjectEvent",
-   "action": "OBSERVE",
-   "bizStep": "shipping",
-   "eventTimeZoneOffset": "-01:00",
-   "eventTime": "2022-03-16T13:13:02.231-01:00"
-  }
- ]
+  "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+  "type": "EPCISDocument",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "bizStep": "shipping",
+        "eventTimeZoneOffset": "-01:00",
+        "eventTime": "2022-03-16T13:42:34.697-01:00"
+      }
+    ]
+  },
+  "schemaVersion": "2.0",
+  "creationDate": "2022-03-16T13:42:34.694Z"
 }
 ```
 
