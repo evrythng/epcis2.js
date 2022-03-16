@@ -294,7 +294,8 @@ First, ensure you did not break anything with: `npm run test`.
 
 Then, run: `npm run build`.
 
-Finally, you can test the built library by first going into the directory: `./example/node_example`, running `npm install` and finally `node example_with_creation_from_setters.js`.
+You can test the built library by first going into the directory: `./example/node_example` and running `npm install`.
+Finally run `node example_with_creation_from_setters.js`.
 
 ### Deploy
 
