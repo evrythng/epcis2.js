@@ -56,6 +56,8 @@ import * as epcis from 'epcis2.js';
 Creating an EPCIS 2.0 document is simple.
 
 ```js
+const { EPCISDocument } = require('epcis2.js');
+
 // json object based on which we want to create an EPCIS 2.0 document
 const object = {
   '@context': 'https://gs1.github.io/EPCIS/epcis-context.jsonld', // context property of an EPCIS document
@@ -69,7 +71,7 @@ const object = {
       }
     ]
   }
-}
+};
 
 const epcisDocument = new EPCISDocument(object);  // instantiate an EPCIS 2.0 document constructed from the given object
 
