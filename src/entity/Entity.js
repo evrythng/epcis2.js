@@ -94,4 +94,128 @@ export default class Entity {
   toString() {
     return JSON.stringify(this.toObject());
   }
+  /**
+   * generate a setter function
+   * @param {string} field - the field that you want to set
+   * @param {any} param - the variable that you to be setted
+   * @param {Array<string|types>} expectedTypes - the list of the authorized types for the param
+   * @return {function} - the setter function corresponding to the arguments
+   */
+   generateSetterFunction(field, param, expectedTypes = []) {
+    // at the end if checked = false we should throw an error because
+    // the param has not the expected type
+    let checked = false;
+    if (expectedTypes.length === 0) { // we check if the array is not empty
+      throw new Error('there must be at least one expected type');
+    }
+    expectedTypes.forEach(
+      (type) => {
+        // we check if the type is a primitive type : ['string','number','boolean',...]
+        if (typeof (type) === 'string') {
+          if (expectedTypes.includes(typeof (param))) {
+            // we check if the param has a right expected primitive Type
+            checked = true;
+          }
+        } else if ((param instanceof type)) { // we check if the param has a right expected Type
+          // the type is not a primitive type
+          checked = true;
+        }
+      },
+    );
+    if (!checked) {
+      throw new Error(`The parameter has an unexpected type. It should be one among this types : ${expectedTypes}`);
+    }
+    this[field] = param;
+    return this;
+  }
+
+  /**
+   * generate a add item to a list function
+   * @param {string} field - the original list
+   * @param {any} item - the item that you want to be added to the list
+   * @param {Array<string|types>} expectedTypes - the list of the authorized types for item
+   * @return {function} - the setter function corresponding to the arguments
+   */
+  generateAddItemToListFunction(field, item, expectedTypes = []) {
+    // at the end if checked = false we should throw an error because
+    // the item has not the expected type
+    let checked = false;
+    if (expectedTypes.length === 0) {
+      throw new Error('there must be at least one expected type');
+    }
+    expectedTypes.forEach(
+      (type) => {
+        // we check if the type is a primitive type : ['string','number','boolean',...]
+        if (typeof (type) === 'string') {
+          if (expectedTypes.includes(typeof (item))) {
+            // we check if the item has a right expected primitive Type
+            checked = true;
+          }
+          // the type is not a primitive type
+        } else if ((item instanceof type)) { // we check if the item has a right expected Type
+          checked = true;
+        }
+      },
+    );
+    if (!checked) {
+      throw new Error(`The parameter has an unexpected type. It should be one among this types : ${expectedTypes}`);
+    }
+
+    if (!this[field]) {
+      this[field] = [];
+    }
+    this[field].push(item);
+    return this;
+  }
+
+  /**
+   * generate a add list to an other list function
+   * @param {string} field - the original list
+   * @param {Array<any>} items - the items that you want to be added to the list
+   * @param {Array<string|types>} expectedTypes - the list of the authorized types for items
+   * @return {function} - the setter function corresponding to the arguments
+   */
+  generateAddItemsToListFunction(field, items, expectedTypes = []) {
+    // here checked is usefull in order to not iterate a loop if
+    // all the items have one of the right expected types
+    let checked = false;
+    if (expectedTypes.length === 0) {
+      throw new Error('there must be at least one expected type');
+    }
+    if (Array.isArray(items)) {
+      expectedTypes.forEach(
+        (type) => {
+          // we check if the type is a primitive type : ['string','number','boolean',...]
+          // and if all the items are not already checked
+          if (!checked && typeof (type) === 'string') {
+            for (let j = 0; j < items.length; j += 1) {
+              if (!expectedTypes.includes(typeof (items[j]))) {
+                // we check if the item has not a right expected primitive Type
+                // in order to throw an Error
+                throw new Error(`At least one of the items in the list is not a ${type}`);
+              }
+            }
+            checked = true; // all the items has been checked
+          } else if (!checked) { // if all the items are not already checked
+            for (let j = 0; j < items.length; j += 1) {
+              if (!(items[j] instanceof type)) {
+                // we check if the item has not a right expected Type in order to throw an Error
+                throw new Error('At least one of the items in the list has an unexpected type');
+              }
+            }
+            checked = true; // all the items has been checked
+          }
+        },
+      );
+
+      if (!this[field]) {
+        this[field] = [];
+      }
+      this[field] = [...this[field], ...items];
+      return this;
+    }
+    throw new Error('A List is expected');
+  }
+
+
 }

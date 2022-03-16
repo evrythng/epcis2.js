@@ -26,6 +26,7 @@ import {
   exampleVocabularyElements,
   exampleIlmd,
 } from './data/eventExample';
+import ObjectEvent from '../src/entity/events/ObjectEvent';
 
 const anotherDate = '2005-04-03T20:33:31.116-06:00';
 const correctiveEventID1 = 'urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8';
@@ -600,5 +601,119 @@ describe('unit tests for model Objects', () => {
       const ilmd = new Ilmd(exampleIlmd);
       expect(ilmd.toObject()).to.deep.equal(exampleIlmd);
     });
+
+    describe('Entity.js', () => {
+      describe('generateSetterFunction', () => {
+        it('should throw an error if there is no expected type', async () => {
+          const field = 'ilmd';
+          const param = new Ilmd();
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateSetterFunction(field, param, []));
+        });
+        it('should throw an error if there is not the right expected type', async () => {
+          const field = 'ilmd';
+          const param = new Ilmd();
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateSetterFunction(field, param, ['string']));
+        });
+        it('should not throw an error if there is the right expected type', async () => {
+          const field = 'ilmd';
+          const param = new Ilmd();
+          const o = new ObjectEvent();
+          assert.doesNotThrow(() => o.generateSetterFunction(field, param, [Ilmd]));
+        });
+        it('should not throw an error if there is at least the right expected type', async () => {
+          let field = 'eventID';
+          let param = 'id';
+          const o = new ObjectEvent();
+          assert.doesNotThrow(() => o.generateSetterFunction(field, param, ['string', 'number']));
+          field = 'ilmd';
+          param = new Ilmd();
+          assert.doesNotThrow(() => o.generateSetterFunction(field, param, [Ilmd, 'number']));
+          assert.doesNotThrow(() => o.generateSetterFunction(field, param, ['number', Ilmd]));
+        });
+      });
+  
+      describe('generateAddItemToListFunction', () => {
+        it('should throw an error if there is no expected type', async () => {
+          const field = 'epcList';
+          const item = 'e';
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateAddItemToListFunction(field, item, []));
+        });
+        it('should throw an error if there is not the right expected type', async () => {
+          const field = 'bizTransactionList';
+          const item = new BizTransactionElement();
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateAddItemToListFunction(field, item, ['boolean']));
+        });
+        it('should not throw an error if there is the right expected type', async () => {
+          const field = 'epcList';
+          const item = 'e';
+          const o = new ObjectEvent();
+          assert.doesNotThrow(() => o.generateAddItemToListFunction(field, item, ['string']));
+        });
+        it('should not throw an error if there is at least the right expected type', async () => {
+          let field = 'epcList';
+          let item = 'id';
+          const o = new ObjectEvent();
+          assert.doesNotThrow(() => o.generateAddItemToListFunction(field, item, ['string', 'number']));
+          field = 'bizTransactionList';
+          item = new BizTransactionElement();
+          assert.doesNotThrow(() => o.generateAddItemToListFunction(field, item, [BizTransactionElement, 'number']));
+          assert.doesNotThrow(() => o.generateAddItemToListFunction(field, item, ['number', BizTransactionElement]));
+        });
+      });
+  
+      describe('generateAddItemsToListFunction', () => {
+        it('should throw an error if there is no expected type', async () => {
+          const field = 'epcList';
+          const items = ['e', 'p', 'c'];
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateAddItemsToListFunction(field, items, []));
+        });
+        it('should throw an error if there is not the right expected type', async () => {
+          const field = 'bizTransactionList';
+          const items = [new BizTransactionElement(), new BizTransactionElement()];
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateAddItemsToListFunction(field, items, ['boolean']));
+        });
+        it('should not throw an error if there is the right expected type', async () => {
+          const field = 'epcList';
+          const items = ['e', 'p', 'c'];
+          const o = new ObjectEvent();
+          assert.doesNotThrow(() => o.generateAddItemsToListFunction(field, items, ['string']));
+        });
+        it('should not throw an error if there is at least the right expected type', async () => {
+          let field = 'epcList';
+          let items = ['id1', 'id2', 'id3'];
+          const o = new ObjectEvent();
+          assert.doesNotThrow(() => o.generateAddItemsToListFunction(field, items, ['string', 'number']));
+          field = 'bizTransactionList';
+          items = [new BizTransactionElement(), new BizTransactionElement()];
+          assert.doesNotThrow(() => o.generateAddItemsToListFunction(field, items, [BizTransactionElement, 'number']));
+          // assert.doesNotThrow(() => o.generateAddItemsToListFunction(
+          // field, items, ['number', BizTransactionElement]));
+        });
+        it('should throw an error if on of the items does not have the right expected type', async () => {
+          let field = 'epcList';
+          let items = ['id1', 'id2', new Ilmd()];
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateAddItemsToListFunction(field, items, ['string', 'number']));
+          field = 'bizTransactionList';
+          items = [new BizTransactionElement(), 'new BizTransactionElement()'];
+          assert.throws(() => o.generateAddItemsToListFunction(field, items, [BizTransactionElement, 'number']));
+          assert.throws(() => o.generateAddItemsToListFunction(field, items, ['number', BizTransactionElement]));
+        });
+        it('should throw an error if the parameter is not a List', async () => {
+          const field = 'epcList';
+          const items = 'not_a_list';
+          const o = new ObjectEvent();
+          assert.throws(() => o.generateAddItemsToListFunction(field, items, ['string', 'number']));
+        });
+      });
+    });
+  
+
   });
 });
