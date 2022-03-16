@@ -133,6 +133,7 @@ describe('unit tests for the EPCISDocument class', () => {
     const ev = new ObjectEvent();
     ev.setEventTime(ov.eventTime)
       .setEventTimeZoneOffset(ov.eventTimeZoneOffset)
+      .setEventID(ov.eventID)
       .addEPC(ov.epcList[0])
       .addEPC(ov.epcList[1])
       .setAction(ov.action)

@@ -215,8 +215,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setContext(context) {
-    this['@context'] = context;
-    return this;
+    return this.generateSetterFunction('@context',context,['string',Object])
   }
 
   /**
@@ -242,7 +241,7 @@ export default class Event extends Entity {
    */
   setEventID(id) {
     this.eventID = id;
-    return this;
+    return this.generateSetterFunction('eventID',id,['string']);
   }
 
   /**
