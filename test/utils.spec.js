@@ -76,33 +76,49 @@ describe('unit tests for util functions', () => {
 
   describe('object to event function', () => {
     it('should not accept invalid parameter', async () => {
-      expect(objectToEvent({})).to.be.instanceOf(ExtendedEvent);
-      expect(objectToEvent({ type: 'foo' })).to.be.instanceOf(ExtendedEvent);
+      const o = objectToEvent({});
+      expect(o).to.be.instanceOf(ExtendedEvent);
+      const type = o.getType();
+      expect(type).to.be.equal(undefined);
+      const o1 = objectToEvent({ type: 'foo' });
+      expect(o1).to.be.instanceOf(ExtendedEvent);
+      const type1 = o1.getType();
+      expect(type1).to.be.a('string');
     });
 
     it('should return an ObjectEvent', async () => {
       const o = objectToEvent({ type: 'ObjectEvent' });
       expect(o).to.be.instanceof(ObjectEvent);
+      const type = o.getType();
+      expect(type).to.be.equal('ObjectEvent');
     });
 
     it('should return an AggregationEvent', async () => {
       const o = objectToEvent({ type: 'AggregationEvent' });
       expect(o).to.be.instanceof(AggregationEvent);
+      const type = o.getType();
+      expect(type).to.be.equal('AggregationEvent');
     });
 
     it('should return an TransactionEvent', async () => {
       const o = objectToEvent({ type: 'TransactionEvent' });
       expect(o).to.be.instanceof(TransactionEvent);
+      const type = o.getType();
+      expect(type).to.be.equal('TransactionEvent');
     });
 
     it('should return an TransformationEvent', async () => {
       const o = objectToEvent({ type: 'TransformationEvent' });
       expect(o).to.be.instanceof(TransformationEvent);
+      const type = o.getType();
+      expect(type).to.be.equal('TransformationEvent');
     });
 
     it('should return an AssociationEvent', async () => {
       const o = objectToEvent({ type: 'AssociationEvent' });
       expect(o).to.be.instanceof(AssociationEvent);
+      const type = o.getType();
+      expect(type).to.be.equal('AssociationEvent');
     });
   });
 
