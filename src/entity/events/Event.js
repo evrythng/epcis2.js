@@ -215,7 +215,8 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setContext(context) {
-    return this.generateSetterFunction('@context', context, ['string', Object]);
+    this['@context'] = context;
+    return this;
   }
 
   /**

@@ -9,6 +9,12 @@ import EPCISHeader from './EPCISHeader';
 import settings from '../../settings';
 import objectToEvent from '../../utils/entityUtils';
 import validateSchema from '../../schema/validator';
+import AggregationEvent from '../events/AggregationEvent';
+import AssociationEvent from '../events/AssociationEvent';
+import ExtendedEvent from '../events/ExtendedEvent';
+import ObjectEvent from '../events/ObjectEvent';
+import TransactionEvent from '../events/TransactionEvent';
+import TransformationEvent from '../events/TransformationEvent';
 
 export default class EPCISDocument extends Entity {
   /**
@@ -62,8 +68,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**
@@ -98,8 +103,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setSchemaVersion(schemaVersion) {
-    this.schemaVersion = schemaVersion;
-    return this;
+    return this.generateSetterFunction('schemaVersion', schemaVersion, ['string']);
   }
 
   /**
@@ -116,8 +120,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setCreationDate(creationDate) {
-    this.creationDate = creationDate;
-    return this;
+    return this.generateSetterFunction('creationDate', creationDate, ['string']);
   }
 
   /**
@@ -134,8 +137,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setEPCISHeader(epcisHeader) {
-    this.epcisHeader = epcisHeader;
-    return this;
+    return this.generateSetterFunction('epcisHeader', epcisHeader, [EPCISHeader]);
   }
 
   /**
@@ -152,11 +154,17 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEvent(event) {
-    if (!this.eventList) {
-      this.eventList = [];
-    }
-    this.eventList.push(event);
-    return this;
+    return this.generateAddItemToListFunction(
+      'eventList',
+      event,
+      [AggregationEvent,
+        AssociationEvent,
+        ExtendedEvent,
+        ObjectEvent,
+        TransactionEvent,
+        TransformationEvent,
+        Event],
+    );
   }
 
   /**
@@ -165,11 +173,17 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEventList(eventList) {
-    if (!this.eventList) {
-      this.eventList = [];
-    }
-    this.eventList = [...this.eventList, ...eventList];
-    return this;
+    return this.generateAddItemsToListFunction(
+      'eventList',
+      eventList,
+      [AggregationEvent,
+        AssociationEvent,
+        ExtendedEvent,
+        ObjectEvent,
+        TransactionEvent,
+        TransformationEvent,
+        Event],
+    );
   }
 
   /**

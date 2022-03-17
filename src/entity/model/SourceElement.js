@@ -27,8 +27,7 @@ export default class SourceElement extends Entity {
    * @return {SourceElement} - the source instance
    */
   setSource(source) {
-    this.source = source;
-    return this;
+    return this.generateSetterFunction('source', source, ['string']);
   }
 
   /**
@@ -45,8 +44,7 @@ export default class SourceElement extends Entity {
    * @return {SourceElement} - the source instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**

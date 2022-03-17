@@ -37,11 +37,7 @@ export default class EPCISMasterData extends Entity {
    * @return {EPCISMasterData} - the epcis master data instance
    */
   addVocabulary(vocabulary) {
-    if (!this.vocabularyList) {
-      this.vocabularyList = [];
-    }
-    this.vocabularyList.push(vocabulary);
-    return this;
+    return this.generateAddItemToListFunction('vocabularyList', vocabulary, [Vocabulary]);
   }
 
   /**
@@ -50,11 +46,7 @@ export default class EPCISMasterData extends Entity {
    * @return {EPCISMasterData} - the epcis master data instance
    */
   addVocabularyList(vocabularyList) {
-    if (!this.vocabularyList) {
-      this.vocabularyList = [];
-    }
-    this.vocabularyList = [...this.vocabularyList, ...vocabularyList];
-    return this;
+    return this.generateAddItemsToListFunction('vocabularyList', vocabularyList, [Vocabulary]);
   }
 
   /**

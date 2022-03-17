@@ -13,8 +13,7 @@ export default class ReadPoint extends Entity {
    * @return {ReadPoint} - the readPoint instance
    */
   setId(id) {
-    this.id = id;
-    return this;
+    return this.generateSetterFunction('id', id, ['string']);
   }
 
   /**

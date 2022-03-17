@@ -13,8 +13,7 @@ export default class BizLocation extends Entity {
    * @return {BizLocation} - the bizLocation instance
    */
   setId(id) {
-    this.id = id;
-    return this;
+    return this.generateSetterFunction('id', id, ['string']);
   }
 
   /**

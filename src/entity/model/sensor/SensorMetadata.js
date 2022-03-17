@@ -13,8 +13,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setTime(time) {
-    this.time = time;
-    return this;
+    return this.generateSetterFunction('time', time, ['string']);
   }
 
   /**
@@ -31,8 +30,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setDeviceID(deviceID) {
-    this.deviceID = deviceID;
-    return this;
+    return this.generateSetterFunction('deviceID', deviceID, ['string']);
   }
 
   /**
@@ -49,8 +47,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setDeviceMetadata(deviceMetadata) {
-    this.deviceMetadata = deviceMetadata;
-    return this;
+    return this.generateSetterFunction('deviceMetadata', deviceMetadata, ['string']);
   }
 
   /**
@@ -67,8 +64,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setRawData(rawData) {
-    this.rawData = rawData;
-    return this;
+    return this.generateSetterFunction('rawData', rawData, ['string']);
   }
 
   /**
@@ -85,8 +81,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setStartTime(startTime) {
-    this.startTime = startTime;
-    return this;
+    return this.generateSetterFunction('startTime', startTime, ['string']);
   }
 
   /**
@@ -103,8 +98,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setEndTime(endTime) {
-    this.endTime = endTime;
-    return this;
+    return this.generateSetterFunction('endTime', endTime, ['string']);
   }
 
   /**
@@ -121,8 +115,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setDataProcessingMethod(dataProcessingMethod) {
-    this.dataProcessingMethod = dataProcessingMethod;
-    return this;
+    return this.generateSetterFunction('dataProcessingMethod', dataProcessingMethod, ['string']);
   }
 
   /**
@@ -139,8 +132,7 @@ export default class SensorMetadata extends Entity {
    * @return {SensorMetadata} - the sensorMetadata instance
    */
   setBizRules(bizRules) {
-    this.bizRules = bizRules;
-    return this;
+    return this.generateSetterFunction('bizRules', bizRules, ['string']);
   }
 
   /**

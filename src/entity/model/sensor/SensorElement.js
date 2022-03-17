@@ -64,11 +64,7 @@ export default class SensorElement extends Entity {
    * @return {SensorElement} - the objectEvent instance
    */
   addSensorReport(sensorReport) {
-    if (!this.sensorReport) {
-      this.sensorReport = [];
-    }
-    this.sensorReport.push(sensorReport);
-    return this;
+    return this.generateAddItemToListFunction('sensorReport', sensorReport, [SensorReportElement]);
   }
 
   /**
@@ -77,11 +73,7 @@ export default class SensorElement extends Entity {
    * @return {SensorElement} - the objectEvent instance
    */
   addSensorReportList(sensorReportList) {
-    if (!this.sensorReport) {
-      this.sensorReport = [];
-    }
-    this.sensorReport = [...this.sensorReport, ...sensorReportList];
-    return this;
+    return this.generateAddItemsToListFunction('sensorReport', sensorReportList, [SensorReportElement]);
   }
 
   /**

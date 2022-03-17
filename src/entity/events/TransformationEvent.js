@@ -79,8 +79,7 @@ export default class TransformationEvent extends Event {
    * @return {Event} - the event instance
    */
   setTransformationID(id) {
-    this.transformationID = id;
-    return this;
+    return this.generateSetterFunction('transformationID', id, ['string']);
   }
 
   /**
@@ -97,11 +96,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addInputEPC(epc) {
-    if (!this.inputEPCList) {
-      this.inputEPCList = [];
-    }
-    this.inputEPCList.push(epc);
-    return this;
+    return this.generateAddItemToListFunction('inputEPCList', epc, ['string']);
   }
 
   /**
@@ -111,11 +106,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addInputEPCList(epcList) {
-    if (!this.inputEPCList) {
-      this.inputEPCList = [];
-    }
-    this.inputEPCList = [...this.inputEPCList, ...epcList];
-    return this;
+    return this.generateAddItemsToListFunction('inputEPCList', epcList, ['string']);
   }
 
   /**
@@ -162,11 +153,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addOutputEPC(epc) {
-    if (!this.outputEPCList) {
-      this.outputEPCList = [];
-    }
-    this.outputEPCList.push(epc);
-    return this;
+    return this.generateAddItemToListFunction('outputEPCList', epc, ['string']);
   }
 
   /**
@@ -176,11 +163,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addOutputEPCList(epcList) {
-    if (!this.outputEPCList) {
-      this.outputEPCList = [];
-    }
-    this.outputEPCList = [...this.outputEPCList, ...epcList];
-    return this;
+    return this.generateAddItemsToListFunction('outputEPCList', epcList, ['string']);
   }
 
   /**
@@ -227,11 +210,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addInputQuantity(quantity) {
-    if (!this.inputQuantityList) {
-      this.inputQuantityList = [];
-    }
-    this.inputQuantityList.push(quantity);
-    return this;
+    return this.generateAddItemToListFunction('inputQuantityList', quantity, [QuantityElement]);
   }
 
   /**
@@ -240,11 +219,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addInputQuantityList(quantityList) {
-    if (!this.inputQuantityList) {
-      this.inputQuantityList = [];
-    }
-    this.inputQuantityList = [...this.inputQuantityList, ...quantityList];
-    return this;
+    return this.generateAddItemsToListFunction('inputQuantityList', quantityList, [QuantityElement]);
   }
 
   /**
@@ -290,11 +265,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addOutputQuantity(quantity) {
-    if (!this.outputQuantityList) {
-      this.outputQuantityList = [];
-    }
-    this.outputQuantityList.push(quantity);
-    return this;
+    return this.generateAddItemToListFunction('outputQuantityList', quantity, [QuantityElement]);
   }
 
   /**
@@ -303,11 +274,7 @@ export default class TransformationEvent extends Event {
    * @return {TransformationEvent} - the transformation event instance
    */
   addOutputQuantityList(quantityList) {
-    if (!this.outputQuantityList) {
-      this.outputQuantityList = [];
-    }
-    this.outputQuantityList = [...this.outputQuantityList, ...quantityList];
-    return this;
+    return this.generateAddItemsToListFunction('outputQuantityList', quantityList, [QuantityElement]);
   }
 
   /**

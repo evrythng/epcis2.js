@@ -37,8 +37,7 @@ export default class Vocabulary extends Entity {
    * @return {Vocabulary} - the vocabulary instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**
@@ -55,11 +54,7 @@ export default class Vocabulary extends Entity {
    * @return {Vocabulary} - the vocabulary instance
    */
   addVocabularyElement(vocabularyElement) {
-    if (!this.vocabularyElementList) {
-      this.vocabularyElementList = [];
-    }
-    this.vocabularyElementList.push(vocabularyElement);
-    return this;
+    return this.generateAddItemToListFunction('vocabularyElementList', vocabularyElement, [VocabularyElement]);
   }
 
   /**
@@ -68,11 +63,7 @@ export default class Vocabulary extends Entity {
    * @return {Vocabulary} - the vocabulary instance
    */
   addVocabularyElementList(vocabularyElementList) {
-    if (!this.vocabularyElementList) {
-      this.vocabularyElementList = [];
-    }
-    this.vocabularyElementList = [...this.vocabularyElementList, ...vocabularyElementList];
-    return this;
+    return this.generateAddItemsToListFunction('vocabularyElementList', vocabularyElementList, [VocabularyElement]);
   }
 
   /**

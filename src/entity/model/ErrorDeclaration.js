@@ -26,8 +26,7 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   setDeclarationTime(time) {
-    this.declarationTime = time;
-    return this;
+    return this.generateSetterFunction('declarationTime', time, ['string']);
   }
 
   /**
@@ -44,8 +43,7 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   setReason(reason) {
-    this.reason = reason;
-    return this;
+    return this.generateSetterFunction('reason', reason, ['string']);
   }
 
   /**
@@ -63,11 +61,7 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   addCorrectiveEventID(correctiveEventID) {
-    if (!this.correctiveEventIDs) {
-      this.correctiveEventIDs = [];
-    }
-    this.correctiveEventIDs.push(correctiveEventID);
-    return this;
+    return this.generateAddItemToListFunction('correctiveEventIDs', correctiveEventID, ['string']);
   }
 
   /**
@@ -78,11 +72,7 @@ export default class ErrorDeclaration extends Entity {
    * @return {ErrorDeclaration} - the errorDeclaration instance
    */
   addCorrectiveEventIDList(correctiveEventIDList) {
-    if (!this.correctiveEventIDs) {
-      this.correctiveEventIDs = [];
-    }
-    this.correctiveEventIDs = [...this.correctiveEventIDs, ...correctiveEventIDList];
-    return this;
+    return this.generateAddItemsToListFunction('correctiveEventIDs', correctiveEventIDList, ['string']);
   }
 
   /**

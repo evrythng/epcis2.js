@@ -174,8 +174,8 @@ export default class Entity {
    * @return {function} - the setter function corresponding to the arguments
    */
   generateAddItemsToListFunction(field, items, expectedTypes = []) {
-    // here checked is usefull in order to not iterate a loop if
-    // all the items have one of the right expected types
+    // here itemsHaveAnExpectedType is an array of boolean if the item has
+    // an expected type so the boolean associate with the item will true
     const itemsHaveAnExpectedType = [];
     if (expectedTypes.length === 0) {
       throw new Error('there must be at least one expected type');
@@ -194,6 +194,7 @@ export default class Entity {
         }
       }
 
+      // if all the items have not an expected type, we can throw an error
       if (itemsHaveAnExpectedType.includes(false)) {
         throw new Error('At least one of the items in the list has an unexpected type');
       }

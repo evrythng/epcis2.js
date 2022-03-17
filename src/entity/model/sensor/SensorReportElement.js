@@ -13,8 +13,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**
@@ -31,8 +30,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setException(exception) {
-    this.exception = exception;
-    return this;
+    return this.generateSetterFunction('exception', exception, ['string']);
   }
 
   /**
@@ -49,8 +47,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setDeviceID(deviceID) {
-    this.deviceID = deviceID;
-    return this;
+    return this.generateSetterFunction('deviceID', deviceID, ['string']);
   }
 
   /**
@@ -67,8 +64,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setDeviceMetadata(deviceMetadata) {
-    this.deviceMetadata = deviceMetadata;
-    return this;
+    return this.generateSetterFunction('deviceMetadata', deviceMetadata, ['string']);
   }
 
   /**
@@ -85,8 +81,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setRawData(rawData) {
-    this.rawData = rawData;
-    return this;
+    return this.generateSetterFunction('rawData', rawData, ['string']);
   }
 
   /**
@@ -103,8 +98,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setDataProcessingMethod(dataProcessingMethod) {
-    this.dataProcessingMethod = dataProcessingMethod;
-    return this;
+    return this.generateSetterFunction('dataProcessingMethod', dataProcessingMethod, ['string']);
   }
 
   /**
@@ -121,8 +115,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setTime(time) {
-    this.time = time;
-    return this;
+    return this.generateSetterFunction('time', time, ['string']);
   }
 
   /**
@@ -139,8 +132,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setMicroorganism(microorganism) {
-    this.microorganism = microorganism;
-    return this;
+    return this.generateSetterFunction('microorganism', microorganism, ['string']);
   }
 
   /**
@@ -157,8 +149,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setChemicalSubstance(chemicalSubstance) {
-    this.chemicalSubstance = chemicalSubstance;
-    return this;
+    return this.generateSetterFunction('chemicalSubstance', chemicalSubstance, ['string']);
   }
 
   /**
@@ -175,8 +166,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setValue(value) {
-    this.value = value;
-    return this;
+    return this.generateSetterFunction('value', value, ['number']);
   }
 
   /**
@@ -193,8 +183,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setComponent(component) {
-    this.component = component;
-    return this;
+    return this.generateSetterFunction('component', component, ['string']);
   }
 
   /**
@@ -211,8 +200,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setStringValue(stringValue) {
-    this.stringValue = stringValue;
-    return this;
+    return this.generateSetterFunction('stringValue', stringValue, ['string']);
   }
 
   /**
@@ -229,8 +217,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setBooleanValue(booleanValue) {
-    this.booleanValue = booleanValue;
-    return this;
+    return this.generateSetterFunction('booleanValue', booleanValue, ['boolean']);
   }
 
   /**
@@ -247,8 +234,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setHexBinaryValue(hexBinaryValue) {
-    this.hexBinaryValue = hexBinaryValue;
-    return this;
+    return this.generateSetterFunction('hexBinaryValue', hexBinaryValue, ['string']);
   }
 
   /**
@@ -265,8 +251,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setUriValue(uriValue) {
-    this.uriValue = uriValue;
-    return this;
+    return this.generateSetterFunction('uriValue', uriValue, ['string']);
   }
 
   /**
@@ -283,8 +268,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setMinValue(minValue) {
-    this.minValue = minValue;
-    return this;
+    return this.generateSetterFunction('minValue', minValue, ['number']);
   }
 
   /**
@@ -301,8 +285,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setMaxValue(maxValue) {
-    this.maxValue = maxValue;
-    return this;
+    return this.generateSetterFunction('maxValue', maxValue, ['number']);
   }
 
   /**
@@ -319,8 +302,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setMeanValue(meanValue) {
-    this.meanValue = meanValue;
-    return this;
+    return this.generateSetterFunction('meanValue', meanValue, ['number']);
   }
 
   /**
@@ -337,8 +319,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setSDev(sDev) {
-    this.sDev = sDev;
-    return this;
+    return this.generateSetterFunction('sDev', sDev, ['number']);
   }
 
   /**
@@ -355,8 +336,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setPercRank(percRank) {
-    this.percRank = percRank;
-    return this;
+    return this.generateSetterFunction('percRank', percRank, ['number']);
   }
 
   /**
@@ -373,8 +353,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setPercValue(percValue) {
-    this.percValue = percValue;
-    return this;
+    return this.generateSetterFunction('percValue', percValue, ['number']);
   }
 
   /**
@@ -391,8 +370,7 @@ export default class SensorReportElement extends Entity {
    * @return {SensorReportElement} - the sensorReport instance
    */
   setUom(uom) {
-    this.uom = uom;
-    return this;
+    return this.generateSetterFunction('uom', uom, ['string']);
   }
 
   /**

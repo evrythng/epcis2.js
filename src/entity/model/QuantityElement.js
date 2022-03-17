@@ -13,8 +13,7 @@ export default class QuantityElement extends Entity {
    * @return {QuantityElement} - the quantityElement instance
    */
   setEpcClass(epcClass) {
-    this.epcClass = epcClass;
-    return this;
+    return this.generateSetterFunction('epcClass', epcClass, ['string']);
   }
 
   /**
@@ -31,8 +30,7 @@ export default class QuantityElement extends Entity {
    * @return {QuantityElement} - the quantityElement instance
    */
   setUom(uom) {
-    this.uom = uom;
-    return this;
+    return this.generateSetterFunction('uom', uom, ['string']);
   }
 
   /**
@@ -49,8 +47,7 @@ export default class QuantityElement extends Entity {
    * @return {QuantityElement} - the quantityElement instance
    */
   setQuantity(quantity) {
-    this.quantity = quantity;
-    return this;
+    return this.generateSetterFunction('quantity', quantity, ['number']);
   }
 
   /**
