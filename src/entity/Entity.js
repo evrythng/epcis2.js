@@ -17,6 +17,31 @@ const variableToObject = (obj) => {
   return obj;
 };
 
+/**
+ * This function checks if the type of param is among the list : expectedTypes
+ * @param {*} expectedTypes the list with the expected types
+ * @param {*} param the parameter which has to be checked
+ * @returns a boolean - true if typeof param is among the list, false if not
+ */
+const checkType = (expectedTypes, param) => {
+  let paramHasAnExpectedType = false;
+  expectedTypes.forEach(
+    (type) => {
+    // we check if the type is a primitive type : ['string','number','boolean',...]
+      if (typeof (type) === 'string') {
+        if (expectedTypes.includes(typeof (param))) {
+        // we check if the param has a right expected primitive Type
+          paramHasAnExpectedType = true;
+        }
+      } else if ((param instanceof type)) { // we check if the param has a right expected Type
+      // the type is not a primitive type
+        paramHasAnExpectedType = true;
+      }
+    },
+  );
+  return paramHasAnExpectedType;
+};
+
 export default class Entity {
   /**
    * You can either create an empty Entity or provide an already existing Entity via Object
@@ -104,26 +129,10 @@ export default class Entity {
    * @return {function} - the setter function corresponding to the arguments
    */
   generateSetterFunction(field, param, expectedTypes = []) {
-    // at the end if paramHasAnExpectedType === false we should throw an error because
-    // the param has not the expected type
-    let paramHasAnExpectedType = false;
     if (expectedTypes.length === 0) { // we check if the array is not empty
       throw new Error('there must be at least one expected type');
     }
-    expectedTypes.forEach(
-      (type) => {
-        // we check if the type is a primitive type : ['string','number','boolean',...]
-        if (typeof (type) === 'string') {
-          if (expectedTypes.includes(typeof (param))) {
-            // we check if the param has a right expected primitive Type
-            paramHasAnExpectedType = true;
-          }
-        } else if ((param instanceof type)) { // we check if the param has a right expected Type
-          // the type is not a primitive type
-          paramHasAnExpectedType = true;
-        }
-      },
-    );
+    const paramHasAnExpectedType = checkType(expectedTypes, param);
     if (!paramHasAnExpectedType) {
       throw new Error(`The parameter has an unexpected type. It should be one among this types : ${expectedTypes}`);
     }
@@ -140,26 +149,11 @@ export default class Entity {
    * @return {function} - the setter function corresponding to the arguments
    */
   generateAddItemToListFunction(field, item, expectedTypes = []) {
-    // at the end if itemHasAnExpectedType === false we should throw an error because
-    // the item has not the expected type
-    let itemHasAnExpectedType = false;
     if (expectedTypes.length === 0) {
       throw new Error('there must be at least one expected type');
     }
-    expectedTypes.forEach(
-      (type) => {
-        // we check if the type is a primitive type : ['string','number','boolean',...]
-        if (typeof (type) === 'string') {
-          if (expectedTypes.includes(typeof (item))) {
-            // we check if the item has a right expected primitive Type
-            itemHasAnExpectedType = true;
-          }
-          // the type is not a primitive type
-        } else if ((item instanceof type)) { // we check if the item has a right expected Type
-          itemHasAnExpectedType = true;
-        }
-      },
-    );
+    const itemHasAnExpectedType = checkType(expectedTypes, item);
+
     if (!itemHasAnExpectedType) {
       throw new Error(`The parameter has an unexpected type. It should be one among these types : ${expectedTypes}`);
     }
@@ -182,35 +176,27 @@ export default class Entity {
   generateAddItemsToListFunction(field, items, expectedTypes = []) {
     // here checked is usefull in order to not iterate a loop if
     // all the items have one of the right expected types
-    let checked = false;
+    const itemsHaveAnExpectedType = [];
     if (expectedTypes.length === 0) {
       throw new Error('there must be at least one expected type');
     }
     if (Array.isArray(items)) {
-      expectedTypes.forEach(
-        (type) => {
-          // we check if the type is a primitive type : ['string','number','boolean',...]
-          // and if all the items are not already checked
-          if (!checked && typeof (type) === 'string') {
-            for (let j = 0; j < items.length; j += 1) {
-              if (!expectedTypes.includes(typeof (items[j]))) {
-                // we check if the item has not a right expected primitive Type
-                // in order to throw an Error
-                throw new Error(`At least one of the items in the list is not a ${type}`);
-              }
+      for (let j = 0; j < items.length; j += 1) {
+        itemsHaveAnExpectedType[j] = false;
+        for (let i = 0; i < expectedTypes.length; i += 1) {
+          if (typeof expectedTypes[i] === 'string') {
+            if (expectedTypes.includes(typeof (items[j]))) {
+              itemsHaveAnExpectedType[j] = true;
             }
-            checked = true; // all the items has been checked
-          } else if (!checked) { // if all the items are not already checked
-            for (let j = 0; j < items.length; j += 1) {
-              if (!(items[j] instanceof type)) {
-                // we check if the item has not a right expected Type in order to throw an Error
-                throw new Error('At least one of the items in the list has an unexpected type');
-              }
-            }
-            checked = true; // all the items has been checked
+          } else if ((items[j] instanceof expectedTypes[i])) {
+            itemsHaveAnExpectedType[j] = true;
           }
-        },
-      );
+        }
+      }
+
+      if (itemsHaveAnExpectedType.includes(false)) {
+        throw new Error('At least one of the items in the list has an unexpected type');
+      }
 
       if (!this[field]) {
         this[field] = [];
