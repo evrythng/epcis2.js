@@ -46,7 +46,7 @@ export default class SensorElement extends Entity {
    * @return {SensorElement} - the sensor instance
    */
   setSensorMetadata(sensorMetadata) {
-    return this.generateSetterFunction('sensorMetadata',sensorMetadata,[SensorMetadata]);
+    return this.generateSetterFunction('sensorMetadata', sensorMetadata, [SensorMetadata]);
   }
 
   /**
