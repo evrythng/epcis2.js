@@ -13,7 +13,6 @@ export default class AttributeElement extends Entity {
    * @return {AttributeElement} - the attributeElement instance
    */
   setId(id) {
-    this.id = id;
     return this.generateSetterFunction('id', id, ['string']);
   }
 
