@@ -15,6 +15,7 @@ import ExtendedEvent from '../events/ExtendedEvent';
 import ObjectEvent from '../events/ObjectEvent';
 import TransactionEvent from '../events/TransactionEvent';
 import TransformationEvent from '../events/TransformationEvent';
+import Event from '../events/Event';
 
 export default class EPCISDocument extends Entity {
   /**
