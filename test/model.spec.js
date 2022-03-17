@@ -414,9 +414,15 @@ describe('unit tests for model Objects', () => {
 
     it('should create a valid Vocabulary object from setters', async () => {
       const vocabulary = new Vocabulary();
+      const vocabularyElementList = [];
+      exampleVocabulary.vocabularyElementList.forEach(
+        (vocaElement) => {
+          vocabularyElementList.push(new VocabularyElement(vocaElement));
+        },
+      );
       vocabulary
         .setType(exampleVocabulary.type)
-        .addVocabularyElementList(exampleVocabulary.vocabularyElementList);
+        .addVocabularyElementList(vocabularyElementList);
 
       expect(vocabulary.getType()).to.be.equal(exampleVocabulary.type);
       expect(vocabulary.getVocabularyElementList().length).to.be.equal(
