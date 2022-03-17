@@ -563,4 +563,28 @@ describe('unit tests for the ObjectEvent class', () => {
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
+
+  describe('setters should throw if we provide an non-expected type', () => {
+    it('setters from Event.js', () => {
+      const ov = new ObjectEvent();
+      assert.throws(() => ov.setType(1));
+      assert.throws(() => ov.setEventID(1));
+      assert.throws(() => ov.setRecordTime(1));
+      assert.throws(() => ov.setErrorDeclaration(1));
+      assert.throws(() => ov.addEPC(1));
+      assert.throws(() => ov.addEPCList([1, 2, 3]));
+      assert.throws(() => ov.addQuantity(1));
+      assert.throws(() => ov.addQuantityList([1, 2, 3]));
+      assert.throws(() => ov.setAction(1));
+      assert.throws(() => ov.setBizStep(1));
+      assert.throws(() => ov.setDisposition(1));
+      assert.throws(() => ov.setPersistentDisposition(1));
+      assert.throws(() => ov.addBizTransaction(1));
+      assert.throws(() => ov.addBizTransactionList([1, 2, 3]));
+      assert.throws(() => ov.addSource(1));
+      assert.throws(() => ov.addSourceList([1, 2, 3]));
+      assert.throws(() => ov.addDestination(1));
+      assert.throws(() => ov.addDestinationList([1, 2, 3]));
+    });
+  });
 });

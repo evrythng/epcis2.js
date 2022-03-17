@@ -5,7 +5,9 @@
  */
 
 import { assert, expect } from 'chai';
-import { dispositions, Ilmd } from '../src';
+import {
+  dispositions, Ilmd, SensorElement, SensorMetadata, SensorReportElement,
+} from '../src';
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';
 import QuantityElement from '../src/entity/model/QuantityElement';
 import PersistentDisposition from '../src/entity/model/PersistentDisposition';
@@ -607,101 +609,210 @@ describe('unit tests for model Objects', () => {
       const ilmd = new Ilmd(exampleIlmd);
       expect(ilmd.toObject()).to.deep.equal(exampleIlmd);
     });
-
-    describe('Entity.js', () => {
-      describe('generateSetterFunction', () => {
-        it('should throw an error if there is no expected type', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateSetterFunction('ilmd', new Ilmd(), []));
-        });
-        it('should throw an error if there is not the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateSetterFunction('ilmd', new Ilmd(), ['string']));
-        });
-        it('should not throw an error if there is the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.doesNotThrow(() => o.generateSetterFunction('ilmd', new Ilmd(), [Ilmd]));
-        });
-        it('should not throw an error if the expected type is among the list', async () => {
-          const o = new ObjectEvent();
-          assert.doesNotThrow(() => o.generateSetterFunction('eventID', 'id', ['string', 'number']));
-          assert.doesNotThrow(() => o.generateSetterFunction('ilmd', new Ilmd(), [Ilmd, 'number']));
-          assert.doesNotThrow(() => o.generateSetterFunction('ilmd', new Ilmd(), ['number', Ilmd]));
-        });
+  });
+  describe('Entity.js', () => {
+    describe('generateSetterFunction', () => {
+      it('should throw an error if there is no expected type', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateSetterFunction('ilmd', new Ilmd(), []));
       });
-
-      describe('generateAddItemToListFunction', () => {
-        it('should throw an error if there is no expected type', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateAddItemToListFunction('epcList', 'e', []));
-        });
-        it('should throw an error if there is not the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateAddItemToListFunction(
-            'bizTransactionList',
-            new BizTransactionElement(),
-            ['boolean'],
-          ));
-        });
-        it('should not throw an error if there is the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.doesNotThrow(() => o.generateAddItemToListFunction('epcList', 'e', ['string']));
-        });
-        it('should not throw an error if there is at least the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.doesNotThrow(() => o.generateAddItemToListFunction('epcList', 'id', ['string', 'number']));
-          assert.doesNotThrow(() => o.generateAddItemToListFunction('bizTransactionList', new BizTransactionElement(), [BizTransactionElement, 'number']));
-          assert.doesNotThrow(() => o.generateAddItemToListFunction('bizTransactionList', new BizTransactionElement(), ['number', BizTransactionElement]));
-        });
+      it('should throw an error if there is not the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateSetterFunction('ilmd', new Ilmd(), ['string']));
       });
-
-      describe('generateAddItemsToListFunction', () => {
-        it('should throw an error if there is no expected type', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateAddItemsToListFunction('epcList', ['e', 'p', 'c'], []));
-        });
-        it('should throw an error if there is not the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateAddItemsToListFunction(
-            'bizTransactionList',
-            [new BizTransactionElement(), new BizTransactionElement()],
-            ['boolean'],
-          ));
-        });
-        it('should not throw an error if there is the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.doesNotThrow(() => o.generateAddItemsToListFunction('epcList', ['e', 'p', 'c'], ['string']));
-        });
-        it('should not throw an error if there is at least the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.doesNotThrow(() => o.generateAddItemsToListFunction('epcList', ['id1', 'id2', 'id3'], ['string', 'number']));
-          assert.doesNotThrow(() => o.generateAddItemsToListFunction(
-            'bizTransactionList',
-            [new BizTransactionElement(), new BizTransactionElement()],
-            [BizTransactionElement, 'number'],
-          ));
-        });
-        it('should throw an error if on of the items does not have the right expected type', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateAddItemsToListFunction(
-            'epcList',
-            ['id1', 'id2', new Ilmd()],
-            ['string', 'number'],
-          ));
-          assert.throws(() => o.generateAddItemsToListFunction(
-            'bizTransactionList',
-            [new BizTransactionElement(), 'new BizTransactionElement()'],
-            [BizTransactionElement, 'number'],
-          ));
-          assert.throws(() => o.generateAddItemsToListFunction('bizTransactionList',
-            [new BizTransactionElement(), 'new BizTransactionElement()'],
-            [BizTransactionElement, 'number']));
-        });
-        it('should throw an error if the parameter is not a List', async () => {
-          const o = new ObjectEvent();
-          assert.throws(() => o.generateAddItemsToListFunction('epcList', 'not_a_list', ['string', 'number']));
-        });
+      it('should not throw an error if there is the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.doesNotThrow(() => o.generateSetterFunction('ilmd', new Ilmd(), [Ilmd]));
       });
+      it('should not throw an error if the expected type is among the list', async () => {
+        const o = new ObjectEvent();
+        assert.doesNotThrow(() => o.generateSetterFunction('eventID', 'id', ['string', 'number']));
+        assert.doesNotThrow(() => o.generateSetterFunction('ilmd', new Ilmd(), [Ilmd, 'number']));
+        assert.doesNotThrow(() => o.generateSetterFunction('ilmd', new Ilmd(), ['number', Ilmd]));
+      });
+    });
+
+    describe('generateAddItemToListFunction', () => {
+      it('should throw an error if there is no expected type', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateAddItemToListFunction('epcList', 'e', []));
+      });
+      it('should throw an error if there is not the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateAddItemToListFunction(
+          'bizTransactionList',
+          new BizTransactionElement(),
+          ['boolean'],
+        ));
+      });
+      it('should not throw an error if there is the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.doesNotThrow(() => o.generateAddItemToListFunction('epcList', 'e', ['string']));
+      });
+      it('should not throw an error if there is at least the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.doesNotThrow(() => o.generateAddItemToListFunction('epcList', 'id', ['string', 'number']));
+        assert.doesNotThrow(() => o.generateAddItemToListFunction('bizTransactionList', new BizTransactionElement(), [BizTransactionElement, 'number']));
+        assert.doesNotThrow(() => o.generateAddItemToListFunction('bizTransactionList', new BizTransactionElement(), ['number', BizTransactionElement]));
+      });
+    });
+
+    describe('generateAddItemsToListFunction', () => {
+      it('should throw an error if there is no expected type', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateAddItemsToListFunction('epcList', ['e', 'p', 'c'], []));
+      });
+      it('should throw an error if there is not the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateAddItemsToListFunction(
+          'bizTransactionList',
+          [new BizTransactionElement(), new BizTransactionElement()],
+          ['boolean'],
+        ));
+      });
+      it('should not throw an error if there is the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.doesNotThrow(() => o.generateAddItemsToListFunction('epcList', ['e', 'p', 'c'], ['string']));
+      });
+      it('should not throw an error if there is at least the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.doesNotThrow(() => o.generateAddItemsToListFunction('epcList', ['id1', 'id2', 'id3'], ['string', 'number']));
+        assert.doesNotThrow(() => o.generateAddItemsToListFunction(
+          'bizTransactionList',
+          [new BizTransactionElement(), new BizTransactionElement()],
+          [BizTransactionElement, 'number'],
+        ));
+      });
+      it('should throw an error if on of the items does not have the right expected type', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateAddItemsToListFunction(
+          'epcList',
+          ['id1', 'id2', new Ilmd()],
+          ['string', 'number'],
+        ));
+        assert.throws(() => o.generateAddItemsToListFunction(
+          'bizTransactionList',
+          [new BizTransactionElement(), 'new BizTransactionElement()'],
+          [BizTransactionElement, 'number'],
+        ));
+        assert.throws(() => o.generateAddItemsToListFunction('bizTransactionList',
+          [new BizTransactionElement(), 'new BizTransactionElement()'],
+          [BizTransactionElement, 'number']));
+      });
+      it('should throw an error if the parameter is not a List', async () => {
+        const o = new ObjectEvent();
+        assert.throws(() => o.generateAddItemsToListFunction('epcList', 'not_a_list', ['string', 'number']));
+      });
+    });
+  });
+
+  describe('setters should throw if we provide an non-expected type', () => {
+    it('setters from SensorElement.js', () => {
+      const o = new SensorElement();
+      assert.throws(() => o.setSensorMetadata(1));
+      assert.throws(() => o.addSensorReport(1));
+      assert.throws(() => o.addSensorReportList([1, 2, 3]));
+    });
+    it('setters from SensorMetadata.js', () => {
+      const o = new SensorMetadata();
+      assert.throws(() => o.setTime(1));
+      assert.throws(() => o.setDeviceID(1));
+      assert.throws(() => o.setDeviceMetadata(1));
+      assert.throws(() => o.setRawData(1));
+      assert.throws(() => o.setStartTime(1));
+      assert.throws(() => o.setEndTime(1));
+      assert.throws(() => o.setDataProcessingMethod(1));
+      assert.throws(() => o.setBizRules(1));
+    });
+    it('setters from SensorReportElement.js', () => {
+      const o = new SensorReportElement();
+      assert.throws(() => o.setType(1));
+      assert.throws(() => o.setException(1));
+      assert.throws(() => o.setDeviceID(1));
+      assert.throws(() => o.setDeviceMetadata(1));
+      assert.throws(() => o.setRawData(1));
+      assert.throws(() => o.setDataProcessingMethod(1));
+      assert.throws(() => o.setTime(1));
+      assert.throws(() => o.setMicroorganism(1));
+      assert.throws(() => o.setChemicalSubstance(1));
+      assert.throws(() => o.setValue('NaN'));
+      assert.throws(() => o.setStringValue(1));
+      assert.throws(() => o.setBooleanValue('not_a_bool'));
+      assert.throws(() => o.setHexBinaryValue(1));
+      assert.throws(() => o.setUriValue(1));
+      assert.throws(() => o.setMinValue('NaN'));
+      assert.throws(() => o.setMaxValue('NaN'));
+      assert.throws(() => o.setMeanValue('NaN'));
+      assert.throws(() => o.setSDev('NaN'));
+      assert.throws(() => o.setPercRank('NaN'));
+      assert.throws(() => o.setPercValue('NaN'));
+      assert.throws(() => o.setUom(1));
+    });
+    it('setters from AttributeElement.js', () => {
+      const o = new AttributeElement();
+      assert.throws(() => o.setId(1));
+      assert.throws(() => o.setAttribute(1));
+    });
+    it('setters from BizLocation.js', () => {
+      const o = new BizLocation();
+      assert.throws(() => o.setId(1));
+    });
+    it('setters from BizTransactionElement.js', () => {
+      const o = new BizTransactionElement();
+      assert.throws(() => o.setId(1));
+    });
+    it('setters from DestinationElement.js', () => {
+      const o = new DestinationElement();
+      assert.throws(() => o.setType(1));
+      assert.throws(() => o.setDestination(1));
+    });
+    it('setters from ErrorDeclaration.js', () => {
+      const o = new ErrorDeclaration();
+      assert.throws(() => o.setDeclarationTime(1));
+      assert.throws(() => o.setReason(1));
+      assert.throws(() => o.addCorrectiveEventID(1));
+      assert.throws(() => o.addCorrectiveEventIDList([1, 2, 3]));
+    });
+    it('setters from Ilmd.js', () => {
+      const o = new Ilmd();
+      assert.throws(() => o.setType(1));
+      assert.throws(() => o.setFormat(1));
+    });
+    it('setters from PersistentDisposition.js', () => {
+      const o = new PersistentDisposition();
+      assert.throws(() => o.addSet(1));
+      assert.throws(() => o.addSetList([1, 2, 3]));
+      assert.throws(() => o.addUnset(1));
+      assert.throws(() => o.addUnsetList([1, 2, 3]));
+    });
+    it('setters from QuantityElement.js', () => {
+      const o = new QuantityElement();
+      assert.throws(() => o.setEpcClass(1));
+      assert.throws(() => o.setUom(1));
+      assert.throws(() => o.setQuantity('NaN'));
+    });
+    it('setters from ReadPoint.js', () => {
+      const o = new ReadPoint();
+      assert.throws(() => o.setId(1));
+    });
+    it('setters from SourceElement.js', () => {
+      const o = new SourceElement();
+      assert.throws(() => o.setSource(1));
+      assert.throws(() => o.setType(1));
+    });
+    it('setters from Vocabulary.js', () => {
+      const o = new Vocabulary();
+      assert.throws(() => o.setType(1));
+      assert.throws(() => o.addVocabularyElement(1));
+      assert.throws(() => o.addVocabularyElementList([1, 2, 3]));
+    });
+    it('setters from VocabularyElement.js', () => {
+      const o = new VocabularyElement();
+      assert.throws(() => o.setId(1));
+      assert.throws(() => o.addAttribute(1));
+      assert.throws(() => o.addAttributeList([1, 2, 3]));
+      assert.throws(() => o.addChild(1));
+      assert.throws(() => o.addChildList([1, 2, 3]));
     });
   });
 });

@@ -401,4 +401,19 @@ describe('unit tests for the TransformationEvent class', () => {
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
+
+  describe('setters should throw if we provide an non-expected type', () => {
+    it('setters from TransformationEvent.js', () => {
+      const transformationEvent = new TransformationEvent();
+      assert.throws(() => transformationEvent.setTransformationID(1));
+      assert.throws(() => transformationEvent.addInputEPC(1));
+      assert.throws(() => transformationEvent.addInputEPCList([1, 2, 3]));
+      assert.throws(() => transformationEvent.addOutputEPC(1));
+      assert.throws(() => transformationEvent.addOutputEPCList([1, 2, 3]));
+      assert.throws(() => transformationEvent.addInputQuantity(1));
+      assert.throws(() => transformationEvent.addInputQuantityList([1, 2, 3]));
+      assert.throws(() => transformationEvent.addOutputQuantity(1));
+      assert.throws(() => transformationEvent.addOutputQuantityList([1, 2, 3]));
+    });
+  });
 });

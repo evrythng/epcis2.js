@@ -14,6 +14,7 @@ import {
   BizLocation,
   BizTransactionElement,
   DestinationElement,
+  EPCISMasterData,
   ErrorDeclaration,
   Ilmd,
   ObjectEvent,
@@ -448,6 +449,28 @@ describe('unit tests for the EPCISDocument class', () => {
       const o = new EPCISDocument();
       const json = o.toObject();
       expect(json.eventList).to.be.equal(undefined);
+    });
+  });
+
+  describe('setters should throw if we provide an non-expected type', () => {
+    it('setters from EPCISDocument.js', () => {
+      const epcisDocument = new EPCISDocument();
+      assert.throws(() => epcisDocument.setType(1));
+      assert.throws(() => epcisDocument.setSchemaVersion(1));
+      assert.throws(() => epcisDocument.setCreationDate(1));
+      assert.throws(() => epcisDocument.setEPCISHeader(1));
+      assert.throws(() => epcisDocument.addEventList(1));
+      assert.throws(() => epcisDocument.addEvent([1, 2, 3]));
+      assert.throws(() => epcisDocument.setEPCISHeader(1));
+    });
+    it('setters from EPCISHeader.js', () => {
+      const epcisHeader = new EPCISHeader();
+      assert.throws(() => epcisHeader.setEPCISMasterData(1));
+    });
+    it('setters from EPCISMasterData.js', () => {
+      const epcisMasterData = new EPCISMasterData();
+      assert.throws(() => epcisMasterData.addVocabulary('not_a_vocabulary'));
+      assert.throws(() => epcisMasterData.addVocabularyList(['not_a_vocabulary', 1, 2]));
     });
   });
 });

@@ -144,4 +144,11 @@ describe('unit tests for the ExtendedEvent class', () => {
     assert.throws(() => o.getSensorElementList());
     assert.throws(() => o.clearSensorElementList());
   });
+
+  describe('setters should throw if we provide an non-expected type', () => {
+    it('setters from ExtendedEvent.js', () => {
+      const eev = new ExtendedEvent();
+      assert.throws(() => eev.setType(1));
+    });
+  });
 });
