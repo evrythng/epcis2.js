@@ -155,17 +155,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEvent(event) {
-    return this.generateAddItemToListFunction(
-      'eventList',
-      event,
-      [AggregationEvent,
-        AssociationEvent,
-        ExtendedEvent,
-        ObjectEvent,
-        TransactionEvent,
-        TransformationEvent,
-        Event],
-    );
+    return this.generateAddItemToListFunction('eventList',event,[Event]);
   }
 
   /**
@@ -174,17 +164,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEventList(eventList) {
-    return this.generateAddItemsToListFunction(
-      'eventList',
-      eventList,
-      [AggregationEvent,
-        AssociationEvent,
-        ExtendedEvent,
-        ObjectEvent,
-        TransactionEvent,
-        TransformationEvent,
-        Event],
-    );
+    return this.generateAddItemsToListFunction('eventList',eventList,[Event]);
   }
 
   /**
