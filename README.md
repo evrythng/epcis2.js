@@ -51,7 +51,109 @@ import { setup } from 'epcis2.js';
 import * as epcis from 'epcis2.js';
 ```
 
-## Building an EPCIS 2.0 JSON document
+## Getting started example
+
+Thanks to our SDK, creating an EPCIS 2.0 document is simple. In this example, we show how to create it 
+from a JSON-LD object.
+
+```js
+const { EPCISDocument } = require('epcis2.js');
+
+// json object based on which we want to create an EPCIS 2.0 document
+const object = {
+  "@context": ["https://gs1.github.io/EPCIS/epcis-context.jsonld",{"example": "http://ns.example.com/epcis/"}],
+  "id": "https://id.example.org/document1",
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2021-07-11T11:30:47.0Z",
+  "epcisBody": {
+    "eventList": [
+      {
+        "eventID": "ni:///sha-256;4217c6a122625b7b9d8ae4f9b89890df35ffa0c501471a096cbfdeebd7207e45?ver=CBV2.0",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "bizStep": "receiving",
+        "disposition": "in_progress",
+        "epcList": [ "https://id.gs1.org/01/70614141123451/21/2018" ],
+        "eventTime": "2021-04-04T20:33:31.116-06:00",
+        "eventTimeZoneOffset": "-06:00",
+        "readPoint": {"id": "urn:epc:id:sgln:0012345.11111.400"},
+        "bizLocation": {"id": "urn:epc:id:sgln:0012345.11111.0"},
+        "bizTransactionList": [
+          { "type": "po", "bizTransaction": "http://transaction.acme.com/po/12345678" }
+        ],
+      }
+    ]
+  }
+};
+
+const epcisDocument = new EPCISDocument(object);  // instantiate an EPCIS 2.0 document constructed from the given object
+
+console.log(epcisDocument.toString());  // print EPCIS 2.0 document as a string
+
+```
+
+Running this script should result in the following EPCIS 2.0 document (printed as a string):
+
+```json
+{
+ "@context": [
+  "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+  {
+   "example": "http://ns.example.com/epcis/"
+  }
+ ],
+ "id": "https://id.example.org/document1",
+ "type": "EPCISDocument",
+ "schemaVersion": "2.0",
+ "creationDate": "2021-07-11T11:30:47.0Z",
+ "epcisBody": {
+  "eventList": [
+   {
+    "eventID": "ni:///sha-256;4217c6a122625b7b9d8ae4f9b89890df35ffa0c501471a096cbfdeebd7207e45?ver=CBV2.0",
+    "type": "ObjectEvent",
+    "action": "OBSERVE",
+    "bizStep": "receiving",
+    "disposition": "in_progress",
+    "eventTime": "2021-04-04T20:33:31.116-06:00",
+    "eventTimeZoneOffset": "-06:00",
+    "readPoint": {
+     "id": "urn:epc:id:sgln:0012345.11111.400"
+    },
+    "bizLocation": {
+     "id": "urn:epc:id:sgln:0012345.11111.0"
+    },
+    "epcList": [
+     "https://id.gs1.org/01/70614141123451/21/2018"
+    ],
+    "bizTransactionList": [
+     {
+      "type": "po",
+      "bizTransaction": "http://transaction.acme.com/po/12345678"
+     }
+    ]
+   }
+  ]
+ }
+}
+```
+
+The `epcisDocument` is an instance of the `EPCISDocument` class which means that you have many methods available 
+to easily view or modify the EPCIS 2.0 document. You can view all of them in ./src/entity/epcis/EPCISDocument.js.
+
+```js
+console.log(epcisDocument.getType()); // EPCISDocument
+
+console.log(epcisDocument.isValid()); // true
+
+console.log(epcisDocument.getEventList());  // check it out yourself :)
+```
+
+The latter line should print an instance of the event `ObjectEvent` which is created automatically based on `object`.
+This instance has many methods which can be used to view or modify the EPCIS 2.0 event.
+You can view all of them in ./src/entity/events/Event.js.
+
+## Building complex EPCIS 2.0 JSON documents
 
 ### Instantiating an EPCIS 2.0 Document
 
