@@ -24,9 +24,7 @@ const variableToObject = (obj) => {
  * @param {*} type - the parameter which has to be checked
  * @returns boolean - true if it is a primitive type, false otherwise
  */
-const isAPrimitiveType = (type) => {
-  return typeof (type) === 'string'
-};
+const isAPrimitiveType = (type) => typeof (type) === 'string';
 
 /**
  * This function throw an error if the type of param is not among the list : expectedTypes
@@ -49,7 +47,7 @@ const throwIfTheParameterHasNotTheExpectedType = (expectedTypes, param) => {
       }
     },
   );
-  if(!paramHasAnExpectedType){
+  if (!paramHasAnExpectedType) {
     throw new Error(`The parameter has an unexpected type. 
     It should be one among this types : ${expectedTypes}`);
   }
@@ -184,7 +182,7 @@ export default class Entity {
     }
     if (Array.isArray(items)) {
       for (let j = 0; j < items.length; j += 1) {
-        throwIfTheParameterHasNotTheExpectedType(expectedTypes,items[j])
+        throwIfTheParameterHasNotTheExpectedType(expectedTypes, items[j]);
       }
       if (!this[listFieldName]) {
         this[listFieldName] = [];

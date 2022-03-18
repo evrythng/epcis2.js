@@ -9,12 +9,7 @@ import EPCISHeader from './EPCISHeader';
 import settings from '../../settings';
 import objectToEvent from '../../utils/entityUtils';
 import validateSchema from '../../schema/validator';
-import AggregationEvent from '../events/AggregationEvent';
-import AssociationEvent from '../events/AssociationEvent';
-import ExtendedEvent from '../events/ExtendedEvent';
-import ObjectEvent from '../events/ObjectEvent';
-import TransactionEvent from '../events/TransactionEvent';
-import TransformationEvent from '../events/TransformationEvent';
+
 import Event from '../events/Event';
 
 export default class EPCISDocument extends Entity {
@@ -155,7 +150,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEvent(event) {
-    return this.generateAddItemToListFunction('eventList',event,[Event]);
+    return this.generateAddItemToListFunction('eventList', event, [Event]);
   }
 
   /**
@@ -164,7 +159,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEventList(eventList) {
-    return this.generateAddItemsToListFunction('eventList',eventList,[Event]);
+    return this.generateAddItemsToListFunction('eventList', eventList, [Event]);
   }
 
   /**
