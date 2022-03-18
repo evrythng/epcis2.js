@@ -712,6 +712,9 @@ describe('unit tests for model Objects', () => {
       assert.throws(() => o.setSensorMetadata(1));
       assert.throws(() => o.addSensorReport(1));
       assert.throws(() => o.addSensorReportList([1, 2, 3]));
+      assert.throws(() => o.setSensorMetadata(new Ilmd()));
+      assert.throws(() => o.addSensorReport(new Ilmd()));
+      assert.throws(() => o.addSensorReportList([new Ilmd(), new Ilmd(), new Ilmd()]));
     });
     it('setters from SensorMetadata.js', () => {
       const o = new SensorMetadata();
@@ -723,6 +726,14 @@ describe('unit tests for model Objects', () => {
       assert.throws(() => o.setEndTime(1));
       assert.throws(() => o.setDataProcessingMethod(1));
       assert.throws(() => o.setBizRules(1));
+      assert.throws(() => o.setTime(new Ilmd()));
+      assert.throws(() => o.setDeviceID(new Ilmd()));
+      assert.throws(() => o.setDeviceMetadata(new Ilmd()));
+      assert.throws(() => o.setRawData(new Ilmd()));
+      assert.throws(() => o.setStartTime(new Ilmd()));
+      assert.throws(() => o.setEndTime(new Ilmd()));
+      assert.throws(() => o.setDataProcessingMethod(new Ilmd()));
+      assert.throws(() => o.setBizRules(new Ilmd()));
     });
     it('setters from SensorReportElement.js', () => {
       const o = new SensorReportElement();
@@ -747,24 +758,49 @@ describe('unit tests for model Objects', () => {
       assert.throws(() => o.setPercRank('NaN'));
       assert.throws(() => o.setPercValue('NaN'));
       assert.throws(() => o.setUom(1));
+      assert.throws(() => o.setType(new Ilmd()));
+      assert.throws(() => o.setException(new Ilmd()));
+      assert.throws(() => o.setDeviceID(new Ilmd()));
+      assert.throws(() => o.setDeviceMetadata(new Ilmd()));
+      assert.throws(() => o.setRawData(new Ilmd()));
+      assert.throws(() => o.setDataProcessingMethod(new Ilmd()));
+      assert.throws(() => o.setTime(new Ilmd()));
+      assert.throws(() => o.setMicroorganism(new Ilmd()));
+      assert.throws(() => o.setChemicalSubstance(new Ilmd()));
+      assert.throws(() => o.setValue(new Ilmd()));
+      assert.throws(() => o.setStringValue(new Ilmd()));
+      assert.throws(() => o.setBooleanValue(new Ilmd()));
+      assert.throws(() => o.setHexBinaryValue(new Ilmd()));
+      assert.throws(() => o.setUriValue(new Ilmd()));
+      assert.throws(() => o.setMinValue(new Ilmd()));
+      assert.throws(() => o.setMaxValue(new Ilmd()));
+      assert.throws(() => o.setMeanValue(new Ilmd()));
+      assert.throws(() => o.setSDev(new Ilmd()));
+      assert.throws(() => o.setPercRank(new Ilmd()));
+      assert.throws(() => o.setPercValue(new Ilmd()));
+      assert.throws(() => o.setUom(new Ilmd()));
     });
     it('setters from AttributeElement.js', () => {
       const o = new AttributeElement();
       assert.throws(() => o.setId(1));
       assert.throws(() => o.setAttribute(1));
+      assert.throws(() => o.setId(new Ilmd()));
+      assert.throws(() => o.setAttribute(new Ilmd()));
     });
     it('setters from BizLocation.js', () => {
       const o = new BizLocation();
       assert.throws(() => o.setId(1));
+      assert.throws(() => o.setId(new Ilmd()));
     });
     it('setters from BizTransactionElement.js', () => {
       const o = new BizTransactionElement();
       assert.throws(() => o.setId(1));
+      assert.throws(() => o.setId(new Ilmd()));
     });
     it('setters from DestinationElement.js', () => {
       const o = new DestinationElement();
       assert.throws(() => o.setType(1));
-      assert.throws(() => o.setDestination(1));
+      assert.throws(() => o.setDestination(new Ilmd()));
     });
     it('setters from ErrorDeclaration.js', () => {
       const o = new ErrorDeclaration();
@@ -772,11 +808,17 @@ describe('unit tests for model Objects', () => {
       assert.throws(() => o.setReason(1));
       assert.throws(() => o.addCorrectiveEventID(1));
       assert.throws(() => o.addCorrectiveEventIDList([1, 2, 3]));
+      assert.throws(() => o.setDeclarationTime(new Ilmd()));
+      assert.throws(() => o.setReason(new Ilmd()));
+      assert.throws(() => o.addCorrectiveEventID(new Ilmd()));
+      assert.throws(() => o.addCorrectiveEventIDList([new Ilmd(), new Ilmd(), new Ilmd()]));
     });
     it('setters from Ilmd.js', () => {
       const o = new Ilmd();
       assert.throws(() => o.setType(1));
       assert.throws(() => o.setFormat(1));
+      assert.throws(() => o.setType(new Ilmd()));
+      assert.throws(() => o.setFormat(new Ilmd()));
     });
     it('setters from PersistentDisposition.js', () => {
       const o = new PersistentDisposition();
@@ -784,27 +826,40 @@ describe('unit tests for model Objects', () => {
       assert.throws(() => o.addSetList([1, 2, 3]));
       assert.throws(() => o.addUnset(1));
       assert.throws(() => o.addUnsetList([1, 2, 3]));
+      assert.throws(() => o.addSet(new Ilmd()));
+      assert.throws(() => o.addSetList([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => o.addUnset(new Ilmd()));
+      assert.throws(() => o.addUnsetList([new Ilmd(), new Ilmd(), new Ilmd()]));
     });
     it('setters from QuantityElement.js', () => {
       const o = new QuantityElement();
       assert.throws(() => o.setEpcClass(1));
       assert.throws(() => o.setUom(1));
       assert.throws(() => o.setQuantity('NaN'));
+      assert.throws(() => o.setEpcClass(new Ilmd()));
+      assert.throws(() => o.setUom(new Ilmd()));
+      assert.throws(() => o.setQuantity(new Ilmd()));
     });
     it('setters from ReadPoint.js', () => {
       const o = new ReadPoint();
       assert.throws(() => o.setId(1));
+      assert.throws(() => o.setId(new Ilmd()));
     });
     it('setters from SourceElement.js', () => {
       const o = new SourceElement();
       assert.throws(() => o.setSource(1));
       assert.throws(() => o.setType(1));
+      assert.throws(() => o.setSource(new Ilmd()));
+      assert.throws(() => o.setType(new Ilmd()));
     });
     it('setters from Vocabulary.js', () => {
       const o = new Vocabulary();
       assert.throws(() => o.setType(1));
       assert.throws(() => o.addVocabularyElement(1));
       assert.throws(() => o.addVocabularyElementList([1, 2, 3]));
+      assert.throws(() => o.setType(new Ilmd()));
+      assert.throws(() => o.addVocabularyElement(new Ilmd()));
+      assert.throws(() => o.addVocabularyElementList([new Ilmd(), new Ilmd(), new Ilmd()]));
     });
     it('setters from VocabularyElement.js', () => {
       const o = new VocabularyElement();
@@ -813,6 +868,11 @@ describe('unit tests for model Objects', () => {
       assert.throws(() => o.addAttributeList([1, 2, 3]));
       assert.throws(() => o.addChild(1));
       assert.throws(() => o.addChildList([1, 2, 3]));
+      assert.throws(() => o.setId(new Ilmd()));
+      assert.throws(() => o.addAttribute(new Ilmd()));
+      assert.throws(() => o.addAttributeList([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => o.addChild(new Ilmd()));
+      assert.throws(() => o.addChildList([new Ilmd(), new Ilmd(), new Ilmd()]));
     });
   });
 });

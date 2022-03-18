@@ -462,15 +462,25 @@ describe('unit tests for the EPCISDocument class', () => {
       assert.throws(() => epcisDocument.addEventList(1));
       assert.throws(() => epcisDocument.addEvent([1, 2, 3]));
       assert.throws(() => epcisDocument.setEPCISHeader(1));
+      assert.throws(() => epcisDocument.setType(new Ilmd()));
+      assert.throws(() => epcisDocument.setSchemaVersion(new Ilmd()));
+      assert.throws(() => epcisDocument.setCreationDate(new Ilmd()));
+      assert.throws(() => epcisDocument.setEPCISHeader(new Ilmd()));
+      assert.throws(() => epcisDocument.addEventList(new Ilmd()));
+      assert.throws(() => epcisDocument.addEvent([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => epcisDocument.setEPCISHeader(new Ilmd()));
     });
     it('setters from EPCISHeader.js', () => {
       const epcisHeader = new EPCISHeader();
       assert.throws(() => epcisHeader.setEPCISMasterData(1));
+      assert.throws(() => epcisHeader.setEPCISMasterData(new Ilmd()));
     });
     it('setters from EPCISMasterData.js', () => {
       const epcisMasterData = new EPCISMasterData();
       assert.throws(() => epcisMasterData.addVocabulary('not_a_vocabulary'));
       assert.throws(() => epcisMasterData.addVocabularyList(['not_a_vocabulary', 1, 2]));
+      assert.throws(() => epcisMasterData.addVocabulary(new Ilmd()));
+      assert.throws(() => epcisMasterData.addVocabularyList([new Ilmd(), new Ilmd(), 2]));
     });
   });
 });

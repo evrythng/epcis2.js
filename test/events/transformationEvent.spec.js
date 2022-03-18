@@ -414,6 +414,15 @@ describe('unit tests for the TransformationEvent class', () => {
       assert.throws(() => transformationEvent.addInputQuantityList([1, 2, 3]));
       assert.throws(() => transformationEvent.addOutputQuantity(1));
       assert.throws(() => transformationEvent.addOutputQuantityList([1, 2, 3]));
+      assert.throws(() => transformationEvent.setTransformationID(new Ilmd()));
+      assert.throws(() => transformationEvent.addInputEPC(new Ilmd()));
+      assert.throws(() => transformationEvent.addInputEPCList([new Ilmd(), new Ilmd()]));
+      assert.throws(() => transformationEvent.addOutputEPC(new Ilmd()));
+      assert.throws(() => transformationEvent.addOutputEPCList([new Ilmd(), new Ilmd()]));
+      assert.throws(() => transformationEvent.addInputQuantity(new Ilmd()));
+      assert.throws(() => transformationEvent.addInputQuantityList([new Ilmd(), new Ilmd()]));
+      assert.throws(() => transformationEvent.addOutputQuantity(new Ilmd()));
+      assert.throws(() => transformationEvent.addOutputQuantityList([new Ilmd(), new Ilmd()]));
     });
   });
 });

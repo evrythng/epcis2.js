@@ -149,6 +149,7 @@ describe('unit tests for the ExtendedEvent class', () => {
     it('setters from ExtendedEvent.js', () => {
       const eev = new ExtendedEvent();
       assert.throws(() => eev.setType(1));
+      assert.throws(() => eev.setType(new Ilmd()));
     });
   });
 });
