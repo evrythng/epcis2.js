@@ -18,20 +18,22 @@ const variableToObject = (obj) => {
 };
 
 /**
- * This function is usefull to know if the current type is a primive type
+ * This function is useful to know if the current type is a primive type
  * ['string','number','boolean',...]
- * we use : typeof (type) === 'string' because this is true only when the type is a primitive one
  * @param {*} type - the parameter which has to be checked
  * @returns boolean - true if it is a primitive type, false otherwise
  */
 const isAPrimitiveType = (type) => typeof (type) === 'string';
 
 /**
- * This function throw an error if the type of param is not among the list : expectedTypes
+ * This function throws an error if the type of param is not among the list : expectedTypes
  * @param {*} expectedTypes - the list with the expected types
  * @param {*} param - the parameter which has to be checked
  */
 const throwIfTheParameterHasNotTheExpectedType = (expectedTypes, param) => {
+  if (expectedTypes.length === 0) { // we check if the array is not empty
+    throw new Error('there must be at least one expected type');
+  }
   let paramHasAnExpectedType = false;
   expectedTypes.forEach(
     (type) => {
@@ -135,21 +137,18 @@ export default class Entity {
    * Generate a setter function that throws if the parameter type is
    * different from the expected one(s).
    * @param {string} field - the field that you want to set
-   * @param {any} param - the variable you to set to the field
+   * @param {any} param - the variable you want to set to the field
    * @param {Array<any>} expectedTypes - The list of authorized types.
    * @return {Entity} - the Entity instance
    */
   generateSetterFunction(field, param, expectedTypes = []) {
-    if (expectedTypes.length === 0) { // we check if the array is not empty
-      throw new Error('there must be at least one expected type');
-    }
     throwIfTheParameterHasNotTheExpectedType(expectedTypes, param);
     this[field] = param;
     return this;
   }
 
   /**
-   * Generate an add item to a list function function that throws if the parameter type
+   * Generate an add item to a list function that throws if the item type
    * is different from the expected one(s).
    * @param {string} listFieldName - the field name of the original list
    * @param {any} item - the item you want to add to the list
@@ -157,9 +156,6 @@ export default class Entity {
    * @return {Entity} - the Entity instance
    */
   generateAddItemToListFunction(listFieldName, item, expectedTypes = []) {
-    if (expectedTypes.length === 0) {
-      throw new Error('there must be at least one expected type');
-    }
     throwIfTheParameterHasNotTheExpectedType(expectedTypes, item);
     if (!this[listFieldName]) {
       this[listFieldName] = [];
@@ -169,7 +165,7 @@ export default class Entity {
   }
 
   /**
-   * Generate an add items to a list function function that throws if the parameter type
+   * Generate an add items to a list function that throws if the parameter type
    * is different from the expected one(s).
    * @param {string} listFieldName - the field name of the original list
    * @param {Array<any>} items - the items you want to add to the list
@@ -177,9 +173,6 @@ export default class Entity {
    * @return {Entity} - the Entity instance
    */
   generateAddItemsToListFunction(listFieldName, items, expectedTypes = []) {
-    if (expectedTypes.length === 0) {
-      throw new Error('there must be at least one expected type');
-    }
     if (Array.isArray(items)) {
       for (let j = 0; j < items.length; j += 1) {
         throwIfTheParameterHasNotTheExpectedType(expectedTypes, items[j]);
