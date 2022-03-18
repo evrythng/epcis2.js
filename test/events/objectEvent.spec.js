@@ -564,7 +564,7 @@ describe('unit tests for the ObjectEvent class', () => {
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
 
-  describe('setters should throw if we provide an non-expected type', () => {
+  describe('setters should throw if we provide a non-expected type', () => {
     it('setters from Event.js', () => {
       const ov = new ObjectEvent();
       assert.throws(() => ov.setType(1));

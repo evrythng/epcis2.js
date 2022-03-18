@@ -452,7 +452,7 @@ describe('unit tests for the EPCISDocument class', () => {
     });
   });
 
-  describe('setters should throw if we provide an non-expected type', () => {
+  describe('setters should throw if we provide a non-expected type', () => {
     it('setters from EPCISDocument.js', () => {
       const epcisDocument = new EPCISDocument();
       assert.throws(() => epcisDocument.setType(1));

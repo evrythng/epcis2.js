@@ -402,7 +402,7 @@ describe('unit tests for the TransformationEvent class', () => {
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
 
-  describe('setters should throw if we provide an non-expected type', () => {
+  describe('setters should throw if we provide a non-expected type', () => {
     it('setters from TransformationEvent.js', () => {
       const transformationEvent = new TransformationEvent();
       assert.throws(() => transformationEvent.setTransformationID(1));

@@ -649,7 +649,7 @@ describe('unit tests for model Objects', () => {
         const o = new ObjectEvent();
         assert.doesNotThrow(() => o.generateAddItemToListFunction('epcList', 'e', ['string']));
       });
-      it('should not throw an error if there is at least the right expected type', async () => {
+      it('should not throw an error if the expected type is among the list', async () => {
         const o = new ObjectEvent();
         assert.doesNotThrow(() => o.generateAddItemToListFunction('epcList', 'id', ['string', 'number']));
         assert.doesNotThrow(() => o.generateAddItemToListFunction('bizTransactionList', new BizTransactionElement(), [BizTransactionElement, 'number']));
@@ -674,7 +674,7 @@ describe('unit tests for model Objects', () => {
         const o = new ObjectEvent();
         assert.doesNotThrow(() => o.generateAddItemsToListFunction('epcList', ['e', 'p', 'c'], ['string']));
       });
-      it('should not throw an error if there is at least the right expected type', async () => {
+      it('should not throw an error if the expected type is among the list', async () => {
         const o = new ObjectEvent();
         assert.doesNotThrow(() => o.generateAddItemsToListFunction('epcList', ['id1', 'id2', 'id3'], ['string', 'number']));
         assert.doesNotThrow(() => o.generateAddItemsToListFunction(
@@ -682,8 +682,13 @@ describe('unit tests for model Objects', () => {
           [new BizTransactionElement(), new BizTransactionElement()],
           [BizTransactionElement, 'number'],
         ));
+        assert.doesNotThrow(() => o.generateAddItemsToListFunction(
+          'bizTransactionList',
+          [new BizTransactionElement(), new BizTransactionElement()],
+          ['number',BizTransactionElement],
+        ));
       });
-      it('should throw an error if on of the items does not have the right expected type', async () => {
+      it('should throw an error if one of the items does not have the right expected type', async () => {
         const o = new ObjectEvent();
         assert.throws(() => o.generateAddItemsToListFunction(
           'epcList',
@@ -695,9 +700,10 @@ describe('unit tests for model Objects', () => {
           [new BizTransactionElement(), 'new BizTransactionElement()'],
           [BizTransactionElement, 'number'],
         ));
-        assert.throws(() => o.generateAddItemsToListFunction('bizTransactionList',
+        assert.throws(() => o.generateAddItemsToListFunction(
+          'bizTransactionList',
           [new BizTransactionElement(), 'new BizTransactionElement()'],
-          [BizTransactionElement, 'number']));
+          ['number',BizTransactionElement]));
       });
       it('should throw an error if the parameter is not a List', async () => {
         const o = new ObjectEvent();
@@ -706,7 +712,7 @@ describe('unit tests for model Objects', () => {
     });
   });
 
-  describe('setters should throw if we provide an non-expected type', () => {
+  describe('setters should throw if we provide a non-expected type', () => {
     it('setters from SensorElement.js', () => {
       const o = new SensorElement();
       assert.throws(() => o.setSensorMetadata(1));
