@@ -685,7 +685,7 @@ describe('unit tests for model Objects', () => {
         assert.doesNotThrow(() => o.generateAddItemsToListFunction(
           'bizTransactionList',
           [new BizTransactionElement(), new BizTransactionElement()],
-          ['number',BizTransactionElement],
+          ['number', BizTransactionElement],
         ));
       });
       it('should throw an error if one of the items does not have the right expected type', async () => {
@@ -703,7 +703,8 @@ describe('unit tests for model Objects', () => {
         assert.throws(() => o.generateAddItemsToListFunction(
           'bizTransactionList',
           [new BizTransactionElement(), 'new BizTransactionElement()'],
-          ['number',BizTransactionElement]));
+          ['number', BizTransactionElement],
+        ));
       });
       it('should throw an error if the parameter is not a List', async () => {
         const o = new ObjectEvent();
