@@ -53,8 +53,7 @@ export default class ExtendedEvent extends Event {
    * @return {ExtendedEvent} - the extendedEvent instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**

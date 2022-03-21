@@ -28,8 +28,7 @@ export default class DestinationElement extends Entity {
    * @return {DestinationElement} - the destination instance
    */
   setDestination(destination) {
-    this.destination = destination;
-    return this;
+    return this.generateSetterFunction('destination', destination, ['string']);
   }
 
   /**
@@ -46,8 +45,7 @@ export default class DestinationElement extends Entity {
    * @return {DestinationElement} - the destination instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**

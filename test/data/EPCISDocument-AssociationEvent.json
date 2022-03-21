@@ -7,6 +7,8 @@
       {
         "type": "AssociationEvent",
         "eventTime": "2019-11-01T13:00:00.000Z",
+        "recordTime": "2005-04-05T02:33:31.116Z",
+        "eventID":"ni:///sha-256;36abb3a2c0a726de32ac4beafd6b8bc4ba0b1d2de244490312e5cbec7b5ddece?ver=CBV2.0",
         "eventTimeZoneOffset": "+01:00",
         "parentID": "urn:epc:id:grai:4012345.55555.987",
         "childEPCs": ["urn:epc:id:giai:4000001.12345", "urn:epc:id:giai:4000001.12346"],

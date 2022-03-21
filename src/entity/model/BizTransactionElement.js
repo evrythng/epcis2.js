@@ -13,8 +13,7 @@ export default class BizTransactionElement extends Entity {
    * @return {BizTransactionElement} - the bizTransaction instance
    */
   setBizTransaction(bizTransaction) {
-    this.bizTransaction = bizTransaction;
-    return this;
+    return this.generateSetterFunction('bizTransaction', bizTransaction, ['string']);
   }
 
   /**
@@ -31,8 +30,7 @@ export default class BizTransactionElement extends Entity {
    * @return {BizTransactionElement} - the bizTransaction instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**

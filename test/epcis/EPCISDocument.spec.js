@@ -14,6 +14,7 @@ import {
   BizLocation,
   BizTransactionElement,
   DestinationElement,
+  EPCISMasterData,
   ErrorDeclaration,
   Ilmd,
   ObjectEvent,
@@ -50,13 +51,13 @@ describe('unit tests for the EPCISDocument class', () => {
     });
 
     it('should set the correct context and schema version', async () => {
-      setup({ EPCISDocumentSchemaVersion: 3, EPCISDocumentContext: 'foo' });
+      setup({ EPCISDocumentSchemaVersion: '3', EPCISDocumentContext: 'foo' });
       const e = new EPCISDocument();
-      expect(e.getSchemaVersion()).to.be.equal(3);
+      expect(e.getSchemaVersion()).to.be.equal('3');
       expect(e.getContext()).to.be.equal('foo');
-      setup({ EPCISDocumentSchemaVersion: undefined, EPCISDocumentContext: undefined });
+      setup({ EPCISDocumentSchemaVersion: 'undefined', EPCISDocumentContext: undefined });
       const e2 = new EPCISDocument();
-      expect(e2.toObject().schemaVersion).to.be.equal(undefined);
+      expect(e2.toObject().schemaVersion).to.be.equal('undefined');
       expect(e2.toObject()['@context']).to.be.equal(undefined);
     });
   });
@@ -133,6 +134,8 @@ describe('unit tests for the EPCISDocument class', () => {
     const ev = new ObjectEvent();
     ev.setEventTime(ov.eventTime)
       .setEventTimeZoneOffset(ov.eventTimeZoneOffset)
+      .setEventID(ov.eventID)
+      .setRecordTime(ov.recordTime)
       .addEPC(ov.epcList[0])
       .addEPC(ov.epcList[1])
       .setAction(ov.action)
@@ -446,6 +449,38 @@ describe('unit tests for the EPCISDocument class', () => {
       const o = new EPCISDocument();
       const json = o.toObject();
       expect(json.eventList).to.be.equal(undefined);
+    });
+  });
+
+  describe('setters should throw if we provide a non-expected type', () => {
+    it('setters from EPCISDocument.js', () => {
+      const epcisDocument = new EPCISDocument();
+      assert.throws(() => epcisDocument.setType(1));
+      assert.throws(() => epcisDocument.setSchemaVersion(1));
+      assert.throws(() => epcisDocument.setCreationDate(1));
+      assert.throws(() => epcisDocument.setEPCISHeader(1));
+      assert.throws(() => epcisDocument.addEventList(1));
+      assert.throws(() => epcisDocument.addEvent([1, 2, 3]));
+      assert.throws(() => epcisDocument.setEPCISHeader(1));
+      assert.throws(() => epcisDocument.setType(new Ilmd()));
+      assert.throws(() => epcisDocument.setSchemaVersion(new Ilmd()));
+      assert.throws(() => epcisDocument.setCreationDate(new Ilmd()));
+      assert.throws(() => epcisDocument.setEPCISHeader(new Ilmd()));
+      assert.throws(() => epcisDocument.addEventList(new Ilmd()));
+      assert.throws(() => epcisDocument.addEvent([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => epcisDocument.setEPCISHeader(new Ilmd()));
+    });
+    it('setters from EPCISHeader.js', () => {
+      const epcisHeader = new EPCISHeader();
+      assert.throws(() => epcisHeader.setEPCISMasterData(1));
+      assert.throws(() => epcisHeader.setEPCISMasterData(new Ilmd()));
+    });
+    it('setters from EPCISMasterData.js', () => {
+      const epcisMasterData = new EPCISMasterData();
+      assert.throws(() => epcisMasterData.addVocabulary('not_a_vocabulary'));
+      assert.throws(() => epcisMasterData.addVocabularyList(['not_a_vocabulary', 1, 2]));
+      assert.throws(() => epcisMasterData.addVocabulary(new Ilmd()));
+      assert.throws(() => epcisMasterData.addVocabularyList([new Ilmd(), new Ilmd(), 2]));
     });
   });
 });

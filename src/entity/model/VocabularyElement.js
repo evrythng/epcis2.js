@@ -38,8 +38,7 @@ export default class VocabularyElement extends Entity {
    * @return {VocabularyElement} - the vocabularyElement instance
    */
   setId(id) {
-    this.id = id;
-    return this;
+    return this.generateSetterFunction('id', id, ['string']);
   }
 
   /**
@@ -56,11 +55,7 @@ export default class VocabularyElement extends Entity {
    * @return {VocabularyElement} - the vocabularyElement instance
    */
   addAttribute(attribute) {
-    if (!this.attributes) {
-      this.attributes = [];
-    }
-    this.attributes.push(attribute);
-    return this;
+    return this.generateAddItemToListFunction('attributes', attribute, [AttributeElement]);
   }
 
   /**
@@ -69,11 +64,7 @@ export default class VocabularyElement extends Entity {
    * @return {VocabularyElement} - the vocabularyElement instance
    */
   addAttributeList(attributeList) {
-    if (!this.attributes) {
-      this.attributes = [];
-    }
-    this.attributes = [...this.attributes, ...attributeList];
-    return this;
+    return this.generateAddItemsToListFunction('attributes', attributeList, [AttributeElement]);
   }
 
   /**
@@ -119,11 +110,7 @@ export default class VocabularyElement extends Entity {
    * @return {VocabularyElement} - the vocabularyElement instance
    */
   addChild(child) {
-    if (!this.children) {
-      this.children = [];
-    }
-    this.children.push(child);
-    return this;
+    return this.generateAddItemToListFunction('children', child, ['string']);
   }
 
   /**
@@ -132,11 +119,7 @@ export default class VocabularyElement extends Entity {
    * @return {VocabularyElement} - the vocabularyElement instance
    */
   addChildList(childList) {
-    if (!this.children) {
-      this.children = [];
-    }
-    this.children = [...this.children, ...childList];
-    return this;
+    return this.generateAddItemsToListFunction('children', childList, ['string']);
   }
 
   /**

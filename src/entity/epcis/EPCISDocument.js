@@ -10,6 +10,8 @@ import settings from '../../settings';
 import objectToEvent from '../../utils/entityUtils';
 import validateSchema from '../../schema/validator';
 
+import Event from '../events/Event';
+
 export default class EPCISDocument extends Entity {
   /**
    * You can either create an empty EPCISDocument or provide an already existing EPCIS document via
@@ -62,8 +64,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**
@@ -98,8 +99,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setSchemaVersion(schemaVersion) {
-    this.schemaVersion = schemaVersion;
-    return this;
+    return this.generateSetterFunction('schemaVersion', schemaVersion, ['string']);
   }
 
   /**
@@ -116,8 +116,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setCreationDate(creationDate) {
-    this.creationDate = creationDate;
-    return this;
+    return this.generateSetterFunction('creationDate', creationDate, ['string']);
   }
 
   /**
@@ -134,8 +133,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setEPCISHeader(epcisHeader) {
-    this.epcisHeader = epcisHeader;
-    return this;
+    return this.generateSetterFunction('epcisHeader', epcisHeader, [EPCISHeader]);
   }
 
   /**
@@ -152,11 +150,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEvent(event) {
-    if (!this.eventList) {
-      this.eventList = [];
-    }
-    this.eventList.push(event);
-    return this;
+    return this.generateAddItemToListFunction('eventList', event, [Event]);
   }
 
   /**
@@ -165,11 +159,7 @@ export default class EPCISDocument extends Entity {
    * @return {EPCISDocument} - the epcisDocument instance
    */
   addEventList(eventList) {
-    if (!this.eventList) {
-      this.eventList = [];
-    }
-    this.eventList = [...this.eventList, ...eventList];
-    return this;
+    return this.generateAddItemsToListFunction('eventList', eventList, [Event]);
   }
 
   /**

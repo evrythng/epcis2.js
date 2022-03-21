@@ -17,6 +17,44 @@ const variableToObject = (obj) => {
   return obj;
 };
 
+/**
+ * This function is useful to know if the current type is a primitive type
+ * ['string','number','boolean',...]
+ * @param {*} type - the parameter which has to be checked
+ * @returns boolean - true if it is a primitive type, false otherwise
+ */
+const isAPrimitiveType = (type) => typeof (type) === 'string';
+
+/**
+ * This function throws an error if the type of param is not among the list : expectedTypes
+ * @param {*} expectedTypes - the list with the expected types
+ * @param {*} param - the parameter which has to be checked
+ */
+const throwIfTheParameterHasNotTheExpectedType = (expectedTypes, param) => {
+  if (expectedTypes.length === 0) { // we check if the array is not empty
+    throw new Error('there must be at least one expected type');
+  }
+  let paramHasAnExpectedType = false;
+  expectedTypes.forEach(
+    (type) => {
+    // we check if the type is a primitive type : ['string','number','boolean',...]
+      if (isAPrimitiveType(type)) {
+        if (expectedTypes.includes(typeof (param))) {
+        // we check if the param has a right expected primitive Type
+          paramHasAnExpectedType = true;
+        }
+      } else if ((param instanceof type)) { // we check if the param has a right expected Type
+      // the type is not a primitive type
+        paramHasAnExpectedType = true;
+      }
+    },
+  );
+  if (!paramHasAnExpectedType) {
+    throw new Error(`The parameter has an unexpected type. 
+    It should be one among this types : ${expectedTypes}`);
+  }
+};
+
 export default class Entity {
   /**
    * You can either create an empty Entity or provide an already existing Entity via Object
@@ -93,5 +131,58 @@ export default class Entity {
    */
   toString() {
     return JSON.stringify(this.toObject());
+  }
+
+  /**
+   * Generate a setter function that throws if the parameter type is
+   * different from the expected one(s).
+   * @param {string} field - the field that you want to set
+   * @param {any} param - the variable you want to set to the field
+   * @param {Array<any>} expectedTypes - The list of authorized types.
+   * @return {Entity} - the Entity instance
+   */
+  generateSetterFunction(field, param, expectedTypes = []) {
+    throwIfTheParameterHasNotTheExpectedType(expectedTypes, param);
+    this[field] = param;
+    return this;
+  }
+
+  /**
+   * Generate an add item to a list function that throws if the item type
+   * is different from the expected one(s).
+   * @param {string} listFieldName - the field name of the original list
+   * @param {any} item - the item you want to add to the list
+   * @param {Array<any>} expectedTypes - The list of authorized types.
+   * @return {Entity} - the Entity instance
+   */
+  generateAddItemToListFunction(listFieldName, item, expectedTypes = []) {
+    throwIfTheParameterHasNotTheExpectedType(expectedTypes, item);
+    if (!this[listFieldName]) {
+      this[listFieldName] = [];
+    }
+    this[listFieldName].push(item);
+    return this;
+  }
+
+  /**
+   * Generate an add items to a list function that throws if the parameter type
+   * is different from the expected one(s).
+   * @param {string} listFieldName - the field name of the original list
+   * @param {Array<any>} items - the items you want to add to the list
+   * @param {Array<any>} expectedTypes - The list of authorized types.
+   * @return {Entity} - the Entity instance
+   */
+  generateAddItemsToListFunction(listFieldName, items, expectedTypes = []) {
+    if (Array.isArray(items)) {
+      for (let j = 0; j < items.length; j += 1) {
+        throwIfTheParameterHasNotTheExpectedType(expectedTypes, items[j]);
+      }
+      if (!this[listFieldName]) {
+        this[listFieldName] = [];
+      }
+      this[listFieldName] = [...this[listFieldName], ...items];
+      return this;
+    }
+    throw new Error('The provided parameter has to be a list');
   }
 }

@@ -35,7 +35,7 @@ export default class EPCISHeader extends Entity {
    */
   setEPCISMasterData(epcisMasterData) {
     this.epcisMasterData = epcisMasterData;
-    return this;
+    return this.generateSetterFunction('epcisMasterData', epcisMasterData, [EPCISMasterData]);
   }
 
   /**

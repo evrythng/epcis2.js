@@ -13,11 +13,7 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addSet(set) {
-    if (!this.set) {
-      this.set = [];
-    }
-    this.set.push(set);
-    return this;
+    return this.generateAddItemToListFunction('set', set, ['string']);
   }
 
   /**
@@ -26,11 +22,7 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addSetList(setList) {
-    if (!this.set) {
-      this.set = [];
-    }
-    this.set = [...this.set, ...setList];
-    return this;
+    return this.generateAddItemsToListFunction('set', setList, ['string']);
   }
 
   /**
@@ -76,11 +68,7 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addUnset(unset) {
-    if (!this.unset) {
-      this.unset = [];
-    }
-    this.unset.push(unset);
-    return this;
+    return this.generateAddItemToListFunction('unset', unset, ['string']);
   }
 
   /**
@@ -89,11 +77,7 @@ export default class PersistentDisposition extends Entity {
    * @return {PersistentDisposition} - the persistentDisposition instance
    */
   addUnsetList(unsetList) {
-    if (!this.unset) {
-      this.unset = [];
-    }
-    this.unset = [...this.unset, ...unsetList];
-    return this;
+    return this.generateAddItemsToListFunction('unset', unsetList, ['string']);
   }
 
   /**

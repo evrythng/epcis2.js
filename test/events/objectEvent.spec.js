@@ -563,4 +563,46 @@ describe('unit tests for the ObjectEvent class', () => {
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
+
+  describe('setters should throw if we provide a non-expected type', () => {
+    it('setters from Event.js', () => {
+      const ov = new ObjectEvent();
+      assert.throws(() => ov.setType(1));
+      assert.throws(() => ov.setEventID(1));
+      assert.throws(() => ov.setRecordTime(1));
+      assert.throws(() => ov.setErrorDeclaration(1));
+      assert.throws(() => ov.addEPC(1));
+      assert.throws(() => ov.addEPCList([1, 2, 3]));
+      assert.throws(() => ov.addQuantity(1));
+      assert.throws(() => ov.addQuantityList([1, 2, 3]));
+      assert.throws(() => ov.setAction(1));
+      assert.throws(() => ov.setBizStep(1));
+      assert.throws(() => ov.setDisposition(1));
+      assert.throws(() => ov.setPersistentDisposition(1));
+      assert.throws(() => ov.addBizTransaction(1));
+      assert.throws(() => ov.addBizTransactionList([1, 2, 3]));
+      assert.throws(() => ov.addSource(1));
+      assert.throws(() => ov.addSourceList([1, 2, 3]));
+      assert.throws(() => ov.addDestination(1));
+      assert.throws(() => ov.addDestinationList([1, 2, 3]));
+      assert.throws(() => ov.setType(new Ilmd()));
+      assert.throws(() => ov.setEventID(new Ilmd()));
+      assert.throws(() => ov.setRecordTime(new Ilmd()));
+      assert.throws(() => ov.setErrorDeclaration(new Ilmd()));
+      assert.throws(() => ov.addEPC(new Ilmd()));
+      assert.throws(() => ov.addEPCList([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => ov.addQuantity(new Ilmd()));
+      assert.throws(() => ov.addQuantityList([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => ov.setAction(new Ilmd()));
+      assert.throws(() => ov.setBizStep(new Ilmd()));
+      assert.throws(() => ov.setDisposition(new Ilmd()));
+      assert.throws(() => ov.setPersistentDisposition(new Ilmd()));
+      assert.throws(() => ov.addBizTransaction(new Ilmd()));
+      assert.throws(() => ov.addBizTransactionList([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => ov.addSource(new Ilmd()));
+      assert.throws(() => ov.addSourceList([new Ilmd(), new Ilmd(), new Ilmd()]));
+      assert.throws(() => ov.addDestination(new Ilmd()));
+      assert.throws(() => ov.addDestinationList([new Ilmd(), new Ilmd(), new Ilmd()]));
+    });
+  });
 });

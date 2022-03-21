@@ -13,8 +13,7 @@ export default class Ilmd extends Entity {
    * @return {Ilmd} - the ilmd instance
    */
   setType(type) {
-    this.type = type;
-    return this;
+    return this.generateSetterFunction('type', type, ['string']);
   }
 
   /**
@@ -31,8 +30,7 @@ export default class Ilmd extends Entity {
    * @return {Ilmd} - the ilmd instance
    */
   setFormat(format) {
-    this.format = format;
-    return this;
+    return this.generateSetterFunction('format', format, ['string']);
   }
 
   /**
