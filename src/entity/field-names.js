@@ -164,6 +164,7 @@ const sensorReport = {
  */
 const event = {
   context: '@context',
+  type: 'type',
   eventID: 'eventID',
   eventTime: 'eventTime',
   eventTimeZoneOffset: 'eventTimeZoneOffset',
@@ -185,10 +186,6 @@ const event = {
   parentID: 'parentID',
   childEPCs: 'childEPCs',
   childQuantityList: 'childQuantityList',
-  // fields above are only for extendedEvent
-  extendedEvent:{
-    type: 'type',
-  },
   // fields above are only for transformationEvent
   transformationEvent: {
     inputEPCList: 'inputEPCList',
