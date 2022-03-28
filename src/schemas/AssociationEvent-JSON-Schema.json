@@ -1,0 +1,141 @@
+{
+    "$id": "https://gs1.github.io/EPCIS/JSON-Schema/schemas/AssociationEvent-JSON-Schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "AssociationEvent": {
+            "allOf": [{
+                "$ref": "event-definitions-JSON-Schema.json#/definitions/Event"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["AssociationEvent"]
+                    },
+                    "parentID": {
+                        "$ref": "event-definitions-JSON-Schema.json#/definitions/uri"
+                    },
+                    "childEPCs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "event-definitions-JSON-Schema.json#/definitions/uri"
+                        }
+                    },
+                    "childQuantityList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "event-definitions-JSON-Schema.json#/definitions/quantityElement"
+                        }
+                    },
+                    "action": {
+                        "$ref": "event-definitions-JSON-Schema.json#/definitions/action"
+                    },
+                    "bizStep": {
+                        "$ref": "bizStep-JSON-Schema.json#/definitions/bizStep"
+                    },
+                    "disposition": {
+                        "$ref": "disposition-JSON-Schema.json#/definitions/disposition"
+                    },
+                    "persistentDisposition": {
+                        "$ref": "event-definitions-JSON-Schema.json#/definitions/persistentDisposition"
+                    },
+                    "readPoint": {
+                        "$ref": "event-definitions-JSON-Schema.json#/definitions/readPoint"
+                    },
+                    "bizLocation": {
+                        "$ref": "event-definitions-JSON-Schema.json#/definitions/bizLocation"
+                    },
+                    "bizTransactionList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "event-definitions-JSON-Schema.json#/definitions/bizTransaction"
+                        }
+                    },
+                    "sourceList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "event-definitions-JSON-Schema.json#/definitions/source"
+                        }
+                    },
+                    "destinationList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "event-definitions-JSON-Schema.json#/definitions/destination"
+                        }
+                    },
+                    "sensorElementList": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "event-definitions-JSON-Schema.json#/definitions/sensorElement"
+                        }
+                    }
+                },
+                "required": ["type", "action", "parentID"],
+                "propertyNames": {
+                    "anyOf": [
+                        {      
+                            "$ref": "event-definitions-JSON-Schema.json#/definitions/common-event-properties"
+                        },
+                        {
+                            "type": "string",
+                            "enum": [
+                                "parentID",
+                                "childEPCs",
+                                "childQuantityList",
+                                "action",
+                                "bizStep",
+                                "disposition",
+                                "persistentDisposition",
+                                "readPoint",
+                                "bizLocation",
+                                "bizTransactionList",
+                                "sourceList",
+                                "destinationList",
+                                "sensorElementList"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "anyOf": [{
+                        "type": "object",
+                        "properties": {
+                            "childEPCs": {
+                                "type": "array",
+                                "minItems": 1
+                            }
+                        },
+                        "required": ["childEPCs"]
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "childQuantityList": {
+                                "type": "array",
+                                "minItems": 1
+                            }
+                        },
+                        "required": ["childQuantityList"]
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "action": {
+                                "type": "string",
+                                "pattern": "^DELETE$"
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/AssociationEvent"
+        }
+    ]
+}

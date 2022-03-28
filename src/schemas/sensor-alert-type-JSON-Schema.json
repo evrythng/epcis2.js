@@ -1,0 +1,20 @@
+{
+    "$id": "https://gs1.github.io/EPCIS/JSON-Schema/schemas/sensor-alert-type-JSON-Schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "sensorAlertType": {
+            "anyOf": [
+                {
+                    "$ref": "definitions-JSON-Schema.json#/definitions/vocab-uri"
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "ALARM_CONDITION",
+                        "ERROR_CONDITION"
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "$id": "https://gs1.github.io/EPCIS/JSON-Schema/schemas/source-dest-type-JSON-Schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "source-dest-type": {
+            "anyOf": [
+                {
+                    "$ref": "definitions-JSON-Schema.json#/definitions/vocab-uri"
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "owning_party",
+                        "possessing_party",
+                        "location"
+                    ]
+                }
+            ]
+        }
+    }
+}

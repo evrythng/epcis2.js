@@ -1,0 +1,32 @@
+{
+    "$id": "https://gs1.github.io/EPCIS/JSON-Schema/schemas/component-JSON-Schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "component": {
+            "anyOf": [
+                {
+                    "$ref": "definitions-JSON-Schema.json#/definitions/vocab-uri"
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "x",
+                        "y",
+                        "z",
+                        "axial_distance",
+                        "azimuth",
+                        "height",
+                        "spherical_radius",
+                        "polar_angle",
+                        "elevation_angle",
+                        "easting",
+                        "northing",
+                        "latitude",
+                        "longitude",
+                        "altitude"
+                    ]
+                }
+            ]
+        }
+    }
+}
