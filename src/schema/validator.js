@@ -4,10 +4,12 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-const Ajv = require('ajv');
+const { default: Ajv } = require('ajv');
+const { default: addFormats } = require('ajv-formats');
 const EPCISDocument = require('./EPCISDocument.schema.json');
 
-const ajv = new Ajv({ useDefaults: true });
+//const ajv = new Ajv({ useDefaults: true });
+const ajv = addFormats(new Ajv({ useDefaults: true }), { mode: 'fast' });
 
 /** Available schemas */
 const validators = {
