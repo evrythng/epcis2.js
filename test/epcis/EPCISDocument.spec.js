@@ -190,7 +190,6 @@ describe('unit tests for the EPCISDocument class', () => {
       ])
       .addSensorElement(
         new SensorElement({
-          type: 'epcis:SensorElement',
           sensorMetadata: {
             time: '2019-04-02T13:05:00.000Z',
             deviceID: 'urn:epc:id:giai:4000001.111',
