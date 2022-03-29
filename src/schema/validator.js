@@ -6,10 +6,17 @@
 
 const { default: Ajv } = require('ajv');
 const { default: addFormats } = require('ajv-formats');
-const { readFileSync } = require('fs');
 const fieldNames = require('../entity/field-names');
 const definitions = require('./definitions.json');
 const validationMode = require('../settings');
+const EPCISDocument = require('./EPCISDocument.schema.json');
+const ObjectEvent = require('./ObjectEvent.schema.json');
+const AggregationEvent = require('./AggregationEvent.schema.json');
+const TransformationEvent = require('./TransformationEvent.schema.json');
+const TransactionEvent = require('./TransactionEvent.schema.json');
+const AssociationEvent = require('./AssociationEvent.schema.json');
+const ExtendedEvent = require('./ExtendedEvent.schema.json');
+const EPCISQueryDocument = require('./EPCISQueryDocument.schema.json');
 
 /**
  * @typedef {object} ValidatorResult
@@ -23,23 +30,22 @@ const ajv = addFormats(new Ajv({ useDefaults: true }), { mode: validationMode })
 /**
  * Load a schema and include 'definitions'.
  *
- * @param {string} schemaName - Name of schema.
+ * @param {object} schema - schema to be loaded.
  * @returns {object} Loaded and enhanced schema.
  */
-const loadSchema = (schemaName) => ({
-  ...JSON.parse(readFileSync(`src/schema/${schemaName}.schema.json`, 'utf8')), definitions,
-});
+const loadSchema = ((schema) => ({ ...schema, definitions })
+);
 
 /** Available schemas */
 const validators = {
-  EPCISDocument: ajv.compile(loadSchema('EPCISDocument')),
-  ObjectEvent: ajv.compile(loadSchema('ObjectEvent')),
-  AggregationEvent: ajv.compile(loadSchema('AggregationEvent')),
-  TransformationEvent: ajv.compile(loadSchema('TransformationEvent')),
-  TransactionEvent: ajv.compile(loadSchema('TransactionEvent')),
-  AssociationEvent: ajv.compile(loadSchema('AssociationEvent')),
-  ExtendedEvent: ajv.compile(loadSchema('ExtendedEvent')),
-  EPCISQueryDocument: ajv.compile(loadSchema('EPCISQueryDocument')),
+  EPCISDocument: ajv.compile(loadSchema(EPCISDocument)),
+  ObjectEvent: ajv.compile(loadSchema(ObjectEvent)),
+  AggregationEvent: ajv.compile(loadSchema(AggregationEvent)),
+  TransformationEvent: ajv.compile(loadSchema(TransformationEvent)),
+  TransactionEvent: ajv.compile(loadSchema(TransactionEvent)),
+  AssociationEvent: ajv.compile(loadSchema(AssociationEvent)),
+  ExtendedEvent: ajv.compile(loadSchema(ExtendedEvent)),
+  EPCISQueryDocument: ajv.compile(loadSchema(EPCISQueryDocument)),
 };
 
 /**
