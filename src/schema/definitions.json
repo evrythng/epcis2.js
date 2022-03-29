@@ -772,5 +772,103 @@
           ]
         }
       ]
+    },
+    "epcisQueryDocumentBody": {
+      "type": "object",
+      "properties": {
+        "queryResults": {
+          "$ref": "#/definitions/queryResults"
+        }
+      },
+      "required": ["queryResults"],
+      "propertyNames": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": ["queryResults"]
+          },
+          {
+            "$ref": "#/definitions/vocab-uri"
+          }
+        ]
+      }
+    },
+    "queryResults": {
+      "type": "object",
+      "properties": {
+        "queryName": {
+          "type": "string"
+        },
+        "subscriptionID": {
+          "type": "string"
+        },
+        "resultsBody": {
+          "$ref": "#/definitions/resultsBody"
+        }
+      },
+      "required": ["queryName", "resultsBody"],
+      "propertyNames": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": ["queryName", "subscriptionID", "resultsBody"]
+          },
+          {
+            "$ref": "#/definitions/vocab-uri"
+          }
+        ]
+      }
+    },
+    "eventList": {
+      "type": "array"
+    },
+    "vocabularyList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/vocabulary"
+      }
+    },
+    "resultsBody": {
+      "type": "object",
+      "properties": {
+        "eventList": {
+          "$ref": "#/definitions/eventList"
+        },
+        "vocabularyList": {
+          "$ref": "#/definitions/vocabularyList"
+        }
+      },
+      "required": ["eventList"],
+      "propertyNames": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": ["eventList", "vocabularyList"]
+          },
+          {
+            "$ref": "#/definitions/vocab-uri"
+          }
+        ]
+      }
+    },
+    "epcisQueryDocumentBody": {
+      "type": "object",
+      "properties": {
+        "queryResults": {
+          "$ref": "#/definitions/queryResults"
+        }
+      },
+      "required": ["queryResults"],
+      "propertyNames": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": ["queryResults"]
+          },
+          {
+            "$ref": "#/definitions/vocab-uri"
+          }
+        ]
+      }
     }
   }
