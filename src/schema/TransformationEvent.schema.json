@@ -68,35 +68,7 @@
           "$ref": "#/definitions/ilmd"
         }
       },
-      "required": ["type"],
-      "propertyNames": {
-        "anyOf": [
-          {
-            "$ref": "#/definitions/common-event-properties"
-          },
-          {
-            "type": "string",
-            "enum": [
-              "inputEPCList",
-              "inputQuantityList",
-              "outputEPCList",
-              "outputQuantityList",
-              "transformationID",
-              "bizStep",
-              "disposition",
-              "persistentDisposition",
-              "readPoint",
-              "bizLocation",
-              "bizTransactionList",
-              "sourceList",
-              "destinationList",
-              "sensorElementList",
-              "ilmd",
-              "TransformationID"
-            ]
-          }
-        ]
-      }
+      "required": ["type"]
     },
     {
       "anyOf": [
@@ -153,6 +125,7 @@
           ]
         },
         {
+          "type": "object",
           "anyOf": [
             {
               "type": "object",
@@ -195,7 +168,6 @@
               "required": ["outputQuantityList"]
             }
           ],
-          "type": "object",
           "required": ["transformationID"]
         }
       ]

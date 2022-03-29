@@ -7,7 +7,6 @@
 const { default: Ajv } = require('ajv');
 const { default: addFormats } = require('ajv-formats');
 const { readFileSync } = require('fs');
-const EPCISDocument = require('./EPCISDocument.schema.json');
 const fieldNames = require('../entity/field-names');
 const definitions = require('./definitions.json');
 const validationMode = require('../settings');
@@ -156,15 +155,15 @@ const validateExtraEventFields = (event) => {
 const validateEpcisDocument = (epcisDocument) => {
   let documentResult = '';
   let eventList = [];
-  if (epcisDocument.type === 'EPCISQueryDocument'){
+  if (epcisDocument.type === 'EPCISQueryDocument') {
     // Validate the query document
     documentResult = validateAgainstSchema(epcisDocument, 'EPCISQueryDocument');
     eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;
-  } else if (epcisDocument.type === 'EPCISDocument'){
+  } else if (epcisDocument.type === 'EPCISDocument') {
     // Validate the capture document
     documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
     eventList = epcisDocument.epcisBody.eventList;
-   } 
+  }
   if (!documentResult.success) throw new Error(`${documentResult.errors}`);
 
   // Validate the events by event type
@@ -173,7 +172,7 @@ const validateEpcisDocument = (epcisDocument) => {
 
     // Validate against schema for defined fields for this event type
     const eventResult = validateAgainstSchema(event, event.type);
-    if (!eventResult.success) throw new Error(`here ${eventResult.errors}`);
+    if (!eventResult.success) throw new Error(`${eventResult.errors}`);
 
     // Validate all extra field names and possible extensions
     const eventFieldsResult = validateExtraEventFields(event);
