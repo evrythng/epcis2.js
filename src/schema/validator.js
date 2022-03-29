@@ -7,7 +7,7 @@
 const { default: Ajv } = require('ajv');
 const { default: addFormats } = require('ajv-formats');
 const { readFileSync } = require('fs');
-const EPCISDocument = require('./EPCISDocument.schema copy.json');
+const EPCISDocument = require('./EPCISDocument.schema.json');
 const fieldNames = require('../entity/field-names');
 const definitions = require('./definitions.json');
 const validationMode = require('../settings');
@@ -39,21 +39,8 @@ const validators = {
   TransformationEvent: ajv.compile(loadSchema('TransformationEvent')),
   TransactionEvent: ajv.compile(loadSchema('TransactionEvent')),
   AssociationEvent: ajv.compile(loadSchema('AssociationEvent')),
-};
-
-/**
- * Validate an EPCIS document.
- *
- * @param {object} instance - The data to validate against the schema.
- * @returns {Array<string>} Any errors.
- */
-const validateSchema = (instance) => {
-  // const test = validators.EPCISDocument;
-  const test = ajv.compile(EPCISDocument);
-  if (!test(instance)) {
-    const [{ dataPath, message }] = test.errors;
-    throw new Error(`${dataPath}: ${message}`);
-  }
+  ExtendedEvent: ajv.compile(loadSchema('ExtendedEvent')),
+  EPCISQueryDocument: ajv.compile(loadSchema('EPCISQueryDocument')),
 };
 
 /**
@@ -167,18 +154,26 @@ const validateExtraEventFields = (event) => {
  * @returns {ValidatorResult} Validation results.
  */
 const validateEpcisDocument = (epcisDocument) => {
-  // Validate the capture document
-  const documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
+  let documentResult = '';
+  let eventList = [];
+  if (epcisDocument.type === 'EPCISQueryDocument'){
+    // Validate the query document
+    documentResult = validateAgainstSchema(epcisDocument, 'EPCISQueryDocument');
+    eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;
+  } else if (epcisDocument.type === 'EPCISDocument'){
+    // Validate the capture document
+    documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
+    eventList = epcisDocument.epcisBody.eventList;
+   } 
   if (!documentResult.success) throw new Error(`${documentResult.errors}`);
 
   // Validate the events by event type
-  const { eventList } = epcisDocument.epcisBody;
   for (let i = 0; i < eventList.length; i += 1) {
     const event = eventList[i];
 
     // Validate against schema for defined fields for this event type
     const eventResult = validateAgainstSchema(event, event.type);
-    if (!eventResult.success) throw new Error(`${eventResult.errors}`);
+    if (!eventResult.success) throw new Error(`here ${eventResult.errors}`);
 
     // Validate all extra field names and possible extensions
     const eventFieldsResult = validateExtraEventFields(event);
@@ -194,5 +189,3 @@ export {
   ensureFieldSet,
   validateEpcisDocument,
 };
-
-export default validateSchema;
