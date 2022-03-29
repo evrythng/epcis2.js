@@ -8,7 +8,7 @@ import Entity from '../Entity';
 import EPCISHeader from './EPCISHeader';
 import settings from '../../settings';
 import objectToEvent from '../../utils/entityUtils';
-import validateSchema from '../../schema/validator';
+import { validateEpcisDocument } from '../../schema/validator';
 
 import Event from '../events/Event';
 
@@ -206,8 +206,8 @@ export default class EPCISDocument extends Entity {
    * @throws {Error} - if the schema isn't valid
    */
   isValid() {
-    validateSchema(this.toObject());
-    return true;
+    const result = validateEpcisDocument(this.toObject());
+    return result.success;
   }
 
   /**
