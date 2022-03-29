@@ -1,14 +1,14 @@
 {
   "allOf": [
     {
-      "$ref": "#/definitions/event"
+      "$ref": "#/definitions/Event"
     },
     {
       "type": "object",
       "properties": {
         "type": {
           "type": "string",
-          "pattern": "^AggregationEvent$"
+          "enum": ["AggregationEvent"]
         },
         "parentID": {
           "$ref": "#/definitions/uri"
@@ -29,10 +29,10 @@
           "$ref": "#/definitions/action"
         },
         "bizStep": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/bizStep"
         },
         "disposition": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/disposition"
         },
         "persistentDisposition": {
           "$ref": "#/definitions/persistentDisposition"
@@ -68,7 +68,32 @@
           }
         }
       },
-      "required": ["type", "action"]
+      "required": ["type", "action"],
+      "propertyNames": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/common-event-properties"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "parentID",
+              "childEPCs",
+              "childQuantityList",
+              "action",
+              "bizStep",
+              "disposition",
+              "persistentDisposition",
+              "readPoint",
+              "bizLocation",
+              "bizTransactionList",
+              "sourceList",
+              "destinationList",
+              "sensorElementList"
+            ]
+          }
+        ]
+      }
     },
     {
       "anyOf": [

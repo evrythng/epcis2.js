@@ -1,0 +1,16 @@
+{
+    "allOf": [
+      {
+        "$ref": "#/definitions/Event"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/vocab-uri"
+          }
+        },
+        "required": ["type"]
+      }
+    ]
+  }

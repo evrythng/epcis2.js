@@ -1,153 +1,183 @@
 {
-    "allOf": [
-      {
-        "$ref": "#/definitions/event"
-      },
-      {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "pattern": "^ObjectEvent$"
-          },
-          "epcList": {
-            "$ref": "#/definitions/epcList"
-          },
-          "quantityList": {
-            "$ref": "#/definitions/quantityList"
-          },
-          "action": {
-            "$ref": "#/definitions/action"
-          },
-          "bizStep": {
-            "$ref": "#/definitions/uri"
-          },
-          "disposition": {
-            "$ref": "#/definitions/uri"
-          },
-          "persistentDisposition": {
-            "$ref": "#/definitions/persistentDisposition"
-          },
-          "readPoint": {
-            "$ref": "#/definitions/readPoint"
-          },
-          "bizLocation": {
-            "$ref": "#/definitions/bizLocation"
-          },
-          "bizTransactionList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/bizTransaction"
-            }
-          },
-          "sourceList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/source"
-            }
-          },
-          "destinationList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/destination"
-            }
-          },
-          "sensorElementList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/sensorElement"
-            }
-          },
-          "ilmd": {
-            "$ref": "#/definitions/ilmd"
+  "allOf": [
+    {
+      "$ref": "#/definitions/Event"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ObjectEvent"]
+        },
+        "epcList": {
+          "$ref": "#/definitions/epcList"
+        },
+        "quantityList": {
+          "$ref": "#/definitions/quantityList"
+        },
+        "action": {
+          "$ref": "#/definitions/action"
+        },
+        "bizStep": {
+          "$ref": "#/definitions/bizStep"
+        },
+        "disposition": {
+          "$ref": "#/definitions/disposition"
+        },
+        "persistentDisposition": {
+          "$ref": "#/definitions/persistentDisposition"
+        },
+        "readPoint": {
+          "$ref": "#/definitions/readPoint"
+        },
+        "bizLocation": {
+          "$ref": "#/definitions/bizLocation"
+        },
+        "bizTransactionList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bizTransaction"
           }
         },
-        "required": ["type", "action"]
+        "sourceList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/source"
+          }
+        },
+        "destinationList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/destination"
+          }
+        },
+        "sensorElementList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sensorElement"
+          }
+        },
+        "ilmd": {
+          "$ref": "#/definitions/ilmd"
+        }
       },
-      {
+      "required": ["type", "action"],
+      "propertyNames": {
         "anyOf": [
           {
-            "type": "object",
-            "properties": {
-              "epcList": {
-                "type": "array",
-                "minItems": 0
-              }
-            },
-            "required": ["epcList"]
+            "$ref": "#/definitions/common-event-properties"
           },
           {
-            "type": "object",
-            "properties": {
-              "quantityList": {
-                "type": "array",
-                "minItems": 1
-              }
-            },
-            "required": ["quantityList"]
-          },
-          {
-            "allOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "sensorElementList": {
-                    "type": "array",
-                    "minItems": 1
-                  }
-                },
-                "required": ["sensorElementList"]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "readPoint": {
-                    "type": "array",
-                    "minItems": 1
-                  }
-                },
-                "required": ["readPoint"]
-              }
+            "type": "string",
+            "enum": [
+              "action",
+              "epcList",
+              "quantityList",
+              "bizStep",
+              "disposition",
+              "persistentDisposition",
+              "readPoint",
+              "bizLocation",
+              "bizTransactionList",
+              "sourceList",
+              "destinationList",
+              "sensorElementList",
+              "ilmd"
             ]
           }
         ]
-      },
-      {
-        "anyOf": [
-          {
-            "type": "object",
-            "properties": {
-              "ilmd": {
-                "not": {}
-              },
-              "action": {
-                "type": "string",
-                "pattern": "^OBSERVE$"
+      }
+    },
+    {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "epcList": {
+              "type": "array",
+              "minItems": 0
+            }
+          },
+          "required": ["epcList"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantityList": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/quantityElement"
               }
             }
           },
-          {
-            "type": "object",
-            "properties": {
-              "ilmd": {
-                "not": {}
+          "required": ["quantityList"]
+        },
+        {
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "sensorElementList": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/sensorElement"
+                  },
+                  "minItems": 1
+                }
               },
-              "action": {
-                "type": "string",
-                "pattern": "^DELETE$"
-              }
+              "required": ["sensorElementList"]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "readPoint": {
+                  "$ref": "#/definitions/readPoint"
+                }
+              },
+              "required": ["readPoint"]
             }
-          },
-          {
-            "type": "object",
-            "properties": {
-              "action": {
-                "type": "string",
-                "pattern": "^ADD$"
-              }
+          ]
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "ilmd": {
+              "not": {}
+            },
+            "action": {
+              "type": "string",
+              "pattern": "^OBSERVE$"
             }
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ilmd": {
+              "not": {}
+            },
+            "action": {
+              "type": "string",
+              "pattern": "^DELETE$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "pattern": "^ADD$"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

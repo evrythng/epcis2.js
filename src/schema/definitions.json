@@ -27,13 +27,13 @@
         "set": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/uri"
+            "$ref": "#/definitions/disposition"
           }
         },
         "unset": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/uri"
+            "$ref": "#/definitions/disposition"
           }
         }
       }
@@ -64,7 +64,7 @@
           "$ref": "#/definitions/time"
         },
         "reason": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/error-reason"
         },
         "correctiveEventIDs": {
           "type": "array",
@@ -94,7 +94,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/bizTransaction-type"
         },
         "bizTransaction": {
           "$ref": "#/definitions/uri"
@@ -124,7 +124,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/source-dest-type"
         },
         "source": {
           "$ref": "#/definitions/uri"
@@ -136,7 +136,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/source-dest-type"
         },
         "destination": {
           "$ref": "#/definitions/uri"
@@ -166,7 +166,10 @@
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/measurementType"
+        },
+        "exception": {
+          "$ref": "#/definitions/sensorAlertType"
         },
         "deviceID": {
           "$ref": "#/definitions/uri"
@@ -361,5 +364,413 @@
         }
       },
       "required": ["id"]
+    },
+    "error-reason": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": ["did_not_occur", "incorrect_data"]
+        }
+      ]
+    },
+    "vocab-uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "bizStep": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "accepting",
+            "arriving",
+            "assembling",
+            "collecting",
+            "commissioning",
+            "consigning",
+            "creating_class_instance",
+            "cycle_counting",
+            "decommissioning",
+            "departing",
+            "destroying",
+            "disassembling",
+            "dispensing",
+            "encoding",
+            "entering_exiting",
+            "holding",
+            "inspecting",
+            "installing",
+            "killing",
+            "loading",
+            "other",
+            "packing",
+            "picking",
+            "receiving",
+            "removing",
+            "repackaging",
+            "repairing",
+            "replacing",
+            "reserving",
+            "retail_selling",
+            "shipping",
+            "staging_outbound",
+            "stock_taking",
+            "stocking",
+            "storing",
+            "transporting",
+            "unloading",
+            "unpacking",
+            "void_shipping",
+            "sensor_reporting",
+            "sampling"
+          ]
+        }
+      ]
+    },
+    "bizTransaction-type": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "bol",
+            "cert",
+            "desadv",
+            "inv",
+            "pedigree",
+            "po",
+            "poc",
+            "prodorder",
+            "recadv",
+            "rma",
+            "testprd",
+            "testres",
+            "upevt"
+          ]
+        }
+      ]
+    },
+    "disposition": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "active",
+            "container_closed",
+            "damaged",
+            "destroyed",
+            "dispensed",
+            "disposed",
+            "encoded",
+            "expired",
+            "in_progress",
+            "in_transit",
+            "inactive",
+            "no_pedigree_match",
+            "non_sellable_other",
+            "partially_dispensed",
+            "recalled",
+            "reserved",
+            "retail_sold",
+            "returned",
+            "sellable_accessible",
+            "sellable_not_accessible",
+            "stolen",
+            "unknown",
+            "available",
+            "completeness_verified",
+            "completeness_inferred",
+            "conformant",
+            "container_open",
+            "mismatch_instance",
+            "mismatch_class",
+            "mismatch_quantity",
+            "needs_replacement",
+            "non_conformant",
+            "unavailable"
+          ]
+        }
+      ]
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "$ref": "#/definitions/@context"
+        },
+        "eventTime": {
+          "$ref": "#/definitions/time"
+        },
+        "recordTime": {
+          "$ref": "#/definitions/time"
+        },
+        "eventTimeZoneOffset": {
+          "type": "string",
+          "pattern": "^([+]|[-])((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+        },
+        "eventID": {
+          "$ref": "#/definitions/eventID"
+        },
+        "errorDeclaration": {
+          "$ref": "#/definitions/errorDeclaration"
+        }
+      },
+      "required": ["eventTime", "eventTimeZoneOffset"]
+    },
+    "common-event-properties": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "@context",
+            "type",
+            "eventTime",
+            "recordTime",
+            "eventTimeZoneOffset",
+            "eventID",
+            "errorDeclaration"
+          ]
+        },
+        {
+          "$ref": "#/definitions/vocab-uri"
+        }
+      ]
+    },
+    "Extended-Event": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Event"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "$ref": "#/definitions/vocab-uri"
+            }
+          },
+          "required": ["type"]
+        }
+      ]
+    },
+    "@context": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "vocab-uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "required-ld-context": {
+      "type": "object",
+      "required": ["@context"]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?$"
+    },
+    "id": {
+      "type": "string",
+      "format": "uri"
+    },
+    "error-reason": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": ["did_not_occur", "incorrect_data"]
+        }
+      ]
+    },
+    "bizTransaction-type": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "bol",
+            "cert",
+            "desadv",
+            "inv",
+            "pedigree",
+            "po",
+            "poc",
+            "prodorder",
+            "recadv",
+            "rma",
+            "testprd",
+            "testres",
+            "upevt"
+          ]
+        }
+      ]
+    },
+    "source-dest-type": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": ["owning_party", "possessing_party", "location"]
+        }
+      ]
+    },
+    "measurementType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "AbsoluteHumidity",
+            "AbsorbedDose",
+            "AbsorbedDoseRate",
+            "Acceleration",
+            "Activity",
+            "Altitude",
+            "AmountOfSubstance",
+            "AmountOfSubstancePerUnitVolume",
+            "Angle",
+            "AngularAcceleration",
+            "AngularMomentum",
+            "AngularVelocity",
+            "Area",
+            "Capacitance",
+            "Conductance",
+            "Conductivity",
+            "Count",
+            "Density",
+            "Dimensionless",
+            "DoseEquivalent",
+            "DoseEquivalentRate",
+            "DynamicViscosity",
+            "ElectricCharge",
+            "ElectricCurrent",
+            "ElectricCurrentDensity",
+            "ElectricFieldStrength",
+            "Energy",
+            "Exposure",
+            "Force",
+            "Frequency",
+            "Illuminance",
+            "Inductance",
+            "Irradiance",
+            "KinematicViscosity",
+            "Length",
+            "LinearMomentum",
+            "Luminance",
+            "LuminousFlux",
+            "LuminousIntensity",
+            "MagneticFlux",
+            "MagneticFluxDensity",
+            "MagneticVectorPotential",
+            "Mass",
+            "MassConcentration",
+            "MassFlowRate",
+            "MassPerAreaTime",
+            "MemoryCapacity",
+            "MolalityOfSolute",
+            "MolarEnergy",
+            "MolarMass",
+            "MolarVolume",
+            "Power",
+            "Pressure",
+            "RadiantFlux",
+            "RadiantIntensity",
+            "RelativeHumidity",
+            "Resistance",
+            "Resistivity",
+            "SolidAngle",
+            "SpecificVolume",
+            "Speed",
+            "SurfaceDensity",
+            "SurfaceTension",
+            "Temperature",
+            "Time",
+            "Torque",
+            "Voltage",
+            "Volume",
+            "VolumeFlowRate",
+            "VolumeFraction",
+            "VolumetricFlux",
+            "Wavenumber"
+          ]
+        }
+      ]
+    },
+    "sensorAlertType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": ["ALARM_CONDITION", "ERROR_CONDITION"]
+        }
+      ]
+    },
+    "component": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocab-uri"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "x",
+            "y",
+            "z",
+            "axial_distance",
+            "azimuth",
+            "height",
+            "spherical_radius",
+            "polar_angle",
+            "elevation_angle",
+            "easting",
+            "northing",
+            "latitude",
+            "longitude",
+            "altitude"
+          ]
+        }
+      ]
     }
   }

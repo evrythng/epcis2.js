@@ -1,14 +1,14 @@
 {
   "allOf": [
     {
-      "$ref": "#/definitions/event"
+      "$ref": "#/definitions/Event"
     },
     {
       "type": "object",
       "properties": {
         "type": {
           "type": "string",
-          "pattern": "^TransformationEvent$"
+          "enum": ["TransformationEvent"]
         },
         "inputEPCList": {
           "$ref": "#/definitions/epcList"
@@ -26,10 +26,10 @@
           "$ref": "#/definitions/uri"
         },
         "bizStep": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/bizStep"
         },
         "disposition": {
-          "$ref": "#/definitions/uri"
+          "$ref": "#/definitions/disposition"
         },
         "persistentDisposition": {
           "$ref": "#/definitions/persistentDisposition"
@@ -68,7 +68,34 @@
           "$ref": "#/definitions/ilmd"
         }
       },
-      "required": ["type"]
+      "required": ["type"],
+      "propertyNames": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/common-event-properties"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "inputEPCList",
+              "inputQuantityList",
+              "outputEPCList",
+              "outputQuantityList",
+              "transformationID",
+              "bizStep",
+              "disposition",
+              "persistentDisposition",
+              "readPoint",
+              "bizLocation",
+              "bizTransactionList",
+              "sourceList",
+              "destinationList",
+              "sensorElementList",
+              "ilmd"
+            ]
+          }
+        ]
+      }
     },
     {
       "anyOf": [
@@ -125,7 +152,6 @@
           ]
         },
         {
-          "type": "object",
           "anyOf": [
             {
               "type": "object",
@@ -168,6 +194,7 @@
               "required": ["outputQuantityList"]
             }
           ],
+          "type": "object",
           "required": ["transformationID"]
         }
       ]
