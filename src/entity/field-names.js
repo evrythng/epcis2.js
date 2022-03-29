@@ -25,7 +25,7 @@ const bizLocation = {
  * An object containing all the possible field names for a bizTransactionElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const bizTransactionElement = {
+const bizTransaction = {
   type: 'type',
   bizTransaction: 'bizTransaction',
 };
@@ -34,7 +34,7 @@ const bizTransactionElement = {
  * An object containing all the possible field names for a destinationElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const destinationElement = {
+const destination = {
   type: 'type',
   destination: 'destination',
 };
@@ -59,7 +59,7 @@ const ilmd = {
 };
 
 /**
- * An object containing all the possible field names for bizTransactionElement
+ * An object containing all the possible field names for persistentDisposition
  * More info here: https://www.gs1.org/standards/epcis
  */
 const persistentDisposition = {
@@ -87,7 +87,7 @@ const readPoint = {
  * An object containing all the possible field names for a sourceElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const sourceElement = {
+const source = {
   type: 'type',
   source: 'source',
 };
@@ -187,13 +187,12 @@ const event = {
   childEPCs: 'childEPCs',
   childQuantityList: 'childQuantityList',
   // fields above are only for transformationEvent
-  transformationEvent: {
-    inputEPCList: 'inputEPCList',
-    inputQuantityList: 'inputQuantityList',
-    outputEPCList: 'outputEPCList',
-    outputQuantityList: 'outputQuantityList',
-    transformationID: 'transformationID',
-  },
+  inputEPCList: 'inputEPCList',
+  inputQuantityList: 'inputQuantityList',
+  outputEPCList: 'outputEPCList',
+  outputQuantityList: 'outputQuantityList',
+  transformationID: 'transformationID',
+
 };
 
 /**
@@ -233,14 +232,14 @@ module.exports = {
   sensorReport,
   attributeElement,
   bizLocation,
-  bizTransactionElement,
-  destinationElement,
+  bizTransaction,
+  destination,
   errorDeclaration,
   ilmd,
   persistentDisposition,
   quantityElement,
   readPoint,
-  sourceElement,
+  source,
   vocabulary,
   vocabularyElement,
 };
