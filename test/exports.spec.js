@@ -172,7 +172,7 @@ describe('All the functions should be well exported', () => {
     const o = sdk.objectToEvent({ type: 'ObjectEvent' });
     expect(o).to.be.instanceof(sdk.ObjectEvent);
   });
-  it('validateSchema', async () => {
-    assert.doesNotThrow(() => { sdk.validateSchema(EPCISDocumentObjectEvent); });
+  it('validateEpcisDocument', async () => {
+    assert.doesNotThrow(() => { sdk.validateEpcisDocument(EPCISDocumentObjectEvent); });
   });
 });
