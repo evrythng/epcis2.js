@@ -15,7 +15,7 @@ export { default as AssociationEvent } from './entity/events/AssociationEvent';
 export { default as TransactionEvent } from './entity/events/TransactionEvent';
 export { default as Event } from './entity/events/Event';
 
-export { default as validateSchema } from './schema/validator';
+export { validateEpcisDocument } from './schema/validator';
 export { default as ErrorDeclaration } from './entity/model/ErrorDeclaration';
 export { default as AttributeElement } from './entity/model/AttributeElement';
 export { default as BizLocation } from './entity/model/BizLocation';
