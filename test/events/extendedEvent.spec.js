@@ -160,8 +160,8 @@ describe('unit tests for the ExtendedEvent class', () => {
         eventTime: '2013-06-08T14:58:56.591Z',
         eventTimeZoneOffset: '+02:00',
         'ext1:float': '20',
-      })
-      ee.isValid()
+      });
+      ee.isValid();
       assert.doesNotThrow(() => ee.isValid());
     });
     it('should reject an undefined Event', async () => {
@@ -169,7 +169,7 @@ describe('unit tests for the ExtendedEvent class', () => {
       assert.throw(() => ee.isValid());
     });
     it('should reject an incomplete Event', async () => {
-      const ee = new ExtendedEvent({})
+      const ee = new ExtendedEvent({});
       assert.throw(() => ee.isValid());
     });
   });

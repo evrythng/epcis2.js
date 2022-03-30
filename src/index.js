@@ -15,14 +15,14 @@ export { default as AssociationEvent } from './entity/events/AssociationEvent';
 export { default as TransactionEvent } from './entity/events/TransactionEvent';
 export { default as Event } from './entity/events/Event';
 export {
-    fieldNames,
-    allowedEventTypeSegments,
-    eventPersistentDispositionRelType,
-    eventEpcRelType,
-    eventSourceDestRelType,
-    captureJobErrorTypes,
-    maxRetries,
-    retryWaitMs,
+  fieldNames,
+  allowedEventTypeSegments,
+  eventPersistentDispositionRelType,
+  eventEpcRelType,
+  eventSourceDestRelType,
+  captureJobErrorTypes,
+  maxRetries,
+  retryWaitMs,
 } from './entity/constants';
 
 export { validateEpcisDocument } from './schema/validator';

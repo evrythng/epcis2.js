@@ -152,7 +152,7 @@ describe('unit tests for the AggregationEvent class', () => {
   });
   describe('AggregationEvent.isValid()', () => {
     it('should accept a real AggregationEvent', async () => {
-      const ae = new AggregationEvent(exampleAggregationEvent)
+      const ae = new AggregationEvent(exampleAggregationEvent);
       expect(ae.type).to.be.equal('AggregationEvent');
       assert.doesNotThrow(() => ae.isValid());
     });
@@ -162,8 +162,8 @@ describe('unit tests for the AggregationEvent class', () => {
     });
     it('should reject an incomplete Event', async () => {
       const ae = new AggregationEvent({
-        type: "AggregationEvent"
-      })
+        type: 'AggregationEvent',
+      });
       assert.throw(() => ae.isValid());
     });
   });

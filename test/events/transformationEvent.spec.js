@@ -427,7 +427,7 @@ describe('unit tests for the TransformationEvent class', () => {
   });
   describe('TransformationEvent.isValid()', () => {
     it('should accept a real TransformationEvent', async () => {
-      const ee = new TransformationEvent(exampleTransformationEvent)
+      const ee = new TransformationEvent(exampleTransformationEvent);
       expect(ee.type).to.be.equal('TransformationEvent');
       assert.doesNotThrow(() => ee.isValid());
     });
@@ -436,9 +436,9 @@ describe('unit tests for the TransformationEvent class', () => {
       assert.throw(() => ee.isValid());
     });
     it('should reject an incomplete Event', async () => {
-      const ee = new TransformationEvent ({
-        type: "TransformationEvent"
-      })
+      const ee = new TransformationEvent({
+        type: 'TransformationEvent',
+      });
       assert.throw(() => ee.isValid());
     });
   });

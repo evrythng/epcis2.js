@@ -608,7 +608,7 @@ describe('unit tests for the ObjectEvent class', () => {
 
   describe('ObjectEvent.isValid()', () => {
     it('should accept a real ObjectEvent', async () => {
-      const oe = new ObjectEvent(exampleObjectEvent)
+      const oe = new ObjectEvent(exampleObjectEvent);
       expect(oe.type).to.be.equal('ObjectEvent');
       assert.doesNotThrow(() => oe.isValid());
     });
@@ -618,8 +618,8 @@ describe('unit tests for the ObjectEvent class', () => {
     });
     it('should reject an incomplete Event', async () => {
       const oe = {
-        type: "ObjectEvent"
-      }
+        type: 'ObjectEvent',
+      };
       assert.throw(() => oe.isValid());
     });
   });

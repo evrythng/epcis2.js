@@ -4,8 +4,8 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-import { default as Ajv } from 'ajv';
-import { default as addFormats } from 'ajv-formats';
+import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
 import * as fieldNames from '../entity/field-names';
 import definitions from './definitions.json';
 import validationMode from '../settings';

@@ -964,17 +964,17 @@ export default class Event extends Entity {
     return this.childQuantityList;
   }
 
-    /**
+  /**
    * Check if the Event respects the rules of the standard defined in
    * src/schema/${EventType}.schema.json
    * @return {boolean} - true if the Event is valid
    * @throws {Error} - if the schema isn't valid
    */
-     isValid() {
-      const result = validateAgainstSchema(this.toObject(),this.getType().toString());
-      if (!result.success){
-        throw new Error(result.errors);
-      }
-      return result.success;
+  isValid() {
+    const result = validateAgainstSchema(this.toObject(), this.getType().toString());
+    if (!result.success) {
+      throw new Error(result.errors);
     }
+    return result.success;
+  }
 }

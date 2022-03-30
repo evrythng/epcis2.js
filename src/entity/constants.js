@@ -4,8 +4,6 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-'use strict';
-
 import * as fieldNames from './field-names';
 
 /** Allowed eventTypes URL segment values */

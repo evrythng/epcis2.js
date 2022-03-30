@@ -17,8 +17,8 @@ describe('unit tests for setup.js', () => {
       {
         'content-type': 'application/json',
       }.toString(),
-      );
-      expect(settings.validationMode).to.be.equal('full');
+    );
+    expect(settings.validationMode).to.be.equal('full');
   });
 
   it('should use custom settings', async () => {
@@ -29,7 +29,7 @@ describe('unit tests for setup.js', () => {
         'content-type': 'application/json',
         authorization: 'abc',
       },
-      validationMode:'fast'
+      validationMode: 'fast',
     });
     expect(settings.eventTimeZoneOffset).to.be.equal('-02:00');
     expect(settings.apiUrl).to.be.equal('google.com');
@@ -38,7 +38,7 @@ describe('unit tests for setup.js', () => {
         'content-type': 'application/json',
         authorization: 'abc',
       }.toString(),
-      );
+    );
     expect(settings.validationMode).to.be.equal('fast');
   });
 });

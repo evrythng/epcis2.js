@@ -275,7 +275,7 @@ describe('unit tests for the AssociationEvent class', () => {
   });
   describe('AssociationEvent.isValid()', () => {
     it('should accept a real AssociationEvent', async () => {
-      const ae = new AssociationEvent(exampleAssociationEvent)
+      const ae = new AssociationEvent(exampleAssociationEvent);
       expect(ae.type).to.be.equal('AssociationEvent');
       assert.doesNotThrow(() => ae.isValid());
     });
@@ -285,8 +285,8 @@ describe('unit tests for the AssociationEvent class', () => {
     });
     it('should reject an incomplete Event', async () => {
       const ae = new AssociationEvent({
-        type: "AssociationEvent"
-      })
+        type: 'AssociationEvent',
+      });
       assert.throw(() => ae.isValid());
     });
   });

@@ -175,7 +175,7 @@ describe('unit tests for the TransactionEvent class', () => {
   });
   describe('TransactionEvent.isValid()', () => {
     it('should accept a real TransactionEvent', async () => {
-      const ee = new TransactionEvent(exampleTransactionEvent)
+      const ee = new TransactionEvent(exampleTransactionEvent);
       expect(ee.type).to.be.equal('TransactionEvent');
       assert.doesNotThrow(() => ee.isValid());
     });
@@ -185,8 +185,8 @@ describe('unit tests for the TransactionEvent class', () => {
     });
     it('should reject an incomplete Event', async () => {
       const ee = new TransactionEvent({
-        type: "TransactionEvent"
-      })
+        type: 'TransactionEvent',
+      });
       assert.throw(() => ee.isValid());
     });
   });

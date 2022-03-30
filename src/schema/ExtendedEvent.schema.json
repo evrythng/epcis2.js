@@ -7,7 +7,14 @@
         "type": "object",
         "properties": {
           "type": {
+            "anyOf":[
+              {
             "$ref": "#/definitions/vocab-uri"
+          },
+          {
+            "type":"string"
+          } 
+        ]
           }
         },
         "required": ["type"]
