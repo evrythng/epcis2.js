@@ -4,19 +4,19 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-const { default: Ajv } = require('ajv');
-const { default: addFormats } = require('ajv-formats');
-const fieldNames = require('../entity/field-names');
-const definitions = require('./definitions.json');
-const validationMode = require('../settings');
-const EPCISDocument = require('./EPCISDocument.schema.json');
-const ObjectEvent = require('./ObjectEvent.schema.json');
-const AggregationEvent = require('./AggregationEvent.schema.json');
-const TransformationEvent = require('./TransformationEvent.schema.json');
-const TransactionEvent = require('./TransactionEvent.schema.json');
-const AssociationEvent = require('./AssociationEvent.schema.json');
-const ExtendedEvent = require('./ExtendedEvent.schema.json');
-const EPCISQueryDocument = require('./EPCISQueryDocument.schema.json');
+import { default as Ajv } from 'ajv';
+import { default as addFormats } from 'ajv-formats';
+import * as fieldNames from '../entity/field-names';
+import definitions from './definitions.json';
+import validationMode from '../settings';
+import EPCISDocument from './EPCISDocument.schema.json';
+import ObjectEvent from './ObjectEvent.schema.json';
+import AggregationEvent from './AggregationEvent.schema.json';
+import TransformationEvent from './TransformationEvent.schema.json';
+import TransactionEvent from './TransactionEvent.schema.json';
+import AssociationEvent from './AssociationEvent.schema.json';
+import ExtendedEvent from './ExtendedEvent.schema.json';
+import EPCISQueryDocument from './EPCISQueryDocument.schema.json';
 
 /**
  * @typedef {object} ValidatorResult
