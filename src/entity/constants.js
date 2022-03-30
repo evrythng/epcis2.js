@@ -6,7 +6,49 @@
 
 'use strict';
 
-const fieldNames = require('./field-names');
+import {
+  epcisDocument,
+  epcisHeader,
+  epcisMasterData,
+  event,
+  sensorElement,
+  sensorMetadata,
+  sensorReport,
+  attributeElement,
+  bizLocation,
+  bizTransaction,
+  destination,
+  errorDeclaration,
+  ilmd,
+  persistentDisposition,
+  quantityElement,
+  readPoint,
+  source,
+  vocabulary,
+  vocabularyElement,
+} from './field-names';
+
+const fieldNames = {
+  epcisDocument,
+  epcisHeader,
+  epcisMasterData,
+  event,
+  sensorElement,
+  sensorMetadata,
+  sensorReport,
+  attributeElement,
+  bizLocation,
+  bizTransaction,
+  destination,
+  errorDeclaration,
+  ilmd,
+  persistentDisposition,
+  quantityElement,
+  readPoint,
+  source,
+  vocabulary,
+  vocabularyElement,
+}
 
 /** Allowed eventTypes URL segment values */
 const allowedEventTypeSegments = new Set([
@@ -54,15 +96,13 @@ const maxRetries = 3;
 /** Time between retry attempts */
 const retryWaitMs = 5000;
 
-module.exports = {
+export {
   fieldNames,
   allowedEventTypeSegments,
   eventPersistentDispositionRelType,
   eventEpcRelType,
   eventSourceDestRelType,
-
   captureJobErrorTypes,
-
   maxRetries,
   retryWaitMs,
 };

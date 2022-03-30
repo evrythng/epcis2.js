@@ -222,7 +222,7 @@ const epcisMasterData = {
   vocabularyList: 'vocabularyList',
 };
 
-module.exports = {
+export {
   epcisDocument,
   epcisHeader,
   epcisMasterData,
