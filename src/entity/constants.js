@@ -6,7 +6,7 @@
 
 'use strict';
 
-const fieldNames = require('./field-names');
+import * as fieldNames from './field-names';
 
 /** Allowed eventTypes URL segment values */
 const allowedEventTypeSegments = new Set([
@@ -54,15 +54,13 @@ const maxRetries = 3;
 /** Time between retry attempts */
 const retryWaitMs = 5000;
 
-module.exports = {
+export {
   fieldNames,
   allowedEventTypeSegments,
   eventPersistentDispositionRelType,
   eventEpcRelType,
   eventSourceDestRelType,
-
   captureJobErrorTypes,
-
   maxRetries,
   retryWaitMs,
 };
