@@ -6,49 +6,7 @@
 
 'use strict';
 
-import {
-  epcisDocument,
-  epcisHeader,
-  epcisMasterData,
-  event,
-  sensorElement,
-  sensorMetadata,
-  sensorReport,
-  attributeElement,
-  bizLocation,
-  bizTransaction,
-  destination,
-  errorDeclaration,
-  ilmd,
-  persistentDisposition,
-  quantityElement,
-  readPoint,
-  source,
-  vocabulary,
-  vocabularyElement,
-} from './field-names';
-
-const fieldNames = {
-  epcisDocument,
-  epcisHeader,
-  epcisMasterData,
-  event,
-  sensorElement,
-  sensorMetadata,
-  sensorReport,
-  attributeElement,
-  bizLocation,
-  bizTransaction,
-  destination,
-  errorDeclaration,
-  ilmd,
-  persistentDisposition,
-  quantityElement,
-  readPoint,
-  source,
-  vocabulary,
-  vocabularyElement,
-}
+import * as fieldNames from './field-names';
 
 /** Allowed eventTypes URL segment values */
 const allowedEventTypeSegments = new Set([
