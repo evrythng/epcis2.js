@@ -81,8 +81,7 @@ describe('validation of an EPCIS document', () => {
     });
 
     it('should accept a valid EPCISQueryDocument', () => {
-      // assert.doesNotThrow(() => validateEpcisDocument(testData.QueryDocument));
-      validateEpcisDocument(testData.QueryDocument);
+      assert.doesNotThrow(() => validateEpcisDocument(testData.QueryDocument));
     });
   });
 
