@@ -605,4 +605,22 @@ describe('unit tests for the ObjectEvent class', () => {
       assert.throws(() => ov.addDestinationList([new Ilmd(), new Ilmd(), new Ilmd()]));
     });
   });
+
+  describe('ObjectEvent.isValid()', () => {
+    it('should accept a real ObjectEvent', async () => {
+      const oe = new ObjectEvent(exampleObjectEvent)
+      expect(oe.type).to.be.equal('ObjectEvent');
+      assert.doesNotThrow(() => oe.isValid());
+    });
+    it('should reject an undefined Event', async () => {
+      const oe = undefined;
+      assert.throw(() => oe.isValid());
+    });
+    it('should reject an incomplete Event', async () => {
+      const oe = {
+        type: "ObjectEvent"
+      }
+      assert.throw(() => oe.isValid());
+    });
+  });
 });

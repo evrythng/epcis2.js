@@ -273,4 +273,21 @@ describe('unit tests for the AssociationEvent class', () => {
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
+  describe('AssociationEvent.isValid()', () => {
+    it('should accept a real AssociationEvent', async () => {
+      const ae = new AssociationEvent(exampleAssociationEvent)
+      expect(ae.type).to.be.equal('AssociationEvent');
+      assert.doesNotThrow(() => ae.isValid());
+    });
+    it('should reject an undefined Event', async () => {
+      const ae = undefined;
+      assert.throw(() => ae.isValid());
+    });
+    it('should reject an incomplete Event', async () => {
+      const ae = new AssociationEvent({
+        type: "AssociationEvent"
+      })
+      assert.throw(() => ae.isValid());
+    });
+  });
 });
