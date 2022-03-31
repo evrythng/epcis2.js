@@ -4,26 +4,27 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-import * as fieldNames from './field-names';
+export * as fieldNames from './field-names';
 
 /** Allowed eventTypes URL segment values */
-const allowedEventTypeSegments = new Set([
+export const allowedEventTypeSegments = new Set([
   'all',
   'ObjectEvent'.toLowerCase(),
   'AggregationEvent'.toLowerCase(),
   'AssociationEvent'.toLowerCase(),
   'TransactionEvent'.toLowerCase(),
   'TransformationEvent'.toLowerCase(),
+  'ExtendedEvent'.toLowerCase(),
 ]);
 
 /** Types of persistent dispositions */
-const eventPersistentDispositionRelType = {
+export const eventPersistentDispositionRelType = {
   set: 'set',
   unset: 'unset',
 };
 
 /** Event EPC relation types */
-const eventEpcRelType = {
+export const eventEpcRelType = {
   epcList: 'epcList',
   childEPCs: 'childEPCs',
   inputEPCList: 'inputEPCList',
@@ -36,29 +37,12 @@ const eventEpcRelType = {
 };
 
 /** Event source and destination relation types */
-const eventSourceDestRelType = {
+export const eventSourceDestRelType = {
   source: 'source',
   destination: 'destination',
 };
 
 /** Capture job error types */
-const captureJobErrorTypes = {
+export const captureJobErrorTypes = {
   incorrectData: 'urn:epcglobal:cbv:er:payload:incorrect_data',
-};
-
-/** Maximum number of retries when reading the capture document */
-const maxRetries = 3;
-
-/** Time between retry attempts */
-const retryWaitMs = 5000;
-
-export {
-  fieldNames,
-  allowedEventTypeSegments,
-  eventPersistentDispositionRelType,
-  eventEpcRelType,
-  eventSourceDestRelType,
-  captureJobErrorTypes,
-  maxRetries,
-  retryWaitMs,
 };
