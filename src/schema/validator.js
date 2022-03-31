@@ -120,11 +120,11 @@ const validateExtraEventFields = (event) => {
     } = event;
 
     // Validate bizTransactionList
-    bizTransactionList.forEach((p) => ensureFieldSet(p, 'bizTransaction'));
+    bizTransactionList.forEach((p) => ensureFieldSet(p, 'bizTransactionElement'));
 
     // Validate source/destination lists
-    sourceList.forEach((p) => ensureFieldSet(p, 'source'));
-    destinationList.forEach((p) => ensureFieldSet(p, 'destination'));
+    sourceList.forEach((p) => ensureFieldSet(p, 'sourceElement'));
+    destinationList.forEach((p) => ensureFieldSet(p, 'destinationElement'));
 
     // Validate various quantity list types
     quantityList.forEach((p) => ensureFieldSet(p, 'quantityElement'));

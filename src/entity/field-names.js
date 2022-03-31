@@ -25,7 +25,7 @@ export const bizLocation = {
  * An object containing all the possible field names for a bizTransactionElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-export const bizTransaction = {
+export const bizTransactionElement = {
   type: 'type',
   bizTransaction: 'bizTransaction',
 };
@@ -34,7 +34,7 @@ export const bizTransaction = {
  * An object containing all the possible field names for a destinationElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-export const destination = {
+export const destinationElement = {
   type: 'type',
   destination: 'destination',
 };
@@ -87,7 +87,7 @@ export const readPoint = {
  * An object containing all the possible field names for a sourceElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-export const source = {
+export const sourceElement = {
   type: 'type',
   source: 'source',
 };
@@ -187,7 +187,7 @@ export const event = {
   parentID: 'parentID',
   childEPCs: 'childEPCs',
   childQuantityList: 'childQuantityList',
-  // fields above below only for transformationEvent
+  // fields below are only for transformationEvent
   inputEPCList: 'inputEPCList',
   inputQuantityList: 'inputQuantityList',
   outputEPCList: 'outputEPCList',
