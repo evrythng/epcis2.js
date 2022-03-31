@@ -16,7 +16,6 @@ import TransformationEvent from './TransformationEvent.schema.json';
 import TransactionEvent from './TransactionEvent.schema.json';
 import AssociationEvent from './AssociationEvent.schema.json';
 import ExtendedEvent from './ExtendedEvent.schema.json';
-import EPCISQueryDocument from './EPCISQueryDocument.schema.json';
 
 /**
  * @typedef {object} ValidatorResult
@@ -45,7 +44,6 @@ const validators = {
   TransactionEvent: ajv.compile(loadSchema(TransactionEvent)),
   AssociationEvent: ajv.compile(loadSchema(AssociationEvent)),
   ExtendedEvent: ajv.compile(loadSchema(ExtendedEvent)),
-  EPCISQueryDocument: ajv.compile(loadSchema(EPCISQueryDocument)),
 };
 
 /**
@@ -159,17 +157,18 @@ const validateExtraEventFields = (event) => {
  * @returns {ValidatorResult} Validation results.
  */
 const validateEpcisDocument = (epcisDocument) => {
-  let documentResult = '';
   let eventList = [];
-  if (epcisDocument.type === 'EPCISQueryDocument') {
-    // Validate the query document
-    documentResult = validateAgainstSchema(epcisDocument, 'EPCISQueryDocument');
-    eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;
-  } else if (epcisDocument.type === 'EPCISDocument') {
-    // Validate the capture document
-    documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
+
+  // Validate the capture document
+  const documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
+
+  if (epcisDocument.type === 'EPCISQueryDocument'){
+    eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;;
+  } else {
     eventList = epcisDocument.epcisBody.eventList;
   }
+
+
   if (!documentResult.success) throw new Error(`${documentResult.errors}`);
 
   // Validate the events by event type
