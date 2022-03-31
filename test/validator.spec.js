@@ -76,6 +76,10 @@ describe('validation of an EPCIS document', () => {
       assert.doesNotThrow(() => validateEpcisDocument(testData.TransformationEvent));
     });
 
+    it('should accept a valid EPCISDocument containing ObjectEvent', () => {
+      assert.doesNotThrow(() => validateEpcisDocument(testData.ObjectEvent));
+    });
+
     it('should accept a valid EPCISDocument containing AssociationEvent', () => {
       assert.doesNotThrow(() => validateEpcisDocument(testData.AssociationEvent));
     });
@@ -158,7 +162,7 @@ describe('validation of an EPCIS document', () => {
   });
 });
 
-describe('Unit test: validation.js', () => {
+describe('Unit test: validator.js', () => {
   describe('validateAgainstSchema', () => {
     it('should throw for unknown schema name', () => {
       assert.throws(() => validateAgainstSchema({}, 'invalidName'));
@@ -173,12 +177,11 @@ describe('Unit test: validation.js', () => {
 
   describe('validateEpcisDocument', () => {
     it('should accept correct EPCISDocument', () => {
-      const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+      const epcisD = {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
+
         epcisBody: {
           eventList: [
             {
@@ -200,9 +203,9 @@ describe('Unit test: validation.js', () => {
             },
           ],
         },
+        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
       };
-
-      const res = validateEpcisDocument(epcisDocument);
+      const res = validateEpcisDocument(epcisD);
       assert.equal(res.success, true);
       assert.deepEqual(res.errors, []);
     });
@@ -213,7 +216,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: 2,
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -246,7 +248,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -278,7 +279,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -314,7 +314,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -348,7 +347,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -381,7 +379,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -444,7 +441,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -520,7 +516,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -591,7 +586,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -653,7 +647,6 @@ describe('Unit test: validation.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
         epcisBody: {
           eventList: [
             {
@@ -710,35 +703,33 @@ describe('Unit test: validation.js', () => {
 
     it('should accept TransformationEvent various quantity list types', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
-        creationDate: '2005-07-11T11:30:47.0Z',
-        format: 'application/ld+json',
+        creationDate: '2013-06-04T14:59:02.099+02:00',
         epcisBody: {
           eventList: [
             {
-              eventID: 'test:event:id',
               type: 'TransformationEvent',
-              action: 'OBSERVE',
-              eventTime: '2013-10-31T14:58:56.591+00:00',
-              eventTimeZoneOffset: '+00:00',
-              bizStep: 'urn:epcglobal:cbv:bizstep:commissioning',
-              disposition: 'urn:epcglobal:cbv:disp:in_progress',
-              readPoint: { id: 'urn:epc:id:sgln:4012345.00001.0' },
-              ilmd: { 'example:bestBeforeDate': '2014-12-10', 'example:batch': 'XYZ' },
-              transformationID: 'urn:epc:id:gdti:0614141.12345.400',
-              childQuantityList: [
-                { epcClass: 'urn:epc:idpat:sgtin:4012345.098765.*', quantity: 10 },
-                {
-                  epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
-                  quantity: 200.5,
-                  uom: 'KGM',
-                },
-              ],
+              eventTime: '2013-10-31T14:58:56.591Z',
+              eventTimeZoneOffset: '+02:00',
               inputEPCList: [
                 'urn:epc:id:sgtin:4012345.011122.25',
                 'urn:epc:id:sgtin:4000001.065432.99886655',
+              ],
+              inputQuantityList: [
+                {
+                  epcClass: 'urn:epc:class:lgtin:4012345.011111.4444',
+                  quantity: 10,
+                  uom: 'KGM',
+                },
+                {
+                  epcClass: 'urn:epc:class:lgtin:0614141.077777.987',
+                  quantity: 30,
+                },
+                {
+                  epcClass: 'urn:epc:idpat:sgtin:4012345.066666.*',
+                  quantity: 220,
+                },
               ],
               outputEPCList: [
                 'urn:epc:id:sgtin:4012345.077889.25',
@@ -746,27 +737,272 @@ describe('Unit test: validation.js', () => {
                 'urn:epc:id:sgtin:4012345.077889.27',
                 'urn:epc:id:sgtin:4012345.077889.28',
               ],
-              inputQuantityList: [
-                { epcClass: 'urn:epc:class:lgtin:4012345.011111.4444', quantity: 10, uom: 'KGM' },
-                { epcClass: 'urn:epc:class:lgtin:0614141.077777.987', quantity: 15 },
-                { epcClass: 'urn:epc:idpat:sgtin:4012345.066666.*', quantity: 220 },
-              ],
               outputQuantityList: [
-                { epcClass: 'urn:epc:class:lgtin:4012345.011111.5555', quantity: 100, uom: 'KGM' },
-                { epcClass: 'urn:epc:class:lgtin:0614141.077777.1111', quantity: 15 },
-                { epcClass: 'urn:epc:idpat:sgtin:4012345.066666.*', quantity: 320 },
-              ],
-              quantityList: [
-                { epcClass: 'urn:epc:idpat:sgtin:4012345.066666.*', quantity: 220 },
                 {
-                  epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
-                  quantity: 200,
+                  epcClass: 'urn:epc:class:lgtin:4012345.011111.4444',
+                  quantity: 10,
                   uom: 'KGM',
                 },
+                {
+                  epcClass: 'urn:epc:class:lgtin:0614141.077777.987',
+                  quantity: 30,
+                },
+                {
+                  epcClass: 'urn:epc:idpat:sgtin:4012345.066666.*',
+                  quantity: 220,
+                },
               ],
+              transformationID: 'urn:epc:id:gdti:0614141.12345.400',
+              bizStep: 'commissioning',
+              disposition: 'in_progress',
+              readPoint: {
+                id: 'urn:epc:id:sgln:4012345.00001.0',
+              },
+              bizLocation: {
+                id: 'urn:epc:id:sgln:0614141.00888.0',
+              },
+              bizTransactionList: [
+                {
+                  type: 'po',
+                  bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
+                },
+                {
+                  type: 'pedigree',
+                  bizTransaction: 'urn:epc:id:gsrn:0614141.0000010253',
+                },
+              ],
+              sourceList: [
+                {
+                  type: 'location',
+                  source: 'urn:epc:id:sgln:4012345.00225.0',
+                },
+                {
+                  type: 'possessing_party',
+                  source: 'urn:epc:id:pgln:4012345.00225',
+                },
+                {
+                  type: 'owning_party',
+                  source: 'urn:epc:id:pgln:4012345.00225',
+                },
+              ],
+              destinationList: [
+                {
+                  type: 'location',
+                  destination: 'urn:epc:id:sgln:0614141.00777.0',
+                },
+                {
+                  type: 'possessing_party',
+                  destination: 'urn:epc:id:pgln:0614141.00777',
+                },
+                {
+                  type: 'owning_party',
+                  destination: 'urn:epc:id:pgln:0614141.00777',
+                },
+              ],
+              ilmd: {
+                'ext1:float': '20',
+                'ext1:array': [
+                  '12',
+                  '22',
+                  '2013-06-08T14:58:56.591Z',
+                  'true',
+                  'stringInArray',
+                  {
+                    'ext1:object': {
+                      'ext1:object': {
+                        'ext2:array': [
+                          '14',
+                          '23.0',
+                          'stringInArrayInObjectInArray',
+                        ],
+                        'ext2:object': {
+                          'ext2:object': {
+                            'ext3:string': 'stringInObjectInObjectInArray',
+                          },
+                        },
+                        'ext2:int': '13',
+                        'ext2:string': 'stringInObjectInArray',
+                      },
+                    },
+                  },
+                ],
+                'ext1:object': {
+                  'ext2:array': [
+                    '11',
+                    '21',
+                    'stringInArrayInObject',
+                  ],
+                  'ext2:object': {
+                    'ext2:object': {
+                      'ext3:string': 'stringInObjectInObject',
+                    },
+                  },
+                  'ext2:string': 'stringInObject',
+                },
+                'cbvmda:countryOfExport': 'KR',
+                'cbvmda:grossWeight': '3.5',
+                'ext1:int': '10',
+                'cbvmda:netWeight': '3.5',
+                'ext1:time': '2013-06-08T14:58:56.591Z',
+                'ext1:boolean': 'true',
+                'ext1:default': 'stringAsDefaultValue',
+                'ext1:string': 'string',
+                'cbvmda:countryOfOrigin': 'GB',
+                'cbvmda:drainedWeight': '3.5',
+                'cbvmda:lotNumber': 'ABC123',
+              },
+              sensorElementList: [
+                {
+                  sensorMetadata: {
+                    time: '2019-04-02T13:05:00.000Z',
+                    deviceID: 'urn:epc:id:giai:4000001.111',
+                    deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+                    rawData: 'https://example.org/giai/401234599999',
+                    startTime: '2019-04-02T12:55:01.000Z',
+                    endTime: '2019-04-02T13:55:00.000Z',
+                    dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
+                    bizRules: 'https://example.com/gdti/4012345000054987',
+                    'ext1:someFurtherMetadata': 'someText',
+                  },
+                  sensorReport: [
+                    {
+                      type: 'Temperature',
+                      deviceID: 'urn:epc:id:giai:4000001.111',
+                      rawData: 'https://example.org/giai/401234599999',
+                      dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
+                      time: '2019-07-19T13:00:00.000Z',
+                      microorganism: 'https://www.ncbi.nlm.nih.gov/taxonomy/1126011',
+                      chemicalSubstance: 'https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N',
+                      value: 26,
+                      component: 'example:x',
+                      stringValue: 'SomeString',
+                      booleanValue: true,
+                      hexBinaryValue: 'f0f0f0',
+                      uriValue: 'https://id.gs1.org/giai/4000001111',
+                      minValue: 26,
+                      maxValue: 26.2,
+                      meanValue: 13.2,
+                      percRank: 50,
+                      percValue: 12.7,
+                      uom: 'CEL',
+                      sDev: 0.1,
+                      'ext1:someFurtherReportData': 'someText',
+                      deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+                    },
+                  ],
+                  'ext1:float': '20',
+                  'ext1:time': '2013-06-08T14:58:56.591Z',
+                  'ext1:array': [
+                    '12',
+                    '22',
+                    '2013-06-08T14:58:56.591Z',
+                    'true',
+                    'stringInArray',
+                    {
+                      'ext1:object': {
+                        'ext1:object': {
+                          'ext2:array': [
+                            '14',
+                            '23.0',
+                            'stringInArrayInObjectInArray',
+                          ],
+                          'ext2:object': {
+                            'ext2:object': {
+                              'ext3:string': 'stringInObjectInObjectInArray',
+                            },
+                          },
+                          'ext2:int': '13',
+                          'ext2:string': 'stringInObjectInArray',
+                        },
+                      },
+                    },
+                  ],
+                  'ext1:boolean': 'true',
+                  'ext1:object': {
+                    'ext2:array': [
+                      '11',
+                      '21',
+                      'stringInArrayInObject',
+                    ],
+                    'ext2:object': {
+                      'ext2:object': {
+                        'ext3:string': 'stringInObjectInObject',
+                      },
+                    },
+                    'ext2:string': 'stringInObject',
+                  },
+                  'ext1:default': 'stringAsDefaultValue',
+                  'ext1:int': '10',
+                  'ext1:string': 'string',
+                },
+              ],
+              persistentDisposition: {
+                set: [
+                  'completeness_verified',
+                ],
+                unset: [
+                  'completeness_inferred',
+                ],
+              },
+              'ext1:float': '20',
+              'ext1:time': '2013-06-08T14:58:56.591Z',
+              'ext1:array': [
+                '12',
+                '22',
+                '2013-06-08T14:58:56.591Z',
+                'true',
+                'stringInArray',
+                {
+                  'ext1:object': {
+                    'ext1:object': {
+                      'ext2:array': [
+                        '14',
+                        '23.0',
+                        'stringInArrayInObjectInArray',
+                      ],
+                      'ext2:object': {
+                        'ext2:object': {
+                          'ext3:string': 'stringInObjectInObjectInArray',
+                        },
+                      },
+                      'ext2:int': '13',
+                      'ext2:string': 'stringInObjectInArray',
+                    },
+                  },
+                },
+              ],
+              'ext1:boolean': 'true',
+              'ext1:object': {
+                'ext2:array': [
+                  '11',
+                  '21',
+                  'stringInArrayInObject',
+                ],
+                'ext2:object': {
+                  'ext2:object': {
+                    'ext3:string': 'stringInObjectInObject',
+                  },
+                },
+                'ext2:string': 'stringInObject',
+              },
+              'ext1:default': 'stringAsDefaultValue',
+              'ext1:int': '10',
+              'ext1:string': 'string',
             },
           ],
         },
+        '@context': [
+          'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+          {
+            ext3: 'http://example.com/ext3/',
+          },
+          {
+            ext2: 'http://example.com/ext2/',
+          },
+          {
+            ext1: 'http://example.com/ext1/',
+          },
+        ],
       };
 
       const res = validateEpcisDocument(epcisDocument);
