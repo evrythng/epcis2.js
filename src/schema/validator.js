@@ -25,7 +25,7 @@ import EPCISQueryDocument from './EPCISQueryDocument.schema.json';
  */
 const successResult = { success: true, errors: [] };
 
-const ajv = addFormats(new Ajv({ useDefaults: true }), { mode: validationMode });
+const ajv = addFormats(new Ajv({ useDefaults: true, strict: false }), { mode: validationMode });
 
 /**
  * Load a schema and include 'definitions'.
