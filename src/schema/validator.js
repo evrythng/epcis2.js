@@ -63,7 +63,7 @@ const validateAgainstSchema = (data, schemaName) => {
   if (validator(data)) return successResult;
 
   const [{ dataPath, message }] = validator.errors;
-  return { success: false, errors: [`${JSON.stringify(data)} ${schemaName}${dataPath} ${message}`] };
+  return { success: false, errors: [`${schemaName}${dataPath} ${message}`] };
 };
 
 /**
