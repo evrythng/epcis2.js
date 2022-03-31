@@ -8,7 +8,7 @@
  * An object containing all the possible field names for an attributeElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const attributeElement = {
+export const attributeElement = {
   id: 'id',
   attribute: 'attribute',
 };
@@ -17,7 +17,7 @@ const attributeElement = {
  * An object containing all the possible field names for a bizLocation
  * More info here: https://www.gs1.org/standards/epcis
  */
-const bizLocation = {
+export const bizLocation = {
   id: 'id',
 };
 
@@ -25,7 +25,7 @@ const bizLocation = {
  * An object containing all the possible field names for a bizTransactionElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const bizTransaction = {
+export const bizTransaction = {
   type: 'type',
   bizTransaction: 'bizTransaction',
 };
@@ -34,7 +34,7 @@ const bizTransaction = {
  * An object containing all the possible field names for a destinationElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const destination = {
+export const destination = {
   type: 'type',
   destination: 'destination',
 };
@@ -43,7 +43,7 @@ const destination = {
  * An object containing all the possible field names for an errorDeclaration
  * More info here: https://www.gs1.org/standards/epcis
  */
-const errorDeclaration = {
+export const errorDeclaration = {
   declarationTime: 'declarationTime',
   reason: 'reason',
   correctiveEventIDs: 'correctiveEventIDs',
@@ -53,7 +53,7 @@ const errorDeclaration = {
  * An object containing all the possible field names for an ilmd
  * More info here: https://www.gs1.org/standards/epcis
  */
-const ilmd = {
+export const ilmd = {
   type: 'type',
   format: 'format',
 };
@@ -62,7 +62,7 @@ const ilmd = {
  * An object containing all the possible field names for persistentDisposition
  * More info here: https://www.gs1.org/standards/epcis
  */
-const persistentDisposition = {
+export const persistentDisposition = {
   set: 'set',
   unset: 'unset',
 };
@@ -71,7 +71,7 @@ const persistentDisposition = {
  * An object containing all the possible field names for a quantityElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const quantityElement = {
+export const quantityElement = {
   epcClass: 'epcClass',
   quantity: 'quantity',
   uom: 'uom',
@@ -80,14 +80,14 @@ const quantityElement = {
  * An object containing all the possible field names for a readPoint
  * More info here: https://www.gs1.org/standards/epcis
  */
-const readPoint = {
+export const readPoint = {
   id: 'id',
 };
 /**
  * An object containing all the possible field names for a sourceElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const source = {
+export const source = {
   type: 'type',
   source: 'source',
 };
@@ -95,7 +95,7 @@ const source = {
  * An object containing all the possible field names for a vocabulary
  * More info here: https://www.gs1.org/standards/epcis
  */
-const vocabulary = {
+export const vocabulary = {
   type: 'type',
   vocabularyElementList: 'vocabularyElementList',
 };
@@ -103,7 +103,7 @@ const vocabulary = {
  * An object containing all the possible field names for a vocabularyElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const vocabularyElement = {
+export const vocabularyElement = {
   id: 'id',
   attributes: 'attributes',
   children: 'children',
@@ -113,7 +113,7 @@ const vocabularyElement = {
  * An object containing all the possible field names for a sensorElement
  * More info here: https://www.gs1.org/standards/epcis
  */
-const sensorElement = {
+export const sensorElement = {
   sensorMetadata: 'sensorMetadata',
   sensorReport: 'sensorReport',
 };
@@ -121,7 +121,7 @@ const sensorElement = {
  * An object containing all the possible field names for a sensorMetadata
  * More info here: https://www.gs1.org/standards/epcis
  */
-const sensorMetadata = {
+export const sensorMetadata = {
   time: 'time',
   startTime: 'startTime',
   endTime: 'endTime',
@@ -135,7 +135,7 @@ const sensorMetadata = {
  * An object containing all the possible field names for a sensorReport
  * More info here: https://www.gs1.org/standards/epcis
  */
-const sensorReport = {
+export const sensorReport = {
   type: 'type',
   deviceID: 'deviceID',
   deviceMetadata: 'deviceMetadata',
@@ -162,7 +162,7 @@ const sensorReport = {
  * An object containing all the possible field names for an event
  * More info here: https://www.gs1.org/standards/epcis
  */
-const event = {
+export const event = {
   context: '@context',
   type: 'type',
   eventID: 'eventID',
@@ -186,7 +186,7 @@ const event = {
   parentID: 'parentID',
   childEPCs: 'childEPCs',
   childQuantityList: 'childQuantityList',
-  // fields above are only for transformationEvent
+  // fields above below only for transformationEvent
   inputEPCList: 'inputEPCList',
   inputQuantityList: 'inputQuantityList',
   outputEPCList: 'outputEPCList',
@@ -199,7 +199,7 @@ const event = {
  * An object containing all the possible field names for an epcisDocument
  * More info here: https://www.gs1.org/standards/epcis
  */
-const epcisDocument = {
+export const epcisDocument = {
   type: 'type',
   context: '@context',
   schemaVersion: 'schemaVersion',
@@ -211,35 +211,15 @@ const epcisDocument = {
  * An object containing all the possible field names for an epcisHeader
  * More info here: https://www.gs1.org/standards/epcis
  */
-const epcisHeader = {
+export const epcisHeader = {
   epcisMasterData: 'epcisMasterData',
 };
 /**
  * An object containing all the possible field names for an epcisMasterData
  * More info here: https://www.gs1.org/standards/epcis
  */
-const epcisMasterData = {
+export const epcisMasterData = {
   vocabularyList: 'vocabularyList',
 };
 
-export {
-  epcisDocument,
-  epcisHeader,
-  epcisMasterData,
-  event,
-  sensorElement,
-  sensorMetadata,
-  sensorReport,
-  attributeElement,
-  bizLocation,
-  bizTransaction,
-  destination,
-  errorDeclaration,
-  ilmd,
-  persistentDisposition,
-  quantityElement,
-  readPoint,
-  source,
-  vocabulary,
-  vocabularyElement,
-};
+
