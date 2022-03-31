@@ -433,31 +433,6 @@
         }
       ]
     },
-    "bizTransaction-type": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/vocab-uri"
-        },
-        {
-          "type": "string",
-          "enum": [
-            "bol",
-            "cert",
-            "desadv",
-            "inv",
-            "pedigree",
-            "po",
-            "poc",
-            "prodorder",
-            "recadv",
-            "rma",
-            "testprd",
-            "testres",
-            "upevt"
-          ]
-        }
-      ]
-    },
     "disposition": {
       "anyOf": [
         {
@@ -589,10 +564,6 @@
         }
       ]
     },
-    "vocab-uri": {
-      "type": "string",
-      "format": "uri"
-    },
     "required-ld-context": {
       "type": "object",
       "required": ["@context"]
@@ -605,17 +576,7 @@
       "type": "string",
       "format": "uri"
     },
-    "error-reason": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/vocab-uri"
-        },
-        {
-          "type": "string",
-          "enum": ["did_not_occur", "incorrect_data"]
-        }
-      ]
-    },
+    
     "bizTransaction-type": {
       "anyOf": [
         {
@@ -772,26 +733,6 @@
           ]
         }
       ]
-    },
-    "epcisQueryDocumentBody": {
-      "type": "object",
-      "properties": {
-        "queryResults": {
-          "$ref": "#/definitions/queryResults"
-        }
-      },
-      "required": ["queryResults"],
-      "propertyNames": {
-        "anyOf": [
-          {
-            "type": "string",
-            "enum": ["queryResults"]
-          },
-          {
-            "$ref": "#/definitions/vocab-uri"
-          }
-        ]
-      }
     },
     "queryResults": {
       "type": "object",
