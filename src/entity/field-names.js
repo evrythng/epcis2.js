@@ -157,6 +157,7 @@ export const sensorReport = {
   percRank: 'percRank',
   percValue: 'percValue',
   uom: 'uom',
+  exception: 'exception'
 };
 /**
  * An object containing all the possible field names for an event
