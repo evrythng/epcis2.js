@@ -38,7 +38,7 @@ const loadSchema = ((schema) => ({ ...schema, definitions })
 
 /** Available schemas */
 const validators = {
-  EPCISDocument: ajv.compile(loadSchema(EPCISDocument)),
+  EPCISDocument: ajv.compile(EPCISDocument),
   ObjectEvent: ajv.compile(loadSchema(ObjectEvent)),
   AggregationEvent: ajv.compile(loadSchema(AggregationEvent)),
   TransformationEvent: ajv.compile(loadSchema(TransformationEvent)),
@@ -63,7 +63,7 @@ const validateAgainstSchema = (data, schemaName) => {
   if (validator(data)) return successResult;
 
   const [{ dataPath, message }] = validator.errors;
-  return { success: false, errors: [`${schemaName}${dataPath} ${message}`] };
+  return { success: false, errors: [`${JSON.stringify(data)} ${schemaName}${dataPath} ${message}`] };
 };
 
 /**
