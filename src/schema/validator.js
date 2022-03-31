@@ -162,12 +162,11 @@ const validateEpcisDocument = (epcisDocument) => {
   // Validate the capture document
   const documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
 
-  if (epcisDocument.type === 'EPCISQueryDocument'){
-    eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;;
+  if (epcisDocument.type === 'EPCISQueryDocument') {
+    eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;
   } else {
     eventList = epcisDocument.epcisBody.eventList;
   }
-
 
   if (!documentResult.success) throw new Error(`${documentResult.errors}`);
 
