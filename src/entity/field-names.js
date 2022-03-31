@@ -157,7 +157,7 @@ export const sensorReport = {
   percRank: 'percRank',
   percValue: 'percValue',
   uom: 'uom',
-  exception: 'exception'
+  exception: 'exception',
 };
 /**
  * An object containing all the possible field names for an event
@@ -222,5 +222,3 @@ export const epcisHeader = {
 export const epcisMasterData = {
   vocabularyList: 'vocabularyList',
 };
-
-
