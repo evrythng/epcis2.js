@@ -153,6 +153,14 @@ The latter line should print an instance of the event `ObjectEvent` which is cre
 This instance has many methods which can be used to view or modify the EPCIS 2.0 event.
 You can view all of them in ./src/entity/events/Event.js.
 
+It is now possible to validate EPCIS events without wrapping them in an EPCIS Document.
+
+```js
+const eventList = epcisDocument.getEventList();
+const objectEvent = eventList[0];
+console.log(objectEvent.isValid()); // true
+```
+
 ## Building complex EPCIS 2.0 JSON documents
 
 ### Instantiating an EPCIS 2.0 Document
@@ -234,6 +242,37 @@ all the attributes associated to this particular CBV.
 The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.
 
 
+### New constants
+
+There are new constants that you can find in the `constants.js` file 
+For example: 
+```js
+/** Event EPC relation types */
+export const eventEpcRelType = {
+  epcList: 'epcList',
+  childEPCs: 'childEPCs',
+  inputEPCList: 'inputEPCList',
+  outputEPCList: 'outputEPCList',
+  quantityList: 'quantityList',
+  inputQuantityList: 'inputQuantityList',
+  outputQuantityList: 'outputQuantityList',
+  childQuantityList: 'childQuantityList',
+  parentID: 'parentID',
+};
+```
+
+There are also some constant objects containing all the possible field names for a Entity in the `field-names.js` file
+For example: 
+```js
+/**
+ * An object containing all the possible field names for persistentDisposition
+ * More info here: https://www.gs1.org/standards/epcis
+ */
+export const persistentDisposition = {
+  set: 'set',
+  unset: 'unset',
+};
+```
 ### Instantiating events from EPCIS 2.0 objects
 
 In case you have an EPCIS 2.0 object and want to instantiate an EPCIS 2.0 event based on it, the SDK
