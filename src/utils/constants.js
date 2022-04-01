@@ -4,8 +4,6 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-import { errorReasonIdentifiers } from '../cbv/cbv';
-
 export * as fieldNames from './field-names';
 
 /** Event EPC relation types */
@@ -25,9 +23,4 @@ export const eventEpcRelType = {
 export const eventSourceDestRelType = {
   source: 'source',
   destination: 'destination',
-};
-
-/** Capture job error types */
-export const captureJobErrorTypes = {
-  incorrectData: errorReasonIdentifiers.incorrect_data,
 };
