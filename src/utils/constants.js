@@ -5,23 +5,7 @@
  */
 
 export * as fieldNames from './field-names';
-
-/** Allowed eventTypes URL segment values */
-export const allowedEventTypeSegments = new Set([
-  'all',
-  'ObjectEvent'.toLowerCase(),
-  'AggregationEvent'.toLowerCase(),
-  'AssociationEvent'.toLowerCase(),
-  'TransactionEvent'.toLowerCase(),
-  'TransformationEvent'.toLowerCase(),
-  'ExtendedEvent'.toLowerCase(),
-]);
-
-/** Types of persistent dispositions */
-export const eventPersistentDispositionRelType = {
-  set: 'set',
-  unset: 'unset',
-};
+import {errorReasonIdentifiers} from '../cbv/cbv';
 
 /** Event EPC relation types */
 export const eventEpcRelType = {
@@ -44,5 +28,5 @@ export const eventSourceDestRelType = {
 
 /** Capture job error types */
 export const captureJobErrorTypes = {
-  incorrectData: 'urn:epcglobal:cbv:er:payload:incorrect_data',
+  incorrectData: errorReasonIdentifiers.incorrect_data,
 };
