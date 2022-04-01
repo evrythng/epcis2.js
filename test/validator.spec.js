@@ -575,7 +575,7 @@ describe('Unit test: validator.js', () => {
           ],
         },
       };
-      
+
       assert.throws(() => { validateEpcisDocument(epcisDocument); });
     });
 

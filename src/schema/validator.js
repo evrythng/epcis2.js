@@ -186,4 +186,3 @@ export const validateEpcisDocument = (epcisDocument) => {
   // No errors in document or any events
   return successResult;
 };
-

@@ -158,7 +158,7 @@ export const sensorReport = {
   percValue: 'percValue',
   uom: 'uom',
   exception: 'exception',
-  coordinateReferenceSystem: 'coordinateReferenceSystem'
+  coordinateReferenceSystem: 'coordinateReferenceSystem',
 };
 /**
  * An object containing all the possible field names for an event
@@ -194,7 +194,7 @@ export const event = {
   outputEPCList: 'outputEPCList',
   outputQuantityList: 'outputQuantityList',
   transformationID: 'transformationID',
-  certificationInfo: 'certificationInfo'
+  certificationInfo: 'certificationInfo',
 };
 
 /**
@@ -210,7 +210,7 @@ export const epcisDocument = {
   epcisBody: 'epcisBody',
   sender: 'sender',
   receiver: 'receiver',
-  instanceIdentifier: 'instanceIdentifier'
+  instanceIdentifier: 'instanceIdentifier',
 };
 /**
  * An object containing all the possible field names for an epcisHeader

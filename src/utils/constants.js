@@ -4,8 +4,9 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
+import { errorReasonIdentifiers } from '../cbv/cbv';
+
 export * as fieldNames from './field-names';
-import {errorReasonIdentifiers} from '../cbv/cbv';
 
 /** Event EPC relation types */
 export const eventEpcRelType = {
