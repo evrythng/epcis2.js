@@ -965,7 +965,7 @@ export default class Event extends Entity {
   }
 
   /**
-   * Check if the Event respects the rules of the standard defined in
+   * Check if the EPCIS Event respects the rules of the standard defined in
    * src/schema/${EventType}.schema.json
    * @return {boolean} - true if the Event is valid
    * @throws {Error} - if the schema isn't valid

@@ -181,7 +181,6 @@ describe('Unit test: validator.js', () => {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
-
         epcisBody: {
           eventList: [
             {
@@ -576,7 +575,7 @@ describe('Unit test: validator.js', () => {
           ],
         },
       };
-
+      
       assert.throws(() => { validateEpcisDocument(epcisDocument); });
     });
 

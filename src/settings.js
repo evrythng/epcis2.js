@@ -20,9 +20,10 @@
  * @property {string} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion'
  * parameter of an EPCISDocument. Set it to undefined if you don't want the parameter in your
  * EPCISDocument.
- * @property {string} validationMode The default value of 'validationMode' for the format
- * validation. Set it to "fast" mode if you want the following formats simplified: "date",
- * "time", "date-time", "iso-time", "iso-date-time", "uri", "uri-reference", "email".
+ * @property {string} validationMode - The default value of 'validationMode' for the format
+ * validation of EPCISDocument or EPCIS Event against schemas. Set it to "fast" if you want 
+ * the following formats simplified: "date", "time", "date-time", "iso-time", "iso-date-time",
+ * "uri", "uri-reference", "email".
  * */
 
 /**

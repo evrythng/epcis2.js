@@ -8,6 +8,7 @@ import { assert, expect } from 'chai';
 import * as sdk from '../src';
 
 import EPCISDocumentObjectEvent from './data/EPCISDocument-ObjectEvent.json';
+import EPCISObjectEventSchema from '../src/schema/ObjectEvent.schema.json'
 
 describe('All the functions should be well exported', () => {
   it('EPCISDocument', async () => {
@@ -174,5 +175,11 @@ describe('All the functions should be well exported', () => {
   });
   it('validateEpcisDocument', async () => {
     assert.doesNotThrow(() => { sdk.validateEpcisDocument(EPCISDocumentObjectEvent); });
+  });
+  it('loadSchema', async () => {
+    assert.doesNotThrow(() => { sdk.loadSchema(EPCISObjectEventSchema); });
+  });
+  it('validateAgainstSchema', async () => {
+    assert.doesNotThrow(() => { sdk.validateAgainstSchema(EPCISDocumentObjectEvent.epcisBody.eventList[0],'ObjectEvent'); });
   });
 });

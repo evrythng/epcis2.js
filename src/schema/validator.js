@@ -6,7 +6,7 @@
 
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import * as fieldNames from '../entity/field-names';
+import * as fieldNames from '../utils/field-names';
 import definitions from './definitions.json';
 import validationMode from '../settings';
 import EPCISDocument from './EPCISDocument.schema.json';
@@ -32,7 +32,7 @@ const ajv = addFormats(new Ajv({ useDefaults: true, strict: false }), { mode: va
  * @param {object} schema - schema to be loaded.
  * @returns {object} Loaded and enhanced schema.
  */
-const loadSchema = ((schema) => ({ ...schema, definitions })
+export const loadSchema = ((schema) => ({ ...schema, definitions })
 );
 
 /** Available schemas */
@@ -53,7 +53,7 @@ const validators = {
  * @param {string} schemaName - Name of the schema from validatorNames.
  * @returns {ValidatorResult} Validation results.
  */
-const validateAgainstSchema = (data, schemaName) => {
+export const validateAgainstSchema = (data, schemaName) => {
   const validatorNames = Object.keys(validators);
   if (!validatorNames.includes(schemaName)) throw new Error(`Invalid schemaName: ${schemaName}`);
 
@@ -72,7 +72,7 @@ const validateAgainstSchema = (data, schemaName) => {
  * @param {object} data - Data to validate.
  * @param {string} fieldSet - Name of the field set from field-names.js.
  */
-const ensureFieldSet = (data, fieldSet) => {
+export const ensureFieldSet = (data, fieldSet) => {
   if (!data) return;
   if (!fieldNames[fieldSet]) throw new Error(`Unknown fieldSet: ${fieldSet}`);
 
@@ -94,7 +94,7 @@ const ensureFieldSet = (data, fieldSet) => {
  * @param {object} event - Event to validate.
  * @returns {ValidatorResult} Validation results.
  */
-const validateExtraEventFields = (event) => {
+export const validateExtraEventFields = (event) => {
   try {
     // Validate top-level fields
     ensureFieldSet(event, 'event');
@@ -156,7 +156,7 @@ const validateExtraEventFields = (event) => {
  * @param {object} epcisDocument - Data to validate.
  * @returns {ValidatorResult} Validation results.
  */
-const validateEpcisDocument = (epcisDocument) => {
+export const validateEpcisDocument = (epcisDocument) => {
   let eventList = [];
 
   // Validate the capture document
@@ -187,8 +187,3 @@ const validateEpcisDocument = (epcisDocument) => {
   return successResult;
 };
 
-export {
-  validateAgainstSchema,
-  ensureFieldSet,
-  validateEpcisDocument,
-};
