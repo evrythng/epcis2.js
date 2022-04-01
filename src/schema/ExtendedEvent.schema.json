@@ -10,10 +10,7 @@
             "anyOf":[
               {
             "$ref": "#/definitions/vocab-uri"
-          },
-          {
-            "type":"string"
-          } 
+          }
         ]
           }
         },
