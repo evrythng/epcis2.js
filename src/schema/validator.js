@@ -6,7 +6,7 @@
 
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import * as fieldNames from '../utils/field-names';
+import fieldNames from '../utils/field-names';
 import definitions from './definitions.json';
 import validationMode from '../settings';
 import EPCISDocument from './EPCISDocument.schema.json';
@@ -32,8 +32,7 @@ const ajv = addFormats(new Ajv({ useDefaults: true, strict: false }), { mode: va
  * @param {object} schema - schema to be loaded.
  * @returns {object} Loaded and enhanced schema.
  */
-export const loadSchema = ((schema) => ({ ...schema, definitions })
-);
+export const loadSchema = ((schema) => ({ ...schema, definitions }));
 
 /** Available schemas */
 const validators = {
@@ -50,7 +49,9 @@ const validators = {
  * Validate data against a nominated schema.
  *
  * @param {object} data - Data to validate.
- * @param {string} schemaName - Name of the schema from validatorNames.
+ * @param {string} schemaName - Name of the schema from the following
+ * list : EPCISDocument, ObjectEvent, AggregationEvent, TransformationEvent, TransactionEvent,
+ * AssociationEvent, ExtendedEvent
  * @returns {ValidatorResult} Validation results.
  */
 export const validateAgainstSchema = (data, schemaName) => {
@@ -94,7 +95,7 @@ export const ensureFieldSet = (data, fieldSet) => {
  * @param {object} event - Event to validate.
  * @returns {ValidatorResult} Validation results.
  */
-export const validateExtraEventFields = (event) => {
+const validateExtraEventFields = (event) => {
   try {
     // Validate top-level fields
     ensureFieldSet(event, 'event');
@@ -175,8 +176,9 @@ export const validateEpcisDocument = (epcisDocument) => {
     const event = eventList[i];
 
     // Validate against schema for defined fields for this event type
-    const eventResult = validateAgainstSchema(event, event.type);
-    if (!eventResult.success) throw new Error(`${eventResult.errors}`);
+    // const eventResult = validateAgainstSchema(event, event.type);
+    // if (!eventResult.success) throw new Error(`${eventResult.errors}`);
+    // This part of the code is already verified with EPCISDocument schema validation
 
     // Validate all extra field names and possible extensions
     const eventFieldsResult = validateExtraEventFields(event);
