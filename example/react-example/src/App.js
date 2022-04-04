@@ -49,6 +49,8 @@ const App = () => {
       console.log('objectEvent: ');
       console.log(objectEvent.toObject());
       console.log(`epcisDocument (toString): ${epcisDocument.toString()}`);
+      console.log(`EPCISDocument is valid ? ${epcisDocument.isValid()}`);
+      console.log(`ObjectEvent is valid ? ${objectEvent.isValid()}`);
 
       const res = await capture(epcisDocument);
       const text = await res.text();

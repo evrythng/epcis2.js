@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 
-const { setup, EPCISDocument, capture } = require('epcis2.js');
+const { ObjectEvent, setup, EPCISDocument, capture } = require('epcis2.js');
 
 // you can override the global parameter with the setup function
 setup({
@@ -60,6 +60,9 @@ const sendACaptureRequestExample = async () => {
   const text = await res.text();
   console.log(`Request status: ${res.status}`);
   console.log(`Request response: ${text}`);
+
+  console.log(`EPCISDocument is valid ? ${epcisDocument.isValid()}`);
+  console.log(`ObjectEvent is valid ? ${epcisDocument.eventList[0].isValid()}`);
 };
 
 sendACaptureRequestExample();

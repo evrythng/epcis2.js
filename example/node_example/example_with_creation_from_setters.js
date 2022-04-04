@@ -60,6 +60,9 @@ const sendACaptureRequestExample = async () => {
   const text = await res.text();
   console.log(`Request status: ${res.status}`);
   console.log(`Request response: ${text}`);
+
+  console.log(`EPCISDocument is valid ? ${epcisDocument.isValid()}`);
+  console.log(`ObjectEvent is valid ? ${epcisDocument.eventList[0].isValid()}`);
 };
 
 sendACaptureRequestExample();
