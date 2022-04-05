@@ -20,8 +20,8 @@
  * @property {string} EPCISDocumentSchemaVersion - The default value of the 'schemaVersion'
  * parameter of an EPCISDocument. Set it to undefined if you don't want the parameter in your
  * EPCISDocument.
- * @property {string} validationMode - The default value of 'validationMode' ("full") for the
- * format validation of an EPCISDocument or an EPCIS Event against schemas.
+ * @property {string} validationMode - The default value of 'validationMode' for the
+ * validation of an EPCISDocument or an EPCIS Event against schemas.
  * Possible values are either "full" or "fast".
  * Please refer to: https://www.npmjs.com/package/ajv-formats/v/0.3.4
  */

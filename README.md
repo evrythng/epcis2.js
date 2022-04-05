@@ -245,7 +245,7 @@ The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cb
 
 There are constants that you can find in the `constants.js` file.
 There is also an constant object containing all the possible field names for an Entity in the `field-names.js` file.
-All these constants can be very useful for you.
+All these constants can be very useful.
 Here is an example of field names: 
 ```js
 const { fieldNames } = require('epcis2.js');
