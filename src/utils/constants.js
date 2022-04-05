@@ -4,8 +4,6 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-export * as fieldNames from './field-names';
-
 /** Event EPC relation types */
 export const eventEpcRelType = {
   epcList: 'epcList',

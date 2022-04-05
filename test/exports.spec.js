@@ -182,4 +182,34 @@ describe('All the functions should be well exported', () => {
   it('validateAgainstSchema', async () => {
     assert.doesNotThrow(() => { sdk.validateAgainstSchema(EPCISDocumentObjectEvent.epcisBody.eventList[0], 'ObjectEvent'); });
   });
+  it('field-names.js', async () => {
+    expect(sdk.fieldNames.epcisDocument).to.deep.equal(
+      {
+        type: 'type',
+        context: '@context',
+        schemaVersion: 'schemaVersion',
+        creationDate: 'creationDate',
+        epcisHeader: 'epcisHeader',
+        epcisBody: 'epcisBody',
+        sender: 'sender',
+        receiver: 'receiver',
+        instanceIdentifier: 'instanceIdentifier',
+      },
+    );
+  });
+  it('constants.js', async () => {
+    expect(sdk.eventEpcRelType).to.deep.equal(
+      {
+        epcList: 'epcList',
+        childEPCs: 'childEPCs',
+        inputEPCList: 'inputEPCList',
+        outputEPCList: 'outputEPCList',
+        quantityList: 'quantityList',
+        inputQuantityList: 'inputQuantityList',
+        outputQuantityList: 'outputQuantityList',
+        childQuantityList: 'childQuantityList',
+        parentID: 'parentID',
+      },
+    );
+  });
 });

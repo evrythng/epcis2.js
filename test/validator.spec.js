@@ -11,7 +11,6 @@ import {
   bizSteps,
   dispositions,
   ObjectEvent,
-  objectToEvent,
   QuantityElement,
   SensorElement,
   TransformationEvent,
@@ -24,7 +23,7 @@ import EPCISDocumentAssociationEvent from './data/EPCISDocument-AssociationEvent
 import EPCISDocumentQueryDocument from './data/EPCISQueryDocument.json';
 import EPCISDocument from '../src/entity/epcis/EPCISDocument';
 import BizTransactionElement from '../src/entity/model/BizTransactionElement';
-import * as cbv from '../src/cbv/cbv'
+import * as cbv from '../src/cbv/cbv';
 import {
   validateAgainstSchema,
   ensureFieldSet,
@@ -55,8 +54,6 @@ describe('validation of an EPCIS document', () => {
         type: cbv.businessTransactionTypes.po,
         bizTransaction: 'http://transaction.acme.com/po/12345678',
       });
-
-      console.log(epcisDocument.toString())
 
       objectEvent
         .setEventTime('2005-04-03T20:33:31.116-06:00')

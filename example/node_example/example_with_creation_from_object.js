@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 
-const { ObjectEvent, setup, EPCISDocument, capture, fieldNames } = require('epcis2.js');
+const { ObjectEvent, setup, EPCISDocument, capture, fieldNames, eventEpcRelType } = require('epcis2.js');
 
 // you can override the global parameter with the setup function
 setup({
@@ -67,6 +67,9 @@ const sendACaptureRequestExample = async () => {
   
   console.log(`field names of an EPCIS Document:`);
   console.log(fieldNames.epcisDocument);
+  
+  console.log(`example of constant from constants.js:`);
+  console.log(eventEpcRelType.epcList)
 };
 
 sendACaptureRequestExample();

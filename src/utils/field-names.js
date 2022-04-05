@@ -4,7 +4,7 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-const fieldNames = {
+export const fieldNames = {
   attributeElement: {
     id: 'id',
     attribute: 'attribute',
