@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "ajv": "^7.1.0",
-    "ajv-formats": "^1.5.1",
     "epcis2.js": "file:../../",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
