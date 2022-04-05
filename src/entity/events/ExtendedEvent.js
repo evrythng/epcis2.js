@@ -31,7 +31,7 @@ const invalidFields = [
 
 export default class ExtendedEvent extends Event {
   /**
-   * You can either create an empty Aggregation Event or provide an already existing Aggregation
+   * You can either create an empty Extended Event or provide an already existing Extended
    * event via Object
    * @param {Object} [extendedEvent] - The object that will be used to create the
    * ExtendedEvent entity
