@@ -58,7 +58,7 @@ export default class ExtendedEvent extends Event {
   }
 
   /**
-    * @override
+   * @override
    * Check if the ExtendedEvent respects the rules of the standard defined in
    * src/schema/ExtendedEvent.schema.json
    * @return {boolean} - true if the Event is valid
