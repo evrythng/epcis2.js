@@ -6,7 +6,14 @@
 
 import { assert } from 'chai';
 import {
-  actionTypes, bizSteps, dispositions, ObjectEvent,
+  actionTypes,
+  AggregationEvent,
+  bizSteps,
+  dispositions,
+  ObjectEvent,
+  QuantityElement,
+  SensorElement,
+  TransformationEvent,
 } from '../src';
 import EPCISDocumentObjectEvent from './data/EPCISDocument-ObjectEvent.json';
 import EPCISDocumentAggregationEvent from './data/EPCISDocument-AggregationEvent.json';
@@ -1007,6 +1014,210 @@ describe('Unit test: validator.js', () => {
       const res = validateEpcisDocument(epcisDocument);
       assert.equal(res.success, true);
       assert.deepEqual(res.errors, []);
+    });
+
+    it('should reject correct EPCISDocument with an object event containing a bizTransaction list with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const oe = new ObjectEvent();
+      oe.setAction('OBSERVE'); // required
+      oe.addEPC('epc:epc:epc'); // required
+      oe.addBizTransactionList([
+        new BizTransactionElement(
+          {
+            type: 'urn:epcglobal:cbv:btt:po',
+            bizTransaction: 'http://transaction.acme.com/po/12345678',
+            invalid: '',
+          },
+        ),
+      ]);
+      epcisDocument.addEvent(oe);
+      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+    });
+
+    it('should reject correct EPCISDocument with an object event containing a quantity list with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const oe = new ObjectEvent();
+      oe.setAction('OBSERVE'); // required
+      oe.addQuantityList([
+        new QuantityElement(
+          {
+            epcClass: 'urn:epc:class:lgtin:4012345.011111.1111',
+            quantity: 10,
+            uom: 'KGM',
+            invalid: '',
+          },
+        ),
+      ]);
+      epcisDocument.addEvent(oe);
+      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+    });
+
+    it('should reject correct EPCISDocument with a transformation event containing an input quantity list with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const te = new TransformationEvent();
+      te.addInputQuantity(
+        new QuantityElement(
+          {
+            epcClass: 'urn:epc:class:lgtin:4012345.011111.1111',
+            quantity: 10,
+            uom: 'KGM',
+            invalid: '',
+          },
+        ),
+      );
+      te.addOutputQuantity(
+        new QuantityElement(
+          {
+            epcClass: 'urn:epc:class:lgtin:4012345.011111.1111',
+            quantity: 10,
+            uom: 'KGM',
+          },
+        ),
+      );
+      epcisDocument.addEvent(te);
+      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+    });
+
+    it('should reject correct EPCISDocument with a transformation event containing an output quantity list with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const te = new TransformationEvent();
+      te.addInputQuantity(
+        new QuantityElement(
+          {
+            epcClass: 'urn:epc:class:lgtin:4012345.011111.1111',
+            quantity: 10,
+            uom: 'KGM',
+          },
+        ),
+      );
+      te.addOutputQuantity(
+        new QuantityElement(
+          {
+            epcClass: 'urn:epc:class:lgtin:4012345.011111.1111',
+            quantity: 10,
+            uom: 'KGM',
+            invalid: '',
+          },
+        ),
+      );
+      epcisDocument.addEvent(te);
+      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+    });
+
+    it('should reject correct EPCISDocument with an aggregation event containing a child quantity list with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const te = new AggregationEvent();
+      te.setAction('OBSERVE'); // required
+      te.addChildQuantity(
+        new QuantityElement(
+          {
+            epcClass: 'urn:epc:class:lgtin:4012345.011111.1111',
+            quantity: 10,
+            uom: 'KGM',
+            invalid: '',
+          },
+        ),
+      );
+      epcisDocument.addEvent(te);
+      assert.throws(() => { epcisDocument.isValid(); });
+    });
+
+    it('should reject correct EPCISDocument with an aggregation event containing a sensorElement with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const te = new ObjectEvent();
+      te.setAction('OBSERVE'); // required
+      te.addEPC('epc:epc:epc'); // required
+      te.addSensorElement(
+        new SensorElement({
+          invalid: '',
+          sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
+          sensorReport: [
+            {
+              type: 'gs1:MeasurementType-Temperature',
+              value: 26.0,
+              uom: 'CEL',
+              deviceID: 'urn:epc:id:giai:4000001.111',
+              deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+              rawData: 'https://example.org/giai/401234599999',
+            },
+            {
+              type: 'gs1:MeasurementType-Humidity',
+              value: 12.1,
+              uom: 'A93',
+              deviceID: 'urn:epc:id:giai:4000001.222',
+              deviceMetadata: 'https://id.gs1.org/giai/4000001222',
+              rawData: 'https://example.org/giai/401234599999',
+            },
+          ],
+        }),
+      );
+      epcisDocument.addEvent(te);
+      assert.throws(() => { epcisDocument.isValid(); });
+    });
+
+    it('should reject correct EPCISDocument with an aggregation event containing a sensor metadata with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const te = new ObjectEvent();
+      te.setAction('OBSERVE'); // required
+      te.addEPC('epc:epc:epc'); // required
+      te.addSensorElement(
+        new SensorElement({
+          sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00', invalid: '' },
+          sensorReport: [
+            {
+              type: 'gs1:MeasurementType-Temperature',
+              value: 26.0,
+              uom: 'CEL',
+              deviceID: 'urn:epc:id:giai:4000001.111',
+              deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+              rawData: 'https://example.org/giai/401234599999',
+            },
+            {
+              type: 'gs1:MeasurementType-Humidity',
+              value: 12.1,
+              uom: 'A93',
+              deviceID: 'urn:epc:id:giai:4000001.222',
+              deviceMetadata: 'https://id.gs1.org/giai/4000001222',
+              rawData: 'https://example.org/giai/401234599999',
+            },
+          ],
+        }),
+      );
+      epcisDocument.addEvent(te);
+      assert.throws(() => { epcisDocument.isValid(); });
+    });
+
+    it('should reject correct EPCISDocument with an aggregation event containing a sensor report with a non-valid extension', () => {
+      const epcisDocument = new EPCISDocument();
+      const te = new ObjectEvent();
+      te.setAction('OBSERVE'); // required
+      te.addEPC('epc:epc:epc'); // required
+      te.addSensorElement(
+        new SensorElement({
+          sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
+          sensorReport: [
+            {
+              type: 'gs1:MeasurementType-Temperature',
+              value: 26.0,
+              uom: 'CEL',
+              deviceID: 'urn:epc:id:giai:4000001.111',
+              deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+              rawData: 'https://example.org/giai/401234599999',
+              invalid: '',
+            },
+            {
+              type: 'gs1:MeasurementType-Humidity',
+              value: 12.1,
+              uom: 'A93',
+              deviceID: 'urn:epc:id:giai:4000001.222',
+              deviceMetadata: 'https://id.gs1.org/giai/4000001222',
+              rawData: 'https://example.org/giai/401234599999',
+            },
+          ],
+        }),
+      );
+      epcisDocument.addEvent(te);
+      assert.throws(() => { epcisDocument.isValid(); });
     });
   });
 });

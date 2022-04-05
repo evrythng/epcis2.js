@@ -109,8 +109,6 @@ const validateExtraEventFields = (event) => {
     // Validate sub-fields that are lists of objects
     const {
       bizTransactionList = [],
-      sourceList = [],
-      destinationList = [],
       quantityList = [],
       inputQuantityList = [],
       outputQuantityList = [],
@@ -122,10 +120,11 @@ const validateExtraEventFields = (event) => {
     bizTransactionList.forEach((p) => ensureFieldSet(p, 'bizTransactionElement'));
 
     // Validate source/destination lists
-    sourceList.forEach((p) => ensureFieldSet(p, 'sourceElement'));
-    destinationList.forEach((p) => ensureFieldSet(p, 'destinationElement'));
+    // sourceList.forEach((p) => ensureFieldSet(p, 'sourceElement'));
+    // destinationList.forEach((p) => ensureFieldSet(p, 'destinationElement'));
+    // This part is already check in the schema
 
-    // Validate various quantity list types
+    // // Validate various quantity list types
     quantityList.forEach((p) => ensureFieldSet(p, 'quantityElement'));
     inputQuantityList.forEach((p) => ensureFieldSet(p, 'quantityElement'));
     outputQuantityList.forEach((p) => ensureFieldSet(p, 'quantityElement'));
