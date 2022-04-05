@@ -11,6 +11,7 @@ import {
   bizSteps,
   dispositions,
   ObjectEvent,
+  objectToEvent,
   QuantityElement,
   SensorElement,
   TransformationEvent,
@@ -23,7 +24,7 @@ import EPCISDocumentAssociationEvent from './data/EPCISDocument-AssociationEvent
 import EPCISDocumentQueryDocument from './data/EPCISQueryDocument.json';
 import EPCISDocument from '../src/entity/epcis/EPCISDocument';
 import BizTransactionElement from '../src/entity/model/BizTransactionElement';
-
+import * as cbv from '../src/cbv/cbv'
 import {
   validateAgainstSchema,
   ensureFieldSet,
@@ -51,9 +52,11 @@ describe('validation of an EPCIS document', () => {
       const epcisDocument = new EPCISDocument();
       const objectEvent = new ObjectEvent();
       const bizTransaction = new BizTransactionElement({
-        type: 'urn:epcglobal:cbv:btt:po',
+        type: cbv.businessTransactionTypes.po,
         bizTransaction: 'http://transaction.acme.com/po/12345678',
       });
+
+      console.log(epcisDocument.toString())
 
       objectEvent
         .setEventTime('2005-04-03T20:33:31.116-06:00')
@@ -67,7 +70,6 @@ describe('validation of an EPCIS document', () => {
         .addBizTransaction(bizTransaction);
 
       epcisDocument.setCreationDate('2005-07-11T11:30:47+00:00').addEvent(objectEvent);
-
       assert.doesNotThrow(() => epcisDocument.isValid());
     });
 
@@ -194,15 +196,15 @@ describe('Unit test: validator.js', () => {
               eventID: 'test:event:id',
               type: 'ObjectEvent',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
               eventTime: '2005-04-03T20:33:31.116000-06:00',
               eventTimeZoneOffset: '-06:00',
               readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -228,15 +230,15 @@ describe('Unit test: validator.js', () => {
               eventID: 'test:event:id',
               type: 'ObjectEvent',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
               eventTime: '2005-04-03T20:33:31.116000-06:00',
               eventTimeZoneOffset: '-06:00',
               readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -259,15 +261,15 @@ describe('Unit test: validator.js', () => {
             {
               eventID: 'test:event:id',
               type: 'ObjectEvent',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
               eventTime: '2005-04-03T20:33:31.116000-06:00',
               eventTimeZoneOffset: '-06:00',
               readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -292,15 +294,15 @@ describe('Unit test: validator.js', () => {
               type: 'ObjectEvent',
               'evt:factoryId': 'foobar',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
               eventTime: '2005-04-03T20:33:31.116000-06:00',
               eventTimeZoneOffset: '-06:00',
               readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -327,15 +329,15 @@ describe('Unit test: validator.js', () => {
               type: 'ObjectEvent',
               factoryId: 'foobar',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
               eventTime: '2005-04-03T20:33:31.116000-06:00',
               eventTimeZoneOffset: '-06:00',
               readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -347,7 +349,7 @@ describe('Unit test: validator.js', () => {
       assert.throws(() => { validateEpcisDocument(epcisDocument); });
     });
 
-    it('should reject incorrect event with invalid eventId field', () => {
+    it('should reject incorrect event with with eventId instead of eventID', () => {
       const epcisDocument = {
         '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
         type: 'EPCISDocument',
@@ -359,15 +361,15 @@ describe('Unit test: validator.js', () => {
               eventId: 'test:event:id',
               type: 'ObjectEvent',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
               eventTime: '2005-04-03T20:33:31.116000-06:00',
               eventTimeZoneOffset: '-06:00',
               readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -391,8 +393,8 @@ describe('Unit test: validator.js', () => {
               eventID: 'test:event:id',
               type: 'ObjectEvent',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: [
                 'urn:epc:id:sgtin:0614141.107346.2017',
                 'urn:epc:id:sgtin:0614141.107346.2018',
@@ -404,7 +406,7 @@ describe('Unit test: validator.js', () => {
               },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -413,7 +415,7 @@ describe('Unit test: validator.js', () => {
                   sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
                   sensorReport: [
                     {
-                      type: 'gs1:MeasurementType-Temperature',
+                      type: cbv.sensorMeasurementTypes.temperature,
                       value: 26.0,
                       uom: 'CEL',
                       deviceID: 'urn:epc:id:giai:4000001.111',
@@ -421,7 +423,7 @@ describe('Unit test: validator.js', () => {
                       rawData: 'https://example.org/giai/401234599999',
                     },
                     {
-                      type: 'gs1:MeasurementType-Humidity',
+                      type: cbv.sensorMeasurementTypes.absolute_humidity,
                       value: 12.1,
                       uom: 'A93',
                       deviceID: 'urn:epc:id:giai:4000001.222',
@@ -453,8 +455,8 @@ describe('Unit test: validator.js', () => {
               eventID: 'test:event:id',
               type: 'ObjectEvent',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: [
                 'urn:epc:id:sgtin:0614141.107346.2017',
                 'urn:epc:id:sgtin:0614141.107346.2018',
@@ -471,7 +473,7 @@ describe('Unit test: validator.js', () => {
               },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -484,7 +486,7 @@ describe('Unit test: validator.js', () => {
                   sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
                   sensorReport: [
                     {
-                      type: 'gs1:MeasurementType-Temperature',
+                      type: cbv.sensorMeasurementTypes.temperature,
                       value: 26.0,
                       uom: 'CEL',
                       deviceID: 'urn:epc:id:giai:4000001.111',
@@ -492,7 +494,7 @@ describe('Unit test: validator.js', () => {
                       rawData: 'https://example.org/giai/401234599999',
                     },
                     {
-                      type: 'gs1:MeasurementType-Humidity',
+                      type: cbv.sensorMeasurementTypes.relative_humidity,
                       value: 12.1,
                       uom: 'A93',
                       deviceID: 'urn:epc:id:giai:4000001.222',
@@ -528,8 +530,8 @@ describe('Unit test: validator.js', () => {
               eventID: 'test:event:id',
               type: 'ObjectEvent',
               action: 'OBSERVE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:shipping',
-              disposition: 'urn:epcglobal:cbv:disp:in_transit',
+              bizStep: cbv.bizSteps.shipping,
+              disposition: cbv.dispositions.in_transit,
               epcList: [
                 'urn:epc:id:sgtin:0614141.107346.2017',
                 'urn:epc:id:sgtin:0614141.107346.2018',
@@ -546,7 +548,7 @@ describe('Unit test: validator.js', () => {
               },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:po',
+                  type: cbv.businessTransactionTypes.po,
                   bizTransaction: 'http://transaction.acme.com/po/12345678',
                 },
               ],
@@ -556,7 +558,7 @@ describe('Unit test: validator.js', () => {
                   sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
                   sensorReport: [
                     {
-                      type: 'gs1:MeasurementType-Temperature',
+                      type: cbv.sensorMeasurementTypes.temperature,
                       value: 26.0,
                       uom: 'CEL',
                       deviceID: 'urn:epc:id:giai:4000001.111',
@@ -564,7 +566,7 @@ describe('Unit test: validator.js', () => {
                       rawData: 'https://example.org/giai/401234599999',
                     },
                     {
-                      type: 'gs1:MeasurementType-Humidity',
+                      type: cbv.sensorMeasurementTypes.absolute_humidity,
                       value: 12.1,
                       uom: 'A93',
                       deviceID: 'urn:epc:id:giai:4000001.222',
@@ -606,35 +608,35 @@ describe('Unit test: validator.js', () => {
                 'urn:epc:id:sgtin:9520001.012346.10000001003',
               ],
               action: 'DELETE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:unpacking',
-              disposition: 'urn:epcglobal:cbv:disp:in_progress',
+              bizStep: cbv.bizSteps.unpacking,
+              disposition: cbv.dispositions.in_progress,
               readPoint: { id: 'urn:epc:id:sgln:9529999.99999.0' },
               bizLocation: { id: 'urn:epc:id:sgln:9529999.99999.0' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:inv',
+                  type: cbv.businessTransactionTypes.inv,
                   bizTransaction: 'urn:epcglobal:cbv:bt:9520011111116:A123',
                 },
               ],
               sourceList: [
                 {
-                  type: 'urn:epcglobal:cbv:sdt:owning_party',
+                  type: cbv.sourceDestinationTypes.owning_party,
                   source: 'urn:epc:id:pgln:9520001.11111',
                 },
               ],
               destinationList: [
                 {
-                  type: 'urn:epcglobal:cbv:sdt:owning_party',
+                  type: cbv.sourceDestinationTypes.owning_party,
                   destination: 'urn:epc:id:pgln:9520999.99999',
                 },
               ],
               persistentDisposition: {
-                unset: ['urn:epcglobal:cbv:disp:completeness_inferred'],
-                set: ['urn:epcglobal:cbv:disp:completeness_verified'],
+                unset: [cbv.dispositions.completeness_inferred],
+                set: [cbv.dispositions.completeness_verified],
               },
               errorDeclaration: {
                 declarationTime: '2020-01-14T23:00:00.000+00:00',
-                reason: 'urn:epcglobal:cbv:er:incorrect_data',
+                reason: cbv.errorReasonIdentifiers.incorrect_data,
                 correctiveEventIDs: ['urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'],
               },
             },
@@ -667,35 +669,35 @@ describe('Unit test: validator.js', () => {
                 'urn:epc:id:sgtin:9520001.012346.10000001003',
               ],
               action: 'DELETE',
-              bizStep: 'urn:epcglobal:cbv:bizstep:unpacking',
-              disposition: 'urn:epcglobal:cbv:disp:in_progress',
+              bizStep: cbv.bizSteps.unpacking,
+              disposition: cbv.dispositions.in_progress,
               readPoint: { id: 'urn:epc:id:sgln:9529999.99999.0' },
               bizLocation: { id: 'urn:epc:id:sgln:9529999.99999.0' },
               bizTransactionList: [
                 {
-                  type: 'urn:epcglobal:cbv:btt:inv',
+                  type: cbv.businessTransactionTypes.inv,
                   bizTransaction: 'urn:epcglobal:cbv:bt:9520011111116:A123',
                 },
               ],
               sourceList: [
                 {
-                  type: 'urn:epcglobal:cbv:sdt:owning_party',
+                  type: cbv.sourceDestinationTypes.owning_party,
                   source: 'urn:epc:id:pgln:9520001.11111',
                 },
               ],
               destinationList: [
                 {
-                  type: 'urn:epcglobal:cbv:sdt:owning_party',
+                  type: cbv.sourceDestinationTypes.owning_party,
                   destination: 'urn:epc:id:pgln:9520999.99999',
                 },
               ],
               persistentDisposition: {
-                unset: ['urn:epcglobal:cbv:disp:completeness_inferred'],
-                set: ['urn:epcglobal:cbv:disp:completeness_verified'],
+                unset: [cbv.dispositions.completeness_inferred],
+                set: [cbv.dispositions.completeness_verified],
               },
               errorDeclaration: {
                 declarationTime: '2020-01-14T23:00:00.000+00:00',
-                reason: 'urn:epcglobal:cbv:er:incorrect_data',
+                reason: cbv.errorReasonIdentifiers.incorrect_data,
                 correctiveEventIDs: ['urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8'],
                 evtErrorCode: 1239,
               },
@@ -707,7 +709,7 @@ describe('Unit test: validator.js', () => {
       assert.throws(() => { validateEpcisDocument(epcisDocument); });
     });
 
-    it('should accept TransformationEvent various quantity list types', () => {
+    it('should accept TransformationEvent with various quantity list types', () => {
       const epcisDocument = {
         type: 'EPCISDocument',
         schemaVersion: '2.0',
@@ -1024,7 +1026,7 @@ describe('Unit test: validator.js', () => {
       oe.addBizTransactionList([
         new BizTransactionElement(
           {
-            type: 'urn:epcglobal:cbv:btt:po',
+            type: cbv.businessTransactionTypes.po,
             bizTransaction: 'http://transaction.acme.com/po/12345678',
             invalid: '',
           },
@@ -1133,7 +1135,7 @@ describe('Unit test: validator.js', () => {
           sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
           sensorReport: [
             {
-              type: 'gs1:MeasurementType-Temperature',
+              type: cbv.sensorMeasurementTypes.temperature,
               value: 26.0,
               uom: 'CEL',
               deviceID: 'urn:epc:id:giai:4000001.111',
@@ -1141,7 +1143,7 @@ describe('Unit test: validator.js', () => {
               rawData: 'https://example.org/giai/401234599999',
             },
             {
-              type: 'gs1:MeasurementType-Humidity',
+              type: cbv.sensorMeasurementTypes.absolute_humidity,
               value: 12.1,
               uom: 'A93',
               deviceID: 'urn:epc:id:giai:4000001.222',
@@ -1165,7 +1167,7 @@ describe('Unit test: validator.js', () => {
           sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00', invalid: '' },
           sensorReport: [
             {
-              type: 'gs1:MeasurementType-Temperature',
+              type: cbv.sensorMeasurementTypes.temperature,
               value: 26.0,
               uom: 'CEL',
               deviceID: 'urn:epc:id:giai:4000001.111',
@@ -1173,7 +1175,7 @@ describe('Unit test: validator.js', () => {
               rawData: 'https://example.org/giai/401234599999',
             },
             {
-              type: 'gs1:MeasurementType-Humidity',
+              type: cbv.sensorMeasurementTypes.relative_humidity,
               value: 12.1,
               uom: 'A93',
               deviceID: 'urn:epc:id:giai:4000001.222',
@@ -1197,7 +1199,7 @@ describe('Unit test: validator.js', () => {
           sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
           sensorReport: [
             {
-              type: 'gs1:MeasurementType-Temperature',
+              type: cbv.sensorMeasurementTypes.temperature,
               value: 26.0,
               uom: 'CEL',
               deviceID: 'urn:epc:id:giai:4000001.111',
@@ -1206,7 +1208,7 @@ describe('Unit test: validator.js', () => {
               invalid: '',
             },
             {
-              type: 'gs1:MeasurementType-Humidity',
+              type: cbv.sensorMeasurementTypes.absolute_humidity,
               value: 12.1,
               uom: 'A93',
               deviceID: 'urn:epc:id:giai:4000001.222',
