@@ -15,7 +15,7 @@ export { default as AssociationEvent } from './entity/events/AssociationEvent';
 export { default as TransactionEvent } from './entity/events/TransactionEvent';
 export { default as Event } from './entity/events/Event';
 export * from './utils/constants';
-export { fieldNames } from './utils/field-names';
+export { default as fieldNames } from './utils/field-names';
 
 export { validateEpcisDocument, validateAgainstSchema, loadSchema } from './schema/validator';
 export { default as ErrorDeclaration } from './entity/model/ErrorDeclaration';

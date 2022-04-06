@@ -6,7 +6,7 @@
 
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import { fieldNames } from '../utils/field-names';
+import fieldNames from '../utils/field-names';
 import definitions from './definitions.json';
 import validationMode from '../settings';
 import EPCISDocument from './EPCISDocument.schema.json';
