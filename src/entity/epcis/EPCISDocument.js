@@ -200,6 +200,57 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
+   * Set the instanceIdentifier property
+   * @param {string} instanceIdentifier
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  setInstanceIdentifier(instanceIdentifier) {
+    return this.generateSetterFunction('instanceIdentifier', instanceIdentifier, ['string']);
+  }
+
+  /**
+   * Getter for the instanceIdentifier property
+   * @return {string} - the instanceIdentifier
+   */
+  getInstanceIdentifier() {
+    return this.instanceIdentifier;
+  }
+
+  /**
+   * Set the sender property
+   * @param {string} sender
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  setSender(sender) {
+    return this.generateSetterFunction('sender', sender, ['string']);
+  }
+
+  /**
+   * Getter for the sender property
+   * @return {string} - the sender
+   */
+  getSender() {
+    return this.sender;
+  }
+
+  /**
+   * Set the receiver property
+   * @param {string} receiver
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  setReceiver(receiver) {
+    return this.generateSetterFunction('receiver', receiver, ['string']);
+  }
+
+  /**
+   * Getter for the receiver property
+   * @return {string} - the receiver
+   */
+  getReceiver() {
+    return this.receiver;
+  }
+
+  /**
    * Check if the EPCISDocument respects the rules of the standard defined in
    * src/schema/EPCISDocument.schema.json
    * @return {boolean} - true if the EPCIS document is valid
