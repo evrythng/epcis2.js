@@ -16,7 +16,7 @@ import {
   errorReasonIdentifiers, sensorMeasurementTypes, components,
 } from '../../../src';
 
-const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
+const exampleObjectEvent = JSON.parse(JSON.stringify(EPCISDocumentObjectEvent.epcisBody.eventList[0]));
 
 describe('unit tests for pre-hashing', () => {
   it('Should return a valid pre-hash', () => {
