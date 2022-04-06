@@ -68,7 +68,7 @@ const sendACaptureRequestExample = async () => {
   console.log(`field names of an EPCIS Document:`);
   console.log(fieldNames.epcisDocument);
   
-  console.log(`example of constant from constants.js:`);
+  console.log(`example of constants from constants.js:`);
   console.log(eventEpcRelType)
 };
 
