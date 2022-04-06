@@ -1,0 +1,260 @@
+{
+  "$id": "https://gs1.github.io/EPCIS/JSON-Schema/schemas/TransformationEvent-JSON-Schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+      "TransformationEvent": {
+          "allOf": [
+              {
+                  "$ref": "#/definitions/Event"
+              },
+              {
+                  "type": "object",
+                  "properties": {
+                      "type": {
+                          "type": "string",
+                          "enum": [
+                              "TransformationEvent"
+                          ]
+                      },
+                      "inputEPCList": {
+                          "$ref": "#/definitions/epcList"
+                      },
+                      "inputQuantityList": {
+                          "$ref": "#/definitions/quantityList"
+                      },
+                      "outputEPCList": {
+                          "$ref": "#/definitions/epcList"
+                      },
+                      "outputQuantityList": {
+                          "$ref": "#/definitions/quantityList"
+                      },
+                      "transformationID": {
+                          "$ref": "#/definitions/uri"
+                      },
+                      "bizStep": {
+                          "$ref": "bizStep-JSON-Schema.json#/definitions/bizStep"
+                      },
+                      "disposition": {
+                          "$ref": "disposition-JSON-Schema.json#/definitions/disposition"
+                      },
+                      "persistentDisposition": {
+                          "$ref": "#/definitions/persistentDisposition"
+                      },
+                      "readPoint": {
+                          "$ref": "#/definitions/readPoint"
+                      },
+                      "bizLocation": {
+                          "$ref": "#/definitions/bizLocation"
+                      },
+                      "bizTransactionList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/bizTransaction"
+                          }
+                      },
+                      "sourceList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/source"
+                          }
+                      },
+                      "destinationList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/destination"
+                          }
+                      },
+                      "sensorElementList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/sensorElement"
+                          }
+                      },
+                      "ilmd": {
+                          "$ref": "#/definitions/ilmd"
+                      }
+                  },
+                  "required": [
+                      "type"
+                  ],
+                  "propertyNames": {
+                      "anyOf": [
+                          {      
+                              "$ref": "#/definitions/common-event-properties"
+                          },
+                          {
+                              "type": "string",
+                              "enum": [
+                                  "inputEPCList",
+                                  "inputQuantityList",
+                                  "outputEPCList",
+                                  "outputQuantityList",
+                                  "transformationID",
+                                  "bizStep",
+                                  "disposition",
+                                  "persistentDisposition",
+                                  "readPoint",
+                                  "bizLocation",
+                                  "bizTransactionList",
+                                  "sourceList",
+                                  "destinationList",
+                                  "sensorElementList",
+                                  "ilmd"
+                              ]
+                          }
+                      ]
+                  }
+              },
+              {
+                  "anyOf": [
+                      {
+                          "allOf": [
+                              {
+                                  "anyOf": [
+                                      {
+                                          "type": "object",
+                                          "properties": {
+                                              "inputEPCList": {
+                                                  "type": "array",
+                                                  "minItems": 1,
+                                                  "items": {
+                                                      "$ref": "definitions-JSON-Schema.json#/definitions/id"
+                                                  }
+                                              }
+                                          },
+                                          "required": [
+                                              "inputEPCList"
+                                          ]
+                                      },
+                                      {
+                                          "type": "object",
+                                          "properties": {
+                                              "inputQuantityList": {
+                                                  "type": "array",
+                                                  "minItems": 1,
+                                                  "items": {
+                                                      "$ref": "#/definitions/quantityElement"
+                                                  }
+                                              }
+                                          },
+                                          "required": [
+                                              "inputQuantityList"
+                                          ]
+                                      }
+                                  ]
+                              },
+                              {
+                                  "anyOf": [
+                                      {
+                                          "type": "object",
+                                          "properties": {
+                                              "outputEPCList": {
+                                                  "type": "array",
+                                                  "minItems": 1,
+                                                  "items": {
+                                                      "$ref": "definitions-JSON-Schema.json#/definitions/id"
+                                                  }
+                                              }
+                                          },
+                                          "required": [
+                                              "outputEPCList"
+                                          ]
+                                      },
+                                      {
+                                          "type": "object",
+                                          "properties": {
+                                              "outputQuantityList": {
+                                                  "type": "array",
+                                                  "minItems": 1,
+                                                  "items": {
+                                                      "$ref": "#/definitions/quantityElement"
+                                                  }
+                                              }
+                                          },
+                                          "required": [
+                                              "outputQuantityList"
+                                          ]
+                                      }
+                                  ]
+                              }
+                          ]
+                      },
+                      {
+                          "anyOf": [
+                              {
+                                  "type": "object",
+                                  "properties": {
+                                      "inputEPCList": {
+                                          "type": "array",
+                                          "minItems": 1,
+                                          "items": {
+                                              "$ref": "definitions-JSON-Schema.json#/definitions/id"
+                                          }
+                                      }
+                                  },
+                                  "required": [
+                                      "inputEPCList"
+                                  ]
+                              },
+                              {
+                                  "type": "object",
+                                  "properties": {
+                                      "inputQuantityList": {
+                                          "type": "array",
+                                          "minItems": 1,
+                                          "items": {
+                                              "$ref": "#/definitions/quantityElement"
+                                          }
+                                      }
+                                  },
+                                  "required": [
+                                      "inputQuantityList"
+                                  ]
+                              },
+                              {
+                                  "type": "object",
+                                  "properties": {
+                                      "outputEPCList": {
+                                          "type": "array",
+                                          "minItems": 1,
+                                          "items": {
+                                              "$ref": "definitions-JSON-Schema.json#/definitions/id"
+                                          }
+                                      }
+                                  },
+                                  "required": [
+                                      "outputEPCList"
+                                  ]
+                              },
+                              {
+                                  "type": "object",
+                                  "properties": {
+                                      "outputQuantityList": {
+                                          "type": "array",
+                                          "minItems": 1,
+                                          "items": {
+                                              "$ref": "#/definitions/quantityElement"
+                                          }
+                                      }
+                                  },
+                                  "required": [
+                                      "outputQuantityList"
+                                  ]
+                              }
+                          ],
+                          "type": "object",
+                          "required": [
+                              "transformationID"
+                          ]
+                      }
+                  ]
+              }
+          ]
+      }
+  },
+  "allOf": [
+      {
+          "$ref": "#/definitions/TransformationEvent"
+      }
+  ]
+}

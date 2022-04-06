@@ -1,0 +1,208 @@
+{
+  "$id": "https://gs1.github.io/EPCIS/JSON-Schema/schemas/ObjectEvent-JSON-Schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+      "ObjectEvent": {
+          "allOf": [
+              {
+                  "$ref": "#/definitions/Event"
+              },
+              {
+                  "type": "object",
+                  "properties": {
+                      "type": {
+                          "type": "string",
+                          "enum": ["ObjectEvent"]
+                      },
+                      "epcList": {
+                          "$ref": "#/definitions/epcList"
+                      },
+                      "quantityList": {
+                          "$ref": "#/definitions/quantityList"
+                      },
+                      "action": {
+                          "$ref": "#/definitions/action"
+                      },
+                      "bizStep": {
+                          "$ref": "bizStep-JSON-Schema.json#/definitions/bizStep"
+                      },
+                      "disposition": {
+                          "$ref": "disposition-JSON-Schema.json#/definitions/disposition"
+                      },
+                      "persistentDisposition": {
+                          "$ref": "#/definitions/persistentDisposition"
+                      },
+                      "readPoint": {
+                          "$ref": "#/definitions/readPoint"
+                      },
+                      "bizLocation": {
+                          "$ref": "#/definitions/bizLocation"
+                      },
+                      "bizTransactionList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/bizTransaction"
+                          }
+                      },
+                      "sourceList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/source"
+                          }
+                      },
+                      "destinationList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/destination"
+                          }
+                      },
+                      "sensorElementList": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/sensorElement"
+                          }
+                      },
+                      "ilmd": {
+                          "$ref": "#/definitions/ilmd"
+                      }
+                  },
+                  "required": [
+                      "type",
+                      "action"
+                  ],
+                  "propertyNames": {
+                      "anyOf": [
+                          {      
+                              "$ref": "#/definitions/common-event-properties"
+                          },
+                          {
+                              "type": "string",
+                              "enum": [
+                                  "action",
+                                  "epcList",
+                                  "quantityList",
+                                  "bizStep",
+                                  "disposition",
+                                  "persistentDisposition",
+                                  "readPoint",
+                                  "bizLocation",
+                                  "bizTransactionList",
+                                  "sourceList",
+                                  "destinationList",
+                                  "sensorElementList",
+                                  "ilmd"
+                              ]
+                          }
+                      ]
+                  }
+              },
+              {
+                  "anyOf": [
+                      {
+                          "type": "object",
+                          "properties": {
+                              "epcList": {
+                                  "type": "array",
+                                  "minItems": 0,
+                                  "items": {
+                                      "$ref": "definitions-JSON-Schema.json#/definitions/id"
+                                  }
+                              }
+                          },
+                          "required": [
+                              "epcList"
+                          ]
+                      },
+                      {
+                          "type": "object",
+                          "properties": {
+                              "quantityList": {
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "items": {
+                                      "$ref": "#/definitions/quantityElement"
+                                  }
+                              }
+                          },
+                          "required": [
+                              "quantityList"
+                          ]
+                      },
+                      {
+                          "allOf": [
+                              {
+                                  "type": "object",
+                                  "properties": {
+                                      "sensorElementList": {
+                                          "type": "array",
+                                          "items": {
+                                              "$ref": "#/definitions/sensorElement"
+                                          },
+                                          "minItems": 1
+                                      }
+                                  },
+                                  "required": [
+                                      "sensorElementList"
+                                  ]
+                              },
+                              {
+                                  "type": "object",
+                                  "properties": {
+                                      "readPoint": {
+                                          "$ref": "#/definitions/readPoint"
+                                      }
+                                  },
+                                  "required": [
+                                      "readPoint"
+                                  ]
+                              }
+                          ]
+                      }
+                  ]
+              },
+              {
+                  "anyOf": [
+                      {
+                          "type": "object",
+                          "properties": {
+                              "ilmd": {
+                                  "not": {}
+                              },
+                              "action": {
+                                  "type": "string",
+                                  "pattern": "^OBSERVE$"
+                              }
+                          }
+                      },
+                      {
+                          "type": "object",
+                          "properties": {
+                              "ilmd": {
+                                  "not": {}
+                              },
+                              "action": {
+                                  "type": "string",
+                                  "pattern": "^DELETE$"
+                              }
+                          }
+                      },
+                      {
+                          "type": "object",
+                          "properties": {
+                              "action": {
+                                  "type": "string",
+                                  "pattern": "^ADD$"
+                              }
+                          }
+                      }
+                  ]
+              }
+          ]
+      }
+  },
+  "allOf": [
+      {
+          "$ref": "#/definitions/ObjectEvent"
+      }
+  ]
+}

@@ -9,7 +9,7 @@ This project is jointly supported by [EVRYTHNG](https://evrythng.com) and [Zebra
 
 ## Introduction to EPCIS and EPCIS 2.0
 
-EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the work-in-progress major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web. EPCIS 2.0 currently being developed by the EPCIS and CBV 2.0 MSWG which EVRYTHNG are Zebra part of. The standard has not been ratified yet, hence consider everything you see here tentative.
+EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the work-in-progress major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web. EPCIS 2.0 is currently being developed by the EPCIS and CBV 2.0 MSWG which EVRYTHNG and Zebra are part of. The standard has not been ratified yet, hence consider everything you see here tentative.
 
 EPCIS 2.0 brings the following highlights to the table:
 
@@ -153,6 +153,13 @@ The latter line should print an instance of the event `ObjectEvent` which is cre
 This instance has many methods which can be used to view or modify the EPCIS 2.0 event.
 You can view all of them in ./src/entity/events/Event.js.
 
+It is also possible to validate EPCIS events without wrapping them in an EPCIS Document.
+
+```js
+const objectEvent = new ObjectEvent();
+console.log(objectEvent.isValid());
+```
+
 ## Building complex EPCIS 2.0 JSON documents
 
 ### Instantiating an EPCIS 2.0 Document
@@ -233,6 +240,28 @@ Then, by typing `actionType.` as a parameter of the `setAction` method of the `O
 all the attributes associated to this particular CBV.
 The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.
 
+
+### Constants
+
+There are constants that you can find in the `constants.js` file.
+There is also an constant object containing all the possible field names for an Entity in the `field-names.js` file.
+All these constants can be very useful.
+Here is an example of field names: 
+```js
+const { fieldNames } = require('epcis2.js');
+console.log(fieldNames.epcisDocument);
+  // {
+  //   type: 'type',
+  //   context: '@context',
+  //   schemaVersion: 'schemaVersion',
+  //   creationDate: 'creationDate',
+  //   epcisHeader: 'epcisHeader',
+  //   epcisBody: 'epcisBody',
+  //   sender: 'sender',
+  //   receiver: 'receiver',
+  //   instanceIdentifier: 'instanceIdentifier',
+  // }
+```
 
 ### Instantiating events from EPCIS 2.0 objects
 

@@ -8,6 +8,7 @@ import { assert, expect } from 'chai';
 import * as sdk from '../src';
 
 import EPCISDocumentObjectEvent from './data/EPCISDocument-ObjectEvent.json';
+import EPCISObjectEventSchema from '../src/schema/ObjectEvent.schema.json';
 
 describe('All the functions should be well exported', () => {
   it('EPCISDocument', async () => {
@@ -172,7 +173,43 @@ describe('All the functions should be well exported', () => {
     const o = sdk.objectToEvent({ type: 'ObjectEvent' });
     expect(o).to.be.instanceof(sdk.ObjectEvent);
   });
-  it('validateSchema', async () => {
-    assert.doesNotThrow(() => { sdk.validateSchema(EPCISDocumentObjectEvent); });
+  it('validateEpcisDocument', async () => {
+    assert.doesNotThrow(() => { sdk.validateEpcisDocument(EPCISDocumentObjectEvent); });
+  });
+  it('loadSchema', async () => {
+    assert.doesNotThrow(() => { sdk.loadSchema(EPCISObjectEventSchema); });
+  });
+  it('validateAgainstSchema', async () => {
+    assert.doesNotThrow(() => { sdk.validateAgainstSchema(EPCISDocumentObjectEvent.epcisBody.eventList[0], 'ObjectEvent'); });
+  });
+  it('field-names.js', async () => {
+    expect(sdk.fieldNames.epcisDocument).to.deep.equal(
+      {
+        type: 'type',
+        context: '@context',
+        schemaVersion: 'schemaVersion',
+        creationDate: 'creationDate',
+        epcisHeader: 'epcisHeader',
+        epcisBody: 'epcisBody',
+        sender: 'sender',
+        receiver: 'receiver',
+        instanceIdentifier: 'instanceIdentifier',
+      },
+    );
+  });
+  it('constants.js', async () => {
+    expect(sdk.eventEpcRelType).to.deep.equal(
+      {
+        epcList: 'epcList',
+        childEPCs: 'childEPCs',
+        inputEPCList: 'inputEPCList',
+        outputEPCList: 'outputEPCList',
+        quantityList: 'quantityList',
+        inputQuantityList: 'inputQuantityList',
+        outputQuantityList: 'outputQuantityList',
+        childQuantityList: 'childQuantityList',
+        parentID: 'parentID',
+      },
+    );
   });
 });

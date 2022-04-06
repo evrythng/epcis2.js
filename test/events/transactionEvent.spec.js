@@ -173,4 +173,21 @@ describe('unit tests for the TransactionEvent class', () => {
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
+  describe('TransactionEvent.isValid()', () => {
+    it('should accept a real TransactionEvent', async () => {
+      const ee = new TransactionEvent(exampleTransactionEvent);
+      expect(ee.type).to.be.equal('TransactionEvent');
+      assert.doesNotThrow(() => ee.isValid());
+    });
+    it('should reject an undefined Event', async () => {
+      const ee = undefined;
+      assert.throw(() => ee.isValid());
+    });
+    it('should reject an incomplete Event', async () => {
+      const ee = new TransactionEvent({
+        type: 'TransactionEvent',
+      });
+      assert.throw(() => ee.isValid());
+    });
+  });
 });

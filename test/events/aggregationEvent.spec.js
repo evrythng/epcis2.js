@@ -150,4 +150,21 @@ describe('unit tests for the AggregationEvent class', () => {
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
   });
+  describe('AggregationEvent.isValid()', () => {
+    it('should accept a real AggregationEvent', async () => {
+      const ae = new AggregationEvent(exampleAggregationEvent);
+      expect(ae.type).to.be.equal('AggregationEvent');
+      assert.doesNotThrow(() => ae.isValid());
+    });
+    it('should reject an undefined Event', async () => {
+      const ae = undefined;
+      assert.throw(() => ae.isValid());
+    });
+    it('should reject an incomplete Event', async () => {
+      const ae = new AggregationEvent({
+        type: 'AggregationEvent',
+      });
+      assert.throw(() => ae.isValid());
+    });
+  });
 });

@@ -8,6 +8,7 @@
 /* eslint-disable no-unused-vars */
 
 import Event, { fieldToFunctions } from './Event';
+import { validateAgainstSchema } from '../../schema/validator';
 
 const invalidFields = [
   'epcList',
@@ -30,7 +31,7 @@ const invalidFields = [
 
 export default class ExtendedEvent extends Event {
   /**
-   * You can either create an empty Aggregation Event or provide an already existing Aggregation
+   * You can either create an empty Extended Event or provide an already existing Extended
    * event via Object
    * @param {Object} [extendedEvent] - The object that will be used to create the
    * ExtendedEvent entity
@@ -57,10 +58,17 @@ export default class ExtendedEvent extends Event {
   }
 
   /**
-   * Getter for the type property
-   * @return {string} - the type
+   * @override
+   * Check if the ExtendedEvent respects the rules of the standard defined in
+   * src/schema/ExtendedEvent.schema.json
+   * @return {boolean} - true if the Event is valid
+   * @throws {Error} - if the schema isn't valid
    */
-  getType() {
-    return this.type;
+  isValid() {
+    const result = validateAgainstSchema(this.toObject(), 'ExtendedEvent');
+    if (!result.success) {
+      throw new Error(result.errors);
+    }
+    return result.success;
   }
 }

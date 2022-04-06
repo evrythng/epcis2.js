@@ -425,4 +425,21 @@ describe('unit tests for the TransformationEvent class', () => {
       assert.throws(() => transformationEvent.addOutputQuantityList([new Ilmd(), new Ilmd()]));
     });
   });
+  describe('TransformationEvent.isValid()', () => {
+    it('should accept a real TransformationEvent', async () => {
+      const ee = new TransformationEvent(exampleTransformationEvent);
+      expect(ee.type).to.be.equal('TransformationEvent');
+      assert.doesNotThrow(() => ee.isValid());
+    });
+    it('should reject an undefined Event', async () => {
+      const ee = undefined;
+      assert.throw(() => ee.isValid());
+    });
+    it('should reject an incomplete Event', async () => {
+      const ee = new TransformationEvent({
+        type: 'TransformationEvent',
+      });
+      assert.throw(() => ee.isValid());
+    });
+  });
 });
