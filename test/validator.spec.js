@@ -440,7 +440,7 @@ describe('Unit test: validator.js', () => {
       assert.deepEqual(res.errors, []);
     });
 
-    it('should accept correct sensorElementList with valid extensions', () => {
+    it('should accept sensorElementList with extensions', () => {
       const epcisDocument = {
         '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
         type: 'EPCISDocument',
@@ -891,54 +891,9 @@ describe('Unit test: validator.js', () => {
                       percValue: 12.7,
                       uom: 'CEL',
                       sDev: 0.1,
-                      'ext1:someFurtherReportData': 'someText',
                       deviceMetadata: 'https://id.gs1.org/giai/4000001111',
                     },
                   ],
-                  'ext1:float': '20',
-                  'ext1:time': '2013-06-08T14:58:56.591Z',
-                  'ext1:array': [
-                    '12',
-                    '22',
-                    '2013-06-08T14:58:56.591Z',
-                    'true',
-                    'stringInArray',
-                    {
-                      'ext1:object': {
-                        'ext1:object': {
-                          'ext2:array': [
-                            '14',
-                            '23.0',
-                            'stringInArrayInObjectInArray',
-                          ],
-                          'ext2:object': {
-                            'ext2:object': {
-                              'ext3:string': 'stringInObjectInObjectInArray',
-                            },
-                          },
-                          'ext2:int': '13',
-                          'ext2:string': 'stringInObjectInArray',
-                        },
-                      },
-                    },
-                  ],
-                  'ext1:boolean': 'true',
-                  'ext1:object': {
-                    'ext2:array': [
-                      '11',
-                      '21',
-                      'stringInArrayInObject',
-                    ],
-                    'ext2:object': {
-                      'ext2:object': {
-                        'ext3:string': 'stringInObjectInObject',
-                      },
-                    },
-                    'ext2:string': 'stringInObject',
-                  },
-                  'ext1:default': 'stringAsDefaultValue',
-                  'ext1:int': '10',
-                  'ext1:string': 'string',
                 },
               ],
               persistentDisposition: {
