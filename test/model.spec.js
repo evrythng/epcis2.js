@@ -171,11 +171,10 @@ describe('unit tests for model Objects', () => {
       expect(quantityElement.toObject()).to.deep.equal(exampleQuantityElement);
     });
 
-    it('should add and remove custom fields', async () => {
+    it('should not add and remove custom fields', async () => {
       const obj = new QuantityElement();
-      obj.addExtension('key', 'value');
-      expect(obj.toObject().key).to.be.equal('value');
-      obj.removeExtension('key');
+      assert.throw(() => { obj.addExtension('key', 'value'); });
+      assert.throw(() => { obj.removeExtension('key'); });
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
@@ -249,11 +248,10 @@ describe('unit tests for model Objects', () => {
       expect(json.bizTransaction).to.be.equal(exampleBizTransactionElement.bizTransaction);
     });
 
-    it('should add and remove custom fields', async () => {
+    it('should not add and remove custom fields', async () => {
       const obj = new BizTransactionElement();
-      obj.addExtension('key', 'value');
-      expect(obj.toObject().key).to.be.equal('value');
-      obj.removeExtension('key');
+      assert.throws(() => { obj.addExtension('key', 'value'); });
+      assert.throws(() => { obj.removeExtension('key'); });
       expect(obj.toObject().key).to.be.equal(undefined);
     });
   });
@@ -343,7 +341,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.removeSet(set[0]);
       expect(persistentDisposition.set.toString()).to.be.equal([set[1]].toString());
       persistentDisposition.removeSet(set[1]);
-      expect(persistentDisposition.set.toString()).to.be.equal([].toString());
+      expect(persistentDisposition.set).to.be.equal(undefined);
     });
 
     it('should add and remove a set List', async () => {
@@ -351,7 +349,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.addSetList(set);
       expect(persistentDisposition.set.toString()).to.be.equal(set.toString());
       persistentDisposition.removeSetList(set);
-      expect(persistentDisposition.set.toString()).to.be.equal([].toString());
+      expect(persistentDisposition.set).to.be.equal(undefined);
     });
 
     it('should clear the set List', async () => {
@@ -377,7 +375,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.removeUnset(unset[0]);
       expect(persistentDisposition.unset.toString()).to.be.equal([unset[1]].toString());
       persistentDisposition.removeUnset(unset[1]);
-      expect(persistentDisposition.unset.toString()).to.be.equal([].toString());
+      expect(persistentDisposition.unset).to.be.equal(undefined);
     });
 
     it('should add and remove an unset List', async () => {
@@ -385,7 +383,7 @@ describe('unit tests for model Objects', () => {
       persistentDisposition.addUnsetList(unset);
       expect(persistentDisposition.unset.toString()).to.be.equal(unset.toString());
       persistentDisposition.removeUnsetList(unset);
-      expect(persistentDisposition.unset.toString()).to.be.equal([].toString());
+      expect(persistentDisposition.unset).to.be.equal(undefined);
     });
 
     it('should clear the unset List', async () => {
@@ -402,12 +400,57 @@ describe('unit tests for model Objects', () => {
       expect(json.unset).to.be.equal(undefined);
     });
 
-    it('should add and remove custom fields', async () => {
+    it('should not add and remove custom fields', async () => {
       const obj = new PersistentDisposition();
-      obj.addExtension('key', 'value');
-      expect(obj.toObject().key).to.be.equal('value');
-      obj.removeExtension('key');
+      assert.throws(() => { obj.addExtension('key', 'value'); });
+      assert.throws(() => { obj.removeExtension('key'); });
       expect(obj.toObject().key).to.be.equal(undefined);
+    });
+
+    it('should clear setList if empty', async () => {
+      const persistentDisposition = new PersistentDisposition();
+      persistentDisposition.addSet(set[0]);
+      persistentDisposition.addSet(set[1]);
+      persistentDisposition.removeSet(set[0]);
+      expect(persistentDisposition.set).to.not.be.equal(undefined);
+      persistentDisposition.removeSet(set[1]);
+      expect(persistentDisposition.set).to.be.equal(undefined);
+
+      persistentDisposition.addSet(set[0]);
+      persistentDisposition.addSet(set[1]);
+      persistentDisposition.removeSetList([set[1], set[0]]);
+      expect(persistentDisposition.set).to.be.equal(undefined);
+    });
+
+    it('should throw if we add an item that is already in the set list', async () => {
+      const persistentDisposition = new PersistentDisposition();
+      assert.doesNotThrow(() => { persistentDisposition.addSet(set[0]); });
+      assert.throw(() => { persistentDisposition.addSet(set[0]); });
+      assert.throw(() => { persistentDisposition.addSet([set[0], set[1]]); });
+      expect(persistentDisposition.set.toString()).to.be.equal((set[0].toString()));
+    });
+
+    it('should clear unsetList if empty', async () => {
+      const persistentDisposition = new PersistentDisposition();
+      persistentDisposition.addUnset(unset[0]);
+      persistentDisposition.addUnset(unset[1]);
+      persistentDisposition.removeUnset(unset[0]);
+      expect(persistentDisposition.unset).to.not.be.equal(undefined);
+      persistentDisposition.removeUnset(unset[1]);
+      expect(persistentDisposition.unset).to.be.equal(undefined);
+
+      persistentDisposition.addUnset(unset[0]);
+      persistentDisposition.addUnset(unset[1]);
+      persistentDisposition.removeUnsetList([unset[1], unset[0]]);
+      expect(persistentDisposition.unset).to.be.equal(undefined);
+    });
+
+    it('should throw if we add an item that is already in the unset list', async () => {
+      const persistentDisposition = new PersistentDisposition();
+      assert.doesNotThrow(() => { persistentDisposition.addUnset(unset[0]); });
+      assert.throw(() => { persistentDisposition.addUnset(unset[0]); });
+      assert.throw(() => { persistentDisposition.addUnset([unset[0], unset[1]]); });
+      expect(persistentDisposition.unset.toString()).to.be.equal((unset[0].toString()));
     });
   });
 
