@@ -112,7 +112,9 @@ describe('unit tests for sensor relative Objects', () => {
       expect(sensorReport.getPercValue()).to.be.equal(exampleSensorReportElement.percValue);
       expect(sensorReport.getUom()).to.be.equal(exampleSensorReportElement.uom);
       expect(sensorReport.getException()).to.be.equal(exampleSensorReportElement.exception);
-      expect(sensorReport.getCoordinateReferenceSystem()).to.be.equal(exampleSensorReportElement.coordinateReferenceSystem);
+      expect(sensorReport.getCoordinateReferenceSystem()).to.be.equal(
+        exampleSensorReportElement.coordinateReferenceSystem,
+      );
     });
 
     it('should create a valid SensorReportElement object from JSON', async () => {

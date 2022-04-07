@@ -1175,7 +1175,7 @@ describe('Unit test: validator.js', () => {
     });
     it('should reject correct EPCISDocument with an invalid cbv', () => {
       const te = new ObjectEvent();
-      te.setAction('ADD')
+      te.setAction('ADD');
       te.setBizStep('foobar');
       assert.throws(() => { te.isValid(); });
     });
