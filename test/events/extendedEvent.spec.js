@@ -143,6 +143,11 @@ describe('unit tests for the ExtendedEvent class', () => {
     assert.throws(() => o.addSensorElementList([new SensorElement()]));
     assert.throws(() => o.getSensorElementList());
     assert.throws(() => o.clearSensorElementList());
+
+    assert.doesNotThrow(() => o.addCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.addCertificationInfoList(['1:2:3', '3:2:1']));
+    assert.doesNotThrow(() => o.removeCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.removeCertificationInfoList(['1:2:3', '3:2:1']));
   });
 
   describe('setters should throw if we provide a non-expected type', () => {

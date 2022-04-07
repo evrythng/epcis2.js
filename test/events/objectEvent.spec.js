@@ -238,6 +238,14 @@ describe('unit tests for the ObjectEvent class', () => {
     });
   });
 
+  it('should throw if we add an item that is already in the epc list', async () => {
+    const o = new ObjectEvent();
+    assert.doesNotThrow(() => { o.addEPC(epc1); });
+    assert.throw(() => { o.addEPC(epc1); });
+    assert.throw(() => { o.addEPCList([epc2, epc1]); });
+    expect(o.epcList.toString()).to.be.equal(epc1.toString());
+  });
+
   describe('quantityList field', () => {
     const quantity1 = new QuantityElement(exampleObjectEvent.quantityList[0]);
     const quantity2 = new QuantityElement(exampleObjectEvent.quantityList[1]);
@@ -537,6 +545,10 @@ describe('unit tests for the ObjectEvent class', () => {
     assert.doesNotThrow(() => o.clearDestinationList());
     assert.doesNotThrow(() => o.setIlmd(new Ilmd()));
     assert.doesNotThrow(() => o.getIlmd());
+    assert.doesNotThrow(() => o.addCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.addCertificationInfoList(['1:2:3', '3:2:1']));
+    assert.doesNotThrow(() => o.removeCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.removeCertificationInfoList(['1:2:3', '3:2:1']));
 
     assert.throws(() => o.setParentId('id'));
     assert.throws(() => o.getParentId());
@@ -603,6 +615,55 @@ describe('unit tests for the ObjectEvent class', () => {
       assert.throws(() => ov.addSourceList([new Ilmd(), new Ilmd(), new Ilmd()]));
       assert.throws(() => ov.addDestination(new Ilmd()));
       assert.throws(() => ov.addDestinationList([new Ilmd(), new Ilmd(), new Ilmd()]));
+    });
+  });
+
+  describe('certificationInfo field', () => {
+    it('setters from Event.js', () => {
+      it('should add and remove a certification info', async () => {
+        const o = new ObjectEvent();
+        o.addCertificationInfo('certification:info');
+        expect(o.certificationInfoList.toString()).to.be.equal(['certification:info'].toString());
+        o.addCertificationInfo('certification:info2');
+        expect(o.certificationInfoList.toString()).to.be.equal(
+          ['certification:info', 'certification:info2'].toString(),
+        );
+        o.removeCertificationInfo('certification:info');
+        expect(o.certificationInfoList.toString()).to.be.equal(['certification:info2'].toString());
+        o.removeCertificationInfo('certification:info2');
+        expect(o.certificationInfoList.toString()).to.be.equal([].toString());
+      });
+
+      it('should add a certification info list', async () => {
+        const o = new ObjectEvent();
+        o.addCertificationInfo(['certification:info', 'certification:info2']);
+        expect(o.certificationInfoList.toString()).to.be.equal(
+          ['certification:info', 'certification:info2'].toString(),
+        );
+      });
+
+      it('should remove a certification info list', async () => {
+        const o = new ObjectEvent();
+        o.addCertificationInfo(['certification:info', 'certification:info2']);
+        expect(o.certificationInfoList.toString()).to.be.equal(
+          ['certification:info', 'certification:info2'].toString(),
+        );
+        o.removeCertificationInfoList(['certification:info', 'certification:info2']);
+        expect(o.certificationInfoList.toString()).to.be.equal([].toString());
+      });
+
+      it('should clear the certification info list', async () => {
+        const o = new ObjectEvent();
+        o.addCertificationInfo(['certification:info', 'certification:info2']);
+        o.clearCertificationInfoList();
+        expect(o.certificationInfoList).to.be.equal(undefined);
+      });
+
+      it('should not add the certification info list to JSON if it is not defined', async () => {
+        const o = new ObjectEvent();
+        const json = o.toObject();
+        expect(json.certificationInfoList).to.be.equal(undefined);
+      });
     });
   });
 

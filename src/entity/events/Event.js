@@ -357,14 +357,77 @@ export default class Event extends Entity {
     return this.errorDeclaration;
   }
 
+  /**
+   * Add the certificationInfo to the "certificationInfoList" field
+   * @param {string} certificationInfo - the certificationInfo to add
+   * @return {Event} - the event instance
+   */
+  addCertificationInfo(certificationInfo) {
+    return this.generateAddItemToListFunction('certificationInfoList', certificationInfo, ['string']);
+  }
+
+  /**
+   * Add each certificationInfo to the "certificationInfoList" field
+   * @param {Array<string>} certificationInfoList - the certificationInfos to add
+   * @return {Event} - the event instance
+   */
+  addCertificationInfoList(certificationInfoList) {
+    return this.generateAddItemsToListFunction('certificationInfoList', certificationInfoList, ['string']);
+  }
+
+  /**
+   * Clear the certificationInfo list
+   * @return {Event} - the event instance
+   */
+  clearCertificationInfoList() {
+    delete this.certificationInfoList;
+    return this;
+  }
+
+  /**
+   * Remove a certificationInfo from the "certificationInfoList" field
+   * @param {string} certificationInfo - the certificationInfo to remove
+   * @return {Event} - the event instance
+   */
+  removeCertificationInfo(certificationInfo) {
+    this.certificationInfoList = this.certificationInfoList.filter(
+      (item) => item !== certificationInfo,
+    );
+    return this;
+  }
+
+  /**
+   * Remove each certificationInfo from the "certificationInfoList" field
+   * @param {Array<string>} certificationInfoList - the certificationInfos to remove
+   * @return {Event} - the event instance
+   */
+  removeCertificationInfoList(certificationInfoList) {
+    certificationInfoList.forEach((certificationInfo) => {
+      this.removeCertificationInfo(certificationInfo);
+    });
+    return this;
+  }
+
+  /**
+   * Getter for the certificationInfoList property
+   * @return {Array<string>} - the certificationInfoList
+   */
+  getCertificationInfoList() {
+    return this.certificationInfoList;
+  }
+
   /** ************     NOT COMMON TO ALL EVENTS    ********************** */
 
   /**
    * Add the epc to the "epcList" field
+   * @throws an error if the epc to add is already in the epc list
    * @param {string} epc - the epc to add (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
    * @return {Event} - the event instance
    */
   addEPC(epc) {
+    if (this.epcList && this.epcList.includes(epc)) {
+      throw new Error('This epc is already in the epc list');
+    }
     return this.generateAddItemToListFunction('epcList', epc, ['string']);
   }
 
@@ -372,9 +435,15 @@ export default class Event extends Entity {
    * Add each epc to the "epcList" field
    * @param {Array<string>} epcList - the epcs to add
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
+   * @throws  an error if at least one item is already in the epc list
    * @return {Event} - the event instance
    */
   addEPCList(epcList) {
+    epcList.forEach((epc) => {
+      if (this.epcList && this.epcList.includes(epc)) {
+        throw new Error('This epc is already in the epc list');
+      }
+    });
     return this.generateAddItemsToListFunction('epcList', epcList, ['string']);
   }
 

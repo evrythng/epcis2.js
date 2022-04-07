@@ -400,6 +400,11 @@ describe('unit tests for the TransformationEvent class', () => {
     assert.doesNotThrow(() => o.addSensorElementList([new SensorElement()]));
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
+
+    assert.doesNotThrow(() => o.addCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.addCertificationInfoList(['1:2:3', '3:2:1']));
+    assert.doesNotThrow(() => o.removeCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.removeCertificationInfoList(['1:2:3', '3:2:1']));
   });
 
   describe('setters should throw if we provide a non-expected type', () => {
