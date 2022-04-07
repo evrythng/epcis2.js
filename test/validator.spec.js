@@ -1173,5 +1173,11 @@ describe('Unit test: validator.js', () => {
       epcisDocument.addEvent(te);
       assert.throws(() => { epcisDocument.isValid(); });
     });
+    it('should reject correct EPCISDocument with an invalid cbv', () => {
+      const te = new ObjectEvent();
+      te.setAction('ADD')
+      te.setBizStep('foobar');
+      assert.throws(() => { te.isValid(); });
+    });
   });
 });
