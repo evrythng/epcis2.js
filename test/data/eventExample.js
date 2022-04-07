@@ -46,6 +46,7 @@ export const exampleSensorReportElement = {
   sDev: 0.1,
   'ext1:someFurtherReportData': 'someText',
   deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+  coordinateReferenceSystem: 'coordinate:reference:system',
 };
 
 /**
