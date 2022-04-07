@@ -8,6 +8,20 @@ import Entity from '../Entity';
 
 export default class QuantityElement extends Entity {
   /**
+   * You can either create an empty QuantityElement or provide an already existing one via Object
+   * @param {Object} [quantityElement] - The object that will be used to create the quantity element
+   */
+  constructor(quantityElement) {
+    super(quantityElement);
+    this.addExtension = () => {
+      throw new Error('Extensions are not supported in a quantity element');
+    };
+    this.removeExtension = () => {
+      throw new Error('Extensions are not supported in a quantity element');
+    };
+  }
+
+  /**
    * Set the epcClass property
    * @param {string} epcClass
    * @return {QuantityElement} - the quantityElement instance
