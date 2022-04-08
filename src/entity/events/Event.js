@@ -383,7 +383,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addEPC(epc) {
-    if (this.epcList && this.epcList.includes(epc)) {
+    if (this.epcList?.includes(epc)) {
       throw new Error('This epc is already in the epc list');
     }
     return this.generateAddItemToListFunction('epcList', epc, ['string']);
@@ -398,7 +398,7 @@ export default class Event extends Entity {
    */
   addEPCList(epcList) {
     epcList.forEach((epc) => {
-      if (this.epcList && this.epcList.includes(epc)) {
+      if (this.epcList?.includes(epc)) {
         throw new Error('This epc is already in the epc list');
       }
     });

@@ -30,7 +30,7 @@ export default class PersistentDisposition extends Entity {
     * @return {PersistentDisposition} - the persistentDisposition instance
     */
   addSet(set) {
-    if (this.set && this.set.includes(set)) {
+    if (this.set?.includes(set)) {
       throw new Error('This set is already in the set list');
     }
     return this.generateAddItemToListFunction('set', set, ['string']);
@@ -44,7 +44,7 @@ export default class PersistentDisposition extends Entity {
     */
   addSetList(setList) {
     setList.forEach((set) => {
-      if (this.set && this.set.includes(set)) {
+      if (this.set?.includes(set)) {
         throw new Error('This set is already in the set list');
       }
     });
@@ -67,7 +67,7 @@ export default class PersistentDisposition extends Entity {
     */
   removeSet(set) {
     this.set = this.set.filter((elem) => elem !== set);
-    if (this.set && this.set.length === 0) {
+    if (!this.set?.length) {
       this.clearSetList();
     }
     return this;
@@ -80,7 +80,7 @@ export default class PersistentDisposition extends Entity {
     */
   removeSetList(setList) {
     setList.forEach((set) => this.removeSet(set));
-    if (this.set && this.set.length === 0) {
+    if (!this.set?.length) {
       this.clearSetList();
     }
     return this;
@@ -101,7 +101,7 @@ export default class PersistentDisposition extends Entity {
     * @return {PersistentDisposition} - the persistentDisposition instance
     */
   addUnset(unset) {
-    if (this.unset && this.unset.includes(unset)) {
+    if (this.unset?.includes(unset)) {
       throw new Error('This unset is already in the unset list');
     }
     return this.generateAddItemToListFunction('unset', unset, ['string']);
@@ -115,7 +115,7 @@ export default class PersistentDisposition extends Entity {
     */
   addUnsetList(unsetList) {
     unsetList.forEach((unset) => {
-      if (this.unset && this.unset.includes(unset)) {
+      if (this.unset?.includes(unset)) {
         throw new Error('This unset is already in the unset list');
       }
     });
@@ -138,7 +138,7 @@ export default class PersistentDisposition extends Entity {
     */
   removeUnset(unset) {
     this.unset = this.unset.filter((elem) => elem !== unset);
-    if (this.unset && this.unset.length === 0) {
+    if (!this.unset?.length) {
       this.clearUnsetList();
     }
     return this;
@@ -151,7 +151,7 @@ export default class PersistentDisposition extends Entity {
     */
   removeUnsetList(unsetList) {
     unsetList.forEach((unset) => this.removeUnset(unset));
-    if (this.unset && this.unset.length === 0) {
+    if (!this.unset?.length) {
       this.clearUnsetList();
     }
     return this;
