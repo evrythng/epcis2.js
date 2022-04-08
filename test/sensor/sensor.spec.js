@@ -80,7 +80,8 @@ describe('unit tests for sensor relative Objects', () => {
         .setPercRank(exampleSensorReportElement.percRank)
         .setPercValue(exampleSensorReportElement.percValue)
         .setUom(exampleSensorReportElement.uom)
-        .setCoordinateReferenceSystem(exampleSensorReportElement.coordinateReferenceSystem);
+        .setCoordinateReferenceSystem(exampleSensorReportElement.coordinateReferenceSystem)
+        .setBizRules(exampleSensorReportElement.bizRules);
 
       expect(sensorReport.getType()).to.be.equal(exampleSensorReportElement.type);
       expect(sensorReport.getDeviceID()).to.be.equal(exampleSensorReportElement.deviceID);
@@ -115,6 +116,7 @@ describe('unit tests for sensor relative Objects', () => {
       expect(sensorReport.getCoordinateReferenceSystem()).to.be.equal(
         exampleSensorReportElement.coordinateReferenceSystem,
       );
+      expect(sensorReport.getBizRules()).to.be.equal(exampleSensorReportElement.bizRules);
     });
 
     it('should create a valid SensorReportElement object from JSON', async () => {
