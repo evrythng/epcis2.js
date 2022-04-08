@@ -128,8 +128,8 @@ describe('unit tests for the AggregationEvent class', () => {
 
     assert.doesNotThrow(() => o.addChildEPC(''));
     assert.doesNotThrow(() => o.removeChildEPC(''));
-    assert.doesNotThrow(() => o.removeChildEPCList(['']));
     assert.doesNotThrow(() => o.addChildEPCList(['']));
+    assert.doesNotThrow(() => o.removeChildEPCList(['']));
     assert.doesNotThrow(() => o.getChildEPCList());
     assert.doesNotThrow(() => o.clearChildEPCList());
 

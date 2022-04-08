@@ -477,6 +477,9 @@ export default class Event extends Entity {
    */
   removeQuantity(quantity) {
     this.quantityList = this.quantityList.filter((elem) => elem !== quantity);
+    if (!this.quantityList?.length) {
+      this.clearQuantityList();
+    }
     return this;
   }
 
@@ -487,6 +490,9 @@ export default class Event extends Entity {
    */
   removeQuantityList(quantityList) {
     quantityList.forEach((quantity) => this.removeQuantity(quantity));
+    if (!this.quantityList?.length) {
+      this.clearQuantityList();
+    }
     return this;
   }
 
@@ -656,6 +662,9 @@ export default class Event extends Entity {
    */
   removeBizTransaction(bizTransaction) {
     this.bizTransactionList = this.bizTransactionList.filter((elem) => elem !== bizTransaction);
+    if (!this.bizTransactionList?.length) {
+      this.clearBizTransactionList();
+    }
     return this;
   }
 
@@ -666,6 +675,9 @@ export default class Event extends Entity {
    */
   removeBizTransactionList(bizTransactionList) {
     bizTransactionList.forEach((bizTransaction) => this.removeBizTransaction(bizTransaction));
+    if (!this.bizTransactionList?.length) {
+      this.clearBizTransactionList();
+    }
     return this;
   }
 
@@ -821,6 +833,9 @@ export default class Event extends Entity {
    */
   removeSensorElement(sensorElement) {
     this.sensorElementList = this.sensorElementList.filter((elem) => elem !== sensorElement);
+    if (!this.sensorElementList?.length) {
+      this.clearSensorElementList();
+    }
     return this;
   }
 
@@ -833,6 +848,9 @@ export default class Event extends Entity {
     sensorElementList.forEach(
       (sensorElementElement) => this.removeSensorElement(sensorElementElement),
     );
+    if (!this.sensorElementList?.length) {
+      this.clearSensorElementList();
+    }
     return this;
   }
 
@@ -914,6 +932,9 @@ export default class Event extends Entity {
    */
   removeChildEPC(epc) {
     this.childEPCs = this.childEPCs.filter((elem) => elem !== epc);
+    if (!this.childEPCs?.length) {
+      this.clearChildEPCList();
+    }
     return this;
   }
 
@@ -925,6 +946,9 @@ export default class Event extends Entity {
    */
   removeChildEPCList(epcList) {
     epcList.forEach((epc) => this.removeChildEPC(epc));
+    if (!this.childEPCs?.length) {
+      this.clearChildEPCList();
+    }
     return this;
   }
 
@@ -970,6 +994,9 @@ export default class Event extends Entity {
    */
   removeChildQuantity(quantity) {
     this.childQuantityList = this.childQuantityList.filter((elem) => elem !== quantity);
+    if (!this.childQuantityList?.length) {
+      this.clearChildQuantityList();
+    }
     return this;
   }
 
@@ -980,6 +1007,9 @@ export default class Event extends Entity {
    */
   removeChildQuantityList(quantityList) {
     quantityList.forEach((quantity) => this.removeChildQuantity(quantity));
+    if (!this.childQuantityList?.length) {
+      this.clearChildQuantityList();
+    }
     return this;
   }
 

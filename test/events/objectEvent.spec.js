@@ -260,7 +260,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeQuantity(quantity1);
       expect(o.quantityList.toString()).to.be.equal([quantity2].toString());
       o.removeQuantity(quantity2);
-      expect(o.quantityList.toString()).to.be.equal([].toString());
+      expect(o.quantityList).to.be.equal(undefined);
     });
 
     it('should add a quantity list', async () => {
@@ -286,7 +286,7 @@ describe('unit tests for the ObjectEvent class', () => {
       // trying again but removing the whole list
       o.addQuantity(quantity2);
       o.removeQuantityList([quantity2, quantity3]);
-      expect(o.quantityList.toString()).to.be.equal([].toString());
+      expect(o.quantityList).to.be.equal(undefined);
     });
 
     it('should clear the quantity list', async () => {
@@ -318,7 +318,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeBizTransaction(bizTransaction1);
       expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction2].toString());
       o.removeBizTransaction(bizTransaction2);
-      expect(o.bizTransactionList.toString()).to.be.equal([].toString());
+      expect(o.bizTransactionList).to.be.equal(undefined);
     });
 
     it('should add a bizTransaction list', async () => {
@@ -336,7 +336,7 @@ describe('unit tests for the ObjectEvent class', () => {
         [bizTransaction1, bizTransaction2].toString(),
       );
       o.removeBizTransactionList([bizTransaction1, bizTransaction2]);
-      expect(o.bizTransactionList.toString()).to.be.equal([].toString());
+      expect(o.bizTransactionList).to.be.equal();
     });
 
     it('should clear the bizTransaction list', async () => {
@@ -456,7 +456,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeSensorElement(sensorElement1);
       expect(o.sensorElementList.toString()).to.be.equal([sensorElement2].toString());
       o.removeSensorElement(sensorElement2);
-      expect(o.sensorElementList.toString()).to.be.equal([].toString());
+      expect(o.sensorElementList).to.be.equal(undefined);
     });
 
     it('should add a sensorElement list', async () => {
@@ -474,7 +474,7 @@ describe('unit tests for the ObjectEvent class', () => {
         [sensorElement1, sensorElement2].toString(),
       );
       o.removeSensorElementList([sensorElement1, sensorElement2]);
-      expect(o.sensorElementList.toString()).to.be.equal([].toString());
+      expect(o.sensorElementList).to.be.equal(undefined);
     });
 
     it('should clear the sensorElement list', async () => {

@@ -63,7 +63,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeInputEPC(epc1);
       expect(o.getInputEPCList().toString()).to.be.equal([epc2].toString());
       o.removeInputEPC(epc2);
-      expect(o.getInputEPCList().toString()).to.be.equal([].toString());
+      expect(o.getInputEPCList()).to.be.equal(undefined);
     });
 
     it('should add an epc list', async () => {
@@ -89,7 +89,7 @@ describe('unit tests for the TransformationEvent class', () => {
       // trying again but removing the whole list
       o.addInputEPC(epc2);
       o.removeInputEPCList([epc2, epc3]);
-      expect(o.getInputEPCList().toString()).to.be.equal([].toString());
+      expect(o.getInputEPCList()).to.be.equal(undefined);
     });
 
     it('should clear the epc list', async () => {
@@ -120,7 +120,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeInputQuantity(quantity1);
       expect(o.getInputQuantityList().toString()).to.be.equal([quantity2].toString());
       o.removeInputQuantity(quantity2);
-      expect(o.getInputQuantityList().toString()).to.be.equal([].toString());
+      expect(o.getInputQuantityList()).to.be.equal(undefined);
     });
 
     it('should add a quantity list', async () => {
@@ -148,7 +148,7 @@ describe('unit tests for the TransformationEvent class', () => {
       // trying again but removing the whole list
       o.addInputQuantity(quantity2);
       o.removeInputQuantityList([quantity2, quantity3]);
-      expect(o.getInputQuantityList().toString()).to.be.equal([].toString());
+      expect(o.getInputQuantityList()).to.be.equal(undefined);
     });
 
     it('should clear the quantity list', async () => {
@@ -175,7 +175,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeOutputEPC(epc1);
       expect(o.getOutputEPCList().toString()).to.be.equal([epc2].toString());
       o.removeOutputEPC(epc2);
-      expect(o.getOutputEPCList().toString()).to.be.equal([].toString());
+      expect(o.getOutputEPCList()).to.be.equal(undefined);
     });
 
     it('should add an epc list', async () => {
@@ -201,7 +201,7 @@ describe('unit tests for the TransformationEvent class', () => {
       // trying again but removing the whole list
       o.addOutputEPC(epc2);
       o.removeOutputEPCList([epc2, epc3]);
-      expect(o.getOutputEPCList().toString()).to.be.equal([].toString());
+      expect(o.getOutputEPCList()).to.be.equal(undefined);
     });
 
     it('should clear the epc list', async () => {
@@ -232,7 +232,7 @@ describe('unit tests for the TransformationEvent class', () => {
       o.removeOutputQuantity(quantity1);
       expect(o.getOutputQuantityList().toString()).to.be.equal([quantity2].toString());
       o.removeOutputQuantity(quantity2);
-      expect(o.getOutputQuantityList().toString()).to.be.equal([].toString());
+      expect(o.getOutputQuantityList()).to.be.equal(undefined);
     });
 
     it('should add a quantity list', async () => {
@@ -260,7 +260,7 @@ describe('unit tests for the TransformationEvent class', () => {
       // trying again but removing the whole list
       o.addOutputQuantity(quantity2);
       o.removeOutputQuantityList([quantity2, quantity3]);
-      expect(o.getOutputQuantityList().toString()).to.be.equal([].toString());
+      expect(o.getOutputQuantityList()).to.be.equal(undefined);
     });
 
     it('should clear the quantity list', async () => {
