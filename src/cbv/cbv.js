@@ -190,7 +190,7 @@ export const sensorMeasurementTypes = {
   pressure: 'Pressure',
   radiant_flux: 'RadiantFlux',
   radiant_intensity: 'RadiantIntensity',
-  radioactivity: 'radioactivity',
+  radioactivity: 'Radioactivity',
   relative_humidity: 'RelativeHumidity',
   resistance: 'Resistance',
   resistivity: 'Resistivity',
