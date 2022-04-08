@@ -358,61 +358,19 @@ export default class Event extends Entity {
   }
 
   /**
-   * Add the certificationInfo to the "certificationInfoList" field
-   * @param {string} certificationInfo - the certificationInfo to add
+   * set the certificationInfo property
+   * @param {string|Array<string>} certificationInfo
    * @return {Event} - the event instance
    */
-  addCertificationInfo(certificationInfo) {
-    return this.generateAddItemToListFunction('certificationInfoList', certificationInfo, ['string']);
+  setCertificationInfo(certificationInfo) {
+    return this.generateSetterFunction('certificationInfo', certificationInfo, ['string', Array]);
   }
 
   /**
-   * Add each certificationInfo to the "certificationInfoList" field
-   * @param {Array<string>} certificationInfoList - the certificationInfos to add
-   * @return {Event} - the event instance
+   * Getter for the certificationInfo property
+   * @return {string|Array<string>} - the certificationInfo
    */
-  addCertificationInfoList(certificationInfoList) {
-    return this.generateAddItemsToListFunction('certificationInfoList', certificationInfoList, ['string']);
-  }
-
-  /**
-   * Clear the certificationInfo list
-   * @return {Event} - the event instance
-   */
-  clearCertificationInfoList() {
-    delete this.certificationInfoList;
-    return this;
-  }
-
-  /**
-   * Remove a certificationInfo from the "certificationInfoList" field
-   * @param {string} certificationInfo - the certificationInfo to remove
-   * @return {Event} - the event instance
-   */
-  removeCertificationInfo(certificationInfo) {
-    this.certificationInfoList = this.certificationInfoList.filter(
-      (item) => item !== certificationInfo,
-    );
-    return this;
-  }
-
-  /**
-   * Remove each certificationInfo from the "certificationInfoList" field
-   * @param {Array<string>} certificationInfoList - the certificationInfos to remove
-   * @return {Event} - the event instance
-   */
-  removeCertificationInfoList(certificationInfoList) {
-    certificationInfoList.forEach((certificationInfo) => {
-      this.removeCertificationInfo(certificationInfo);
-    });
-    return this;
-  }
-
-  /**
-   * Getter for the certificationInfoList property
-   * @return {Array<string>} - the certificationInfoList
-   */
-  getCertificationInfoList() {
+  getCertificationInfo() {
     return this.certificationInfoList;
   }
 

@@ -545,10 +545,8 @@ describe('unit tests for the ObjectEvent class', () => {
     assert.doesNotThrow(() => o.clearDestinationList());
     assert.doesNotThrow(() => o.setIlmd(new Ilmd()));
     assert.doesNotThrow(() => o.getIlmd());
-    assert.doesNotThrow(() => o.addCertificationInfo('a:b:c'));
-    assert.doesNotThrow(() => o.addCertificationInfoList(['1:2:3', '3:2:1']));
-    assert.doesNotThrow(() => o.removeCertificationInfo('a:b:c'));
-    assert.doesNotThrow(() => o.removeCertificationInfoList(['1:2:3', '3:2:1']));
+    assert.doesNotThrow(() => o.setCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.setCertificationInfo(['a:b:c', 'c:b:a']));
 
     assert.throws(() => o.setParentId('id'));
     assert.throws(() => o.getParentId());
@@ -622,9 +620,9 @@ describe('unit tests for the ObjectEvent class', () => {
     it('setters from Event.js', () => {
       it('should add and remove a certification info', async () => {
         const o = new ObjectEvent();
-        o.addCertificationInfo('certification:info');
+        o.setCertificationInfo('certification:info');
         expect(o.certificationInfoList.toString()).to.be.equal(['certification:info'].toString());
-        o.addCertificationInfo('certification:info2');
+        o.setCertificationInfo('certification:info2');
         expect(o.certificationInfoList.toString()).to.be.equal(
           ['certification:info', 'certification:info2'].toString(),
         );
@@ -636,7 +634,7 @@ describe('unit tests for the ObjectEvent class', () => {
 
       it('should add a certification info list', async () => {
         const o = new ObjectEvent();
-        o.addCertificationInfo(['certification:info', 'certification:info2']);
+        o.setCertificationInfo(['certification:info', 'certification:info2']);
         expect(o.certificationInfoList.toString()).to.be.equal(
           ['certification:info', 'certification:info2'].toString(),
         );
@@ -644,7 +642,7 @@ describe('unit tests for the ObjectEvent class', () => {
 
       it('should remove a certification info list', async () => {
         const o = new ObjectEvent();
-        o.addCertificationInfo(['certification:info', 'certification:info2']);
+        o.setCertificationInfo(['certification:info', 'certification:info2']);
         expect(o.certificationInfoList.toString()).to.be.equal(
           ['certification:info', 'certification:info2'].toString(),
         );
@@ -654,7 +652,7 @@ describe('unit tests for the ObjectEvent class', () => {
 
       it('should clear the certification info list', async () => {
         const o = new ObjectEvent();
-        o.addCertificationInfo(['certification:info', 'certification:info2']);
+        o.setCertificationInfo(['certification:info', 'certification:info2']);
         o.clearCertificationInfoList();
         expect(o.certificationInfoList).to.be.equal(undefined);
       });

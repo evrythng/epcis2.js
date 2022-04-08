@@ -642,7 +642,7 @@ describe('unit tests for model Objects', () => {
   describe('Ilmd.js', () => {
     it('should create a valid AttributeElement object from setters', async () => {
       const ilmd = new Ilmd();
-      ilmd.addExtension('ext:int',100);
+      ilmd.addExtension('ext:int', 100);
 
       expect(ilmd.getExtension('ext:int')).to.be.equal(100);
     });
