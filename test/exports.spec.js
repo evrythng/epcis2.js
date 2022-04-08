@@ -105,11 +105,6 @@ describe('All the functions should be well exported', () => {
     errorDeclaration.setDeclarationTime('test');
     expect(errorDeclaration.getDeclarationTime()).to.be.equal('test');
   });
-  it('Ilmd', async () => {
-    const ilmd = new sdk.Ilmd();
-    ilmd.setType('test');
-    expect(ilmd.getType()).to.be.equal('test');
-  });
   it('PersistentDisposition', async () => {
     const persistentDisposition = new sdk.PersistentDisposition();
     persistentDisposition.addSet('a_set');
