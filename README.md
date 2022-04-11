@@ -191,12 +191,12 @@ const event2 = new ObjectEvent();
 const epcisDocument = new EPCISDocument();
 
 event
-  .setAction(actionTypes.observe)
+  .setAction(cbv.actionTypes.observe)
   .setEventTime('2005-04-03T20:33:31.116-06:00')
   .setEventTimeZoneOffset('-06:00');
 
 event2
-  .setAction(actionTypes.observe)
+  .setAction(cbv.actionTypes.observe)
   .setEventTime('2005-04-03T21:33:31.116-06:00')
   .setEventTimeZoneOffset('-06:00');
 
@@ -235,8 +235,8 @@ This example would output (as a string):
 ### CBV attributes autocomplete
 
 The latest version of the SDK enables you to easily search among all attributes of each Core Business Vocabulary.
-In order to do this, for example, you can import `actionType` as we did in the script above.
-Then, by typing `actionType.` as a parameter of the `setAction` method of the `ObjectEvent` class, you will be displayed
+In order to do this, for example, you can import `cbv` as we did in the script above.
+Then, by typing `cbv.actionType.` as a parameter of the `setAction` method of the `ObjectEvent` class, you will be displayed
 all the attributes associated to this particular CBV.
 The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.
 
