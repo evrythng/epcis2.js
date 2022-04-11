@@ -8,13 +8,7 @@ import { assert, expect } from 'chai';
 import { eventToPreHashedString } from '../../../src/hash_generator/EPCISEventToPreHashedString';
 import { sampleContext, sampleObjectEvent } from '../../data/hashing/samplePrehashesAndHashes';
 import EPCISDocumentObjectEvent from '../../data/EPCISDocument-ObjectEvent.json';
-import {
-  sourceDestinationTypes,
-  businessTransactionTypes,
-  bizSteps,
-  dispositions,
-  errorReasonIdentifiers, sensorMeasurementTypes, components,
-} from '../../../src';
+import cbv from '../../../src/cbv/cbv';
 
 const exampleObjectEvent = JSON.parse(
   JSON.stringify(EPCISDocumentObjectEvent.epcisBody.eventList[0]),
@@ -223,11 +217,11 @@ describe('unit tests for pre-hashing', () => {
         {
           bizTransactionList: [
             {
-              type: businessTransactionTypes.desadv,
+              type: cbv.businessTransactionTypes.desadv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:4711',
             },
             {
-              type: businessTransactionTypes.inv,
+              type: cbv.businessTransactionTypes.inv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:RE1099',
             },
           ],
@@ -238,12 +232,12 @@ describe('unit tests for pre-hashing', () => {
         {
           bizTransactionList: [
             {
-              type: businessTransactionTypes.inv,
+              type: cbv.businessTransactionTypes.inv,
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:RE1099',
             },
             {
               bizTransaction: 'urn:epcglobal:cbv:bt:5200001000008:4711',
-              type: businessTransactionTypes.desadv,
+              type: cbv.businessTransactionTypes.desadv,
             },
           ],
         },
@@ -260,11 +254,11 @@ describe('unit tests for pre-hashing', () => {
         {
           sourceList: [
             {
-              type: sourceDestinationTypes.possessing_party,
+              type: cbv.sourceDestinationTypes.possessing_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
             {
-              type: sourceDestinationTypes.owning_party,
+              type: cbv.sourceDestinationTypes.owning_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
           ],
@@ -276,10 +270,10 @@ describe('unit tests for pre-hashing', () => {
           sourceList: [
             {
               source: 'urn:epc:id:pgln:4000001.00012',
-              type: sourceDestinationTypes.owning_party,
+              type: cbv.sourceDestinationTypes.owning_party,
             },
             {
-              type: sourceDestinationTypes.possessing_party,
+              type: cbv.sourceDestinationTypes.possessing_party,
               source: 'urn:epc:id:pgln:4000001.00012',
             },
           ],
@@ -298,15 +292,15 @@ describe('unit tests for pre-hashing', () => {
         {
           destinationList: [
             {
-              type: sourceDestinationTypes.possessing_party,
+              type: cbv.sourceDestinationTypes.possessing_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
             {
-              type: sourceDestinationTypes.owning_party,
+              type: cbv.sourceDestinationTypes.owning_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
             {
-              type: sourceDestinationTypes.location,
+              type: cbv.sourceDestinationTypes.location,
               destination: 'urn:epc:id:sgln:4012345.00012.0',
             },
           ],
@@ -318,14 +312,14 @@ describe('unit tests for pre-hashing', () => {
           destinationList: [
             {
               destination: 'urn:epc:id:sgln:4012345.00012.0',
-              type: sourceDestinationTypes.location,
+              type: cbv.sourceDestinationTypes.location,
             },
             {
               destination: 'urn:epc:id:pgln:4012345.00000',
-              type: sourceDestinationTypes.owning_party,
+              type: cbv.sourceDestinationTypes.owning_party,
             },
             {
-              type: sourceDestinationTypes.possessing_party,
+              type: cbv.sourceDestinationTypes.possessing_party,
               destination: 'urn:epc:id:pgln:4012345.00000',
             },
           ],
@@ -513,24 +507,24 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: sensorMeasurementTypes.temperature,
+              type: cbv.sensorMeasurementTypes.temperature,
               value: 26,
               exception: 'ERROR_CONDITION',
               uom: 'CEL',
-              component: components.easting,
+              component: cbv.components.easting,
             },
             {
-              type: sensorMeasurementTypes.absolute_humidity,
+              type: cbv.sensorMeasurementTypes.absolute_humidity,
               value: 12.1,
               uom: 'A93',
             },
             {
-              type: sensorMeasurementTypes.speed,
+              type: cbv.sensorMeasurementTypes.speed,
               value: 160,
               uom: 'KMH',
             },
             {
-              type: sensorMeasurementTypes.illuminance,
+              type: cbv.sensorMeasurementTypes.illuminance,
               value: 800,
               uom: 'LUX',
             },
@@ -545,22 +539,22 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: sensorMeasurementTypes.temperature,
+              type: cbv.sensorMeasurementTypes.temperature,
               value: 26.1,
               uom: 'CEL',
             },
             {
-              type: sensorMeasurementTypes.absolute_humidity,
+              type: cbv.sensorMeasurementTypes.absolute_humidity,
               value: 12.2,
               uom: 'A93',
             },
             {
-              type: sensorMeasurementTypes.speed,
+              type: cbv.sensorMeasurementTypes.speed,
               value: 161,
               uom: 'KMH',
             },
             {
-              type: sensorMeasurementTypes.illuminance,
+              type: cbv.sensorMeasurementTypes.illuminance,
               value: 801,
               uom: 'LUX',
             },
@@ -575,22 +569,22 @@ describe('unit tests for pre-hashing', () => {
           },
           sensorReport: [
             {
-              type: sensorMeasurementTypes.temperature,
+              type: cbv.sensorMeasurementTypes.temperature,
               value: 26.2,
               uom: 'CEL',
             },
             {
-              type: sensorMeasurementTypes.absolute_humidity,
+              type: cbv.sensorMeasurementTypes.absolute_humidity,
               value: 12.2,
               uom: 'A93',
             },
             {
-              type: sensorMeasurementTypes.speed,
+              type: cbv.sensorMeasurementTypes.speed,
               value: 162,
               uom: 'KMH',
             },
             {
-              type: sensorMeasurementTypes.illuminance,
+              type: cbv.sensorMeasurementTypes.illuminance,
               value: 802,
               uom: 'LUX',
             },
@@ -771,7 +765,7 @@ describe('unit tests for pre-hashing', () => {
   it('should pre-hash a bizStep', () => {
     const str = eventToPreHashedString(
       {
-        bizStep: bizSteps.repairing,
+        bizStep: cbv.bizSteps.repairing,
       },
       {},
     );
@@ -781,7 +775,7 @@ describe('unit tests for pre-hashing', () => {
   it('should pre-hash a disposition', () => {
     const str = eventToPreHashedString(
       {
-        disposition: dispositions.damaged,
+        disposition: cbv.dispositions.damaged,
       },
       {},
     );
@@ -793,12 +787,12 @@ describe('unit tests for pre-hashing', () => {
       {
         persistentDisposition: {
           set: [
-            dispositions.completeness_inferred,
-            dispositions.completeness_verified,
+            cbv.dispositions.completeness_inferred,
+            cbv.dispositions.completeness_verified,
           ],
           unset: [
-            dispositions.completeness_verified,
-            dispositions.completeness_inferred,
+            cbv.dispositions.completeness_verified,
+            cbv.dispositions.completeness_inferred,
           ],
         },
       },
@@ -884,7 +878,7 @@ describe('unit tests for pre-hashing', () => {
       {
         errorDeclaration: {
           declarationTime: '2020-01-15T00:00:00.000+01:00',
-          reason: errorReasonIdentifiers.incorrect_data,
+          reason: cbv.errorReasonIdentifiers.incorrect_data,
           'example:vendorExtension': {
             '@xmlns:example': 'http://ns.example.com/epcis',
             '#text': 'Test1',

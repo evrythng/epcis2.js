@@ -192,6 +192,15 @@ describe('All the functions should be well exported', () => {
       },
     );
   });
+  it('cbv.js', async () => {
+    expect(sdk.cbv.actionTypes).to.deep.equal(
+      {
+        observe: 'OBSERVE',
+        add: 'ADD',
+        delete: 'DELETE',
+      },
+    );
+  });
   it('constants.js', async () => {
     expect(sdk.eventEpcRelType).to.deep.equal(
       {

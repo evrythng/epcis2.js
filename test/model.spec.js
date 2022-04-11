@@ -6,7 +6,7 @@
 
 import { assert, expect } from 'chai';
 import {
-  dispositions, Ilmd, SensorElement, SensorMetadata, SensorReportElement,
+  cbv, Ilmd, SensorElement, SensorMetadata, SensorReportElement,
 } from '../src';
 import ErrorDeclaration from '../src/entity/model/ErrorDeclaration';
 import QuantityElement from '../src/entity/model/QuantityElement';
@@ -313,8 +313,8 @@ describe('unit tests for model Objects', () => {
   });
 
   describe('PersistentDisposition.js', () => {
-    const set = [dispositions.active, dispositions.unavailable];
-    const unset = [dispositions.completeness_inferred, dispositions.unknown];
+    const set = [cbv.dispositions.active, cbv.dispositions.unavailable];
+    const unset = [cbv.dispositions.completeness_inferred, cbv.dispositions.unknown];
 
     it('should create a valid PersistentDisposition object from JSON', async () => {
       const persistentDispositionJSON = {

@@ -21,13 +21,7 @@ const {
     Ilmd,
     setup, 
     capture,
-    bizSteps,
-    dispositions,
-    businessTransactionTypes,
-    sourceDestinationTypes,
-    sensorMeasurementTypes,
-    actionTypes,
-    components } = require('epcis2.js');
+    cbv } = require('epcis2.js');
 
 const objectEvent = new ObjectEvent();
 const epcisDocument = new EPCISDocument();
@@ -263,13 +257,13 @@ const sendACaptureRequestExample = async () => {
 
     // bizTransactions
     const bizTransaction = new BizTransactionElement();
-    bizTransaction.setType(businessTransactionTypes.po)
+    bizTransaction.setType(cbv.businessTransactionTypes.po)
     .setBizTransaction('urn:epc:id:gdti:0614141.00001.1618034');
     const bizTransaction2 = new BizTransactionElement();
-    bizTransaction2.setType(businessTransactionTypes.pedigree)
+    bizTransaction2.setType(cbv.businessTransactionTypes.pedigree)
     .setBizTransaction('urn:epc:id:gsrn:0614141.00001.0000010253');
     const bizTransaction3 = new BizTransactionElement();
-    bizTransaction3.setType(businessTransactionTypes.poc)
+    bizTransaction3.setType(cbv.businessTransactionTypes.poc)
     .setBizTransaction('urn:epc:id:gsrn:0614141.00001.0000023553');
 
     const bizTransactionList = [ bizTransaction, bizTransaction2 ]
@@ -292,26 +286,26 @@ const sendACaptureRequestExample = async () => {
 
     // source
     const source = new SourceElement();
-    source.setType(sourceDestinationTypes.location)
+    source.setType(cbv.sourceDestinationTypes.location)
     .setSource('urn:epc:id:sgln:4012345.00225.0');
     const source2 = new SourceElement();
-    source2.setType(sourceDestinationTypes.possessing_party)
+    source2.setType(cbv.sourceDestinationTypes.possessing_party)
     .setSource('urn:epc:id:sgln:4012345.00225.1');
     const source3 = new SourceElement();
-    source3.setType(sourceDestinationTypes.owning_party)
+    source3.setType(cbv.sourceDestinationTypes.owning_party)
     .setSource('urn:epc:id:sgln:4012345.00225.2');
 
     const sourceList = [ source, source2 ];
 
     // destination
     const destination = new DestinationElement();
-    destination.setType(sourceDestinationTypes.location)
+    destination.setType(cbv.sourceDestinationTypes.location)
     .setDestination('urn:epc:id:sgln:0614141.00777.0');
     const destination2 = new DestinationElement();
-    destination2.setType(sourceDestinationTypes.possessing_party)
+    destination2.setType(cbv.sourceDestinationTypes.possessing_party)
     .setDestination('urn:epc:id:sgln:0614141.00777.2');
     const destination3 = new DestinationElement();
-    destination3.setType(sourceDestinationTypes.owning_party)
+    destination3.setType(cbv.sourceDestinationTypes.owning_party)
     .setDestination('urn:epc:id:sgln:0614141.00777.3');
 
     const destinationList = [ destination, destination2 ];
@@ -353,7 +347,7 @@ const sendACaptureRequestExample = async () => {
 
         //sensor report element
         const sensorReport = new SensorReportElement();
-        sensorReport.setType(sensorMeasurementTypes.temperature)
+        sensorReport.setType(cbv.sensorMeasurementTypes.temperature)
         .setDeviceID("urn:epc:id:giai:4000001.111")
         .setRawData("https://example.org/giai/401234599999")
         .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
@@ -361,7 +355,7 @@ const sendACaptureRequestExample = async () => {
         .setMicroorganism("https://www.ncbi.nlm.nih.gov/taxonomy/1126011")
         .setChemicalSubstance("https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N")
         .setValue(26)
-        .setComponent(components.x)
+        .setComponent(cbv.components.x)
         .setStringValue('SomeString')
         .setBooleanValue(true)
         .setHexBinaryValue('f0f0f0')
@@ -378,7 +372,7 @@ const sendACaptureRequestExample = async () => {
         .setBizRules("https://example.com/gdti/4012345000054987");
 
         const sensorReport2 = new SensorReportElement();
-        sensorReport2.setType(sensorMeasurementTypes.speed)
+        sensorReport2.setType(cbv.sensorMeasurementTypes.speed)
         .setDeviceID("urn:epc:id:giai:4000001.111")
         .setRawData("https://example.org/giai/401234599999")
         .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
@@ -386,7 +380,7 @@ const sendACaptureRequestExample = async () => {
         .setMicroorganism("https://www.ncbi.nlm.nih.gov/taxonomy/1126011")
         .setChemicalSubstance("https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N")
         .setValue(130)
-        .setComponent(components.x)
+        .setComponent(cbv.components.x)
         .setStringValue('SomeString')
         .setBooleanValue(true)
         .setHexBinaryValue('f0f0f0')
@@ -403,7 +397,7 @@ const sendACaptureRequestExample = async () => {
         .setBizRules("https://example.com/gdti/4012345000054987");
 
         const sensorReport3 = new SensorReportElement();
-        sensorReport3.setType(sensorMeasurementTypes.speed)
+        sensorReport3.setType(cbv.sensorMeasurementTypes.speed)
         .setDeviceID("urn:epc:id:giai:4000001.111")
         .setRawData("https://example.org/giai/401234599999")
         .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
@@ -411,7 +405,7 @@ const sendACaptureRequestExample = async () => {
         .setMicroorganism("https://www.ncbi.nlm.nih.gov/taxonomy/1126011")
         .setChemicalSubstance("https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N")
         .setValue(2)
-        .setComponent(components.x)
+        .setComponent(cbv.components.x)
         .setStringValue('SomeString')
         .setBooleanValue(true)
         .setHexBinaryValue('f0f0f0')
@@ -453,13 +447,11 @@ const sendACaptureRequestExample = async () => {
 
     // persistentDisposition
     const persistentDisposition = new PersistentDisposition();
-    persistentDisposition.addSet(dispositions.completeness_verified)
-    .addUnset(dispositions.completeness_inferred);
+    persistentDisposition.addSet(cbv.dispositions.completeness_verified)
+    .addUnset(cbv.dispositions.completeness_inferred);
 
     // ilmd
     const ilmd = new Ilmd();
-    // ilmd.setType('uri:ilmd:type')
-    // .setFormat('uri:format')
     ilmd.addExtension("ext1:boolean","true",);
 
 
@@ -473,9 +465,9 @@ const sendACaptureRequestExample = async () => {
         "urn:epc:id:sgtin:0614141.107346.2018",
         "urn:epc:id:sgtin:0614141.107346.2017"
       ])
-    .setAction(actionTypes.add)
-    .setBizStep(bizSteps.receiving)
-    .setDisposition(dispositions.in_progress)
+    .setAction(cbv.actionTypes.add)
+    .setBizStep(cbv.bizSteps.receiving)
+    .setDisposition(cbv.dispositions.in_progress)
     .setErrorDeclaration(errorDeclaration)
     .setReadPoint(readPoint)
     .setBizLocation(bizLocation)
@@ -535,7 +527,7 @@ const sendACaptureRequestExample = async () => {
     console.log(`Request response: ${text}`);
 
     // we can override the settings in the capture
-    console.log('Capture with override settings:');
+    console.log('Capture with overridden settings:');
     res = await capture(epcisDocument,{timeout: '200'});
     text = await res.text();
     console.log(`Request status: ${res.status}`);
