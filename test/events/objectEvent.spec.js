@@ -135,7 +135,7 @@ describe('unit tests for the ObjectEvent class', () => {
   it('should generate a hashed ID from a string as context', async () => {
     const oe = new ObjectEvent();
     oe.setAction(cbv.actionTypes.delete)
-    .addEPCList(exampleObjectEvent.epcList);
+      .addEPCList(exampleObjectEvent.epcList);
     assert.doesNotThrow(() => { oe.generateHashID('https://gs1.github.io/EPCIS/epcis-context.jsonld'); });
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
     expect(oe.isValid()).to.be.equal(true);
@@ -144,7 +144,7 @@ describe('unit tests for the ObjectEvent class', () => {
   it('should generate a hashed ID from an array of string as context', async () => {
     const oe = new ObjectEvent();
     oe.setAction(cbv.actionTypes.delete)
-    .addEPCList(exampleObjectEvent.epcList);
+      .addEPCList(exampleObjectEvent.epcList);
     assert.doesNotThrow(() => {
       oe.generateHashID([
         'https://gs1.github.io/EPCIS/epcis-context.jsonld',
@@ -153,7 +153,7 @@ describe('unit tests for the ObjectEvent class', () => {
       ]);
     });
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
-    expect(oe.isValid()).to.be.equal(true)
+    expect(oe.isValid()).to.be.equal(true);
   });
 
   it('should generate a hashed ID from an array of Object as context', async () => {
@@ -168,7 +168,7 @@ describe('unit tests for the ObjectEvent class', () => {
       ]);
     });
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
-    expect(oe.isValid()).to.be.equal(true)
+    expect(oe.isValid()).to.be.equal(true);
     assert.doesNotThrow(() => {
       oe.generateHashID([
         {
@@ -183,7 +183,7 @@ describe('unit tests for the ObjectEvent class', () => {
       ]);
     });
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
-    expect(oe.isValid()).to.be.equal(true)
+    expect(oe.isValid()).to.be.equal(true);
   });
 
   it('should generate a hashed ID from a mixed array', async () => {
@@ -207,7 +207,7 @@ describe('unit tests for the ObjectEvent class', () => {
       ]);
     });
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
-    expect(oe.isValid()).to.be.equal(true)
+    expect(oe.isValid()).to.be.equal(true);
   });
 
   it('should be able to set the time zone offset from number or string', async () => {
@@ -380,6 +380,31 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.quantityList).to.be.equal(undefined);
     });
+
+    it('should throw an error if there is/are extension(s) in the quantity element', async () => {
+      const o = new ObjectEvent();
+      const qt = new QuantityElement({
+        epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
+        quantity: 200,
+        uom: 'KGM',
+        'ext1:bool': true,
+      });
+
+      assert.throw(() => { o.addQuantity(qt); });
+      assert.throw(() => { o.addQuantityList([qt, quantity1]); });
+    });
+  });
+
+  describe('persistent disposition field', () => {
+    it('should throw an error if there is/are extension(s) in the persistentDisposition', async () => {
+      const o = new ObjectEvent();
+      const persistentDisposition = new PersistentDisposition({
+        set: [cbv.dispositions.completeness_verified],
+        unset: [cbv.dispositions.completeness_inferred],
+        'ext1:bool': true,
+      });
+      assert.throw(() => { o.setPersistentDisposition(persistentDisposition); });
+    });
   });
 
   describe('bizTransactionList field', () => {
@@ -430,6 +455,21 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.bizTransactionList).to.be.equal(undefined);
     });
+
+    it('should throw an error if there is/are extension(s) in the bizTransaction element', async () => {
+      const o = new ObjectEvent();
+      const bizT = new BizTransactionElement({
+        type: cbv.businessTransactionTypes.po,
+        bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
+        'ext1:bool': true,
+      });
+      const bizT2 = new BizTransactionElement({
+        type: cbv.businessTransactionTypes.po,
+        bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
+      });
+      assert.throw(() => { o.addBizTransaction(bizT); });
+      assert.throw(() => { o.addBizTransactionList([bizT, bizT2, bizTransaction2]); });
+    });
   });
 
   describe('sourceList field', () => {
@@ -474,6 +514,22 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.sourceList).to.be.equal(undefined);
     });
+
+    it('should throw an error if there is/are extension(s) in the source element', async () => {
+      const o = new ObjectEvent();
+      const src = new SourceElement({
+        type: cbv.sourceDestinationTypes.location,
+        source: 'urn:epc:id:sgln:4012345.00225.0',
+        'ext1:bool': true,
+      });
+      const src2 = new SourceElement({
+        type: cbv.sourceDestinationTypes.location,
+        source: 'urn:epc:id:sgln:4012345.00225.0',
+        'ext1:bool': false,
+      });
+      assert.throw(() => { o.addSource(src); });
+      assert.throw(() => { o.addSourceList([src, src2, source1]); });
+    });
   });
 
   describe('destinationList field', () => {
@@ -517,6 +573,21 @@ describe('unit tests for the ObjectEvent class', () => {
       const o = new ObjectEvent();
       const json = o.toObject();
       expect(json.destinationList).to.be.equal(undefined);
+    });
+
+    it('should throw an error if there is/are extension(s) in the destination element', async () => {
+      const o = new ObjectEvent();
+      const dest = new DestinationElement({
+        type: cbv.sourceDestinationTypes.location,
+        destination: 'urn:epc:id:sgln:0614141.00777.0',
+        'ext:bool': true,
+      });
+      const dest2 = new DestinationElement({
+        type: cbv.sourceDestinationTypes.location,
+        destination: 'urn:epc:id:sgln:0614141.00777.0',
+      });
+      assert.throw(() => { o.addDestination(dest); });
+      assert.throw(() => { o.addDestinationList([dest, dest2, destination1]); });
     });
   });
 

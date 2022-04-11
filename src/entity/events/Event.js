@@ -90,6 +90,15 @@ export const fieldToFunctions = {
   ],
 };
 
+const throwIfThereIsUnexpectedExtension = (object) => {
+  const objectFields = Object.keys(object);
+  objectFields.forEach((field) => {
+    if (field.toString().includes(':')) {
+      throw new Error('Extensions are not supported in this element');
+    }
+  });
+};
+
 /**
  * Abstract class Event
  *
@@ -449,6 +458,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addQuantity(quantity) {
+    throwIfThereIsUnexpectedExtension(quantity);
     return this.generateAddItemToListFunction('quantityList', quantity, [QuantityElement]);
   }
 
@@ -458,6 +468,9 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addQuantityList(quantityList) {
+    quantityList.forEach((quantity) => {
+      throwIfThereIsUnexpectedExtension(quantity);
+    });
     return this.generateAddItemsToListFunction('quantityList', quantityList, [QuantityElement]);
   }
 
@@ -561,6 +574,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   setPersistentDisposition(persistentDisposition) {
+    throwIfThereIsUnexpectedExtension(persistentDisposition);
     return this.generateSetterFunction('persistentDisposition', persistentDisposition, [PersistentDisposition]);
   }
 
@@ -634,6 +648,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addBizTransaction(bizTransaction) {
+    throwIfThereIsUnexpectedExtension(bizTransaction);
     return this.generateAddItemToListFunction('bizTransactionList', bizTransaction, [BizTransactionElement]);
   }
 
@@ -643,6 +658,9 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addBizTransactionList(bizTransactionList) {
+    bizTransactionList.forEach(
+      (bizTransaction) => throwIfThereIsUnexpectedExtension(bizTransaction),
+    );
     return this.generateAddItemsToListFunction('bizTransactionList', bizTransactionList, [BizTransactionElement]);
   }
 
@@ -695,6 +713,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addSource(source) {
+    throwIfThereIsUnexpectedExtension(source);
     return this.generateAddItemToListFunction('sourceList', source, [SourceElement]);
   }
 
@@ -704,6 +723,9 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addSourceList(sourceList) {
+    sourceList.forEach((source) => {
+      throwIfThereIsUnexpectedExtension(source);
+    });
     return this.generateAddItemsToListFunction('sourceList', sourceList, [SourceElement]);
   }
 
@@ -750,6 +772,7 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addDestination(destination) {
+    throwIfThereIsUnexpectedExtension(destination);
     return this.generateAddItemToListFunction('destinationList', destination, [DestinationElement]);
   }
 
@@ -759,6 +782,9 @@ export default class Event extends Entity {
    * @return {Event} - the event instance
    */
   addDestinationList(destinationList) {
+    destinationList.forEach(
+      (destination) => throwIfThereIsUnexpectedExtension(destination),
+    );
     return this.generateAddItemsToListFunction('destinationList', destinationList, [DestinationElement]);
   }
 
