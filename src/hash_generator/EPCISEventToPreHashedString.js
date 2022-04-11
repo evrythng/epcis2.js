@@ -524,7 +524,22 @@ export const getOrderedPreHashString = (
 export const eventToPreHashedString = (event, context, throwError = true) => {
   // this field contains the context defined in the "context" field and the context defined directly
   // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
-  const extendedContext = { ...context, ...getEventContexts(event) };
+  let contextObject = {};
+  if (Array.isArray(context)) {
+    context.forEach((context) => {
+      if (typeof context === 'string') {
+        const stringContextToObjectContext = {context};
+        contextObject = { ...contextObject,  ...stringContextToObjectContext };
+      } else if (context instanceof Object) {
+        contextObject = { ...contextObject, ...context };
+      }
+    })
+  } else if (typeof context === 'string') {
+    contextObject = { context };
+  } else if (context instanceof Object) {
+    contextObject = context;
+  }
+  const extendedContext = { ...contextObject, ...getEventContexts(event) };
   const res = getOrderedPreHashString(
     event,
     extendedContext,

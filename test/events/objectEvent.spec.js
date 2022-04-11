@@ -20,6 +20,7 @@ import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import Ilmd from '../../src/entity/model/Ilmd';
 import { getTimeZoneOffset } from '../../src/utils/utils';
 import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
+import cbv from '../../src/cbv/cbv';
 
 const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 const epc1 = exampleObjectEvent.epcList[0];
@@ -129,6 +130,84 @@ describe('unit tests for the ObjectEvent class', () => {
       cbvmda: 'http://ns.example.com/epcis/',
     })).to.not.throw();
     expect(obj.getEventID().startsWith('ni:///')).to.be.equal(true);
+  });
+
+  it('should generate a hashed ID from a string as context', async () => {
+    const oe = new ObjectEvent();
+    oe.setAction(cbv.actionTypes.delete)
+    .addEPCList(exampleObjectEvent.epcList);
+    assert.doesNotThrow(() => { oe.generateHashID('https://gs1.github.io/EPCIS/epcis-context.jsonld'); });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true);
+  });
+
+  it('should generate a hashed ID from an array of string as context', async () => {
+    const oe = new ObjectEvent();
+    oe.setAction(cbv.actionTypes.delete)
+    .addEPCList(exampleObjectEvent.epcList);
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld1',
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld2',
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true)
+  });
+
+  it('should generate a hashed ID from an array of Object as context', async () => {
+    const oe = new ObjectEvent(exampleObjectEvent);
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        { example: 'http://ns.example.com/epcis/' },
+        { ext1: 'http://ns.example.com/epcis/' },
+        { ext2: 'http://ns.example.com/epcis/' },
+        { ext3: 'http://ns.example.com/epcis/' },
+        { cbvmda: 'http://ns.example.com/epcis/' },
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true)
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        {
+          example: 'http://ns.example.com/epcis/',
+          ext1: 'http://ns.example.com/epcis/',
+          ext2: 'http://ns.example.com/epcis/',
+        },
+        {
+          ext3: 'http://ns.example.com/epcis/',
+          cbvmda: 'http://ns.example.com/epcis/',
+        },
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true)
+  });
+
+  it('should generate a hashed ID from a mixed array', async () => {
+    const oe = new ObjectEvent(exampleObjectEvent);
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        {
+          ext3: 'http://example.com/ext3/',
+        },
+        {
+          ext2: 'http://example.com/ext2/',
+        },
+        {
+          ext1: 'http://example.com/ext1/',
+        },
+        {
+          example: 'http://ns.example.com/epcis/',
+          cbvmda: 'http://ns.example.com/epcis/',
+        },
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true)
   });
 
   it('should be able to set the time zone offset from number or string', async () => {
