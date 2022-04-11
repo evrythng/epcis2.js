@@ -521,23 +521,23 @@ export const getOrderedPreHashString = (
  * fields for example. Otherwise, it won't throw an error and it will still return the generated id
  * @returns {string} - the pre-hashed string that can be converted to an hashed string
  */
-export const eventToPreHashedString = (event, context, throwError = true) => {
+export const eventToPreHashedString = (event, contexts, throwError = true) => {
   // this field contains the context defined in the "context" field and the context defined directly
   // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
   let contextObject = {};
-  if (Array.isArray(context)) {
-    context.forEach((context) => {
+  if (Array.isArray(contexts)) {
+    contexts.forEach((context) => {
       if (typeof context === 'string') {
-        const stringContextToObjectContext = {context};
-        contextObject = { ...contextObject,  ...stringContextToObjectContext };
+        const stringContextToObjectContext = { context };
+        contextObject = { ...contextObject, ...stringContextToObjectContext };
       } else if (context instanceof Object) {
         contextObject = { ...contextObject, ...context };
       }
-    })
-  } else if (typeof context === 'string') {
-    contextObject = { context };
-  } else if (context instanceof Object) {
-    contextObject = context;
+    });
+  } else if (typeof contexts === 'string') {
+    contextObject = { context: contexts };
+  } else if (contexts instanceof Object) {
+    contextObject = contexts;
   }
   const extendedContext = { ...contextObject, ...getEventContexts(event) };
   const res = getOrderedPreHashString(
