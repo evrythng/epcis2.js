@@ -212,7 +212,8 @@ export const buildITIPUri = (gcp, itemRefAndIndicator, piece, total, serialNumbe
 export const buildGIDUri = (manageNumber, objectClass, serialNumber) => `urn:epc:id:gid:${manageNumber}.${objectClass}.${serialNumber}`;
 
 /**
- *
+ * This function throw an error if there is an extension in the specified object
+ * @throws an error if there is an unexpected extension in the specified object
  * @param {*} object
  */
 export const throwIfThereIsAnUnexpectedExtension = (object) => {
