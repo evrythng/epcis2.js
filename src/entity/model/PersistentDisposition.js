@@ -5,6 +5,7 @@
  */
 
 import Entity from '../Entity';
+import { throwIfThereIsAnUnexpectedExtension } from '../../utils/utils';
 
 export default class PersistentDisposition extends Entity {
   /**
@@ -21,6 +22,13 @@ export default class PersistentDisposition extends Entity {
     this.removeExtension = () => {
       throw new Error('Extensions are not supported in a destination element');
     };
+
+    if (!persistentDisposition) {
+      // create an empty persistent disposition object
+      return;
+    }
+
+    throwIfThereIsAnUnexpectedExtension(persistentDisposition);
   }
 
   /**
@@ -80,9 +88,7 @@ export default class PersistentDisposition extends Entity {
     */
   removeSetList(setList) {
     setList.forEach((set) => this.removeSet(set));
-    if (!this.set?.length) {
-      this.clearSetList();
-    }
+
     return this;
   }
 

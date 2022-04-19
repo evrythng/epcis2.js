@@ -513,7 +513,7 @@ export const getOrderedPreHashString = (
 /**
  * Convert the epcis event passed in parameter into a pre-hashed string
  * @param {{}} event - the EPCIS Event that needs to be converted
- * @param {{}} context - the list of context (e.g {
+ * @param {{}|string|Array{any}} context - the list of contexts (e.g {
  *    "example": "http://ns.example.com/epcis/",
  *    "example2": "http://ns.example2.com/epcis/",
  * })
@@ -521,23 +521,37 @@ export const getOrderedPreHashString = (
  * fields for example. Otherwise, it won't throw an error and it will still return the generated id
  * @returns {string} - the pre-hashed string that can be converted to an hashed string
  */
-export const eventToPreHashedString = (event, contexts, throwError = true) => {
-  // this field contains the context defined in the "context" field and the context defined directly
+export const eventToPreHashedString = (event, context, throwError = true) => {
+  // this field extendedContext contains the context defined
+  // in the "context" field and the context defined directly
   // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
   let contextObject = {};
-  if (Array.isArray(contexts)) {
-    contexts.forEach((context) => {
-      if (typeof context === 'string') {
-        const stringContextToObjectContext = { context };
-        contextObject = { ...contextObject, ...stringContextToObjectContext };
-      } else if (context instanceof Object) {
-        contextObject = { ...contextObject, ...context };
+  let i = 0;
+  if (Array.isArray(context)) {
+    context.forEach((c) => {
+      if (typeof c === 'string') {
+        /* We must transform the string into an object.
+          For this we put the name of the field: default
+          and we have a counter in the case that there are
+          several strings in the array */
+        const obj = {};
+        let fieldName = '';
+        i += 1;
+        if (i === 1) {
+          fieldName = 'default';
+        } else {
+          fieldName = `default${i}`;
+        }
+        obj[fieldName] = c;
+        contextObject = { ...contextObject, ...obj };
+      } else if (c instanceof Object) {
+        contextObject = { ...contextObject, ...c };
       }
     });
-  } else if (typeof contexts === 'string') {
-    contextObject = { context: contexts };
-  } else if (contexts instanceof Object) {
-    contextObject = contexts;
+  } else if (typeof context === 'string') {
+    contextObject = { default: context };
+  } else if (context instanceof Object) {
+    contextObject = context;
   }
   const extendedContext = { ...contextObject, ...getEventContexts(event) };
   const res = getOrderedPreHashString(

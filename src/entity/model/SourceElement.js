@@ -5,6 +5,7 @@
  */
 
 import Entity from '../Entity';
+import { throwIfThereIsAnUnexpectedExtension } from '../../utils/utils';
 
 export default class SourceElement extends Entity {
   /**
@@ -19,6 +20,13 @@ export default class SourceElement extends Entity {
     this.removeExtension = () => {
       throw new Error('Extensions are not supported in a source element');
     };
+
+    if (!sourceElement) {
+      // create an empty source element
+      return;
+    }
+
+    throwIfThereIsAnUnexpectedExtension(sourceElement);
   }
 
   /**

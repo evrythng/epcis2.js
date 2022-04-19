@@ -139,9 +139,6 @@ export default class TransformationEvent extends Event {
    */
   removeInputEPCList(epcList) {
     epcList.forEach((epc) => this.removeInputEPC(epc));
-    if (!this.inputEPCList?.length) {
-      this.clearInputEPCList();
-    }
     return this;
   }
 
@@ -202,9 +199,6 @@ export default class TransformationEvent extends Event {
    */
   removeOutputEPCList(epcList) {
     epcList.forEach((epc) => this.removeOutputEPC(epc));
-    if (!this.outputEPCList?.length) {
-      this.clearOutputEPCList();
-    }
     return this;
   }
 
@@ -263,9 +257,6 @@ export default class TransformationEvent extends Event {
    */
   removeInputQuantityList(quantityList) {
     quantityList.forEach((quantity) => this.removeInputQuantity(quantity));
-    if (!this.inputQuantityList?.length) {
-      this.clearInputQuantityList();
-    }
     return this;
   }
 
@@ -324,9 +315,6 @@ export default class TransformationEvent extends Event {
    */
   removeOutputQuantityList(quantityList) {
     quantityList.forEach((quantity) => this.removeOutputQuantity(quantity));
-    if (!this.outputQuantityList?.length) {
-      this.clearOutputQuantityList();
-    }
     return this;
   }
 

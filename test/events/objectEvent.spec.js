@@ -136,7 +136,7 @@ describe('unit tests for the ObjectEvent class', () => {
     const oe = new ObjectEvent();
     oe.setAction(cbv.actionTypes.delete)
       .addEPCList(exampleObjectEvent.epcList);
-    assert.doesNotThrow(() => { oe.generateHashID('https://gs1.github.io/EPCIS/epcis-context.jsonld'); });
+    assert.doesNotThrow(() => oe.generateHashID('https://gs1.github.io/EPCIS/epcis-context.jsonld'));
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
     expect(oe.isValid()).to.be.equal(true);
   });
@@ -315,14 +315,43 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.epcList).to.be.equal(undefined);
     });
-  });
 
-  it('should throw if we add an item that is already in the epc list', async () => {
-    const o = new ObjectEvent();
-    assert.doesNotThrow(() => { o.addEPC(epc1); });
-    assert.throw(() => { o.addEPC(epc1); });
-    assert.throw(() => { o.addEPCList([epc2, epc1]); });
-    expect(o.epcList.toString()).to.be.equal(epc1.toString());
+    it('should throw if we add an item that is already in the epc list', async () => {
+      const o = new ObjectEvent();
+      assert.doesNotThrow(() => { o.addEPC(epc1); });
+      assert.throw(() => { o.addEPC(epc1); });
+      assert.throw(() => { o.addEPCList([epc2, epc1]); });
+      expect(o.epcList.toString()).to.be.equal(epc1.toString());
+
+      let oe = {};
+      assert.throw(() => {
+        oe = new ObjectEvent(
+          {
+            type: 'ObjectEvent',
+            action: 'OBSERVE',
+            bizStep: 'shipping',
+            disposition: 'in_transit',
+            epcList: [
+              'urn:epc:id:sgtin:0614141.107346.2017',
+              'urn:epc:id:sgtin:0614141.107346.2017',
+              'urn:epc:id:sgtin:0614141.107346.2018',
+            ],
+            eventTime: '2005-04-03T20:33:31.116-06:00',
+            eventTimeZoneOffset: '-06:00',
+            readPoint: {
+              id: 'urn:epc:id:sgln:0614141.07346.1234',
+            },
+            bizTransactionList: [
+              {
+                type: 'po',
+                bizTransaction: 'http://transaction.acme.com/po/12345678',
+              },
+            ],
+          },
+        );
+      });
+      expect(oe).to.deep.equal({});
+    });
   });
 
   describe('quantityList field', () => {
@@ -382,31 +411,70 @@ describe('unit tests for the ObjectEvent class', () => {
     });
 
     it('should throw an error if there is/are extension(s) in the quantity element', async () => {
-      const o = new ObjectEvent();
-      const qt = new QuantityElement({
-        epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
-        quantity: 200,
-        uom: 'KGM',
-        'ext1:bool': true,
+      let qt = {};
+      assert.throw(() => {
+        qt = new QuantityElement({
+          epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
+          quantity: 200,
+          uom: 'KGM',
+          'ext1:bool': true,
+        });
       });
+      expect(qt).to.deep.equal({});
 
-      assert.throw(() => { o.addQuantity(qt); });
-      assert.throw(() => { o.addQuantityList([qt, quantity1]); });
+      let oe = {};
+      assert.throw(() => {
+        oe = new ObjectEvent(
+          {
+            type: 'ObjectEvent',
+            action: 'OBSERVE',
+            bizStep: 'shipping',
+            disposition: 'in_transit',
+            epcList: ['urn:epc:id:sgtin:0614141.107346.2017','urn:epc:id:sgtin:0614141.107346.2018'],
+            eventTime: '2005-04-03T20:33:31.116-06:00',
+            eventTimeZoneOffset: '-06:00',
+            readPoint: {
+              id: 'urn:epc:id:sgln:0614141.07346.1234',
+            },
+            bizTransactionList: [
+              {
+                type: 'po',
+                bizTransaction: 'http://transaction.acme.com/po/12345678',
+              },
+            ],
+            quantityList: [
+              {
+                epcClass: 'urn:epc:class:lgtin:4012345.012345.887766',
+                quantity: 100,
+                uom: 'KGM',
+              },
+              {
+                epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
+                quantity: 200,
+                uom: 'KGM',
+                'ext1:bool': true,
+              }
+            ]
+          },
+        );
+      });
+      expect(oe).to.deep.equal({});
     });
   });
 
   describe('persistent disposition field', () => {
     it('should throw an error if there is/are extension(s) in the persistentDisposition', async () => {
-      const o = new ObjectEvent();
-      const persistentDisposition = new PersistentDisposition({
-        set: [cbv.dispositions.completeness_verified],
-        unset: [cbv.dispositions.completeness_inferred],
-        'ext1:bool': true,
+      let pDisp = {};
+      assert.throw(() => {
+        pDisp = new PersistentDisposition({
+          set: [cbv.dispositions.completeness_verified],
+          unset: [cbv.dispositions.completeness_inferred],
+          'ext1:bool': true,
+        });
       });
-      assert.throw(() => { o.setPersistentDisposition(persistentDisposition); });
+      expect(pDisp).to.deep.equal({});
     });
   });
-
   describe('bizTransactionList field', () => {
     const bizTransaction1 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[0]);
     const bizTransaction2 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[1]);
@@ -457,18 +525,15 @@ describe('unit tests for the ObjectEvent class', () => {
     });
 
     it('should throw an error if there is/are extension(s) in the bizTransaction element', async () => {
-      const o = new ObjectEvent();
-      const bizT = new BizTransactionElement({
-        type: cbv.businessTransactionTypes.po,
-        bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
-        'ext1:bool': true,
+      let bizT = {};
+      assert.throw(() => {
+        bizT = new BizTransactionElement({
+          type: cbv.businessTransactionTypes.po,
+          bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
+          'ext1:bool': true,
+        });
       });
-      const bizT2 = new BizTransactionElement({
-        type: cbv.businessTransactionTypes.po,
-        bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
-      });
-      assert.throw(() => { o.addBizTransaction(bizT); });
-      assert.throw(() => { o.addBizTransactionList([bizT, bizT2, bizTransaction2]); });
+      expect(bizT).to.deep.equal({});
     });
   });
 
@@ -516,19 +581,15 @@ describe('unit tests for the ObjectEvent class', () => {
     });
 
     it('should throw an error if there is/are extension(s) in the source element', async () => {
-      const o = new ObjectEvent();
-      const src = new SourceElement({
-        type: cbv.sourceDestinationTypes.location,
-        source: 'urn:epc:id:sgln:4012345.00225.0',
-        'ext1:bool': true,
+      let src = {};
+      assert.throw(() => {
+        src = new SourceElement({
+          type: cbv.sourceDestinationTypes.location,
+          source: 'urn:epc:id:sgln:4012345.00225.0',
+          'ext1:bool': true,
+        });
       });
-      const src2 = new SourceElement({
-        type: cbv.sourceDestinationTypes.location,
-        source: 'urn:epc:id:sgln:4012345.00225.0',
-        'ext1:bool': false,
-      });
-      assert.throw(() => { o.addSource(src); });
-      assert.throw(() => { o.addSourceList([src, src2, source1]); });
+      expect(src).to.deep.equal({});
     });
   });
 
@@ -576,18 +637,15 @@ describe('unit tests for the ObjectEvent class', () => {
     });
 
     it('should throw an error if there is/are extension(s) in the destination element', async () => {
-      const o = new ObjectEvent();
-      const dest = new DestinationElement({
-        type: cbv.sourceDestinationTypes.location,
-        destination: 'urn:epc:id:sgln:0614141.00777.0',
-        'ext:bool': true,
+      let dest = {};
+      assert.throw(() => {
+        dest = new DestinationElement({
+          type: cbv.sourceDestinationTypes.location,
+          destination: 'urn:epc:id:sgln:0614141.00777.0',
+          'ext:bool': true,
+        });
       });
-      const dest2 = new DestinationElement({
-        type: cbv.sourceDestinationTypes.location,
-        destination: 'urn:epc:id:sgln:0614141.00777.0',
-      });
-      assert.throw(() => { o.addDestination(dest); });
-      assert.throw(() => { o.addDestinationList([dest, dest2, destination1]); });
+      expect(dest).to.deep.equal({});
     });
   });
 
@@ -771,21 +829,21 @@ describe('unit tests for the ObjectEvent class', () => {
       it('should add and remove a certification info', async () => {
         const o = new ObjectEvent();
         o.setCertificationInfo('certification:info');
-        expect(o.certificationInfoList.toString()).to.be.equal(['certification:info'].toString());
+        expect(o.getCertificationInfo().toString()).to.be.equal(['certification:info'].toString());
         o.setCertificationInfo('certification:info2');
-        expect(o.certificationInfoList.toString()).to.be.equal(
+        expect(o.getCertificationInfo().toString()).to.be.equal(
           ['certification:info', 'certification:info2'].toString(),
         );
         o.removeCertificationInfo('certification:info');
-        expect(o.certificationInfoList.toString()).to.be.equal(['certification:info2'].toString());
+        expect(o.getCertificationInfo().toString()).to.be.equal(['certification:info2'].toString());
         o.removeCertificationInfo('certification:info2');
-        expect(o.certificationInfoList.toString()).to.be.equal([].toString());
+        expect(o.getCertificationInfo().toString()).to.be.equal([].toString());
       });
 
       it('should add a certification info list', async () => {
         const o = new ObjectEvent();
         o.setCertificationInfo(['certification:info', 'certification:info2']);
-        expect(o.certificationInfoList.toString()).to.be.equal(
+        expect(o.getCertificationInfo().toString()).to.be.equal(
           ['certification:info', 'certification:info2'].toString(),
         );
       });
@@ -793,24 +851,24 @@ describe('unit tests for the ObjectEvent class', () => {
       it('should remove a certification info list', async () => {
         const o = new ObjectEvent();
         o.setCertificationInfo(['certification:info', 'certification:info2']);
-        expect(o.certificationInfoList.toString()).to.be.equal(
+        expect(o.getCertificationInfo().toString()).to.be.equal(
           ['certification:info', 'certification:info2'].toString(),
         );
         o.removeCertificationInfoList(['certification:info', 'certification:info2']);
-        expect(o.certificationInfoList.toString()).to.be.equal([].toString());
+        expect(o.getCertificationInfo().toString()).to.be.equal([].toString());
       });
 
       it('should clear the certification info list', async () => {
         const o = new ObjectEvent();
         o.setCertificationInfo(['certification:info', 'certification:info2']);
         o.clearCertificationInfoList();
-        expect(o.certificationInfoList).to.be.equal(undefined);
+        expect(o.getCertificationInfo()).to.be.equal(undefined);
       });
 
       it('should not add the certification info list to JSON if it is not defined', async () => {
         const o = new ObjectEvent();
         const json = o.toObject();
-        expect(json.certificationInfoList).to.be.equal(undefined);
+        expect(json.getCertificationInfo()).to.be.equal(undefined);
       });
     });
   });

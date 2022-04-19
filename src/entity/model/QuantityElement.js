@@ -5,6 +5,7 @@
  */
 
 import Entity from '../Entity';
+import { throwIfThereIsAnUnexpectedExtension } from '../../utils/utils';
 
 export default class QuantityElement extends Entity {
   /**
@@ -19,6 +20,13 @@ export default class QuantityElement extends Entity {
     this.removeExtension = () => {
       throw new Error('Extensions are not supported in a quantity element');
     };
+
+    if (!quantityElement) {
+      // create an empty quantity element object
+      return;
+    }
+
+    throwIfThereIsAnUnexpectedExtension(quantityElement);
   }
 
   /**

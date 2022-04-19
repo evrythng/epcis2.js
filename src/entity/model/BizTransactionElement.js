@@ -5,6 +5,7 @@
  */
 
 import Entity from '../Entity';
+import { throwIfThereIsAnUnexpectedExtension } from '../../utils/utils';
 
 export default class BizTransactionElement extends Entity {
   /**
@@ -21,6 +22,13 @@ export default class BizTransactionElement extends Entity {
     this.removeExtension = () => {
       throw new Error('Extensions are not supported in a bizTransaction element');
     };
+
+    if (!bizTransactionElement) {
+      // create an empty biz transaction element
+      return;
+    }
+
+    throwIfThereIsAnUnexpectedExtension(bizTransactionElement);
   }
 
   /**
