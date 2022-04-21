@@ -53,51 +53,51 @@ const buildSensorReportElementExample = () => {
 }
 
 const buildSensorMetadataExample = () => {
-   //sensor metadata
-   return new SensorMetadata().setTime(new Date().toISOString())
-   .setDeviceID("urn:epc:id:giai:4000001.111")
-   .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-   .setRawData("https://example.org/giai/401234599999")
-   .setStartTime("2019-04-02T12:55:01.000Z")
-   .setEndTime("2019-04-02T13:55:00.000Z")
-   .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
-   .setBizRules("https://example.com/gdti/4012345000054987")
-   .addExtension('example:someFurtherMetadata', 'someText');
+  //sensor metadata
+  return new SensorMetadata().setTime(new Date().toISOString())
+  .setDeviceID("urn:epc:id:giai:4000001.111")
+  .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
+  .setRawData("https://example.org/giai/401234599999")
+  .setStartTime("2019-04-02T12:55:01.000Z")
+  .setEndTime("2019-04-02T13:55:00.000Z")
+  .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
+  .setBizRules("https://example.com/gdti/4012345000054987")
+  .addExtension('example:someFurtherMetadata', 'someText');
 }
 
 const buildErrorDeclarationExample = () => {
-    return new ErrorDeclaration({
-      "declarationTime": new Date().toISOString(),
-      "reason": cbv.errorReasonIdentifiers.incorrect_data,
-      "example:vendorExtension": "Test1",
-      "correctiveEventIDs": ["urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"]
+  return new ErrorDeclaration({
+    "declarationTime": new Date().toISOString(),
+    "reason": cbv.errorReasonIdentifiers.incorrect_data,
+    "example:vendorExtension": "Test1",
+    "correctiveEventIDs": ["urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"]
   });
 }
 
 const buildReadPointExample = () => {
-    return new ReadPoint({
-      "id": "urn:epc:id:sgln:0012345.11111." + Math.floor(Math.random() * 999)
-    });
+  return new ReadPoint({
+    "id": "urn:epc:id:sgln:0012345.11111." + Math.floor(Math.random() * 999)
+  });
 }
 
 const buildBizLocationExample = () => {
-    return new BizLocation().setId("urn:epc:id:sgln:0012345.11111." + Math.floor(Math.random() * 9));
+  return new BizLocation().setId("urn:epc:id:sgln:0012345.11111." + Math.floor(Math.random() * 9));
 }
 
 const buildBizTransactionExample = () => {
-    return new BizTransactionElement().setType(cbv.businessTransactionTypes.po)
-    .setBizTransaction('urn:epc:id:gdti:0614141.00001.1618' + Math.floor(Math.random() * 999));
+  return new BizTransactionElement().setType(cbv.businessTransactionTypes.po)
+  .setBizTransaction('urn:epc:id:gdti:0614141.00001.1618' + Math.floor(Math.random() * 999));
 }
 
 const buildQuantityElementExample = () => {
-    return new QuantityElement().setEpcClass("urn:epc:class:lgtin:4012345.012345.9911111")
-    .setQuantity(Math.floor(Math.random() * 999))
-    .setUom('KGM');
+  return new QuantityElement().setEpcClass("urn:epc:class:lgtin:4012345.012345.9911111")
+  .setQuantity(Math.floor(Math.random() * 999))
+  .setUom('KGM');
 }
 
 const buildSourceElementExample = () => {
-    return new SourceElement().setType(cbv.sourceDestinationTypes.location)
-    .setSource('urn:epc:id:sgln:4012345.00225.' + Math.floor(Math.random() * 9));
+  return new SourceElement().setType(cbv.sourceDestinationTypes.location)
+  .setSource('urn:epc:id:sgln:4012345.00225.' + Math.floor(Math.random() * 9));
 }
 
 const buildDestinationElementExample = () => {
@@ -108,10 +108,10 @@ const buildDestinationElementExample = () => {
 const buildSensorElementExample = () => {
   const sensorReportList = [buildSensorReportElementExample(),buildSensorReportElementExample()];
 
-    return new SensorElement().setSensorMetadata(buildSensorMetadataExample())
-    .addSensorReportList(sensorReportList)
-    .addSensorReport(buildSensorReportElementExample())
-    .addExtension('example:myField', 'my_custom_value')
+  return new SensorElement().setSensorMetadata(buildSensorMetadataExample())
+  .addSensorReportList(sensorReportList)
+  .addSensorReport(buildSensorReportElementExample())
+  .addExtension('example:myField', 'my_custom_value')
 }
 
 const buildPersistentDispositionExample = () => {
@@ -362,10 +362,10 @@ const buildAssociationEvent = () => {
 }
 
 const buildExtendedEvent = () => {
-    return new ExtendedEvent().setType('My:custom:event:type')
-    .setEventID('ni:///sha-256;36abb3a2c0a726de32ac4beafd6b8bc4ba0b1d2de244490312e5cbec7b5ddece?ver=CBV2.0')
-    .setEventTime("2005-04-05T02:33:31.116Z")
-    .setRecordTime(new Date().toISOString());
+  return new ExtendedEvent().setType('My:custom:event:type')
+  .setEventID('ni:///sha-256;36abb3a2c0a726de32ac4beafd6b8bc4ba0b1d2de244490312e5cbec7b5ddece?ver=CBV2.0')
+  .setEventTime("2005-04-05T02:33:31.116Z")
+  .setRecordTime(new Date().toISOString());
 }
 
 const buildEPCISMasterDataExample = () => {
