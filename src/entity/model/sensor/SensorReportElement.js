@@ -380,4 +380,38 @@ export default class SensorReportElement extends Entity {
   getUom() {
     return this.uom;
   }
+
+  /**
+   * Set the coordinate Reference System property
+   * @param {string} coordinateReferenceSystem
+   * @return {SensorReportElement} - the sensorReport instance
+   */
+  setCoordinateReferenceSystem(coordinateReferenceSystem) {
+    return this.generateSetterFunction('coordinateReferenceSystem', coordinateReferenceSystem, ['string']);
+  }
+
+  /**
+     * Getter for the coordinate Reference System property
+     * @return {string} - the uom
+     */
+  getCoordinateReferenceSystem() {
+    return this.coordinateReferenceSystem;
+  }
+
+  /**
+   * Set the bizRules property
+   * @param {string} bizRules
+   * @return {SensorReportElement} - the SensorReportElement instance
+   */
+  setBizRules(bizRules) {
+    return this.generateSetterFunction('bizRules', bizRules, ['string']);
+  }
+
+  /**
+   * Getter for the bizRules property
+   * @return {string} - the bizRules
+   */
+  getBizRules() {
+    return this.bizRules;
+  }
 }

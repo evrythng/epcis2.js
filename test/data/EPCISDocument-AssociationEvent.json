@@ -2,6 +2,9 @@
   "type": "EPCISDocument",
   "schemaVersion": "2.0",
   "creationDate": "2013-06-04T14:59:02.099+02:00",
+  "sender": "urn:epc:id:sgln:0353579.00001.0",
+  "receiver": "urn:epc:id:sgln:5012345.00001.0",
+  "instanceIdentifier": "1234567890",
   "epcisBody": {
     "eventList": [
       {
@@ -85,7 +88,7 @@
             },
             "sensorReport": [
               {
-                "type": "gs1:Temperature",
+                "type": "Temperature",
                 "deviceID": "urn:epc:id:giai:4000001.111",
                 "rawData": "https://example.org/giai/401234599999",
                 "dataProcessingMethod": "https://example.com/gdti/4012345000054987",
@@ -120,7 +123,11 @@
               {
                 "ext1:object": {
                   "ext1:object": {
-                    "ext2:array": ["14", "23.0", "stringInArrayInObjectInArray"],
+                    "ext2:array": [
+                      "14",
+                      "23.0",
+                      "stringInArrayInObjectInArray"
+                    ],
                     "ext2:object": {
                       "ext2:object": {
                         "ext3:string": "stringInObjectInObjectInArray"
@@ -134,7 +141,11 @@
             ],
             "ext1:boolean": "true",
             "ext1:object": {
-              "ext2:array": ["11", "21", "stringInArrayInObject"],
+              "ext2:array": [
+                "11",
+                "21",
+                "stringInArrayInObject"
+              ],
               "ext2:object": {
                 "ext2:object": {
                   "ext3:string": "stringInObjectInObject"

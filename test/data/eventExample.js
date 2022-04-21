@@ -46,6 +46,8 @@ export const exampleSensorReportElement = {
   sDev: 0.1,
   'ext1:someFurtherReportData': 'someText',
   deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+  coordinateReferenceSystem: 'coordinate:reference:system',
+  bizRules: 'https://example.com/gdti/4012345000054987',
 };
 
 /**
@@ -246,81 +248,80 @@ export const exampleEPCISDocumentWithEPCISHeader = {
   type: 'EPCISDocument',
   schemaVersion: '2.0',
   creationDate: '2013-06-04T14:59:02.099+02:00',
+
   epcisHeader: {
-    epcisHeader: {
-      epcisMasterData: {
-        vocabularyList: [
-          {
-            vocabularyElementList: [
-              {
-                type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
-                id: 'urn:epc:id:sgln:0037000.00729.0',
-                attributes: [
-                  { id: 'xmda:latitude', attribute: '+18.0000' },
-                  { id: 'xmda:longitude', attribute: '-70.0000' },
-                  {
-                    id: 'xmda:address',
-                    attribute: {
-                      '@context': {
-                        '@vocab': 'http://epcis.example.com/ns/',
-                      },
-                      type: 'Address',
-                      street: '100 Nowhere Street',
-                      city: 'Fancy',
-                      state: 'DC',
-                      zip: '99999',
+    epcisMasterData: {
+      vocabularyList: [
+        {
+          vocabularyElementList: [
+            {
+              type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              id: 'urn:epc:id:sgln:0037000.00729.0',
+              attributes: [
+                { id: 'xmda:latitude', attribute: '+18.0000' },
+                { id: 'xmda:longitude', attribute: '-70.0000' },
+                {
+                  id: 'xmda:address',
+                  attribute: {
+                    '@context': {
+                      '@vocab': 'http://epcis.example.com/ns/',
                     },
+                    type: 'Address',
+                    street: '100 Nowhere Street',
+                    city: 'Fancy',
+                    state: 'DC',
+                    zip: '99999',
                   },
-                ],
-                children: [
-                  'urn:epc:id:sgln:0037000.00729.8201',
-                  'urn:epc:id:sgln:0037000.00729.8202',
-                  'urn:epc:id:sgln:0037000.00729.8203',
-                ],
-              },
-              {
-                type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
-                id: 'urn:epc:id:sgln:0037000.00729.8202',
-                attributes: [{ id: 'cbvmda:sst', attribute: '202' }],
-                children: ['urn:epc:id:sgln:0037000.00729.8203'],
-              },
-              {
-                type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
-                id: 'urn:epc:id:sgln:0037000.00729.8203',
-                attributes: [
-                  { id: 'cbvmda:sst', attribute: '202' },
-                  { id: 'cbvmda:ssa', attribute: '402' },
-                ],
-              },
-            ],
-          },
-          {
-            vocabularyElementList: [
-              {
-                type: 'urn:epcglobal:epcis:vtype:ReadPoint',
-                id: 'urn:epc:id:sgln:0037000.00729.8201',
-                attributes: [
-                  { id: 'cbvmda:site', attribute: '0037000007296' },
-                  { id: 'cbvmda:sst', attribute: 201 },
-                ],
-              },
-              {
-                type: 'urn:epcglobal:epcis:vtype:ReadPoint',
-                id: 'urn:epc:id:sgln:0037000.00729.8202',
-                attributes: [
-                  { id: 'cbvmda:site', attribute: '0037000007296' },
-                  { id: 'cbvmda:sst', attribute: '202' },
-                ],
-              },
-              {
-                type: 'urn:epcglobal:epcis:vtype:ReadPoint',
-                id: 'urn:epc:id:sgln:0037000.00729.8203',
-                attributes: [{ id: 'cbvmda:sst', attribute: 204 }],
-              },
-            ],
-          },
-        ],
-      },
+                },
+              ],
+              children: [
+                'urn:epc:id:sgln:0037000.00729.8201',
+                'urn:epc:id:sgln:0037000.00729.8202',
+                'urn:epc:id:sgln:0037000.00729.8203',
+              ],
+            },
+            {
+              type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              id: 'urn:epc:id:sgln:0037000.00729.8202',
+              attributes: [{ id: 'cbvmda:sst', attribute: '202' }],
+              children: ['urn:epc:id:sgln:0037000.00729.8203'],
+            },
+            {
+              type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              id: 'urn:epc:id:sgln:0037000.00729.8203',
+              attributes: [
+                { id: 'cbvmda:sst', attribute: '202' },
+                { id: 'cbvmda:ssa', attribute: '402' },
+              ],
+            },
+          ],
+        },
+        {
+          vocabularyElementList: [
+            {
+              type: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              id: 'urn:epc:id:sgln:0037000.00729.8201',
+              attributes: [
+                { id: 'cbvmda:site', attribute: '0037000007296' },
+                { id: 'cbvmda:sst', attribute: 201 },
+              ],
+            },
+            {
+              type: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              id: 'urn:epc:id:sgln:0037000.00729.8202',
+              attributes: [
+                { id: 'cbvmda:site', attribute: '0037000007296' },
+                { id: 'cbvmda:sst', attribute: '202' },
+              ],
+            },
+            {
+              type: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              id: 'urn:epc:id:sgln:0037000.00729.8203',
+              attributes: [{ id: 'cbvmda:sst', attribute: 204 }],
+            },
+          ],
+        },
+      ],
     },
   },
   epcisBody: {

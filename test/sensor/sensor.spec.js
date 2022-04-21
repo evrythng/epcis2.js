@@ -79,7 +79,9 @@ describe('unit tests for sensor relative Objects', () => {
         .setSDev(exampleSensorReportElement.sDev)
         .setPercRank(exampleSensorReportElement.percRank)
         .setPercValue(exampleSensorReportElement.percValue)
-        .setUom(exampleSensorReportElement.uom);
+        .setUom(exampleSensorReportElement.uom)
+        .setCoordinateReferenceSystem(exampleSensorReportElement.coordinateReferenceSystem)
+        .setBizRules(exampleSensorReportElement.bizRules);
 
       expect(sensorReport.getType()).to.be.equal(exampleSensorReportElement.type);
       expect(sensorReport.getDeviceID()).to.be.equal(exampleSensorReportElement.deviceID);
@@ -111,6 +113,10 @@ describe('unit tests for sensor relative Objects', () => {
       expect(sensorReport.getPercValue()).to.be.equal(exampleSensorReportElement.percValue);
       expect(sensorReport.getUom()).to.be.equal(exampleSensorReportElement.uom);
       expect(sensorReport.getException()).to.be.equal(exampleSensorReportElement.exception);
+      expect(sensorReport.getCoordinateReferenceSystem()).to.be.equal(
+        exampleSensorReportElement.coordinateReferenceSystem,
+      );
+      expect(sensorReport.getBizRules()).to.be.equal(exampleSensorReportElement.bizRules);
     });
 
     it('should create a valid SensorReportElement object from JSON', async () => {
@@ -177,7 +183,7 @@ describe('unit tests for sensor relative Objects', () => {
         obj.removeSensorReport(s2);
         expect(obj.getSensorReport()[0].toString()).to.be.equal(s1.toString());
         obj.removeSensorReport(s1);
-        expect(obj.getSensorReport().toString()).to.be.equal([].toString());
+        expect(obj.getSensorReport()).to.be.equal(undefined);
       });
 
       it('should add a sensorReport list', async () => {
@@ -203,6 +209,12 @@ describe('unit tests for sensor relative Objects', () => {
       it('should not add the sensorReport list to JSON if it is not defined', async () => {
         const obj = new SensorElement();
         expect(obj.getSensorReport()).to.be.equal(undefined);
+      });
+    });
+
+    describe('coordinate reference system field', () => {
+      it('should set coordinate reference', async () => {
+
       });
     });
   });

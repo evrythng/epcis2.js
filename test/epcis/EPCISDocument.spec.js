@@ -68,7 +68,10 @@ describe('unit tests for the EPCISDocument class', () => {
       .setCreationDate(EPCISDocumentObjectEvent.creationDate)
       .setSchemaVersion(EPCISDocumentObjectEvent.schemaVersion)
       .setEPCISHeader(new EPCISHeader(exampleEPCISDocumentWithEPCISHeader.epcisHeader))
-      .addEventList(events);
+      .addEventList(events)
+      .setSender(EPCISDocumentObjectEvent.sender)
+      .setReceiver(EPCISDocumentObjectEvent.receiver)
+      .setInstanceIdentifier(EPCISDocumentObjectEvent.instanceIdentifier);
     expect(e.getContext()).to.be.equal(EPCISDocumentObjectEvent['@context']);
     expect(e.getCreationDate()).to.be.equal(EPCISDocumentObjectEvent.creationDate);
     expect(e.getSchemaVersion()).to.be.equal(EPCISDocumentObjectEvent.schemaVersion);
@@ -76,6 +79,9 @@ describe('unit tests for the EPCISDocument class', () => {
       exampleEPCISDocumentWithEPCISHeader.epcisHeader,
     );
     expect(e.getEventList()).to.deep.equal(events);
+    expect(e.getSender()).to.deep.equal(EPCISDocumentObjectEvent.sender);
+    expect(e.getReceiver()).to.deep.equal(EPCISDocumentObjectEvent.receiver);
+    expect(e.getInstanceIdentifier()).to.deep.equal(EPCISDocumentObjectEvent.instanceIdentifier);
   });
 
   it('creation from object should set the variables correctly', async () => {
@@ -238,7 +244,11 @@ describe('unit tests for the EPCISDocument class', () => {
             {
               'ext1:object': {
                 'ext1:object': {
-                  'ext2:array': ['14', '23.0', 'stringInArrayInObjectInArray'],
+                  'ext2:array': [
+                    '14',
+                    '23.0',
+                    'stringInArrayInObjectInArray',
+                  ],
                   'ext2:object': {
                     'ext2:object': {
                       'ext3:string': 'stringInObjectInObjectInArray',
@@ -252,7 +262,11 @@ describe('unit tests for the EPCISDocument class', () => {
           ],
           'ext1:boolean': 'true',
           'ext1:object': {
-            'ext2:array': ['11', '21', 'stringInArrayInObject'],
+            'ext2:array': [
+              '11',
+              '21',
+              'stringInArrayInObject',
+            ],
             'ext2:object': {
               'ext2:object': {
                 'ext3:string': 'stringInObjectInObject',
@@ -367,6 +381,9 @@ describe('unit tests for the EPCISDocument class', () => {
     e.setSchemaVersion(o.schemaVersion)
       .setCreationDate(o.creationDate)
       .setContext(o['@context'])
+      .setInstanceIdentifier(o.instanceIdentifier)
+      .setSender(o.sender)
+      .setReceiver(o.receiver)
       .addEvent(ev);
 
     expect(e.toObject()).to.deep.equal(EPCISDocumentObjectEvent);
@@ -468,6 +485,9 @@ describe('unit tests for the EPCISDocument class', () => {
       assert.throws(() => epcisDocument.addEventList(new Ilmd()));
       assert.throws(() => epcisDocument.addEvent([new Ilmd(), new Ilmd(), new Ilmd()]));
       assert.throws(() => epcisDocument.setEPCISHeader(new Ilmd()));
+      assert.throws(() => epcisDocument.setInstanceIdentifier(1));
+      assert.throws(() => epcisDocument.setReceiver(1));
+      assert.throws(() => epcisDocument.setSender(1));
     });
     it('setters from EPCISHeader.js', () => {
       const epcisHeader = new EPCISHeader();

@@ -210,3 +210,17 @@ export const buildITIPUri = (gcp, itemRefAndIndicator, piece, total, serialNumbe
  * @returns {String} The GID URI
  */
 export const buildGIDUri = (manageNumber, objectClass, serialNumber) => `urn:epc:id:gid:${manageNumber}.${objectClass}.${serialNumber}`;
+
+/**
+ * This function throw an error if there is an extension in the specified object
+ * @throws an error if there is an unexpected extension in the specified object
+ * @param {*} object
+ */
+export const throwIfThereIsAnUnexpectedExtension = (object) => {
+  const objectFields = Object.keys(object);
+  objectFields.forEach((field) => {
+    if (field.toString().includes(':')) {
+      throw new Error('Extensions are not supported in this element');
+    }
+  });
+};

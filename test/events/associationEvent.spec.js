@@ -78,7 +78,7 @@ describe('unit tests for the AssociationEvent class', () => {
       o.removeChildEPC(epc1);
       expect(o.getChildEPCList().toString()).to.be.equal([epc2].toString());
       o.removeChildEPC(epc2);
-      expect(o.getChildEPCList().toString()).to.be.equal([].toString());
+      expect(o.getChildEPCList()).to.be.equal(undefined);
     });
 
     it('should add an epc list', async () => {
@@ -95,7 +95,7 @@ describe('unit tests for the AssociationEvent class', () => {
       expect(o.getChildEPCList().toString()).to.be.equal([epc3, epc1, epc2].toString());
     });
 
-    it('should remove an epc list', async () => {
+    it('should remove a child epc list', async () => {
       const o = new AssociationEvent();
       o.addChildEPCList([epc1, epc2, epc3]);
       o.removeChildEPCList([epc1, epc2]);
@@ -104,7 +104,7 @@ describe('unit tests for the AssociationEvent class', () => {
       // trying again but removing the whole list
       o.addChildEPC(epc2);
       o.removeChildEPCList([epc2, epc3]);
-      expect(o.getChildEPCList().toString()).to.be.equal([].toString());
+      expect(o.getChildEPCList()).to.be.equal(undefined);
     });
 
     it('should clear the epc list', async () => {
@@ -135,7 +135,7 @@ describe('unit tests for the AssociationEvent class', () => {
       o.removeChildQuantity(quantity1);
       expect(o.getChildQuantityList().toString()).to.be.equal([quantity2].toString());
       o.removeChildQuantity(quantity2);
-      expect(o.getChildQuantityList().toString()).to.be.equal([].toString());
+      expect(o.getChildQuantityList()).to.be.equal(undefined);
     });
 
     it('should add a quantity list', async () => {
@@ -163,7 +163,7 @@ describe('unit tests for the AssociationEvent class', () => {
       // trying again but removing the whole list
       o.addChildQuantity(quantity2);
       o.removeChildQuantityList([quantity2, quantity3]);
-      expect(o.getChildQuantityList().toString()).to.be.equal([].toString());
+      expect(o.getChildQuantityList()).to.be.equal(undefined);
     });
 
     it('should clear the quantity list', async () => {
@@ -251,8 +251,8 @@ describe('unit tests for the AssociationEvent class', () => {
 
     assert.doesNotThrow(() => o.addChildEPC(''));
     assert.doesNotThrow(() => o.removeChildEPC(''));
-    assert.doesNotThrow(() => o.removeChildEPCList(['']));
     assert.doesNotThrow(() => o.addChildEPCList(['']));
+    assert.doesNotThrow(() => o.removeChildEPCList(['']));
     assert.doesNotThrow(() => o.getChildEPCList());
     assert.doesNotThrow(() => o.clearChildEPCList());
 
@@ -272,7 +272,11 @@ describe('unit tests for the AssociationEvent class', () => {
     assert.doesNotThrow(() => o.addSensorElementList([new SensorElement()]));
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
+
+    assert.doesNotThrow(() => o.setCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.setCertificationInfo(['a:b:c', 'c:b:a']));
   });
+
   describe('AssociationEvent.isValid()', () => {
     it('should accept a real AssociationEvent', async () => {
       const ae = new AssociationEvent(exampleAssociationEvent);

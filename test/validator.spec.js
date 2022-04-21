@@ -6,10 +6,7 @@
 
 import { assert } from 'chai';
 import {
-  actionTypes,
   AggregationEvent,
-  bizSteps,
-  dispositions,
   ObjectEvent,
   QuantityElement,
   SensorElement,
@@ -23,7 +20,7 @@ import EPCISDocumentAssociationEvent from './data/EPCISDocument-AssociationEvent
 import EPCISDocumentQueryDocument from './data/EPCISQueryDocument.json';
 import EPCISDocument from '../src/entity/epcis/EPCISDocument';
 import BizTransactionElement from '../src/entity/model/BizTransactionElement';
-import * as cbv from '../src/cbv/cbv';
+import cbv from '../src/cbv/cbv';
 import {
   validateAgainstSchema,
   ensureFieldSet,
@@ -59,10 +56,10 @@ describe('validation of an EPCIS document', () => {
         .setEventTime('2005-04-03T20:33:31.116-06:00')
         .addEPC('urn:epc:id:sgtin:0614141.107346.2020')
         .addEPC('urn:epc:id:sgtin:0614141.107346.2021')
-        .setAction(actionTypes.observe)
+        .setAction(cbv.actionTypes.observe)
         .setEventID('ni:///sha-256;87b5f18a69993f0052046d4687dfacdf48f?ver=CBV2.0')
-        .setBizStep(bizSteps.shipping)
-        .setDisposition(dispositions.in_transit)
+        .setBizStep(cbv.bizSteps.shipping)
+        .setDisposition(cbv.dispositions.in_transit)
         .setReadPoint('urn:epc:id:sgln:0614141.07346.1234')
         .addBizTransaction(bizTransaction);
 
@@ -440,7 +437,7 @@ describe('Unit test: validator.js', () => {
       assert.deepEqual(res.errors, []);
     });
 
-    it('should accept correct sensorElementList with valid extensions', () => {
+    it('should accept sensorElementList with extensions', () => {
       const epcisDocument = {
         '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
         type: 'EPCISDocument',
@@ -891,54 +888,9 @@ describe('Unit test: validator.js', () => {
                       percValue: 12.7,
                       uom: 'CEL',
                       sDev: 0.1,
-                      'ext1:someFurtherReportData': 'someText',
                       deviceMetadata: 'https://id.gs1.org/giai/4000001111',
                     },
                   ],
-                  'ext1:float': '20',
-                  'ext1:time': '2013-06-08T14:58:56.591Z',
-                  'ext1:array': [
-                    '12',
-                    '22',
-                    '2013-06-08T14:58:56.591Z',
-                    'true',
-                    'stringInArray',
-                    {
-                      'ext1:object': {
-                        'ext1:object': {
-                          'ext2:array': [
-                            '14',
-                            '23.0',
-                            'stringInArrayInObjectInArray',
-                          ],
-                          'ext2:object': {
-                            'ext2:object': {
-                              'ext3:string': 'stringInObjectInObjectInArray',
-                            },
-                          },
-                          'ext2:int': '13',
-                          'ext2:string': 'stringInObjectInArray',
-                        },
-                      },
-                    },
-                  ],
-                  'ext1:boolean': 'true',
-                  'ext1:object': {
-                    'ext2:array': [
-                      '11',
-                      '21',
-                      'stringInArrayInObject',
-                    ],
-                    'ext2:object': {
-                      'ext2:object': {
-                        'ext3:string': 'stringInObjectInObject',
-                      },
-                    },
-                    'ext2:string': 'stringInObject',
-                  },
-                  'ext1:default': 'stringAsDefaultValue',
-                  'ext1:int': '10',
-                  'ext1:string': 'string',
                 },
               ],
               persistentDisposition: {
@@ -1217,6 +1169,12 @@ describe('Unit test: validator.js', () => {
       );
       epcisDocument.addEvent(te);
       assert.throws(() => { epcisDocument.isValid(); });
+    });
+    it('should reject correct EPCISDocument with an invalid cbv', () => {
+      const te = new ObjectEvent();
+      te.setAction('ADD');
+      te.setBizStep('foobar');
+      assert.throws(() => { te.isValid(); });
     });
   });
 });

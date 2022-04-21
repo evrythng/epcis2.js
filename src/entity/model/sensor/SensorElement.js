@@ -91,6 +91,9 @@ export default class SensorElement extends Entity {
    */
   removeSensorReport(sensorReport) {
     this.sensorReport = this.sensorReport.filter((elem) => elem !== sensorReport);
+    if (!this.sensorReport?.length) {
+      this.clearSensorReportList();
+    }
     return this;
   }
 

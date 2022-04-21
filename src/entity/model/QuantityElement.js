@@ -5,8 +5,30 @@
  */
 
 import Entity from '../Entity';
+import { throwIfThereIsAnUnexpectedExtension } from '../../utils/utils';
 
 export default class QuantityElement extends Entity {
+  /**
+   * You can either create an empty QuantityElement or provide an already existing one via Object
+   * @param {Object} [quantityElement] - The object that will be used to create the quantity element
+   */
+  constructor(quantityElement) {
+    super(quantityElement);
+    this.addExtension = () => {
+      throw new Error('Extensions are not supported in a quantity element');
+    };
+    this.removeExtension = () => {
+      throw new Error('Extensions are not supported in a quantity element');
+    };
+
+    if (!quantityElement) {
+      // create an empty quantity element object
+      return;
+    }
+
+    throwIfThereIsAnUnexpectedExtension(quantityElement);
+  }
+
   /**
    * Set the epcClass property
    * @param {string} epcClass

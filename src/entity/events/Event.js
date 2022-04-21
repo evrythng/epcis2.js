@@ -357,14 +357,35 @@ export default class Event extends Entity {
     return this.errorDeclaration;
   }
 
+  /**
+   * set the certificationInfo property
+   * @param {string|Array<string>} certificationInfo
+   * @return {Event} - the event instance
+   */
+  setCertificationInfo(certificationInfo) {
+    return this.generateSetterFunction('certificationInfo', certificationInfo, ['string', Array]);
+  }
+
+  /**
+   * Getter for the certificationInfo property
+   * @return {string|Array<string>} - the certificationInfo
+   */
+  getCertificationInfo() {
+    return this.certificationInfo;
+  }
+
   /** ************     NOT COMMON TO ALL EVENTS    ********************** */
 
   /**
    * Add the epc to the "epcList" field
+   * @throws an error if the epc to add is already in the epc list
    * @param {string} epc - the epc to add (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
    * @return {Event} - the event instance
    */
   addEPC(epc) {
+    if (this.epcList?.includes(epc)) {
+      throw new Error('This epc is already in the epc list');
+    }
     return this.generateAddItemToListFunction('epcList', epc, ['string']);
   }
 
@@ -372,9 +393,15 @@ export default class Event extends Entity {
    * Add each epc to the "epcList" field
    * @param {Array<string>} epcList - the epcs to add
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
+   * @throws  an error if at least one item is already in the epc list
    * @return {Event} - the event instance
    */
   addEPCList(epcList) {
+    epcList.forEach((epc) => {
+      if (this.epcList?.includes(epc)) {
+        throw new Error('This epc is already in the epc list');
+      }
+    });
     return this.generateAddItemsToListFunction('epcList', epcList, ['string']);
   }
 
@@ -450,6 +477,9 @@ export default class Event extends Entity {
    */
   removeQuantity(quantity) {
     this.quantityList = this.quantityList.filter((elem) => elem !== quantity);
+    if (!this.quantityList?.length) {
+      this.clearQuantityList();
+    }
     return this;
   }
 
@@ -629,6 +659,9 @@ export default class Event extends Entity {
    */
   removeBizTransaction(bizTransaction) {
     this.bizTransactionList = this.bizTransactionList.filter((elem) => elem !== bizTransaction);
+    if (!this.bizTransactionList?.length) {
+      this.clearBizTransactionList();
+    }
     return this;
   }
 
@@ -794,6 +827,9 @@ export default class Event extends Entity {
    */
   removeSensorElement(sensorElement) {
     this.sensorElementList = this.sensorElementList.filter((elem) => elem !== sensorElement);
+    if (!this.sensorElementList?.length) {
+      this.clearSensorElementList();
+    }
     return this;
   }
 
@@ -887,6 +923,9 @@ export default class Event extends Entity {
    */
   removeChildEPC(epc) {
     this.childEPCs = this.childEPCs.filter((elem) => elem !== epc);
+    if (!this.childEPCs?.length) {
+      this.clearChildEPCList();
+    }
     return this;
   }
 
@@ -943,6 +982,9 @@ export default class Event extends Entity {
    */
   removeChildQuantity(quantity) {
     this.childQuantityList = this.childQuantityList.filter((elem) => elem !== quantity);
+    if (!this.childQuantityList?.length) {
+      this.clearChildQuantityList();
+    }
     return this;
   }
 

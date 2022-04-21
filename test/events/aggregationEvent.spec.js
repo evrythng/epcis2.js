@@ -128,8 +128,8 @@ describe('unit tests for the AggregationEvent class', () => {
 
     assert.doesNotThrow(() => o.addChildEPC(''));
     assert.doesNotThrow(() => o.removeChildEPC(''));
-    assert.doesNotThrow(() => o.removeChildEPCList(['']));
     assert.doesNotThrow(() => o.addChildEPCList(['']));
+    assert.doesNotThrow(() => o.removeChildEPCList(['']));
     assert.doesNotThrow(() => o.getChildEPCList());
     assert.doesNotThrow(() => o.clearChildEPCList());
 
@@ -149,6 +149,8 @@ describe('unit tests for the AggregationEvent class', () => {
     assert.doesNotThrow(() => o.addSensorElementList([new SensorElement()]));
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
+    assert.doesNotThrow(() => o.setCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.setCertificationInfo(['a:b:c', 'c:b:a']));
   });
   describe('AggregationEvent.isValid()', () => {
     it('should accept a real AggregationEvent', async () => {

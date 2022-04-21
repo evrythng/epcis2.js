@@ -20,6 +20,7 @@ import SensorElement from '../../src/entity/model/sensor/SensorElement';
 import Ilmd from '../../src/entity/model/Ilmd';
 import { getTimeZoneOffset } from '../../src/utils/utils';
 import EPCISDocumentObjectEvent from '../data/EPCISDocument-ObjectEvent.json';
+import cbv from '../../src/cbv/cbv';
 
 const exampleObjectEvent = EPCISDocumentObjectEvent.epcisBody.eventList[0];
 const epc1 = exampleObjectEvent.epcList[0];
@@ -131,6 +132,84 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getEventID().startsWith('ni:///')).to.be.equal(true);
   });
 
+  it('should generate a hashed ID from a string as context', async () => {
+    const oe = new ObjectEvent();
+    oe.setAction(cbv.actionTypes.delete)
+      .addEPCList(exampleObjectEvent.epcList);
+    assert.doesNotThrow(() => oe.generateHashID('https://gs1.github.io/EPCIS/epcis-context.jsonld'));
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true);
+  });
+
+  it('should generate a hashed ID from an array of string as context', async () => {
+    const oe = new ObjectEvent();
+    oe.setAction(cbv.actionTypes.delete)
+      .addEPCList(exampleObjectEvent.epcList);
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld1',
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld2',
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true);
+  });
+
+  it('should generate a hashed ID from an array of Object as context', async () => {
+    const oe = new ObjectEvent(exampleObjectEvent);
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        { example: 'http://ns.example.com/epcis/' },
+        { ext1: 'http://ns.example.com/epcis/' },
+        { ext2: 'http://ns.example.com/epcis/' },
+        { ext3: 'http://ns.example.com/epcis/' },
+        { cbvmda: 'http://ns.example.com/epcis/' },
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true);
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        {
+          example: 'http://ns.example.com/epcis/',
+          ext1: 'http://ns.example.com/epcis/',
+          ext2: 'http://ns.example.com/epcis/',
+        },
+        {
+          ext3: 'http://ns.example.com/epcis/',
+          cbvmda: 'http://ns.example.com/epcis/',
+        },
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true);
+  });
+
+  it('should generate a hashed ID from a mixed array', async () => {
+    const oe = new ObjectEvent(exampleObjectEvent);
+    assert.doesNotThrow(() => {
+      oe.generateHashID([
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        {
+          ext3: 'http://example.com/ext3/',
+        },
+        {
+          ext2: 'http://example.com/ext2/',
+        },
+        {
+          ext1: 'http://example.com/ext1/',
+        },
+        {
+          example: 'http://ns.example.com/epcis/',
+          cbvmda: 'http://ns.example.com/epcis/',
+        },
+      ]);
+    });
+    expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
+    expect(oe.isValid()).to.be.equal(true);
+  });
+
   it('should be able to set the time zone offset from number or string', async () => {
     const o1 = new ObjectEvent();
     const o2 = new ObjectEvent();
@@ -236,6 +315,43 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.epcList).to.be.equal(undefined);
     });
+
+    it('should throw if we add an item that is already in the epc list', async () => {
+      const o = new ObjectEvent();
+      assert.doesNotThrow(() => { o.addEPC(epc1); });
+      assert.throw(() => { o.addEPC(epc1); });
+      assert.throw(() => { o.addEPCList([epc2, epc1]); });
+      expect(o.epcList.toString()).to.be.equal(epc1.toString());
+
+      let oe = {};
+      assert.throw(() => {
+        oe = new ObjectEvent(
+          {
+            type: 'ObjectEvent',
+            action: 'OBSERVE',
+            bizStep: 'shipping',
+            disposition: 'in_transit',
+            epcList: [
+              'urn:epc:id:sgtin:0614141.107346.2017',
+              'urn:epc:id:sgtin:0614141.107346.2017',
+              'urn:epc:id:sgtin:0614141.107346.2018',
+            ],
+            eventTime: '2005-04-03T20:33:31.116-06:00',
+            eventTimeZoneOffset: '-06:00',
+            readPoint: {
+              id: 'urn:epc:id:sgln:0614141.07346.1234',
+            },
+            bizTransactionList: [
+              {
+                type: 'po',
+                bizTransaction: 'http://transaction.acme.com/po/12345678',
+              },
+            ],
+          },
+        );
+      });
+      expect(oe).to.deep.equal({});
+    });
   });
 
   describe('quantityList field', () => {
@@ -252,7 +368,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeQuantity(quantity1);
       expect(o.quantityList.toString()).to.be.equal([quantity2].toString());
       o.removeQuantity(quantity2);
-      expect(o.quantityList.toString()).to.be.equal([].toString());
+      expect(o.quantityList).to.be.equal(undefined);
     });
 
     it('should add a quantity list', async () => {
@@ -278,7 +394,7 @@ describe('unit tests for the ObjectEvent class', () => {
       // trying again but removing the whole list
       o.addQuantity(quantity2);
       o.removeQuantityList([quantity2, quantity3]);
-      expect(o.quantityList.toString()).to.be.equal([].toString());
+      expect(o.quantityList).to.be.equal(undefined);
     });
 
     it('should clear the quantity list', async () => {
@@ -293,8 +409,72 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.quantityList).to.be.equal(undefined);
     });
+
+    it('should throw an error if there is/are extension(s) in the quantity element', async () => {
+      let qt = {};
+      assert.throw(() => {
+        qt = new QuantityElement({
+          epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
+          quantity: 200,
+          uom: 'KGM',
+          'ext1:bool': true,
+        });
+      });
+      expect(qt).to.deep.equal({});
+
+      let oe = {};
+      assert.throw(() => {
+        oe = new ObjectEvent(
+          {
+            type: 'ObjectEvent',
+            action: 'OBSERVE',
+            bizStep: 'shipping',
+            disposition: 'in_transit',
+            epcList: ['urn:epc:id:sgtin:0614141.107346.2017', 'urn:epc:id:sgtin:0614141.107346.2018'],
+            eventTime: '2005-04-03T20:33:31.116-06:00',
+            eventTimeZoneOffset: '-06:00',
+            readPoint: {
+              id: 'urn:epc:id:sgln:0614141.07346.1234',
+            },
+            bizTransactionList: [
+              {
+                type: 'po',
+                bizTransaction: 'http://transaction.acme.com/po/12345678',
+              },
+            ],
+            quantityList: [
+              {
+                epcClass: 'urn:epc:class:lgtin:4012345.012345.887766',
+                quantity: 100,
+                uom: 'KGM',
+              },
+              {
+                epcClass: 'urn:epc:class:lgtin:4012345.012345.998877',
+                quantity: 200,
+                uom: 'KGM',
+                'ext1:bool': true,
+              },
+            ],
+          },
+        );
+      });
+      expect(oe).to.deep.equal({});
+    });
   });
 
+  describe('persistent disposition field', () => {
+    it('should throw an error if there is/are extension(s) in the persistentDisposition', async () => {
+      let pDisp = {};
+      assert.throw(() => {
+        pDisp = new PersistentDisposition({
+          set: [cbv.dispositions.completeness_verified],
+          unset: [cbv.dispositions.completeness_inferred],
+          'ext1:bool': true,
+        });
+      });
+      expect(pDisp).to.deep.equal({});
+    });
+  });
   describe('bizTransactionList field', () => {
     const bizTransaction1 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[0]);
     const bizTransaction2 = new BizTransactionElement(exampleObjectEvent.bizTransactionList[1]);
@@ -310,7 +490,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeBizTransaction(bizTransaction1);
       expect(o.bizTransactionList.toString()).to.be.equal([bizTransaction2].toString());
       o.removeBizTransaction(bizTransaction2);
-      expect(o.bizTransactionList.toString()).to.be.equal([].toString());
+      expect(o.bizTransactionList).to.be.equal(undefined);
     });
 
     it('should add a bizTransaction list', async () => {
@@ -328,7 +508,7 @@ describe('unit tests for the ObjectEvent class', () => {
         [bizTransaction1, bizTransaction2].toString(),
       );
       o.removeBizTransactionList([bizTransaction1, bizTransaction2]);
-      expect(o.bizTransactionList.toString()).to.be.equal([].toString());
+      expect(o.bizTransactionList).to.be.equal();
     });
 
     it('should clear the bizTransaction list', async () => {
@@ -342,6 +522,18 @@ describe('unit tests for the ObjectEvent class', () => {
       const o = new ObjectEvent();
       const json = o.toObject();
       expect(json.bizTransactionList).to.be.equal(undefined);
+    });
+
+    it('should throw an error if there is/are extension(s) in the bizTransaction element', async () => {
+      let bizT = {};
+      assert.throw(() => {
+        bizT = new BizTransactionElement({
+          type: cbv.businessTransactionTypes.po,
+          bizTransaction: 'urn:epc:id:gdti:0614141.00001.1618034',
+          'ext1:bool': true,
+        });
+      });
+      expect(bizT).to.deep.equal({});
     });
   });
 
@@ -387,6 +579,18 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.sourceList).to.be.equal(undefined);
     });
+
+    it('should throw an error if there is/are extension(s) in the source element', async () => {
+      let src = {};
+      assert.throw(() => {
+        src = new SourceElement({
+          type: cbv.sourceDestinationTypes.location,
+          source: 'urn:epc:id:sgln:4012345.00225.0',
+          'ext1:bool': true,
+        });
+      });
+      expect(src).to.deep.equal({});
+    });
   });
 
   describe('destinationList field', () => {
@@ -431,6 +635,18 @@ describe('unit tests for the ObjectEvent class', () => {
       const json = o.toObject();
       expect(json.destinationList).to.be.equal(undefined);
     });
+
+    it('should throw an error if there is/are extension(s) in the destination element', async () => {
+      let dest = {};
+      assert.throw(() => {
+        dest = new DestinationElement({
+          type: cbv.sourceDestinationTypes.location,
+          destination: 'urn:epc:id:sgln:0614141.00777.0',
+          'ext:bool': true,
+        });
+      });
+      expect(dest).to.deep.equal({});
+    });
   });
 
   describe('sensorElementList field', () => {
@@ -448,7 +664,7 @@ describe('unit tests for the ObjectEvent class', () => {
       o.removeSensorElement(sensorElement1);
       expect(o.sensorElementList.toString()).to.be.equal([sensorElement2].toString());
       o.removeSensorElement(sensorElement2);
-      expect(o.sensorElementList.toString()).to.be.equal([].toString());
+      expect(o.sensorElementList).to.be.equal(undefined);
     });
 
     it('should add a sensorElement list', async () => {
@@ -466,7 +682,7 @@ describe('unit tests for the ObjectEvent class', () => {
         [sensorElement1, sensorElement2].toString(),
       );
       o.removeSensorElementList([sensorElement1, sensorElement2]);
-      expect(o.sensorElementList.toString()).to.be.equal([].toString());
+      expect(o.sensorElementList).to.be.equal(undefined);
     });
 
     it('should clear the sensorElement list', async () => {
@@ -537,6 +753,8 @@ describe('unit tests for the ObjectEvent class', () => {
     assert.doesNotThrow(() => o.clearDestinationList());
     assert.doesNotThrow(() => o.setIlmd(new Ilmd()));
     assert.doesNotThrow(() => o.getIlmd());
+    assert.doesNotThrow(() => o.setCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.setCertificationInfo(['a:b:c', 'c:b:a']));
 
     assert.throws(() => o.setParentId('id'));
     assert.throws(() => o.getParentId());
@@ -603,6 +821,55 @@ describe('unit tests for the ObjectEvent class', () => {
       assert.throws(() => ov.addSourceList([new Ilmd(), new Ilmd(), new Ilmd()]));
       assert.throws(() => ov.addDestination(new Ilmd()));
       assert.throws(() => ov.addDestinationList([new Ilmd(), new Ilmd(), new Ilmd()]));
+    });
+  });
+
+  describe('certificationInfo field', () => {
+    it('setters from Event.js', () => {
+      it('should add and remove a certification info', async () => {
+        const o = new ObjectEvent();
+        o.setCertificationInfo('certification:info');
+        expect(o.getCertificationInfo().toString()).to.be.equal(['certification:info'].toString());
+        o.setCertificationInfo('certification:info2');
+        expect(o.getCertificationInfo().toString()).to.be.equal(
+          ['certification:info', 'certification:info2'].toString(),
+        );
+        o.removeCertificationInfo('certification:info');
+        expect(o.getCertificationInfo().toString()).to.be.equal(['certification:info2'].toString());
+        o.removeCertificationInfo('certification:info2');
+        expect(o.getCertificationInfo().toString()).to.be.equal([].toString());
+      });
+
+      it('should add a certification info list', async () => {
+        const o = new ObjectEvent();
+        o.setCertificationInfo(['certification:info', 'certification:info2']);
+        expect(o.getCertificationInfo().toString()).to.be.equal(
+          ['certification:info', 'certification:info2'].toString(),
+        );
+      });
+
+      it('should remove a certification info list', async () => {
+        const o = new ObjectEvent();
+        o.setCertificationInfo(['certification:info', 'certification:info2']);
+        expect(o.getCertificationInfo().toString()).to.be.equal(
+          ['certification:info', 'certification:info2'].toString(),
+        );
+        o.removeCertificationInfoList(['certification:info', 'certification:info2']);
+        expect(o.getCertificationInfo().toString()).to.be.equal([].toString());
+      });
+
+      it('should clear the certification info list', async () => {
+        const o = new ObjectEvent();
+        o.setCertificationInfo(['certification:info', 'certification:info2']);
+        o.clearCertificationInfoList();
+        expect(o.getCertificationInfo()).to.be.equal(undefined);
+      });
+
+      it('should not add the certification info list to JSON if it is not defined', async () => {
+        const o = new ObjectEvent();
+        const json = o.toObject();
+        expect(json.getCertificationInfo()).to.be.equal(undefined);
+      });
     });
   });
 

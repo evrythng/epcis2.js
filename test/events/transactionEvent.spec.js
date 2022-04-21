@@ -172,6 +172,9 @@ describe('unit tests for the TransactionEvent class', () => {
     assert.doesNotThrow(() => o.addSensorElementList([new SensorElement()]));
     assert.doesNotThrow(() => o.getSensorElementList());
     assert.doesNotThrow(() => o.clearSensorElementList());
+
+    assert.doesNotThrow(() => o.setCertificationInfo('a:b:c'));
+    assert.doesNotThrow(() => o.setCertificationInfo(['a:b:c', 'c:b:a']));
   });
   describe('TransactionEvent.isValid()', () => {
     it('should accept a real TransactionEvent', async () => {
