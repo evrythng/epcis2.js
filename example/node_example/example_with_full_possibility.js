@@ -21,13 +21,55 @@ const {
     Ilmd,
     setup, 
     capture,
-    cbv } = require('epcis2.js');
+    cbv 
+  } = require('epcis2.js');
 
 const objectEvent = new ObjectEvent();
 const epcisDocument = new EPCISDocument();
 const epcisHeader = new EPCISHeader();
 
-// you can override the global parameter with the setup function
+const buildSensorReportElementExample = () => {
+  //sensor report element
+  const sensorReport = new SensorReportElement();
+  return sensorReport.setType(cbv.sensorMeasurementTypes.temperature)
+  .setDeviceID("urn:epc:id:giai:4000001." + Math.floor(Math.random() * 999))
+  .setRawData("https://example.org/giai/401234599999")
+  .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
+  .setTime("2019-07-19T13:00:00.000Z")
+  .setMicroorganism("https://www.ncbi.nlm.nih.gov/taxonomy/1126011")
+  .setChemicalSubstance("https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N")
+  .setValue(26)
+  .setComponent(cbv.components.x)
+  .setStringValue('SomeString')
+  .setBooleanValue(true)
+  .setHexBinaryValue('f0f0f0')
+  .setUriValue("https://id.gs1.org/giai/4000001111")
+  .setMinValue(26)
+  .setMaxValue(26.2)
+  .setMeanValue(13.2)
+  .setPercRank(50)
+  .setPercValue(12.7)
+  .setUom('CEL')
+  .setSDev(0.1)
+  .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
+  .addExtension('example:someFurtherMetadata', 'someText')
+  .setBizRules("https://example.com/gdti/4012345000054987");
+}
+
+const buildSensorMetadataExample = () => {
+   //sensor metadata
+   const sensorMetadata = new SensorMetadata();
+   return sensorMetadata.setTime(new Date().toISOString())
+   .setDeviceID("urn:epc:id:giai:4000001.111")
+   .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
+   .setRawData("https://example.org/giai/401234599999")
+   .setStartTime("2019-04-02T12:55:01.000Z")
+   .setEndTime("2019-04-02T13:55:00.000Z")
+   .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
+   .setBizRules("https://example.com/gdti/4012345000054987")
+   .addExtension('example:someFurtherMetadata', 'someText');
+}
+// you can override the global parameters with the setup function
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
   headers: {
@@ -237,11 +279,11 @@ const sendACaptureRequestExample = async () => {
         "ext1:string": "string"
       }
     );
-
+    
     // errorDeclaration
     const errorDeclaration = new ErrorDeclaration({
         "declarationTime": "2020-01-15T00:00:00+01:00",
-        "reason": "incorrect_data",//todo
+        "reason": cbv.errorReasonIdentifiers.incorrect_data,
         "example:vendorExtension": "Test1",
         "correctiveEventIDs": ["urn:uuid:404d95fc-9457-4a51-bd6a-0bba133845a8"]
     });
@@ -311,136 +353,22 @@ const sendACaptureRequestExample = async () => {
     const destinationList = [ destination, destination2 ];
 
     // sensor element
-        //sensor metadata
-        const sensorMetadata = new SensorMetadata();
-        sensorMetadata.setTime("2019-04-02T13:05:00.000Z")
-        .setDeviceID("urn:epc:id:giai:4000001.111")
-        .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-        .setRawData("https://example.org/giai/401234599999")
-        .setStartTime("2019-04-02T12:55:01.000Z")
-        .setEndTime("2019-04-02T13:55:00.000Z")
-        .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
-        .setBizRules("https://example.com/gdti/4012345000054987")
-        .addExtension('example:someFurtherMetadata', 'someText');
-
-        const sensorMetadata2 = new SensorMetadata();
-        sensorMetadata2.setTime("2020-04-02T13:05:00.000Z")
-        .setDeviceID("urn:epc:id:giai:4000001.111")
-        .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-        .setRawData("https://example.org/giai/401234599999")
-        .setStartTime("2020-04-02T12:55:01.000Z")
-        .setEndTime("2020-04-02T13:55:00.000Z")
-        .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
-        .setBizRules("https://example.com/gdti/4012345000054987")
-        .addExtension('example:someFurtherMetadata', 'someText');
-
-        const sensorMetadata3 = new SensorMetadata();
-        sensorMetadata3.setTime("2021-04-02T13:05:00.000Z")
-        .setDeviceID("urn:epc:id:giai:4000001.111")
-        .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-        .setRawData("https://example.org/giai/401234599999")
-        .setStartTime("2021-04-02T12:55:01.000Z")
-        .setEndTime("2021-04-02T13:55:00.000Z")
-        .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
-        .setBizRules("https://example.com/gdti/4012345000054987")
-        .addExtension('example:someFurtherMetadata', 'someText');
-
-        //sensor report element
-        const sensorReport = new SensorReportElement();
-        sensorReport.setType(cbv.sensorMeasurementTypes.temperature)
-        .setDeviceID("urn:epc:id:giai:4000001.111")
-        .setRawData("https://example.org/giai/401234599999")
-        .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
-        .setTime("2019-07-19T13:00:00.000Z")
-        .setMicroorganism("https://www.ncbi.nlm.nih.gov/taxonomy/1126011")
-        .setChemicalSubstance("https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N")
-        .setValue(26)
-        .setComponent(cbv.components.x)
-        .setStringValue('SomeString')
-        .setBooleanValue(true)
-        .setHexBinaryValue('f0f0f0')
-        .setUriValue("https://id.gs1.org/giai/4000001111")
-        .setMinValue(26)
-        .setMaxValue(26.2)
-        .setMeanValue(13.2)
-        .setPercRank(50)
-        .setPercValue(12.7)
-        .setUom('CEL')
-        .setSDev(0.1)
-        .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-        .addExtension('example:someFurtherMetadata', 'someText')
-        .setBizRules("https://example.com/gdti/4012345000054987");
-
-        const sensorReport2 = new SensorReportElement();
-        sensorReport2.setType(cbv.sensorMeasurementTypes.speed)
-        .setDeviceID("urn:epc:id:giai:4000001.111")
-        .setRawData("https://example.org/giai/401234599999")
-        .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
-        .setTime("2019-07-19T13:00:00.000Z")
-        .setMicroorganism("https://www.ncbi.nlm.nih.gov/taxonomy/1126011")
-        .setChemicalSubstance("https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N")
-        .setValue(130)
-        .setComponent(cbv.components.x)
-        .setStringValue('SomeString')
-        .setBooleanValue(true)
-        .setHexBinaryValue('f0f0f0')
-        .setUriValue("https://id.gs1.org/giai/4000001111")
-        .setMinValue(130)
-        .setMaxValue(130.2)
-        .setMeanValue(75.2)
-        .setPercRank(150)
-        .setPercValue(75.7)
-        .setUom('CEL')
-        .setSDev(0.1)
-        .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-        .addExtension('example:someFurtherMetadata', 'someText')
-        .setBizRules("https://example.com/gdti/4012345000054987");
-
-        const sensorReport3 = new SensorReportElement();
-        sensorReport3.setType(cbv.sensorMeasurementTypes.speed)
-        .setDeviceID("urn:epc:id:giai:4000001.111")
-        .setRawData("https://example.org/giai/401234599999")
-        .setDataProcessingMethod("https://example.com/gdti/4012345000054987")
-        .setTime("2019-07-19T13:00:00.000Z")
-        .setMicroorganism("https://www.ncbi.nlm.nih.gov/taxonomy/1126011")
-        .setChemicalSubstance("https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N")
-        .setValue(2)
-        .setComponent(cbv.components.x)
-        .setStringValue('SomeString')
-        .setBooleanValue(true)
-        .setHexBinaryValue('f0f0f0')
-        .setUriValue("https://id.gs1.org/giai/4000001111")
-        .setMinValue(2)
-        .setMaxValue(2.2)
-        .setMeanValue(1.2)
-        .setPercRank(3)
-        .setPercValue(1.7)
-        .setUom('CEL')
-        .setSDev(0.1)
-        .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-        .addExtension('example:someFurtherMetadata', 'someText')
-        .setBizRules("https://example.com/gdti/4012345000054987");
-
-        const sensorReportElementList = [ sensorReport, sensorReport2 ];
-        const sensorReportElementList2 = [ sensorReport2, sensorReport3 ];
-        const sensorReportElementList3 = [ sensorReport, sensorReport3 ];
-
     const sensorElement = new SensorElement()
-    sensorElement.setSensorMetadata(sensorMetadata)
-    .addSensorReportList(sensorReportElementList)
-    .addSensorReport(sensorReport3)
+    sensorElement.setSensorMetadata(buildSensorMetadataExample())
+    .addSensorReportList([buildSensorReportElementExample(),buildSensorReportElementExample()])
+    .addSensorReport(buildSensorReportElementExample())
     .addExtension('example:myField', 'my_custom_value')
 
     const sensorElement2 = new SensorElement()
-    sensorElement2.setSensorMetadata(sensorMetadata2)
-    .addSensorReportList(sensorReportElementList2)
-    .addSensorReport(sensorReport)
+    sensorElement2.setSensorMetadata(buildSensorMetadataExample())
+    .addSensorReportList([buildSensorReportElementExample(),buildSensorReportElementExample()])
+    .addSensorReport(buildSensorReportElementExample())
     .addExtension('example:myField', 'my_custom_value');
 
     const sensorElement3 = new SensorElement()
-    sensorElement3.setSensorMetadata(sensorMetadata3)
-    .addSensorReportList(sensorReportElementList3)
-    .addSensorReport(sensorReport2)
+    sensorElement3.setSensorMetadata(buildSensorMetadataExample())
+    .addSensorReportList([buildSensorReportElementExample(),buildSensorReportElementExample()])
+    .addSensorReport(buildSensorReportElementExample())
     .addExtension('example:myField', 'my_custom_value');
 
     const sensorElementList = [ sensorElement, sensorElement2 ];
@@ -521,8 +449,8 @@ const sendACaptureRequestExample = async () => {
 
     // capture
     console.log('Capture:')
-    const res = await capture(epcisDocument);
-    const text = await res.text();
+    let res = await capture(epcisDocument);
+    let text = await res.text();
     console.log(`Request status: ${res.status}`);
     console.log(`Request response: ${text}`);
 

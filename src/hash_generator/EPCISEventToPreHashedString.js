@@ -513,7 +513,7 @@ export const getOrderedPreHashString = (
 /**
  * Convert the epcis event passed in parameter into a pre-hashed string
  * @param {{}} event - the EPCIS Event that needs to be converted
- * @param {{}|string|Array{any}} context - the list of contexts (e.g {
+ * @param {string|Object|Array<string>|Array<Object>} context - the list of contexts (e.g {
  *    "example": "http://ns.example.com/epcis/",
  *    "example2": "http://ns.example2.com/epcis/",
  * })
@@ -522,9 +522,9 @@ export const getOrderedPreHashString = (
  * @returns {string} - the pre-hashed string that can be converted to an hashed string
  */
 export const eventToPreHashedString = (event, context, throwError = true) => {
-  // this field extendedContext contains the context defined
+  // this extendedContext field contains the context defined
   // in the "context" field and the context defined directly
-  // in the JSON (e.g "@xmlns:example": "https://ns.example.com/epcis")
+  // in the EPCIS events (e.g "@xmlns:example": "https://ns.example.com/epcis")
   let contextObject = {};
   let i = 0;
   if (Array.isArray(context)) {
@@ -535,14 +535,8 @@ export const eventToPreHashedString = (event, context, throwError = true) => {
           and we have a counter in the case that there are
           several strings in the array */
         const obj = {};
-        let fieldName = '';
         i += 1;
-        if (i === 1) {
-          fieldName = 'default';
-        } else {
-          fieldName = `default${i}`;
-        }
-        obj[fieldName] = c;
+        obj[`default${i > 1 ? i : ''}`] = c;
         contextObject = { ...contextObject, ...obj };
       } else if (c instanceof Object) {
         contextObject = { ...contextObject, ...c };

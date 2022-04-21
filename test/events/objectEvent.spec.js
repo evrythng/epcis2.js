@@ -430,7 +430,7 @@ describe('unit tests for the ObjectEvent class', () => {
             action: 'OBSERVE',
             bizStep: 'shipping',
             disposition: 'in_transit',
-            epcList: ['urn:epc:id:sgtin:0614141.107346.2017','urn:epc:id:sgtin:0614141.107346.2018'],
+            epcList: ['urn:epc:id:sgtin:0614141.107346.2017', 'urn:epc:id:sgtin:0614141.107346.2018'],
             eventTime: '2005-04-03T20:33:31.116-06:00',
             eventTimeZoneOffset: '-06:00',
             readPoint: {
@@ -453,8 +453,8 @@ describe('unit tests for the ObjectEvent class', () => {
                 quantity: 200,
                 uom: 'KGM',
                 'ext1:bool': true,
-              }
-            ]
+              },
+            ],
           },
         );
       });
