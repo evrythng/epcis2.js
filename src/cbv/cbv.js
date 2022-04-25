@@ -212,6 +212,24 @@ const cbv = {
     longitude: 'longitude',
     altitude: 'altitude',
   },
+  vtype: {
+    ReadPointID: 'ReadPoint',
+    BusinessLocationID: 'BusinessLocation',
+    BusinessStepID: 'BusinessStep',
+    DispositionID: 'Disposition',
+    BusinessTransaction: 'BusinessTransaction',
+    BusinessTransactionTypeID: 'BusinessTransactionType',
+    EPCClass: 'EPCClass',
+    SourceDestTypeID: 'SourceDestType',
+    SourceDestID: 'SourceDest',
+    LocationID: 'Location',
+    PartyID: 'Party',
+    ErrorReasonID: 'ErrorReason',
+    SensorPropertyTypeID: 'SensorPropertyType',
+    MicroorganismID: 'Microorganism',
+    ChemicalSubstanceID: 'ChemicalSubstance',
+    ResourceID: 'Resource'
+  }
 };
 
 export default cbv;
