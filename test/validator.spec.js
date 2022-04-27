@@ -4,7 +4,7 @@
  * Copying and unauthorised use of this material strictly prohibited.
  */
 
-import { assert } from 'chai';
+import { assert, expect } from 'chai';
 import {
   AggregationEvent,
   ObjectEvent,
@@ -1175,6 +1175,34 @@ describe('Unit test: validator.js', () => {
       te.setAction('ADD');
       te.setBizStep('foobar');
       assert.throws(() => { te.isValid(); });
+    });
+  });
+  describe('schema validation: throwError = false', () => {
+    it('should accept a valid EPCISDocument containing ObjectEvent', () => {
+      assert.doesNotThrow(() => validateEpcisDocument(testData.ObjectEvent, false));
+    });
+    it('should reject a valid EPCISDocument containing an invalid AssociationEvent', () => {
+      const instance = { ...testData.AssociationEvent };
+
+      // Introduce some error
+      instance.epcisBody.eventList[0].action = 'ADDED';
+
+      let result = {};
+      assert.doesNotThrow(() => result = validateEpcisDocument(instance, false));
+      expect(result.success).to.be.equal(false);
+      expect(result.errors).to.deep.equal(['EPCISDocument/epcisBody/eventList/0/action should be equal to one of the allowed values']);
+    });
+    it('should reject a null EPCISDocument ', () => {
+      let result = {};
+      assert.doesNotThrow(() => result = validateEpcisDocument(null, false));
+      expect(result.success).to.be.equal(false);
+      expect(result.errors).to.deep.equal(['Cannot read properties of null (reading \'type\')']);
+    });
+    it('should reject an undefined EPCISDocument ', () => {
+      let result = {};
+      assert.doesNotThrow(() => result = validateEpcisDocument(undefined, false));
+      expect(result.success).to.be.equal(false);
+      expect(result.errors).to.deep.equal(['Cannot read properties of undefined (reading \'type\')']);
     });
   });
 });
