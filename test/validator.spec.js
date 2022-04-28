@@ -1188,21 +1188,21 @@ describe('Unit test: validator.js', () => {
       instance.epcisBody.eventList[0].action = 'ADDED';
 
       let result = {};
-      assert.doesNotThrow(() => result = validateEpcisDocument(instance, false));
+      assert.doesNotThrow(() => { result = validateEpcisDocument(instance, false); });
       expect(result.success).to.be.equal(false);
       expect(result.errors).to.deep.equal(['EPCISDocument/epcisBody/eventList/0/action should be equal to one of the allowed values']);
     });
     it('should reject a null EPCISDocument ', () => {
       let result = {};
-      assert.doesNotThrow(() => result = validateEpcisDocument(null, false));
+      assert.doesNotThrow(() => { result = validateEpcisDocument(null, false); });
       expect(result.success).to.be.equal(false);
-      expect(result.errors).to.deep.equal(['Cannot read properties of null (reading \'type\')']);
+      expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
     it('should reject an undefined EPCISDocument ', () => {
       let result = {};
-      assert.doesNotThrow(() => result = validateEpcisDocument(undefined, false));
+      assert.doesNotThrow(() => { result = validateEpcisDocument(undefined, false); });
       expect(result.success).to.be.equal(false);
-      expect(result.errors).to.deep.equal(['Cannot read properties of undefined (reading \'type\')']);
+      expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
   });
 });

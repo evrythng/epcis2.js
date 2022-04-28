@@ -154,38 +154,39 @@ const validateExtraEventFields = (event) => {
  * Validate EPCIS Document.
  *
  * @param {object} epcisDocument - Data to validate.
- * @param {boolean} throwError - if set to true, it will throw an error if the data is not valid.
- * Otherwise, it won't throw an error and it will still return an object containing a boolean and the errors messages
+ * @param {boolean} throwError - if set to true, it will throw an error if
+ * the data is not valid. Otherwise, it won't throw an error and it will still
+ * return an object containing a boolean and the errors messages.
  * (e.g { success: false, errors: ["the error message"] })
  * @returns {ValidatorResult} Validation results.
  */
 export const validateEpcisDocument = (epcisDocument, throwError = true) => {
-  try {
-    let eventList = [];
+  let eventList = [];
 
-    // Validate the capture document
-    const documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
+  // Validate the capture document
+  const documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
 
-    if (epcisDocument.type === 'EPCISQueryDocument') {
-      eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;
-    } else {
-      eventList = epcisDocument.epcisBody.eventList;
-    }
+  if (!documentResult.success && throwError) {
+    throw new Error(`${documentResult.errors}`);
+  } else if (!documentResult.success) {
+    return documentResult;
+  }
 
-    if (!documentResult.success) throw new Error(`${documentResult.errors}`);
+  if (epcisDocument.type === 'EPCISQueryDocument') {
+    eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;
+  } else {
+    eventList = epcisDocument.epcisBody.eventList;
+  }
 
-    // Validate the events by event type
-    for (let i = 0; i < eventList.length; i += 1) {
-      const event = eventList[i];
-      // Validate all extra field names and possible extensions
-      const eventFieldsResult = validateExtraEventFields(event);
-      if (!eventFieldsResult.success) throw new Error(`${eventFieldsResult.errors}`);
-    }
-  } catch (error) {
-    if (throwError) {
-      throw new Error(error);
-    } else {
-      return { success: false, errors: [`${error.message}`] };
+  // Validate the events by event type
+  for (let i = 0; i < eventList.length; i += 1) {
+    const event = eventList[i];
+    // Validate all extra field names and possible extensions
+    const eventFieldsResult = validateExtraEventFields(event);
+    if (!eventFieldsResult.success && throwError) {
+      throw new Error(`${eventFieldsResult.errors}`);
+    } else if (!eventFieldsResult.success) {
+      return eventFieldsResult;
     }
   }
   // No errors in document or any events
