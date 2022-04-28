@@ -1179,7 +1179,12 @@ describe('Unit test: validator.js', () => {
   });
   describe('schema validation: throwError = false', () => {
     it('should accept a valid EPCISDocument containing ObjectEvent', () => {
-      assert.doesNotThrow(() => validateEpcisDocument(testData.ObjectEvent, false));
+      const instance = { ...testData.ObjectEvent };
+      instance.epcisBody.eventList[0].action = 'ADD';
+      let result = {};
+      assert.doesNotThrow(() => { result = validateEpcisDocument(instance, false) });
+      expect(result.success).to.be.equal(true);
+      expect(result.errors).to.deep.equal([]);
     });
     it('should reject a valid EPCISDocument containing an invalid AssociationEvent', () => {
       const instance = { ...testData.AssociationEvent };
