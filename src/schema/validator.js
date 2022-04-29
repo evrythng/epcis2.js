@@ -154,13 +154,23 @@ const validateExtraEventFields = (event) => {
  * Validate EPCIS Document.
  *
  * @param {object} epcisDocument - Data to validate.
+ * @param {boolean} throwError - if set to true, it will throw an error if
+ * the data is not valid. Otherwise, it won't throw an error and it will still
+ * return an object containing a boolean and the errors messages.
+ * (e.g { success: false, errors: ["the error message"] })
  * @returns {ValidatorResult} Validation results.
  */
-export const validateEpcisDocument = (epcisDocument) => {
+export const validateEpcisDocument = (epcisDocument, throwError = true) => {
   let eventList = [];
 
   // Validate the capture document
   const documentResult = validateAgainstSchema(epcisDocument, 'EPCISDocument');
+
+  if (!documentResult.success && throwError) {
+    throw new Error(`${documentResult.errors}`);
+  } else if (!documentResult.success) {
+    return documentResult;
+  }
 
   if (epcisDocument.type === 'EPCISQueryDocument') {
     eventList = epcisDocument.epcisBody.queryResults.resultsBody.eventList;
@@ -168,22 +178,17 @@ export const validateEpcisDocument = (epcisDocument) => {
     eventList = epcisDocument.epcisBody.eventList;
   }
 
-  if (!documentResult.success) throw new Error(`${documentResult.errors}`);
-
   // Validate the events by event type
   for (let i = 0; i < eventList.length; i += 1) {
     const event = eventList[i];
-
-    // Validate against schema for defined fields for this event type
-    // const eventResult = validateAgainstSchema(event, event.type);
-    // if (!eventResult.success) throw new Error(`${eventResult.errors}`);
-    // This part of the code is already verified with EPCISDocument schema validation
-
     // Validate all extra field names and possible extensions
     const eventFieldsResult = validateExtraEventFields(event);
-    if (!eventFieldsResult.success) throw new Error(`${eventFieldsResult.errors}`);
+    if (!eventFieldsResult.success && throwError) {
+      throw new Error(`${eventFieldsResult.errors}`);
+    } else if (!eventFieldsResult.success) {
+      return eventFieldsResult;
+    }
   }
-
   // No errors in document or any events
   return successResult;
 };
