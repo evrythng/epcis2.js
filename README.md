@@ -240,6 +240,10 @@ Then, by typing `cbv.actionType.` as a parameter of the `setAction` method of th
 all the attributes associated to this particular CBV.
 The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.
 
+### Custom vocabulary attributes
+
+You can import all the `vtype` for the `VocabularyElement` type.
+The list of all this Vocabulary can be viewed in ./src/cbv/vtype.js.
 
 ### Constants
 
