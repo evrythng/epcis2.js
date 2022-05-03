@@ -376,7 +376,7 @@ const buildEPCISMasterDataExample = () => {
           type: vtype.BusinessLocationID,
           vocabularyElementList: [
             {
-              type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              type: vtype.BusinessLocationID,
               id: 'urn:epc:id:sgln:0037000.00729.0',
               attributes: [
                 { id: 'xmda:latitude', attribute: '+18.0000' },
@@ -402,13 +402,13 @@ const buildEPCISMasterDataExample = () => {
               ],
             },
             {
-              type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              type: vtype.BusinessLocationID,
               id: 'urn:epc:id:sgln:0037000.00729.8202',
               attributes: [{ id: 'cbvmda:sst', attribute: '202' }],
               children: ['urn:epc:id:sgln:0037000.00729.8203'],
             },
             {
-              type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+              type: vtype.BusinessLocationID,
               id: 'urn:epc:id:sgln:0037000.00729.8203',
               attributes: [
                 { id: 'cbvmda:sst', attribute: '202' },
@@ -418,10 +418,10 @@ const buildEPCISMasterDataExample = () => {
           ],
         },
         {
-          type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+          type: vtype.BusinessLocationID,
           vocabularyElementList: [
             {
-              type: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              type: vtype.ReadPointID,
               id: 'urn:epc:id:sgln:0037000.00729.8201',
               attributes: [
                 { id: 'cbvmda:site', attribute: '0037000007296' },
@@ -429,7 +429,7 @@ const buildEPCISMasterDataExample = () => {
               ],
             },
             {
-              type: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              type: vtype.ReadPointID,
               id: 'urn:epc:id:sgln:0037000.00729.8202',
               attributes: [
                 { id: 'cbvmda:site', attribute: '0037000007296' },
@@ -437,7 +437,7 @@ const buildEPCISMasterDataExample = () => {
               ],
             },
             {
-              type: 'urn:epcglobal:epcis:vtype:ReadPoint',
+              type: vtype.ReadPointID,
               id: 'urn:epc:id:sgln:0037000.00729.8203',
               attributes: [{ id: 'cbvmda:sst', attribute: 204 }],
             },
