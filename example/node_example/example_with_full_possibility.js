@@ -22,7 +22,8 @@ const {
     Ilmd,
     setup, 
     capture,
-    cbv 
+    cbv,
+    vtype
   } = require('epcis2.js');
 
 const buildSensorReportElementExample = () => {
@@ -372,7 +373,7 @@ const buildEPCISMasterDataExample = () => {
   return new EPCISMasterData({
       vocabularyList: [
         { 
-          type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
+          type: vtype.BusinessLocationID,
           vocabularyElementList: [
             {
               type: 'urn:epcglobal:epcis:vtype:BusinessLocation',
