@@ -216,4 +216,7 @@ describe('All the functions should be well exported', () => {
       },
     );
   });
+  it('vtype.js', async () => {
+    expect(sdk.vtype.PartyID).to.be.equal('urn:epcglobal:epcis:vtype:Party');
+  });
 });

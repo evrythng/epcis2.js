@@ -240,6 +240,11 @@ Then, by typing `cbv.actionType.` as a parameter of the `setAction` method of th
 all the attributes associated to this particular CBV.
 The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.
 
+### Custom vocabulary attributes
+
+The SDK allows you to easily search among all default vtypes as defined in the GS1 Web Vocabulary.
+By typing `vtype.`, you will be displayed all the possible vtypes.
+This list can be viewed in ./src/cbv/vtype.js.
 
 ### Constants
 

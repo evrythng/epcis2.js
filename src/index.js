@@ -39,6 +39,7 @@ export { default as capture } from './request/capture';
 export { eventToHashedId } from './hash_generator/EPCISEventToHashedString';
 
 export { default as cbv } from './cbv/cbv';
+export { default as vtype } from './cbv/vtype';
 export * from './settings';
 export * from './utils/utils';
 export { default as objectToEvent } from './utils/entityUtils';
