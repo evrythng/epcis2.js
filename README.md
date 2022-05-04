@@ -242,8 +242,9 @@ The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cb
 
 ### Custom vocabulary attributes
 
-You can import all the `vtype` for the `VocabularyElement` type.
-The list of all this Vocabulary can be viewed in ./src/cbv/vtype.js.
+The SDK allows you to easily search among all default vtypes as defined in the GS1 Web Vocabulary.
+By typing `vtype.`, you will be displayed all the possible vtypes.
+This list can be viewed in ./src/cbv/vtype.js.
 
 ### Constants
 
