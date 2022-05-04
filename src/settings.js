@@ -23,6 +23,8 @@
  * @property {string} validationMode - The default value of 'validationMode' for the
  * validation of an EPCISDocument or an EPCIS Event against schemas.
  * Possible values are either "full" or "fast".
+ * @property {boolean} checkExtensions - if true, the extension of the EPCISDocument will be
+ * checked against the EPCIS Document context. Otherwise, the extensions checks will be ignored.
  * Please refer to: https://www.npmjs.com/package/ajv-formats/v/0.3.4
  */
 
@@ -42,6 +44,7 @@ export const defaultSettings = {
   EPCISDocumentSchemaVersion: '2.0',
   documentValidation: true,
   validationMode: 'full',
+  checkExtensions: true,
 };
 
 // Initialize settings with defaults.
