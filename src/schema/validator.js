@@ -24,14 +24,16 @@ import ExtendedEvent from './ExtendedEvent.schema.json';
  */
 const successResult = { success: true, errors: [] };
 
-const ajv = addFormats(new Ajv({ useDefaults: true, strict: false }), { mode: settings.validationMode });
+const ajv = addFormats(
+  new Ajv({ useDefaults: true, strict: false }), { mode: settings.validationMode },
+);
 
 /**
  * This function returns a list of all the extensions defined in the context.
  * @param {{}} epcisDocument - the EPCISDocument that we want to get extensions from the context
  * @returns an array of all the extensions that are in the context
  */
-const getAuthorizedExtensions = (epcisDocument) => {
+export const getAuthorizedExtensions = (epcisDocument) => {
   let epcisDocumentContext = {};
   if (Object.keys(epcisDocument).includes('@context')) {
     epcisDocumentContext = epcisDocument['@context'];
@@ -187,7 +189,7 @@ const validateExtraEventFields = (event) => {
   }
 };
 
-const checkIfExtensionsAreDefinedInTheContext = (extensions, authorizedExtensions) => {
+export const checkIfExtensionsAreDefinedInTheContext = (extensions, authorizedExtensions) => {
   for (let k = 0; k < extensions.length; k += 1) {
     const extension = extensions[k];
     if (!authorizedExtensions.includes(extension)) {
@@ -238,7 +240,7 @@ export const validateEpcisDocument = (epcisDocument, throwError = true) => {
     }
   }
 
-  if(settings.checkExtensions) { 
+  if (settings.checkExtensions) {
     const authorizedExtensions = getAuthorizedExtensions(epcisDocument);
 
     // for each event in the eventList find all the extensions
@@ -246,15 +248,18 @@ export const validateEpcisDocument = (epcisDocument, throwError = true) => {
       const event = eventList[i];
       const eventCustomFields = Object.keys(event).filter((key) => key.includes(':'));
       const eventExtensions = eventCustomFields.map((key) => key.split(':')[0]);
-  
+
       // check if the extensions are authorized for the event fields
-      const eventExtensionsResult = checkIfExtensionsAreDefinedInTheContext(eventExtensions, authorizedExtensions);
+      const eventExtensionsResult = checkIfExtensionsAreDefinedInTheContext(
+        eventExtensions,
+        authorizedExtensions,
+      );
       if (!eventExtensionsResult.success && throwError) {
         throw new Error(`${eventExtensionsResult.errors}`);
       } else if (!eventExtensionsResult.success) {
         return eventExtensionsResult;
       }
-  
+
       // check if the extensions are authorized for the sub-event fields (e.g. sensorElementList)
       const eventFields = Object.keys(event);
       for (let j = 0; j < eventFields.length; j += 1) {
@@ -262,8 +267,10 @@ export const validateEpcisDocument = (epcisDocument, throwError = true) => {
           const eventSubFields = Object.keys(event[eventFields[j]]);
           const customFields = eventSubFields.filter((key) => key.includes(':'));
           const extensions = customFields.map((key) => key.split(':')[0]);
-  
-          const extensionsResult = checkIfExtensionsAreDefinedInTheContext(extensions, authorizedExtensions);
+          const extensionsResult = checkIfExtensionsAreDefinedInTheContext(
+            extensions,
+            authorizedExtensions,
+          );
           if (!extensionsResult.success && throwError) {
             throw new Error(`${extensionsResult.errors}`);
           } else if (!extensionsResult.success) {
@@ -273,7 +280,6 @@ export const validateEpcisDocument = (epcisDocument, throwError = true) => {
       }
     }
   }
-  
 
   // No errors in document or any events
   return successResult;

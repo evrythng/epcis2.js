@@ -26,6 +26,8 @@ import {
   validateAgainstSchema,
   ensureFieldSet,
   validateEpcisDocument,
+  getAuthorizedExtensions,
+  checkIfExtensionsAreDefinedInTheContext,
 } from '../src/schema/validator';
 
 /** Test documents with different event types inside */
@@ -1218,7 +1220,9 @@ describe('Unit test: validator.js', () => {
       expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
   });
-  it('should reject a document with extensions that are not defined in the context (e.g. example:*}', () => {
+  it('should accept a document with extensions that are not defined in the context (e.g. example:*}'
+   + 'if the settings checkExtensions is set to true', () => {
+    setup({ checkExtensions: true });
     const epcisDocument = {
       '@context': [
         'https://gs1.github.io/EPCIS/epcis-context.jsonld',
@@ -1296,10 +1300,90 @@ describe('Unit test: validator.js', () => {
     expect(res.success).to.be.equal(false);
     expect(res.errors).to.deep.equal(['Event contains unknown extension: example']);
   });
+  it('should accept a document with an event containing extensions that are not defined in the context (e.g. notInContext:*}'
+   + 'if the settings checkExtensions is set to true', () => {
+    setup({ checkExtensions: true });
+    const epcisDocument = {
+      '@context': [
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        { evt: 'https://example.com/evt/', example: 'https://example.com/example/' },
+      ],
+      type: 'EPCISDocument',
+      schemaVersion: '2.0',
+      creationDate: '2005-07-11T11:30:47.0Z',
+      epcisBody: {
+        eventList: [
+          {
+            eventID: 'test:event:id',
+            type: 'ObjectEvent',
+            action: 'OBSERVE',
+            bizStep: cbv.bizSteps.shipping,
+            disposition: cbv.dispositions.in_transit,
+            epcList: [
+              'urn:epc:id:sgtin:0614141.107346.2017',
+              'urn:epc:id:sgtin:0614141.107346.2018',
+            ],
+            eventTime: '2005-04-03T20:33:31.116-06:00',
+            eventTimeZoneOffset: '-06:00',
+            readPoint: {
+              id: 'urn:epc:id:sgln:0614141.07346.1234',
+              'example:extension': 'factoryId',
+              'notInContext:furtherEventData': [{ 'example:data1': '123.5' }, { 'example:data2': '0.987' }],
+            },
+            bizLocation: {
+              id: 'urn:epc:id:sgln:9529999.99999.0',
+              'evt:factoryId': '8934897894',
+            },
+            bizTransactionList: [
+              {
+                type: cbv.businessTransactionTypes.po,
+                bizTransaction: 'http://transaction.acme.com/po/12345678',
+              },
+            ],
+            sensorElementList: [
+              {
+                'example:furtherEventData': [
+                  { 'example:data1': '123.5' },
+                  { 'example:data2': '0.987' },
+                ],
+                sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
+                sensorReport: [
+                  {
+                    type: cbv.sensorMeasurementTypes.temperature,
+                    value: 26.0,
+                    uom: 'CEL',
+                    deviceID: 'urn:epc:id:giai:4000001.111',
+                    deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+                    rawData: 'https://example.org/giai/401234599999',
+                  },
+                  {
+                    type: cbv.sensorMeasurementTypes.relative_humidity,
+                    value: 12.1,
+                    uom: 'A93',
+                    deviceID: 'urn:epc:id:giai:4000001.222',
+                    deviceMetadata: 'https://id.gs1.org/giai/4000001222',
+                    rawData: 'https://example.org/giai/401234599999',
+                  },
+                ],
+              },
+            ],
+            'example:furtherEventData': [
+              { 'example:data1': '123.5' },
+              { 'example:data2': '0.987' },
+            ],
+          },
+        ],
+      },
+    };
+    let res = {};
+    assert.throws(() => { validateEpcisDocument(epcisDocument); });
+    assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
+    expect(res.success).to.be.equal(false);
+    expect(res.errors).to.deep.equal(['Event contains unknown extension: notInContext']);
+  });
   it('should accept a document with extensions that are not defined in the context (e.g. example:*}' +
     'if the settings checkExtensions is set to false', () => {
-
-    setup({checkExtensions: false});
+    setup({ checkExtensions: false });
     const epcisDocument = {
       '@context': [
         'https://gs1.github.io/EPCIS/epcis-context.jsonld',
@@ -1375,5 +1459,71 @@ describe('Unit test: validator.js', () => {
     assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
     expect(res.success).to.be.equal(true);
     expect(res.errors).to.deep.equal([]);
+  });
+  describe('getAuthorizedExtensions()', () => {
+    it('should return the list of authorized extensions', () => {
+      const doc = new EPCISDocument();
+      doc.setContext([
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        {
+          ext3: 'http://example.com/ext3/',
+        },
+        {
+          ext2: 'http://example.com/ext2/',
+        },
+        {
+          ext1: 'http://example.com/ext1/',
+          cbvmda: 'http://example.com/cbvmda/',
+        },
+      ]);
+      const authorizedExtensions = getAuthorizedExtensions(doc);
+      expect(authorizedExtensions).to.deep.equal(['default', 'ext3', 'ext2', 'ext1', 'cbvmda']);
+    });
+  });
+  describe('checkIfExtensionsAreDefinedInTheContext()', () => {
+    it('should return true if all extensions are defined in the context', () => {
+      const doc = new EPCISDocument();
+      doc.setContext([
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        {
+          ext3: 'http://example.com/ext3/',
+        },
+        {
+          ext2: 'http://example.com/ext2/',
+        },
+        {
+          ext1: 'http://example.com/ext1/',
+          cbvmda: 'http://example.com/cbvmda/',
+        },
+      ]);
+      const authorizedExtensions = getAuthorizedExtensions(doc);
+      expect(checkIfExtensionsAreDefinedInTheContext(['ext1', 'cbvmda', 'ext3', 'ext3'], authorizedExtensions)).to.deep.equal(
+        {
+          success: true,
+          errors: [],
+        },
+      );
+    });
+    it('should return false if some extensions are not defined in the context', () => {
+      const doc = new EPCISDocument();
+      doc.setContext([
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        {
+          ext3: 'http://example.com/ext3/',
+        },
+        {
+          ext2: 'http://example.com/ext2/',
+        },
+        {
+          ext1: 'http://example.com/ext1/',
+          cbvmda: 'http://example.com/cbvmda/',
+        },
+      ]);
+      const authorizedExtensions = getAuthorizedExtensions(doc);
+      expect(checkIfExtensionsAreDefinedInTheContext(['ext4'], authorizedExtensions)).to.deep.equal({
+        success: false,
+        errors: ['Event contains unknown extension: ext4'],
+      });
+    });
   });
 });
