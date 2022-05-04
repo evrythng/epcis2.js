@@ -102,6 +102,11 @@ describe('unit tests for the EPCISDocument class', () => {
     expect(e.toObject().epcisBody.eventList).to.deep.equal([o.toObject()]);
   });
 
+  it('should set the id correctly', async () => {
+    const e = new EPCISDocument().setId('test:documentId');
+    expect(e.getId()).to.be.equal('test:documentId');
+  });
+
   it('should not validate the document', async () => {
     const e = new EPCISDocument();
     assert.throws(() => e.isValid());
@@ -384,7 +389,8 @@ describe('unit tests for the EPCISDocument class', () => {
       .setInstanceIdentifier(o.instanceIdentifier)
       .setSender(o.sender)
       .setReceiver(o.receiver)
-      .addEvent(ev);
+      .addEvent(ev)
+      .setId(o.id);
 
     expect(e.toObject()).to.deep.equal(EPCISDocumentObjectEvent);
     expect(e.isValid()).to.be.equal(true);
@@ -488,6 +494,7 @@ describe('unit tests for the EPCISDocument class', () => {
       assert.throws(() => epcisDocument.setInstanceIdentifier(1));
       assert.throws(() => epcisDocument.setReceiver(1));
       assert.throws(() => epcisDocument.setSender(1));
+      assert.throws(() => epcisDocument.setId(1));
     });
     it('setters from EPCISHeader.js', () => {
       const epcisHeader = new EPCISHeader();

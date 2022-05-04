@@ -251,6 +251,23 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
+   * Set the id property
+   * @param {string} id
+   * @return {EPCISDocument} - the epcisDocument instance
+   */
+  setId(id) {
+    return this.generateSetterFunction('id', id, ['string']);
+  }
+
+  /**
+     * Getter for the id property
+     * @return {string} - the id
+     */
+  getId() {
+    return this.id;
+  }
+
+  /**
    * Check if the EPCISDocument respects the rules of the standard defined in
    * src/schema/EPCISDocument.schema.json
    * @return {boolean} - true if the EPCIS document is valid

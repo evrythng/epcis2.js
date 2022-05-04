@@ -1,5 +1,6 @@
 {
   "type": "EPCISDocument",
+  "id":"test:documentId",
   "schemaVersion": "2.0",
   "creationDate": "2013-06-04T14:59:02.099+02:00",
   "sender": "urn:epc:id:sgln:0353579.00001.0",
