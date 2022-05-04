@@ -1292,7 +1292,6 @@ describe('Unit test: validator.js', () => {
     let res = {};
     assert.throws(() => { validateEpcisDocument(epcisDocument); });
     assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
-    console.log(res);
     expect(res.success).to.be.equal(false);
     expect(res.errors).to.deep.equal(['Event contains unknown extension: example']);
   });
