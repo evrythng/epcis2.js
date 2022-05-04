@@ -54,6 +54,19 @@
       "type": "string",
       "pattern": "^[A-Z0-9]{2,3}$"
     },
+    "certificationInfo": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/uri"
+          }
+        },
+        {
+          "$ref": "#/definitions/uri"
+        }
+      ]
+    },
     "eventID": {
       "$ref": "#/definitions/uri"
     },
@@ -514,7 +527,8 @@
             "recordTime",
             "eventTimeZoneOffset",
             "eventID",
-            "errorDeclaration"
+            "errorDeclaration",
+            "certificationInfo"
           ]
         },
         {
