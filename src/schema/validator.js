@@ -27,6 +27,43 @@ const successResult = { success: true, errors: [] };
 const ajv = addFormats(new Ajv({ useDefaults: true, strict: false }), { mode: validationMode });
 
 /**
+ * This function returns a list of all the extensions defined in the context.
+ * @param {{}} epcisDocument - the EPCISDocument that we want to get extensions from the context
+ * @returns an array of all the extensions that are in the context
+ */
+const getAuthorizedExtensions = (epcisDocument) => {
+  let epcisDocumentContext = {};
+  if (Object.keys(epcisDocument).includes('@context')) {
+    epcisDocumentContext = epcisDocument['@context'];
+
+    let contextObject = {};
+    let i = 0;
+    if (Array.isArray(epcisDocumentContext)) {
+      epcisDocumentContext.forEach((c) => {
+        if (typeof c === 'string') {
+          /* We must transform the string into an object.
+            For this we put the name of the field: default
+            and we have a counter in the case that there are
+            several strings in the array */
+          const obj = {};
+          i += 1;
+          obj[`default${i > 1 ? i : ''}`] = c;
+          contextObject = { ...contextObject, ...obj };
+        } else if (c instanceof Object) {
+          contextObject = { ...contextObject, ...c };
+        }
+      });
+    } else if (typeof epcisDocumentContext === 'string') {
+      contextObject = { default: epcisDocumentContext };
+    } else if (epcisDocumentContext instanceof Object) {
+      contextObject = epcisDocumentContext;
+    }
+    return Object.keys(contextObject);
+  }
+  return [];
+};
+
+/**
  * Load a schema and include 'definitions'.
  *
  * @param {object} schema - schema to be loaded.
@@ -150,6 +187,17 @@ const validateExtraEventFields = (event) => {
   }
 };
 
+const checkExtensions = (extensions, authorizedExtensions) => {
+  for (let k = 0; k < extensions.length; k += 1) {
+    const extension = extensions[k];
+    if (!authorizedExtensions.includes(extension)) {
+      const error = `Event contains unknown extension: ${extension}`;
+      return { success: false, errors: [error] };
+    }
+  }
+  return successResult;
+};
+
 /**
  * Validate EPCIS Document.
  *
@@ -189,6 +237,41 @@ export const validateEpcisDocument = (epcisDocument, throwError = true) => {
       return eventFieldsResult;
     }
   }
+
+  const authorizedExtensions = getAuthorizedExtensions(epcisDocument);
+
+  // for each event in the eventList find all the extensions
+  for (let i = 0; i < eventList.length; i += 1) {
+    const event = eventList[i];
+    const eventCustomFields = Object.keys(event).filter((key) => key.includes(':'));
+    const eventExtensions = eventCustomFields.map((key) => key.split(':')[0]);
+
+    // check if the extensions are authorized for the event fields
+    const eventExtensionsResult = checkExtensions(eventExtensions, authorizedExtensions);
+    if (!eventExtensionsResult.success && throwError) {
+      throw new Error(`${eventExtensionsResult.errors}`);
+    } else if (!eventExtensionsResult.success) {
+      return eventExtensionsResult;
+    }
+
+    // check if the extensions are authorized for the sub-event fields (e.g. sensorElementList)
+    const eventFields = Object.keys(event);
+    for (let j = 0; j < eventFields.length; j += 1) {
+      if (!eventFields[j].includes(':') && typeof event[eventFields[j]] === 'object') {
+        const eventSubFields = Object.keys(event[eventFields[j]]);
+        const customFields = eventSubFields.filter((key) => key.includes(':'));
+        const extensions = customFields.map((key) => key.split(':')[0]);
+
+        const extensionsResult = checkExtensions(extensions, authorizedExtensions);
+        if (!extensionsResult.success && throwError) {
+          throw new Error(`${extensionsResult.errors}`);
+        } else if (!extensionsResult.success) {
+          return extensionsResult;
+        }
+      }
+    }
+  }
+
   // No errors in document or any events
   return successResult;
 };

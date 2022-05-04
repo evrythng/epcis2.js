@@ -41,6 +41,7 @@ const testData = {
 describe('validation of an EPCIS document', () => {
   describe('schema validation: valid', () => {
     it('should accept a valid EPCISDocument containing ObjectEvent', () => {
+      validateEpcisDocument(testData.ObjectEvent);
       assert.doesNotThrow(() => validateEpcisDocument(testData.ObjectEvent));
     });
 
@@ -277,7 +278,10 @@ describe('Unit test: validator.js', () => {
 
     it('should accept correct event with event extensions', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': {
+          default: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+          evt: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        },
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -304,7 +308,6 @@ describe('Unit test: validator.js', () => {
           ],
         },
       };
-
       const res = validateEpcisDocument(epcisDocument);
       assert.equal(res.success, true);
       assert.deepEqual(res.errors, []);
@@ -439,7 +442,10 @@ describe('Unit test: validator.js', () => {
 
     it('should accept sensorElementList with extensions', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': [
+          'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+          { example: 'https://example.com/', evt: 'https://example.com/evt/' },
+        ],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -958,6 +964,7 @@ describe('Unit test: validator.js', () => {
           },
           {
             ext1: 'http://example.com/ext1/',
+            cbvmda: 'http://example.com/cbvmda/',
           },
         ],
       };
@@ -1182,7 +1189,7 @@ describe('Unit test: validator.js', () => {
       const instance = { ...testData.ObjectEvent };
       instance.epcisBody.eventList[0].action = 'ADD';
       let result = {};
-      assert.doesNotThrow(() => { result = validateEpcisDocument(instance, false) });
+      assert.doesNotThrow(() => { result = validateEpcisDocument(instance, false); });
       expect(result.success).to.be.equal(true);
       expect(result.errors).to.deep.equal([]);
     });
@@ -1209,5 +1216,84 @@ describe('Unit test: validator.js', () => {
       expect(result.success).to.be.equal(false);
       expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
+  });
+  it('should reject a document with extensions that are not defined in the context (e.g. example:*}', () => {
+    const epcisDocument = {
+      '@context': [
+        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        { evt: 'https://example.com/evt/' },
+      ],
+      type: 'EPCISDocument',
+      schemaVersion: '2.0',
+      creationDate: '2005-07-11T11:30:47.0Z',
+      epcisBody: {
+        eventList: [
+          {
+            eventID: 'test:event:id',
+            type: 'ObjectEvent',
+            action: 'OBSERVE',
+            bizStep: cbv.bizSteps.shipping,
+            disposition: cbv.dispositions.in_transit,
+            epcList: [
+              'urn:epc:id:sgtin:0614141.107346.2017',
+              'urn:epc:id:sgtin:0614141.107346.2018',
+            ],
+            eventTime: '2005-04-03T20:33:31.116-06:00',
+            eventTimeZoneOffset: '-06:00',
+            readPoint: {
+              id: 'urn:epc:id:sgln:0614141.07346.1234',
+              'example:extension': 'factoryId',
+            },
+            bizLocation: {
+              id: 'urn:epc:id:sgln:9529999.99999.0',
+              'evt:factoryId': '8934897894',
+            },
+            bizTransactionList: [
+              {
+                type: cbv.businessTransactionTypes.po,
+                bizTransaction: 'http://transaction.acme.com/po/12345678',
+              },
+            ],
+            sensorElementList: [
+              {
+                'example:furtherEventData': [
+                  { 'example:data1': '123.5' },
+                  { 'example:data2': '0.987' },
+                ],
+                sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
+                sensorReport: [
+                  {
+                    type: cbv.sensorMeasurementTypes.temperature,
+                    value: 26.0,
+                    uom: 'CEL',
+                    deviceID: 'urn:epc:id:giai:4000001.111',
+                    deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+                    rawData: 'https://example.org/giai/401234599999',
+                  },
+                  {
+                    type: cbv.sensorMeasurementTypes.relative_humidity,
+                    value: 12.1,
+                    uom: 'A93',
+                    deviceID: 'urn:epc:id:giai:4000001.222',
+                    deviceMetadata: 'https://id.gs1.org/giai/4000001222',
+                    rawData: 'https://example.org/giai/401234599999',
+                  },
+                ],
+              },
+            ],
+            'example:furtherEventData': [
+              { 'example:data1': '123.5' },
+              { 'example:data2': '0.987' },
+            ],
+          },
+        ],
+      },
+    };
+    let res = {};
+    assert.throws(() => { validateEpcisDocument(epcisDocument); });
+    assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
+    console.log(res);
+    expect(res.success).to.be.equal(false);
+    expect(res.errors).to.deep.equal(['Event contains unknown extension: example']);
   });
 });
