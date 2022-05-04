@@ -212,7 +212,8 @@
       "ext2": "http://example.com/ext2/"
     },
     {
-      "ext1": "http://example.com/ext1/"
+      "ext1": "http://example.com/ext1/",
+      "example": "http://example.com/example/"
     }
   ]
 }
