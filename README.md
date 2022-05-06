@@ -234,8 +234,8 @@ This example would output (as a string):
 
 ### CBV attributes autocomplete
 
-The latest version of the SDK enables you to easily search among all attributes of each Core Business Vocabulary.
-In order to do this, for example, you can import `cbv` as we did in the script above.
+The SDK enables you to easily search among all attributes of each Core Business Vocabulary.
+In order to do this, you need to import `cbv` as we did in the script above.
 Then, by typing `cbv.actionType.` as a parameter of the `setAction` method of the `ObjectEvent` class, you will be displayed
 all the attributes associated to this particular CBV.
 The list of all CBVs and the respective attributes can be viewed in ./src/cbv/cbv.js.

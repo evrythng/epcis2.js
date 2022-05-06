@@ -1,10 +1,17 @@
 {
    "type":"EPCISDocument",
-   "@context":"https://gs1.github.io/EPCIS/epcis-context.jsonld",
+   "@context":[
+      "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+      {
+         "example":"http://ns.example.com/epcis/",
+         "ext1":"http://example.com/ext1/"
+      }
+   ],
    "schemaVersion":"2.0",
    "creationDate":"2013-06-04T14:59:02.099+02:00",
    "sender":"urn:epc:id:sgln:0353579.00001.0",
    "receiver":"urn:epc:id:sgln:5012345.00001.0",
+   "id":"test:documentId1",
    "instanceIdentifier":"1234567890",
    "epcisHeader":{
       "epcisMasterData":{
@@ -125,6 +132,7 @@
             "type":"AssociationEvent",
             "eventTime":"2019-11-01T13:00:00.000Z",
             "recordTime":"2005-04-05T02:33:31.116Z",
+            "certificationInfo":"https://accreditation-council.example.org/certificate/ABC12345",
             "eventID":"ni:///sha-256;36abb3a2c0a726de32ac4beafd6b8bc4ba0b1d2de244490312e5cbec7b5ddece?ver=CBV2.0",
             "eventTimeZoneOffset":"-02:00",
             "parentID":"urn:epc:id:grai:4012345.55555.987",
@@ -342,7 +350,7 @@
             "bizStep":"receiving",
             "disposition":"in_progress",
             "errorDeclaration":{
-               "declarationTime":"2022-04-21T09:19:10.165Z",
+               "declarationTime":"2022-05-04T12:00:55.484Z",
                "reason":"incorrect_data",
                "example:vendorExtension":"Test1",
                "correctiveEventIDs":[
@@ -350,7 +358,7 @@
                ]
             },
             "readPoint":{
-               "id":"urn:epc:id:sgln:0012345.11111.603"
+               "id":"urn:epc:id:sgln:0012345.11111.159"
             },
             "bizLocation":{
                "id":"urn:epc:id:sgln:0012345.11111.2"
@@ -358,46 +366,46 @@
             "bizTransactionList":[
                {
                   "type":"po",
-                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618142"
+                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618647"
                },
                {
                   "type":"po",
-                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618562"
+                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618331"
                },
                {
                   "type":"po",
-                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618385"
+                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.161861"
                }
             ],
             "quantityList":[
                {
                   "epcClass":"urn:epc:class:lgtin:4012345.012345.9911111",
-                  "quantity":993,
+                  "quantity":47,
                   "uom":"KGM"
                },
                {
                   "epcClass":"urn:epc:class:lgtin:4012345.012345.9911111",
-                  "quantity":108,
+                  "quantity":168,
                   "uom":"KGM"
                },
                {
                   "epcClass":"urn:epc:class:lgtin:4012345.012345.9911111",
-                  "quantity":532,
+                  "quantity":500,
                   "uom":"KGM"
                }
             ],
             "sourceList":[
                {
                   "type":"location",
-                  "source":"urn:epc:id:sgln:4012345.00225.8"
-               },
-               {
-                  "type":"location",
                   "source":"urn:epc:id:sgln:4012345.00225.3"
                },
                {
                   "type":"location",
-                  "source":"urn:epc:id:sgln:4012345.00225.2"
+                  "source":"urn:epc:id:sgln:4012345.00225.6"
+               },
+               {
+                  "type":"location",
+                  "source":"urn:epc:id:sgln:4012345.00225.4"
                }
             ],
             "destinationList":[
@@ -417,7 +425,7 @@
             "sensorElementList":[
                {
                   "sensorMetadata":{
-                     "time":"2022-04-21T09:19:10.165Z",
+                     "time":"2022-05-04T12:00:55.483Z",
                      "deviceID":"urn:epc:id:giai:4000001.111",
                      "deviceMetadata":"https://id.gs1.org/giai/4000001111",
                      "rawData":"https://example.org/giai/401234599999",
@@ -430,7 +438,7 @@
                   "sensorReport":[
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.564",
+                        "deviceID":"urn:epc:id:giai:4000001.108",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -455,7 +463,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.478",
+                        "deviceID":"urn:epc:id:giai:4000001.537",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -480,7 +488,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.791",
+                        "deviceID":"urn:epc:id:giai:4000001.60",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -508,7 +516,7 @@
                },
                {
                   "sensorMetadata":{
-                     "time":"2022-04-21T09:19:10.165Z",
+                     "time":"2022-05-04T12:00:55.484Z",
                      "deviceID":"urn:epc:id:giai:4000001.111",
                      "deviceMetadata":"https://id.gs1.org/giai/4000001111",
                      "rawData":"https://example.org/giai/401234599999",
@@ -519,56 +527,6 @@
                      "example:someFurtherMetadata":"someText"
                   },
                   "sensorReport":[
-                     {
-                        "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.895",
-                        "rawData":"https://example.org/giai/401234599999",
-                        "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
-                        "time":"2019-07-19T13:00:00.000Z",
-                        "microorganism":"https://www.ncbi.nlm.nih.gov/taxonomy/1126011",
-                        "chemicalSubstance":"https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
-                        "value":26,
-                        "component":"x",
-                        "stringValue":"SomeString",
-                        "booleanValue":true,
-                        "hexBinaryValue":"f0f0f0",
-                        "uriValue":"https://id.gs1.org/giai/4000001111",
-                        "minValue":26,
-                        "maxValue":26.2,
-                        "meanValue":13.2,
-                        "percRank":50,
-                        "percValue":12.7,
-                        "uom":"CEL",
-                        "sDev":0.1,
-                        "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
-                     },
-                     {
-                        "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.493",
-                        "rawData":"https://example.org/giai/401234599999",
-                        "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
-                        "time":"2019-07-19T13:00:00.000Z",
-                        "microorganism":"https://www.ncbi.nlm.nih.gov/taxonomy/1126011",
-                        "chemicalSubstance":"https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
-                        "value":26,
-                        "component":"x",
-                        "stringValue":"SomeString",
-                        "booleanValue":true,
-                        "hexBinaryValue":"f0f0f0",
-                        "uriValue":"https://id.gs1.org/giai/4000001111",
-                        "minValue":26,
-                        "maxValue":26.2,
-                        "meanValue":13.2,
-                        "percRank":50,
-                        "percValue":12.7,
-                        "uom":"CEL",
-                        "sDev":0.1,
-                        "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
-                     },
                      {
                         "type":"Temperature",
                         "deviceID":"urn:epc:id:giai:4000001.475",
@@ -593,13 +551,63 @@
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
                         "example:someFurtherMetadata":"someText",
                         "bizRules":"https://example.com/gdti/4012345000054987"
+                     },
+                     {
+                        "type":"Temperature",
+                        "deviceID":"urn:epc:id:giai:4000001.263",
+                        "rawData":"https://example.org/giai/401234599999",
+                        "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
+                        "time":"2019-07-19T13:00:00.000Z",
+                        "microorganism":"https://www.ncbi.nlm.nih.gov/taxonomy/1126011",
+                        "chemicalSubstance":"https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
+                        "value":26,
+                        "component":"x",
+                        "stringValue":"SomeString",
+                        "booleanValue":true,
+                        "hexBinaryValue":"f0f0f0",
+                        "uriValue":"https://id.gs1.org/giai/4000001111",
+                        "minValue":26,
+                        "maxValue":26.2,
+                        "meanValue":13.2,
+                        "percRank":50,
+                        "percValue":12.7,
+                        "uom":"CEL",
+                        "sDev":0.1,
+                        "deviceMetadata":"https://id.gs1.org/giai/4000001111",
+                        "example:someFurtherMetadata":"someText",
+                        "bizRules":"https://example.com/gdti/4012345000054987"
+                     },
+                     {
+                        "type":"Temperature",
+                        "deviceID":"urn:epc:id:giai:4000001.648",
+                        "rawData":"https://example.org/giai/401234599999",
+                        "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
+                        "time":"2019-07-19T13:00:00.000Z",
+                        "microorganism":"https://www.ncbi.nlm.nih.gov/taxonomy/1126011",
+                        "chemicalSubstance":"https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
+                        "value":26,
+                        "component":"x",
+                        "stringValue":"SomeString",
+                        "booleanValue":true,
+                        "hexBinaryValue":"f0f0f0",
+                        "uriValue":"https://id.gs1.org/giai/4000001111",
+                        "minValue":26,
+                        "maxValue":26.2,
+                        "meanValue":13.2,
+                        "percRank":50,
+                        "percValue":12.7,
+                        "uom":"CEL",
+                        "sDev":0.1,
+                        "deviceMetadata":"https://id.gs1.org/giai/4000001111",
+                        "example:someFurtherMetadata":"someText",
+                        "bizRules":"https://example.com/gdti/4012345000054987"
                      }
                   ],
                   "example:myField":"my_custom_value"
                },
                {
                   "sensorMetadata":{
-                     "time":"2022-04-21T09:19:10.166Z",
+                     "time":"2022-05-04T12:00:55.484Z",
                      "deviceID":"urn:epc:id:giai:4000001.111",
                      "deviceMetadata":"https://id.gs1.org/giai/4000001111",
                      "rawData":"https://example.org/giai/401234599999",
@@ -612,7 +620,7 @@
                   "sensorReport":[
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.840",
+                        "deviceID":"urn:epc:id:giai:4000001.320",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -637,7 +645,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.927",
+                        "deviceID":"urn:epc:id:giai:4000001.80",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -662,7 +670,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.849",
+                        "deviceID":"urn:epc:id:giai:4000001.311",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -699,17 +707,18 @@
             },
             "ilmd":{
                "ext1:boolean":"true",
-               "ext1:value":8
+               "ext1:value":0
             },
             "example:myField":"my_custom_value",
-            "eventID":"ni:///sha-256;919d713c3f791f5502edd258e233d1be690008dbfd39be2c977af30c2ef0b1ca?ver=CBV2.0"
+            "certificationInfo":"https://accreditation-council.example.org/certificate/ABC12345",
+            "eventID":"ni:///sha-256;dcedc78a072e1ad069aa8601f24c9c57091717e5e3e9fb909fb4c2fc481790ba?ver=CBV2.0"
          },
          {
             "eventTimeZoneOffset":"-02:00",
             "eventTime":"2005-04-05T02:33:31.116Z",
             "type":"My:custom:event:type",
-            "eventID":"ni:///sha-256;36abb3a2c0a726de32ac4beafd6b8bc4ba0b1d2de244490312e5cbec7b5ddece?ver=CBV2.0",
-            "recordTime":"2022-04-21T09:19:10.180Z"
+            "eventID":"ni:///sha-256;70b631edc102365e678929b8a49ba321d7d4f4a57e5d6356226d3c982e50cfb6?ver=CBV2.0",
+            "recordTime":"2022-05-04T12:00:55.497Z"
          }
       ]
    }

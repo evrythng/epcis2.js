@@ -647,8 +647,8 @@ export const exampleEPCISHeader = {
  * Example of an Extended-Event
  */
 export const extendedEvent = {
-  type: 'ABC_Event',
-  eventID: '_eventID',
+  type: 'ABC:Event',
+  eventID: 'uri:_eventID',
   eventTime: '2013-06-08T14:58:56.591Z',
   eventTimeZoneOffset: '+02:00',
   'ext1:float': '20',

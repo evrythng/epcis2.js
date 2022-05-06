@@ -26,6 +26,21 @@ const {
     vtype
   } = require('epcis2.js');
 
+  // you can override the global parameters with the setup function
+setup({
+  apiUrl: 'https://api.evrythng.io/v2/epcis/',
+  headers: {
+    'content-type': 'application/json',
+    authorization: 'MY_API_KEY',
+  },
+  eventTimeZoneOffset: '-02:00',
+  timeout: '3000',
+  EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
+  EPCISDocumentSchemaVersion: '2.0',
+  documentValidation: true,
+  validationMode: 'fast' //'full' otherwise
+});
+
 const buildSensorReportElementExample = () => {
   //sensor report element
   return new SensorReportElement().setType(cbv.sensorMeasurementTypes.temperature)
@@ -159,6 +174,7 @@ const buildObjectEvent = () => {
   .setPersistentDisposition(buildPersistentDispositionExample())
   .setIlmd(buildIlmdExample())
   .addExtension('example:myField', 'my_custom_value')
+  .setCertificationInfo('https://accreditation-council.example.org/certificate/ABC12345')
   .generateHashID({
     example: 'http://ns.example.com/epcis/',
     ext1: 'http://example.com/ext1/'
@@ -171,6 +187,7 @@ const buildAssociationEvent = () => {
     "type": "AssociationEvent",
     "eventTime": "2019-11-01T13:00:00.000Z",
     "recordTime": "2005-04-05T02:33:31.116Z",
+    "certificationInfo": "https://accreditation-council.example.org/certificate/ABC12345",
     "eventID":"ni:///sha-256;36abb3a2c0a726de32ac4beafd6b8bc4ba0b1d2de244490312e5cbec7b5ddece?ver=CBV2.0",
     "eventTimeZoneOffset": "+01:00",
     "parentID": "urn:epc:id:grai:4012345.55555.987",
@@ -364,7 +381,7 @@ const buildAssociationEvent = () => {
 
 const buildExtendedEvent = () => {
   return new ExtendedEvent().setType('My:custom:event:type')
-  .setEventID('ni:///sha-256;36abb3a2c0a726de32ac4beafd6b8bc4ba0b1d2de244490312e5cbec7b5ddece?ver=CBV2.0')
+  .generateHashID()
   .setEventTime("2005-04-05T02:33:31.116Z")
   .setRecordTime(new Date().toISOString());
 }
@@ -451,29 +468,19 @@ const buildEPCISHeaderExample = () => {
   return new EPCISHeader().setEPCISMasterData(buildEPCISMasterDataExample());
 }
 
-// you can override the global parameters with the setup function
-setup({
-  apiUrl: 'https://api.evrythng.io/v2/epcis/',
-  headers: {
-    'content-type': 'application/json',
-    authorization: 'MY_API_KEY',
-  },
-  eventTimeZoneOffset: '-02:00',
-  timeout: '1000',
-  EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
-  EPCISDocumentSchemaVersion: '2.0',
-  documentValidation: true,
-  validationMode: 'fast' //'full' otherwise
-});
 const sendACaptureRequestExample = async () => {
   try {
     const epcisDocument = new EPCISDocument();
     // epcisDocument
-    epcisDocument.setContext('https://gs1.github.io/EPCIS/epcis-context.jsonld')
+    epcisDocument.setContext(['https://gs1.github.io/EPCIS/epcis-context.jsonld',{
+      example: 'http://ns.example.com/epcis/',
+      ext1: 'http://example.com/ext1/'
+    }])
     .setCreationDate('2013-06-04T14:59:02.099+02:00')
     .setSchemaVersion('2.0')
     .setSender('urn:epc:id:sgln:0353579.00001.0')
     .setReceiver('urn:epc:id:sgln:5012345.00001.0')
+    .setId('test:documentId' + Math.floor(Math.random() * 9))
     .setInstanceIdentifier('1234567890')
     .setEPCISHeader(buildEPCISHeaderExample())
     .addEvent(buildAssociationEvent())

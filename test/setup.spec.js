@@ -19,6 +19,7 @@ describe('unit tests for setup.js', () => {
       }.toString(),
     );
     expect(settings.validationMode).to.be.equal('full');
+    expect(settings.checkExtensions).to.be.equal(false);
   });
 
   it('should use custom settings', async () => {
