@@ -155,6 +155,10 @@ const buildObjectEvent = () => {
       "urn:epc:id:sgtin:0614141.107346.2018",
       "urn:epc:id:sgtin:0614141.107346.2017"
     ])
+  .setContext({
+      example: 'http://ns.example.com/epcis/',
+      ext1: 'http://example.com/ext1/'
+    })
   .setAction(cbv.actionTypes.add)
   .setBizStep(cbv.bizSteps.receiving)
   .setDisposition(cbv.dispositions.in_progress)
@@ -185,6 +189,10 @@ const buildAssociationEvent = () => {
   return new AssociationEvent(
     {
     "type": "AssociationEvent",
+    "@context": {
+      example: 'http://ns.example.com/epcis/',
+      ext1: 'http://example.com/ext1/'
+    },
     "eventTime": "2019-11-01T13:00:00.000Z",
     "recordTime": "2005-04-05T02:33:31.116Z",
     "certificationInfo": "https://accreditation-council.example.org/certificate/ABC12345",

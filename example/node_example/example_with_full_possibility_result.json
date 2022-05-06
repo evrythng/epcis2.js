@@ -11,7 +11,7 @@
    "creationDate":"2013-06-04T14:59:02.099+02:00",
    "sender":"urn:epc:id:sgln:0353579.00001.0",
    "receiver":"urn:epc:id:sgln:5012345.00001.0",
-   "id":"test:documentId1",
+   "id":"test:documentId6",
    "instanceIdentifier":"1234567890",
    "epcisHeader":{
       "epcisMasterData":{
@@ -130,6 +130,10 @@
       "eventList":[
          {
             "type":"AssociationEvent",
+            "@context":{
+               "example":"http://ns.example.com/epcis/",
+               "ext1":"http://example.com/ext1/"
+            },
             "eventTime":"2019-11-01T13:00:00.000Z",
             "recordTime":"2005-04-05T02:33:31.116Z",
             "certificationInfo":"https://accreditation-council.example.org/certificate/ABC12345",
@@ -346,11 +350,15 @@
                "urn:epc:id:sgtin:0614141.107346.2018",
                "urn:epc:id:sgtin:0614141.107346.2017"
             ],
+            "@context":{
+               "example":"http://ns.example.com/epcis/",
+               "ext1":"http://example.com/ext1/"
+            },
             "action":"ADD",
             "bizStep":"receiving",
             "disposition":"in_progress",
             "errorDeclaration":{
-               "declarationTime":"2022-05-04T12:00:55.484Z",
+               "declarationTime":"2022-05-06T14:19:05.517Z",
                "reason":"incorrect_data",
                "example:vendorExtension":"Test1",
                "correctiveEventIDs":[
@@ -358,46 +366,46 @@
                ]
             },
             "readPoint":{
-               "id":"urn:epc:id:sgln:0012345.11111.159"
+               "id":"urn:epc:id:sgln:0012345.11111.358"
             },
             "bizLocation":{
-               "id":"urn:epc:id:sgln:0012345.11111.2"
+               "id":"urn:epc:id:sgln:0012345.11111.7"
             },
             "bizTransactionList":[
                {
                   "type":"po",
-                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618647"
+                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618102"
                },
                {
                   "type":"po",
-                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618331"
+                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618215"
                },
                {
                   "type":"po",
-                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.161861"
+                  "bizTransaction":"urn:epc:id:gdti:0614141.00001.1618132"
                }
             ],
             "quantityList":[
                {
                   "epcClass":"urn:epc:class:lgtin:4012345.012345.9911111",
-                  "quantity":47,
+                  "quantity":227,
                   "uom":"KGM"
                },
                {
                   "epcClass":"urn:epc:class:lgtin:4012345.012345.9911111",
-                  "quantity":168,
+                  "quantity":435,
                   "uom":"KGM"
                },
                {
                   "epcClass":"urn:epc:class:lgtin:4012345.012345.9911111",
-                  "quantity":500,
+                  "quantity":295,
                   "uom":"KGM"
                }
             ],
             "sourceList":[
                {
                   "type":"location",
-                  "source":"urn:epc:id:sgln:4012345.00225.3"
+                  "source":"urn:epc:id:sgln:4012345.00225.1"
                },
                {
                   "type":"location",
@@ -405,7 +413,7 @@
                },
                {
                   "type":"location",
-                  "source":"urn:epc:id:sgln:4012345.00225.4"
+                  "source":"urn:epc:id:sgln:4012345.00225.3"
                }
             ],
             "destinationList":[
@@ -425,7 +433,7 @@
             "sensorElementList":[
                {
                   "sensorMetadata":{
-                     "time":"2022-05-04T12:00:55.483Z",
+                     "time":"2022-05-06T14:19:05.517Z",
                      "deviceID":"urn:epc:id:giai:4000001.111",
                      "deviceMetadata":"https://id.gs1.org/giai/4000001111",
                      "rawData":"https://example.org/giai/401234599999",
@@ -438,7 +446,7 @@
                   "sensorReport":[
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.108",
+                        "deviceID":"urn:epc:id:giai:4000001.760",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -463,7 +471,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.537",
+                        "deviceID":"urn:epc:id:giai:4000001.160",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -488,7 +496,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.60",
+                        "deviceID":"urn:epc:id:giai:4000001.614",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -516,7 +524,7 @@
                },
                {
                   "sensorMetadata":{
-                     "time":"2022-05-04T12:00:55.484Z",
+                     "time":"2022-05-06T14:19:05.517Z",
                      "deviceID":"urn:epc:id:giai:4000001.111",
                      "deviceMetadata":"https://id.gs1.org/giai/4000001111",
                      "rawData":"https://example.org/giai/401234599999",
@@ -529,7 +537,7 @@
                   "sensorReport":[
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.475",
+                        "deviceID":"urn:epc:id:giai:4000001.347",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -554,7 +562,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.263",
+                        "deviceID":"urn:epc:id:giai:4000001.536",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -579,7 +587,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.648",
+                        "deviceID":"urn:epc:id:giai:4000001.111",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -607,7 +615,7 @@
                },
                {
                   "sensorMetadata":{
-                     "time":"2022-05-04T12:00:55.484Z",
+                     "time":"2022-05-06T14:19:05.518Z",
                      "deviceID":"urn:epc:id:giai:4000001.111",
                      "deviceMetadata":"https://id.gs1.org/giai/4000001111",
                      "rawData":"https://example.org/giai/401234599999",
@@ -620,7 +628,7 @@
                   "sensorReport":[
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.320",
+                        "deviceID":"urn:epc:id:giai:4000001.756",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -645,7 +653,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.80",
+                        "deviceID":"urn:epc:id:giai:4000001.846",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -670,7 +678,7 @@
                      },
                      {
                         "type":"Temperature",
-                        "deviceID":"urn:epc:id:giai:4000001.311",
+                        "deviceID":"urn:epc:id:giai:4000001.711",
                         "rawData":"https://example.org/giai/401234599999",
                         "dataProcessingMethod":"https://example.com/gdti/4012345000054987",
                         "time":"2019-07-19T13:00:00.000Z",
@@ -707,18 +715,18 @@
             },
             "ilmd":{
                "ext1:boolean":"true",
-               "ext1:value":0
+               "ext1:value":3
             },
             "example:myField":"my_custom_value",
             "certificationInfo":"https://accreditation-council.example.org/certificate/ABC12345",
-            "eventID":"ni:///sha-256;dcedc78a072e1ad069aa8601f24c9c57091717e5e3e9fb909fb4c2fc481790ba?ver=CBV2.0"
+            "eventID":"ni:///sha-256;ad14b1fa0091a12eaeee8e410d36af78d8a2e16b29a44a74449b70ff1071b57d?ver=CBV2.0"
          },
          {
             "eventTimeZoneOffset":"-02:00",
             "eventTime":"2005-04-05T02:33:31.116Z",
             "type":"My:custom:event:type",
-            "eventID":"ni:///sha-256;70b631edc102365e678929b8a49ba321d7d4f4a57e5d6356226d3c982e50cfb6?ver=CBV2.0",
-            "recordTime":"2022-05-04T12:00:55.497Z"
+            "eventID":"ni:///sha-256;84d89dbd7c2c80d5a322f6af5c28f4e4eda48a560aa9fcfb7ff1e8884e6dde23?ver=CBV2.0",
+            "recordTime":"2022-05-06T14:19:05.531Z"
          }
       ]
    }
