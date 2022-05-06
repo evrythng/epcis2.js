@@ -25,7 +25,7 @@
  * Possible values are either "full" or "fast".
  * @property {boolean} checkExtensions - set it to true if you want the extension of the
  * EPCISDocument to be checked against the EPCIS Document context.
- * Otherwise, the extensions checks will be ignored.
+ * Otherwise, the extensions check will be ignored.
  * Please refer to: https://www.npmjs.com/package/ajv-formats/v/0.3.4
  */
 

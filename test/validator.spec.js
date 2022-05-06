@@ -44,7 +44,6 @@ const testData = {
 describe('validation of an EPCIS document', () => {
   describe('schema validation: valid', () => {
     it('should accept a valid EPCISDocument containing ObjectEvent', () => {
-      validateEpcisDocument(testData.ObjectEvent);
       assert.doesNotThrow(() => validateEpcisDocument(testData.ObjectEvent));
     });
 
@@ -1220,7 +1219,7 @@ describe('Unit test: validator.js', () => {
       expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
   });
-  it('should accept a document with extensions that are not defined in the context (e.g. example:*}'
+  it('should reject a document with extensions that are not defined in the context (e.g. example:*}'
    + 'if the settings checkExtensions is set to true', () => {
     setup({ checkExtensions: true });
     const epcisDocument = {
@@ -1300,7 +1299,7 @@ describe('Unit test: validator.js', () => {
     expect(res.success).to.be.equal(false);
     expect(res.errors).to.deep.equal(['Event contains unknown extension: example']);
   });
-  it('should accept a document with an event containing extensions that are not defined in the context (e.g. notInContext:*}'
+  it('should reject a document with an event containing extensions that are not defined in the context (e.g. notInContext:*}'
    + 'if the settings checkExtensions is set to true', () => {
     setup({ checkExtensions: true });
     const epcisDocument = {
@@ -1477,7 +1476,7 @@ describe('Unit test: validator.js', () => {
         },
       ]);
       const authorizedExtensions = getAuthorizedExtensions(doc);
-      expect(authorizedExtensions).to.deep.equal(['default', 'ext3', 'ext2', 'ext1', 'cbvmda']);
+      expect(authorizedExtensions).to.deep.equal(['ext3', 'ext2', 'ext1', 'cbvmda']);
     });
   });
   describe('checkIfExtensionsAreDefinedInTheContext()', () => {
