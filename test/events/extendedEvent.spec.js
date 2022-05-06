@@ -175,5 +175,10 @@ describe('unit tests for the ExtendedEvent class', () => {
       const ee = new ExtendedEvent({});
       assert.throw(() => ee.isValid());
     });
+    it('should accept a valid extended event', async () => {
+      const ee = new ExtendedEvent(extendedEvent);
+      ee.isValid()
+      assert.doesNotThrow(() => ee.isValid());
+    });
   });
 });
