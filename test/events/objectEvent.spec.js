@@ -889,5 +889,14 @@ describe('unit tests for the ObjectEvent class', () => {
       };
       assert.throw(() => oe.isValid());
     });
+    it('should accept an Object Event with a @context field', async () => {
+      const exampleContext = [
+        'https://www.w3.org/2019/wot/td/v1',
+        { example: 'http://www.w3.org/2019/02/sparql-update' },
+      ];
+      const ee = new ObjectEvent(exampleObjectEvent);
+      ee.setContext(exampleContext);
+      assert.doesNotThrow(() => ee.isValid());
+    });
   });
 });

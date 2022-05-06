@@ -293,5 +293,14 @@ describe('unit tests for the AssociationEvent class', () => {
       });
       assert.throw(() => ae.isValid());
     });
+    it('should accept an Association Event with a @context field', async () => {
+      const exampleContext = [
+        'https://www.w3.org/2019/wot/td/v1',
+        { example: 'http://www.w3.org/2019/02/sparql-update' },
+      ];
+      const ee = new AssociationEvent(exampleAssociationEvent);
+      ee.setContext(exampleContext);
+      assert.doesNotThrow(() => ee.isValid());
+    });
   });
 });
