@@ -181,7 +181,7 @@ describe('All the functions should be well exported', () => {
     expect(sdk.fieldNames.epcisDocument).to.deep.equal(
       {
         type: 'type',
-        context: '@context',
+        '@context': '@context',
         schemaVersion: 'schemaVersion',
         creationDate: 'creationDate',
         epcisHeader: 'epcisHeader',

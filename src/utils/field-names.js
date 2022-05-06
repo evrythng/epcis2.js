@@ -95,7 +95,7 @@ const fieldNames = {
     bizRules: 'bizRules',
   },
   event: {
-    context: '@context',
+    '@context': '@context',
     type: 'type',
     eventID: 'eventID',
     eventTime: 'eventTime',
@@ -128,7 +128,7 @@ const fieldNames = {
   },
   epcisDocument: {
     type: 'type',
-    context: '@context',
+    '@context': '@context',
     schemaVersion: 'schemaVersion',
     creationDate: 'creationDate',
     epcisHeader: 'epcisHeader',
