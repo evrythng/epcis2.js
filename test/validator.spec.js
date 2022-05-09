@@ -1521,4 +1521,20 @@ describe('Unit test: validator.js', () => {
       });
     });
   });
+
+  describe('QuantityElement validation', () => {
+    it('should validate the event with a QuantityElement without the quantity field', () => {
+      const quantityElement = new QuantityElement();
+      quantityElement.setUom('KGM');
+      quantityElement.setEpcClass("urn:epc:class:lgtin:4012345.012345.998877");
+
+      const oe = new ObjectEvent();
+      oe.setAction(cbv.actionTypes.observe);
+
+      // Add the QuantityElement without the quantity field to the ObjectEvent
+      oe.addQuantity(quantityElement);
+
+      expect(oe.isValid()).to.be.equal(true);
+    });
+  });
 });
