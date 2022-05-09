@@ -1526,7 +1526,7 @@ describe('Unit test: validator.js', () => {
     it('should validate the event with a QuantityElement without the quantity field', () => {
       const quantityElement = new QuantityElement();
       quantityElement.setUom('KGM');
-      quantityElement.setEpcClass("urn:epc:class:lgtin:4012345.012345.998877");
+      quantityElement.setEpcClass('urn:epc:class:lgtin:4012345.012345.998877');
 
       const oe = new ObjectEvent();
       oe.setAction(cbv.actionTypes.observe);
