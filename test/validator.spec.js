@@ -632,10 +632,6 @@ describe('Unit test: validator.js', () => {
                   destination: 'urn:epc:id:pgln:9520999.99999',
                 },
               ],
-              persistentDisposition: {
-                unset: [cbv.dispositions.completeness_inferred],
-                set: [cbv.dispositions.completeness_verified],
-              },
               errorDeclaration: {
                 declarationTime: '2020-01-14T23:00:00.000+00:00',
                 reason: cbv.errorReasonIdentifiers.incorrect_data,
