@@ -391,7 +391,15 @@ const buildExtendedEvent = () => {
   return new ExtendedEvent().setType('My:custom:event:type')
   .generateHashID()
   .setEventTime("2005-04-05T02:33:31.116Z")
-  .setRecordTime(new Date().toISOString());
+  .setRecordTime(new Date().toISOString())
+  .addExtension('ext1:key', 'value')
+  .addExtension('evt:number', 509)
+  .setContext(
+    {
+      "evt": "https://evrythng.com/context",
+      "ext1": "https://example.com/context/1"
+    }
+    );
 }
 
 const buildEPCISMasterDataExample = () => {

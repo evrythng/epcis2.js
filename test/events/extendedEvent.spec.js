@@ -180,5 +180,14 @@ describe('unit tests for the ExtendedEvent class', () => {
       ee.isValid();
       assert.doesNotThrow(() => ee.isValid());
     });
+    it('should accept an Extended Event with a @context field', async () => {
+      const exampleContext = [
+        'https://www.w3.org/2019/wot/td/v1',
+        { example: 'http://www.w3.org/2019/02/sparql-update' },
+      ];
+      const ee = new ExtendedEvent(extendedEvent);
+      ee.setContext(exampleContext);
+      assert.doesNotThrow(() => ee.isValid());
+    });
   });
 });
