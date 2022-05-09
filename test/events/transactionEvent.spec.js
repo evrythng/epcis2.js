@@ -192,5 +192,14 @@ describe('unit tests for the TransactionEvent class', () => {
       });
       assert.throw(() => ee.isValid());
     });
+    it('should accept an Transaction Event with a @context field', async () => {
+      const exampleContext = [
+        'https://www.w3.org/2019/wot/td/v1',
+        { example: 'http://www.w3.org/2019/02/sparql-update' },
+      ];
+      const ee = new TransactionEvent(exampleTransactionEvent);
+      ee.setContext(exampleContext);
+      assert.doesNotThrow(() => ee.isValid());
+    });
   });
 });

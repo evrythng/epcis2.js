@@ -479,6 +479,9 @@ Here are the settings that you can configure by default:
 - `headers` - the headers of your requests. Default value is `{ 'content-type': 'application/json' }`.
 - `documentValidation` - whether the EPCISDocument has to be validated or not before sending it via the Capture
   interface. The default value is `true`.
+- `checkExtensions` - if it is set to true the extension of the EPCISDocument will be checked against the EPCIS Document context.
+  (e.g check if all prefixes are defined in the context)
+  Otherwise, the extensions check will be ignored. By default the value is set to `false`.
 
 ### The capture function
 
