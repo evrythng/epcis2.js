@@ -5,7 +5,7 @@ const {
     AssociationEvent,
     ObjectEvent,
     ExtendedEvent,
-    EPCISDocument, 
+    EPCISDocument,
     EPCISHeader,
     EPCISMasterData,
     ErrorDeclaration,
@@ -20,7 +20,7 @@ const {
     SensorElement,
     BizLocation,
     Ilmd,
-    setup, 
+    setup,
     capture,
     cbv,
     vtype
@@ -401,7 +401,7 @@ const buildExtendedEvent = () => {
 const buildEPCISMasterDataExample = () => {
   return new EPCISMasterData({
       vocabularyList: [
-        { 
+        {
           type: vtype.BusinessLocationID,
           vocabularyElementList: [
             {

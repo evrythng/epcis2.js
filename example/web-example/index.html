@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EPCIS2.js demo</title>
+  <script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.2.0/dist/epcis2.browser.js" defer></script>
+  <script>
+    window.onload = () => {
+      const doc = new epcis2.EPCISDocument();
+      console.log(doc.toObject());
+      document.getElementById('epcisDocument').innerText = JSON.stringify(doc.toObject());
+    }
+  </script>
+</head>
+<body>
+EPCISDocument:
+<br/>
+<br/>
+<div id="epcisDocument"></div>
+</body>
+</html>

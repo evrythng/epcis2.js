@@ -19,6 +19,8 @@ EPCIS 2.0 brings the following highlights to the table:
 
 ## Installation
 
+### NPM
+
 Install as an app dependency:
 
 ```
@@ -50,6 +52,21 @@ import { setup } from 'epcis2.js';
 // Alternatively
 import * as epcis from 'epcis2.js';
 ```
+
+### CDN
+
+Or use a simple script tag to load it from the CDN:
+```html
+<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.2.0/dist/epcis2.browser.js"></script>
+```
+
+Then use in a browser `script` tag using the `epcis2` global variable:
+```html
+<script>
+  const doc = new epcis2.EPCISDocument();
+</script>
+```
+
 
 ## Getting started example
 
@@ -516,3 +533,8 @@ Finally run `node example_with_creation_from_setters.js`.
 1. Before deploying, make sure to run the linter: `npm run lint`.
 
 2. Make sure to run the unit tests: `npm run test`.
+
+### Versioning
+
+When contributing, please make sure to update the version of the library in the `package.json` file. You'll also need to
+update the CDN links in the `README` as well as the `example/web-example/index.html` file.
