@@ -6,7 +6,7 @@ const { ObjectEvent, setup, EPCISDocument, capture, fieldNames, eventEpcRelType 
 // you can override the global parameter with the setup function
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
-  EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
+  EPCISDocumentContext: 'https://ref.gs1.org/standards/epcis/2.0/epcis-context.jsonld',
   EPCISDocumentSchemaVersion: '2.0',
   headers: {
     'content-type': 'application/json',

@@ -537,4 +537,4 @@ Finally run `node example_with_creation_from_setters.js`.
 ### Versioning
 
 When contributing, please make sure to update the version of the library in the `package.json` file. You'll also need to
-update the CDN links in the `README` as well as the `example/web-example/index.html` file.
+update the CDN links in the `README` as well as the `example/web-example/index.html`'s CDN link.
