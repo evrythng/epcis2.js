@@ -632,10 +632,6 @@ describe('Unit test: validator.js', () => {
                   destination: 'urn:epc:id:pgln:9520999.99999',
                 },
               ],
-              persistentDisposition: {
-                unset: [cbv.dispositions.completeness_inferred],
-                set: [cbv.dispositions.completeness_verified],
-              },
               errorDeclaration: {
                 declarationTime: '2020-01-14T23:00:00.000+00:00',
                 reason: cbv.errorReasonIdentifiers.incorrect_data,
@@ -1523,6 +1519,22 @@ describe('Unit test: validator.js', () => {
         success: false,
         errors: ['Event contains unknown extension: ext4'],
       });
+    });
+  });
+
+  describe('QuantityElement validation', () => {
+    it('should validate the event with a QuantityElement without the quantity field', () => {
+      const quantityElement = new QuantityElement();
+      quantityElement.setUom('KGM');
+      quantityElement.setEpcClass('urn:epc:class:lgtin:4012345.012345.998877');
+
+      const oe = new ObjectEvent();
+      oe.setAction(cbv.actionTypes.observe);
+
+      // Add the QuantityElement without the quantity field to the ObjectEvent
+      oe.addQuantity(quantityElement);
+
+      expect(oe.isValid()).to.be.equal(true);
     });
   });
 });

@@ -33,9 +33,6 @@ describe('unit tests for the TransactionEvent class', () => {
       .setAction(exampleTransactionEvent.action)
       .setDisposition(exampleTransactionEvent.disposition)
       .setBizStep(exampleTransactionEvent.bizStep)
-      .setPersistentDisposition(
-        new PersistentDisposition(exampleTransactionEvent.persistentDisposition),
-      )
       .setEventTimeZoneOffset(exampleTransactionEvent.eventTimeZoneOffset)
       .setReadPoint(exampleTransactionEvent.readPoint.id)
       .setBizLocation(exampleTransactionEvent.bizLocation.id)
@@ -62,12 +59,6 @@ describe('unit tests for the TransactionEvent class', () => {
     expect(obj.getAction()).to.be.equal(exampleTransactionEvent.action);
     expect(obj.getDisposition()).to.be.equal(exampleTransactionEvent.disposition);
     expect(obj.getBizStep()).to.be.equal(exampleTransactionEvent.bizStep);
-    expect(obj.getPersistentDisposition().getUnset().toString()).to.be.equal(
-      exampleTransactionEvent.persistentDisposition.unset.toString(),
-    );
-    expect(obj.getPersistentDisposition().getSet().toString()).to.be.equal(
-      exampleTransactionEvent.persistentDisposition.set.toString(),
-    );
     expect(obj.getReadPoint().getId()).to.be.equal(exampleTransactionEvent.readPoint.id);
     expect(obj.getParentId()).to.be.equal(exampleTransactionEvent.parentID);
   });
@@ -77,7 +68,6 @@ describe('unit tests for the TransactionEvent class', () => {
     expect(obj.getBizLocation()).to.be.instanceof(BizLocation);
     expect(obj.getBizTransactionList()[0]).to.be.instanceof(BizTransactionElement);
     expect(obj.getDestinationList()[0]).to.be.instanceof(DestinationElement);
-    expect(obj.getPersistentDisposition()).to.be.instanceof(PersistentDisposition);
     expect(obj.getQuantityList()[0]).to.be.instanceof(QuantityElement);
     expect(obj.getReadPoint()).to.be.instanceof(ReadPoint);
     expect(obj.getErrorDeclaration()).to.be.instanceof(ErrorDeclaration);
@@ -163,8 +153,8 @@ describe('unit tests for the TransactionEvent class', () => {
     assert.throws(() => o.getChildQuantityList());
     assert.throws(() => o.clearChildQuantityList());
 
-    assert.doesNotThrow(() => o.setPersistentDisposition(new PersistentDisposition()));
-    assert.doesNotThrow(() => o.getPersistentDisposition());
+    assert.throws(() => o.setPersistentDisposition(new PersistentDisposition()));
+    assert.throws(() => o.getPersistentDisposition());
 
     assert.doesNotThrow(() => o.addSensorElement(new SensorElement()));
     assert.doesNotThrow(() => o.removeSensorElement(new SensorElement()));

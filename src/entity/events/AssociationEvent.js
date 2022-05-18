@@ -9,7 +9,7 @@
 
 import Event, { fieldToFunctions } from './Event';
 
-const invalidFields = ['ilmd', 'epcList', 'quantityList'];
+const invalidFields = ['ilmd', 'epcList', 'quantityList', 'persistentDisposition'];
 
 export default class AssociationEvent extends Event {
   /**

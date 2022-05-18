@@ -5,7 +5,7 @@ const {
     AssociationEvent,
     ObjectEvent,
     ExtendedEvent,
-    EPCISDocument, 
+    EPCISDocument,
     EPCISHeader,
     EPCISMasterData,
     ErrorDeclaration,
@@ -20,7 +20,7 @@ const {
     SensorElement,
     BizLocation,
     Ilmd,
-    setup, 
+    setup,
     capture,
     cbv,
     vtype
@@ -35,7 +35,7 @@ setup({
   },
   eventTimeZoneOffset: '-02:00',
   timeout: '3000',
-  EPCISDocumentContext: 'https://id.gs1.org/epcis-context.jsonld',
+  EPCISDocumentContext: 'https://ref.gs1.org/standards/epcis/2.0/epcis-context.jsonld',
   EPCISDocumentSchemaVersion: '2.0',
   documentValidation: true,
   validationMode: 'fast' //'full' otherwise
@@ -343,10 +343,6 @@ const buildAssociationEvent = () => {
         "ext1:string": "string"
       }
     ],
-    "persistentDisposition": {
-      "set": ["completeness_verified"],
-      "unset": ["completeness_inferred"]
-    },
     "ext1:float": "20",
     "ext1:time": "2013-06-08T14:58:56.591Z",
     "ext1:array": [
@@ -405,7 +401,7 @@ const buildExtendedEvent = () => {
 const buildEPCISMasterDataExample = () => {
   return new EPCISMasterData({
       vocabularyList: [
-        { 
+        {
           type: vtype.BusinessLocationID,
           vocabularyElementList: [
             {
