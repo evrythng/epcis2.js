@@ -398,7 +398,7 @@ describe('unit tests for the EPCISDocument class', () => {
 
   describe('Context can have different types', () => {
     it('context can be a string', async () => {
-      const context = 'context';
+      const context = 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld';
       let e = new EPCISDocument({ '@context': context });
       expect(e.toObject()['@context']).to.deep.equal(context);
       e = new EPCISDocument().setContext(context);
@@ -408,9 +408,9 @@ describe('unit tests for the EPCISDocument class', () => {
     it('context can be an object', async () => {
       const context = { key: 'value', key2: 'value2' };
       let e = new EPCISDocument({ '@context': context });
-      expect(e.toObject()['@context']).to.deep.equal(context);
+      expect(e.toObject()['@context']).to.deep.equal([context, 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld']);
       e = new EPCISDocument().setContext(context);
-      expect(e.toObject()['@context']).to.deep.equal(context);
+      expect(e.toObject()['@context']).to.deep.equal([context, 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld']);
     });
 
     it('context can be an array of string', async () => {
@@ -507,6 +507,38 @@ describe('unit tests for the EPCISDocument class', () => {
       assert.throws(() => epcisMasterData.addVocabularyList(['not_a_vocabulary', 1, 2]));
       assert.throws(() => epcisMasterData.addVocabulary(new Ilmd()));
       assert.throws(() => epcisMasterData.addVocabularyList([new Ilmd(), new Ilmd(), 2]));
+    });
+  });
+
+  describe('should add the default context if it is not provided', () => {
+    it('without any context', () => {
+      const epcisDocument = new EPCISDocument();
+      expect(epcisDocument.toObject()['@context']).to.deep.equal(settings.EPCISDocumentContext);
+    });
+    it('while using setContext with an object', () => {
+      const epcisDocument = new EPCISDocument();
+      epcisDocument.setContext({ test: 'url:of:the:test' });
+      expect(epcisDocument.toObject()['@context']).to.deep.equal([{ test: 'url:of:the:test' }, settings.EPCISDocumentContext]);
+    });
+    it('while using setContext with an array of object', () => {
+      const epcisDocument = new EPCISDocument();
+      epcisDocument.setContext([{ test: 'url:of:the:test' }, { test2: 'url:of:the:test2' }]);
+      expect(epcisDocument.toObject()['@context']).to.deep.equal([{ test: 'url:of:the:test' }, { test2: 'url:of:the:test2' }, settings.EPCISDocumentContext]);
+    });
+    it('should not duplicate the default context if it is already present in the array', () => {
+      const epcisDocument = new EPCISDocument();
+      epcisDocument.setContext([{ test: 'url:of:the:test' }, settings.EPCISDocumentContext]);
+      console.log(epcisDocument)
+      expect(epcisDocument.toObject()['@context']).to.deep.equal([{ test: 'url:of:the:test' }, settings.EPCISDocumentContext]);
+    });
+    it('should not duplicate the default context if it is already present as a string', () => {
+      const epcisDocument = new EPCISDocument();
+      epcisDocument.setContext('https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld');
+      expect(epcisDocument.toObject()['@context']).to.deep.equal('https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld');
+    });
+    it('should also add it if we provide an object in EPCISDocument constructor', () => {
+      const epcisDocument = new EPCISDocument({'@context': 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'});
+      expect(epcisDocument.toObject()['@context']).to.deep.equal('https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld');
     });
   });
 });

@@ -224,3 +224,17 @@ export const throwIfThereIsAnUnexpectedExtension = (object) => {
     }
   });
 };
+
+/**
+ * return true if the specified object is a JSON object, false otherwise.
+ * @param {*} data
+ * @returns
+ */
+export function isJsonObject(data) {
+  try {
+    JSON.parse(JSON.stringify(data));
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
