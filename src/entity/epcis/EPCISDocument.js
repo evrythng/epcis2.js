@@ -87,7 +87,7 @@ export default class EPCISDocument extends Entity {
     let newContext = context;
 
     if (typeof context === 'string' && context !== settings.EPCISDocumentContext) {
-      newContext = [...context, settings.EPCISDocumentContext];
+      newContext = [context, settings.EPCISDocumentContext];
     }
 
     if (typeof context === 'object') {
@@ -99,6 +99,7 @@ export default class EPCISDocument extends Entity {
         newContext = [context, settings.EPCISDocumentContext];
       }
     }
+
     this['@context'] = newContext;
     return this;
   }
