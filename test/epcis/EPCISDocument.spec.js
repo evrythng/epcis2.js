@@ -511,16 +511,21 @@ describe('unit tests for the EPCISDocument class', () => {
   });
 
   describe('should add the default context if it is not provided', () => {
-    it('without any context', () => {
+    it('should add the default context without setting up any context', () => {
       const epcisDocument = new EPCISDocument();
       expect(epcisDocument.toObject()['@context']).to.deep.equal(settings.EPCISDocumentContext);
     });
-    it('while using setContext with an object', () => {
+    it('should add the default context while using setContext with an object', () => {
       const epcisDocument = new EPCISDocument();
       epcisDocument.setContext({ test: 'url:of:the:test' });
       expect(epcisDocument.toObject()['@context']).to.deep.equal([{ test: 'url:of:the:test' }, settings.EPCISDocumentContext]);
     });
-    it('while using setContext with an array of object', () => {
+    it('should add the default context while using setContext with a string', () => {
+      const epcisDocument = new EPCISDocument();
+      epcisDocument.setContext('https://not-the-default-epcis-context.jsonld');
+      expect(epcisDocument.toObject()['@context']).to.deep.equal(['https://not-the-default-epcis-context.jsonld', settings.EPCISDocumentContext]);
+    });
+    it('should add the default context while using setContext with an array of object', () => {
       const epcisDocument = new EPCISDocument();
       epcisDocument.setContext([{ test: 'url:of:the:test' }, { test2: 'url:of:the:test2' }]);
       expect(epcisDocument.toObject()['@context']).to.deep.equal([{ test: 'url:of:the:test' }, { test2: 'url:of:the:test2' }, settings.EPCISDocumentContext]);
