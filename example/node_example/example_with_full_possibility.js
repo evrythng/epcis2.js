@@ -35,7 +35,7 @@ setup({
   },
   eventTimeZoneOffset: '-02:00',
   timeout: '3000',
-  EPCISDocumentContext: 'https://ref.gs1.org/standards/epcis/2.0/epcis-context.jsonld',
+  EPCISDocumentContext: 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
   EPCISDocumentSchemaVersion: '2.0',
   documentValidation: true,
   validationMode: 'fast' //'full' otherwise

@@ -1,5 +1,5 @@
 {
-  "@context": "https://id.gs1.org/epcis-context.jsonld",
+  "@context": "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
   "type": "EPCISDocument",
   "creationDate": "2020-03-03T13:07:51.709+00:00",
   "schemaVersion": "1.2",
