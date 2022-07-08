@@ -484,7 +484,7 @@ const sendACaptureRequestExample = async () => {
   try {
     const epcisDocument = new EPCISDocument();
     // epcisDocument
-    epcisDocument.setContext(['https://gs1.github.io/EPCIS/epcis-context.jsonld',{
+    epcisDocument.setContext(['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',{
       example: 'http://ns.example.com/epcis/',
       ext1: 'http://example.com/ext1/'
     }])

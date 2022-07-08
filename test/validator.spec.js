@@ -208,7 +208,7 @@ describe('Unit test: validator.js', () => {
             },
           ],
         },
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
       };
       const res = validateEpcisDocument(epcisD);
       assert.equal(res.success, true);
@@ -217,7 +217,7 @@ describe('Unit test: validator.js', () => {
 
     it('should reject incorrect EPCISDocument', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: 2,
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -249,7 +249,7 @@ describe('Unit test: validator.js', () => {
 
     it('should reject correct EPCISDocument with invalid event', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -281,8 +281,8 @@ describe('Unit test: validator.js', () => {
     it('should accept correct event with event extensions', () => {
       const epcisDocument = {
         '@context': {
-          default: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
-          evt: 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+          default: 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
+          evt: 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         },
         type: 'EPCISDocument',
         schemaVersion: '2.0',
@@ -317,7 +317,7 @@ describe('Unit test: validator.js', () => {
 
     it('should reject incorrect event with invalid event extensions', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -350,7 +350,7 @@ describe('Unit test: validator.js', () => {
 
     it('should reject incorrect event with with eventId instead of eventID', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -382,7 +382,7 @@ describe('Unit test: validator.js', () => {
 
     it('should accept correct sensorElementList with no extensions', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -445,7 +445,7 @@ describe('Unit test: validator.js', () => {
     it('should accept sensorElementList with extensions', () => {
       const epcisDocument = {
         '@context': [
-          'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+          'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
           { example: 'https://example.com/', evt: 'https://example.com/evt/' },
         ],
         type: 'EPCISDocument',
@@ -522,7 +522,7 @@ describe('Unit test: validator.js', () => {
 
     it('should reject correct sensorElementList with invalid extensions', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -592,7 +592,7 @@ describe('Unit test: validator.js', () => {
 
     it('should accept AggregationEvent with no extensions', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -649,7 +649,7 @@ describe('Unit test: validator.js', () => {
 
     it('should reject AggregationEvent with invalid extensions', () => {
       const epcisDocument = {
-        '@context': ['https://gs1.github.io/EPCIS/epcis-context.jsonld'],
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'],
         type: 'EPCISDocument',
         schemaVersion: '2.0',
         creationDate: '2005-07-11T11:30:47.0Z',
@@ -953,7 +953,7 @@ describe('Unit test: validator.js', () => {
           ],
         },
         '@context': [
-          'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+          'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
           {
             ext3: 'http://example.com/ext3/',
           },
@@ -1220,7 +1220,7 @@ describe('Unit test: validator.js', () => {
     setup({ checkExtensions: true });
     const epcisDocument = {
       '@context': [
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         { evt: 'https://example.com/evt/' },
       ],
       type: 'EPCISDocument',
@@ -1300,7 +1300,7 @@ describe('Unit test: validator.js', () => {
     setup({ checkExtensions: true });
     const epcisDocument = {
       '@context': [
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         { evt: 'https://example.com/evt/', example: 'https://example.com/example/' },
       ],
       type: 'EPCISDocument',
@@ -1381,7 +1381,7 @@ describe('Unit test: validator.js', () => {
     setup({ checkExtensions: false });
     const epcisDocument = {
       '@context': [
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         { evt: 'https://example.com/evt/' },
       ],
       type: 'EPCISDocument',
@@ -1459,7 +1459,7 @@ describe('Unit test: validator.js', () => {
     it('should return the list of authorized extensions', () => {
       const doc = new EPCISDocument();
       doc.setContext([
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         {
           ext3: 'http://example.com/ext3/',
         },
@@ -1479,7 +1479,7 @@ describe('Unit test: validator.js', () => {
     it('should return true if all extensions are defined in the context', () => {
       const doc = new EPCISDocument();
       doc.setContext([
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         {
           ext3: 'http://example.com/ext3/',
         },
@@ -1502,7 +1502,7 @@ describe('Unit test: validator.js', () => {
     it('should return false if some extensions are not defined in the context', () => {
       const doc = new EPCISDocument();
       doc.setContext([
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         {
           ext3: 'http://example.com/ext3/',
         },

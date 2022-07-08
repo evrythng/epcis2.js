@@ -40,7 +40,7 @@ describe('unit tests for the ExtendedEvent class', () => {
   it('should create a valid ExtendedEvent from json EPCISDocument', async () => {
     const doc = {
       type: 'EPCISDocument',
-      '@context': 'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+      '@context': 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
       schemaVersion: '2',
       creationDate: '2022-02-21T16:28:08.813Z',
       epcisBody: {
