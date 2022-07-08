@@ -551,7 +551,7 @@ export const exampleEPCISDocumentWithEPCISHeader = {
     ],
   },
   '@context': [
-    'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+    'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
     {
       ext3: 'http://example.com/ext3/',
     },

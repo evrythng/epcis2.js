@@ -57,7 +57,7 @@ import * as epcis from 'epcis2.js';
 
 Or use a simple script tag to load it from the CDN:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.3.0/dist/epcis2.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.4.0/dist/epcis2.browser.js"></script>
 ```
 
 Then use in a browser `script` tag using the `epcis2` global variable:
@@ -78,7 +78,7 @@ const { EPCISDocument } = require('epcis2.js');
 
 // json object based on which we want to create an EPCIS 2.0 document
 const object = {
-  "@context": ["https://gs1.github.io/EPCIS/epcis-context.jsonld",{"example": "http://ns.example.com/epcis/"}],
+  "@context": ["https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",{"example": "http://ns.example.com/epcis/"}],
   "id": "https://id.example.org/document1",
   "type": "EPCISDocument",
   "schemaVersion": "2.0",
@@ -115,7 +115,7 @@ Running this script should result in the following EPCIS 2.0 document (printed a
 ```json
 {
  "@context": [
-  "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+  "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
   {
    "example": "http://ns.example.com/epcis/"
   }
@@ -227,7 +227,7 @@ This example would output (as a string):
 ```json
 {
   "type": "EPCISDocument",
-  "@context": "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+  "@context": "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
   "schemaVersion": "2.0",
   "creationDate": "2022-03-15T13:08:27.309Z",
   "epcisBody": {
@@ -364,7 +364,7 @@ You can override the default values of EPCISDocument fields by providing them to
 You can configure the following fields:
 
 - `EPCISDocumentContext` - the '@context' property of an EPCISDocument. By default, the value is
-  `https://gs1.github.io/EPCIS/epcis-context.jsonld`
+  `https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld`
 - `EPCISDocumentSchemaVersion` - the 'schemaVersion' property of an EPCISDocument. By default, the value is "2.0".
 
 ```js

@@ -11,6 +11,7 @@ import objectToEvent from '../../utils/entityUtils';
 import { validateEpcisDocument } from '../../schema/validator';
 
 import Event from '../events/Event';
+import { isJsonObject } from '../../utils/utils';
 
 export default class EPCISDocument extends Entity {
   /**
@@ -38,6 +39,8 @@ export default class EPCISDocument extends Entity {
     if (!epcisDocument) {
       return;
     }
+
+    this.setContext(this['@context']);
 
     // Create classes for sub-objects that are provided
     Object.entries(epcisDocument).forEach(([key, value]) => {
@@ -76,12 +79,28 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
-   * Set the context property
+   * Set the context property, and add the default context if it is not provided
    * @param {string|Object|Array<string>|Array<Object>} context
    * @return {EPCISDocument} - the epcisDocument instance
    */
   setContext(context) {
-    this['@context'] = context;
+    let newContext = context;
+
+    if (typeof context === 'string' && context !== settings.EPCISDocumentContext) {
+      newContext = [context, settings.EPCISDocumentContext];
+    }
+
+    if (typeof context === 'object') {
+      if (Array.isArray(context)) {
+        if (!context.includes(settings.EPCISDocumentContext)) {
+          newContext.push(settings.EPCISDocumentContext);
+        }
+      } else if (isJsonObject(context)) {
+        newContext = [context, settings.EPCISDocumentContext];
+      }
+    }
+
+    this['@context'] = newContext;
     return this;
   }
 

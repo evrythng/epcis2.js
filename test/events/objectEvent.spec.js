@@ -70,7 +70,7 @@ describe('unit tests for the ObjectEvent class', () => {
       .setPersistentDisposition(new PersistentDisposition(exampleObjectEvent.persistentDisposition))
       .setReadPoint(exampleObjectEvent.readPoint.id)
       .setBizLocation(exampleObjectEvent.bizLocation.id)
-      .setContext('https://gs1.github.io/EPCIS/epcis-context.jsonld')
+      .setContext('https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld')
       .setIlmd(new Ilmd(exampleObjectEvent.ilmd));
 
     expect(obj.getEPCList().toString()).to.be.equal(exampleObjectEvent.epcList.toString());
@@ -78,7 +78,7 @@ describe('unit tests for the ObjectEvent class', () => {
     expect(obj.getEventTime()).to.be.equal(exampleObjectEvent.eventTime);
     expect(obj.getEventTimeZoneOffset()).to.be.equal(exampleObjectEvent.eventTimeZoneOffset);
     expect(obj.getRecordTime()).to.be.equal(exampleObjectEvent.recordTime);
-    expect(obj.getContext()).to.be.equal('https://gs1.github.io/EPCIS/epcis-context.jsonld');
+    expect(obj.getContext()).to.be.equal('https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld');
     expect(obj['example:myField']).to.be.equal(exampleObjectEvent['example:myField']);
     expect(obj.getErrorDeclaration().getDeclarationTime()).to.be.equal(
       exampleObjectEvent.errorDeclaration.declarationTime,
@@ -136,7 +136,7 @@ describe('unit tests for the ObjectEvent class', () => {
     const oe = new ObjectEvent();
     oe.setAction(cbv.actionTypes.delete)
       .addEPCList(exampleObjectEvent.epcList);
-    assert.doesNotThrow(() => oe.generateHashID('https://gs1.github.io/EPCIS/epcis-context.jsonld'));
+    assert.doesNotThrow(() => oe.generateHashID('https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld'));
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
     expect(oe.isValid()).to.be.equal(true);
   });
@@ -147,9 +147,9 @@ describe('unit tests for the ObjectEvent class', () => {
       .addEPCList(exampleObjectEvent.epcList);
     assert.doesNotThrow(() => {
       oe.generateHashID([
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld1',
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld2',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld1',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld2',
       ]);
     });
     expect(oe.getEventID().startsWith('ni:///')).to.be.equal(true);
@@ -190,7 +190,7 @@ describe('unit tests for the ObjectEvent class', () => {
     const oe = new ObjectEvent(exampleObjectEvent);
     assert.doesNotThrow(() => {
       oe.generateHashID([
-        'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         {
           ext3: 'http://example.com/ext3/',
         },
