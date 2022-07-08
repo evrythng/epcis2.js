@@ -6,7 +6,7 @@ const { ObjectEvent, setup, EPCISDocument, capture, fieldNames, eventEpcRelType 
 // you can override the global parameter with the setup function
 setup({
   apiUrl: 'https://api.evrythng.io/v2/epcis/',
-  EPCISDocumentContext: 'https://ref.gs1.org/standards/epcis/2.0/epcis-context.jsonld',
+  EPCISDocumentContext: 'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
   EPCISDocumentSchemaVersion: '2.0',
   headers: {
     'content-type': 'application/json',
@@ -17,9 +17,9 @@ setup({
 const sendACaptureRequestExample = async () => {
   const epcisDocument = new EPCISDocument({
     '@context': [
-      'https://gs1.github.io/EPCIS/epcis-context.jsonld',
+      'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
       {
-        example: 'http://ns.example.com/epcis/',
+        example: 'http://ns.example.com/epcis/'
       },
     ],
     type: 'EPCISDocument',
@@ -64,12 +64,12 @@ const sendACaptureRequestExample = async () => {
   console.log(`EPCISDocument is valid ? ${epcisDocument.isValid()}`);
   console.log(`ObjectEvent is valid ? ${epcisDocument.eventList[0].isValid()}`);
 
-  
+
   console.log(`field names of an EPCIS Document:`);
   console.log(fieldNames.epcisDocument);
-  
+
   console.log(`example of constants from constants.js:`);
-  console.log(eventEpcRelType)
+  console.log(eventEpcRelType);
 };
 
 sendACaptureRequestExample();
