@@ -40,9 +40,7 @@ export default class EPCISDocument extends Entity {
       return;
     }
 
-    if (isJsonObject(epcisDocument)) {
-      this.setContext(epcisDocument['@context']);
-    }
+    this.setContext(this['@context']);
 
     // Create classes for sub-objects that are provided
     Object.entries(epcisDocument).forEach(([key, value]) => {
