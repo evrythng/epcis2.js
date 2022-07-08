@@ -57,7 +57,7 @@ import * as epcis from 'epcis2.js';
 
 Or use a simple script tag to load it from the CDN:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.2.0/dist/epcis2.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.3.0/dist/epcis2.browser.js"></script>
 ```
 
 Then use in a browser `script` tag using the `epcis2` global variable:
