@@ -18,7 +18,9 @@ const sendACaptureRequestExample = async () => {
   const epcisDocument = new EPCISDocument({
     '@context': [
       'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
-      { example: 'http://ns.example.com/epcis/' },
+      {
+        example: 'http://ns.example.com/epcis/'
+      },
     ],
     type: 'EPCISDocument',
     creationDate: '2005-07-11T11:30:47.0Z',
@@ -47,9 +49,27 @@ const sendACaptureRequestExample = async () => {
     },
   });
 
+  epcisDocument.eventList[0].generateHashID({
+    example: 'http://ns.example.com/epcis/',
+  });
+  console.log(`The generated id is: ${epcisDocument.eventList[0].getEventID()}`);
+
+  console.log(`epcisDocument (toString): ${epcisDocument.toString()}`);
+
+  const res = await capture(epcisDocument);
+  const text = await res.text();
+  console.log(`Request status: ${res.status}`);
+  console.log(`Request response: ${text}`);
 
   console.log(`EPCISDocument is valid ? ${epcisDocument.isValid()}`);
   console.log(`ObjectEvent is valid ? ${epcisDocument.eventList[0].isValid()}`);
+
+
+  console.log(`field names of an EPCIS Document:`);
+  console.log(fieldNames.epcisDocument);
+
+  console.log(`example of constants from constants.js:`);
+  console.log(eventEpcRelType);
 };
 
 sendACaptureRequestExample();
