@@ -238,3 +238,10 @@ export function isJsonObject(data) {
   }
   return true;
 }
+
+/**
+ * Wait for [ms] ms to resolve.
+ * @param {number} ms - the time to wait in milliseconds.
+ * @returns {Promise<unknown>}
+ */
+export const timer = (ms) => new Promise((res) => setTimeout(res, ms));

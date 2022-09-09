@@ -21,10 +21,11 @@ const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
  */
 export function prepare() {
   // Root - generic requests handles
-  fetchMock.mock(settings.apiUrl, responses.ok);
-  fetchMock.mock('https://evrythng.com', responses.ok);
-  fetchMock.mock('https://google.com', () => delay(1500).then(() => ({ Ack: true })));
-  fetchMock.post('end:/capture', responses.ok);
+  fetchMock.mock(settings.apiUrl, responses.ok, { overwriteRoutes: false });
+  fetchMock.mock('https://evrythng.com', responses.ok, { overwriteRoutes: false });
+  fetchMock.mock('https://google.com', () => delay(1500).then(() => ({ Ack: true })), { overwriteRoutes: false });
+  fetchMock.post('end:/capture', responses.ok, { overwriteRoutes: false });
+  fetchMock.get('end:/capture/CAPTURE_JOB_ID', responses.captureJob, { overwriteRoutes: false });
 }
 
 /**

@@ -7,6 +7,7 @@
 export { default as EPCISDocument } from './entity/epcis/EPCISDocument';
 export { default as EPCISMasterData } from './entity/epcis/EPCISMasterData';
 export { default as EPCISHeader } from './entity/epcis/EPCISHeader';
+export { default as CaptureResponse } from './entity/epcis/CaptureResponse';
 export { default as ObjectEvent } from './entity/events/ObjectEvent';
 export { default as ExtendedEvent } from './entity/events/ExtendedEvent';
 export { default as TransformationEvent } from './entity/events/TransformationEvent';

@@ -125,6 +125,12 @@ describe('All the functions should be well exported', () => {
     sourceElement.setSource('urn:epc:id:sgln:4012345.00225.0');
     expect(sourceElement.getSource()).to.be.equal('urn:epc:id:sgln:4012345.00225.0');
   });
+  it('CaptureResponse', async () => {
+    const captureResponse = { headers: new Map() };
+    captureResponse.headers.set('location', '/epcis/capture/CAPTURE_JOB_ID');
+    const cr = new sdk.CaptureResponse(captureResponse);
+    expect(cr.getLocation()).to.be.equal('capture/CAPTURE_JOB_ID');
+  });
   it('Vocabulary', async () => {
     const vocabulary = new sdk.Vocabulary();
     vocabulary.setType('test');
