@@ -23,7 +23,8 @@ const {
     setup,
     capture,
     cbv,
-    vtype
+    vtype,
+    CaptureResponse
   } = require('epcis2.js');
 
   // you can override the global parameters with the setup function
@@ -510,6 +511,12 @@ const sendACaptureRequestExample = async () => {
     // capture
     console.log('Capture:')
     let res = await capture(epcisDocument);
+    const cr = new CaptureResponse(res);
+    await cr.waitForTheCaptureToFinish();
+    console.log(`Running status: ${cr.getRunningStatus()}`);
+    console.log(`Success status: ${cr.getSuccessStatus()}`);
+    console.log(`errors: ${cr.getErrors()}`);
+    console.log(`location: ${cr.getLocation()}`);
     let text = await res.text();
     console.log(`Request status: ${res.status}`);
     console.log(`Request response: ${text}`);

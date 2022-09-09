@@ -515,6 +515,22 @@ You can override all the parameters defined in the previous section in the secon
 If the `documentValidation` field of the settings is set to `true`, and the EPCISDocument hasn't a valid syntax, the
 function throws an error.
 
+### Handling the capture response
+
+To check if the EPCIS document has been digested correctly, you can use the CaptureResponse class.
+```js
+let res = await capture(epcisDocument);
+const cr = new CaptureResponse(res);
+await cr.waitForTheCaptureToFinish(5, 2000, { timeout: 2000 });
+console.log(`Running status: ${cr.getRunningStatus()}`);
+console.log(`Success status: ${cr.getSuccessStatus()}`);
+console.log(`errors: ${cr.getErrors()}`);
+console.log(`location: ${cr.getLocation()}`);
+```
+
+As for the capture function, you can override all the parameters defined in the settings in the 3rd parameters of the
+`waitForTheCaptureToFinish` function.
+
 ## Contributing
 
 ### Build
