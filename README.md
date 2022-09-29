@@ -203,6 +203,12 @@ const epcisDocument = new EPCISDocument({
 To add an event to an EPCIS document, you can use the following:
 
 ```js
+const {
+  ObjectEvent,
+  EPCISDocument,
+  cbv
+} = require('epcis2.js');
+
 const event = new ObjectEvent();
 const event2 = new ObjectEvent();
 const epcisDocument = new EPCISDocument();
