@@ -18,11 +18,13 @@ export default class CaptureResponse {
     if (!captureResponse) {
       throw new Error('A capture response needs to be provided to the constructor');
     }
-
-    captureResponse.headers.forEach((k, v) => {
-      if (v === 'location') this.location = k.replace('/epcis/', '');
-    });
-
+    if (!captureResponse.headers) {
+      throw new Error('A capture response needs to have headers');
+    }
+    if (!captureResponse.headers.get('location')) {
+      throw new Error('A capture response needs to have a location property in the headers');
+    }
+    this.location = captureResponse.headers.get('location');
     this.fetched = null;
   }
 

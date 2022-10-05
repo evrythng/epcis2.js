@@ -10,13 +10,15 @@ import * as sdk from '../../src';
 import { prepare, tearDown } from '../helper/apiMock';
 import setup from '../../src/setup';
 import settings from '../../src/settings';
+import responses from '../helper/responses';
 
 const initialSettings = { ...settings };
 
 let req;
 
+const locationTestValue = '/epcis/capture/CAPTURE_JOB_ID';
 const captureResponse = { headers: new Map() };
-captureResponse.headers.set('location', '/epcis/capture/CAPTURE_JOB_ID');
+captureResponse.headers.set('location', locationTestValue);
 
 describe('Unit tests: Capture response', () => {
   beforeEach((done) => {
@@ -31,6 +33,28 @@ describe('Unit tests: Capture response', () => {
     } else {
       done();
     }
+  });
+
+  it('constructor should create a valid capture reponse', async () => {
+    const cr = new sdk.CaptureResponse(captureResponse);
+    expect(cr.getLocation()).to.be.equal(locationTestValue);
+  });
+
+  it('constructor should throw when passing a null object', async () => {
+    const error = 'A capture response must be provided to the constructor';
+    expect(() => new CaptureResponse()).to.throw(error);
+  });
+
+  it('constructor should throw when passing an object without headers', async () => {
+    const error = 'A capture response must have headers';
+    expect(() => new CaptureResponse({})).to.throw(error);
+  });
+
+  it('constructor should throw when passing an object without location', async () => {
+    const error = 'A capture response must have a location property';
+    const wrongCaptureResponse = { headers: new Map() };
+    wrongCaptureResponse.headers.set('test', 'test');
+    expect(() => new CaptureResponse(wrongCaptureResponse)).to.throw(error);
   });
 
   it('should create a valid capture reponse', async () => {
@@ -54,13 +78,7 @@ describe('Unit tests: Capture response', () => {
   it('should fetch the capture job information', async () => {
     const cr = new sdk.CaptureResponse(captureResponse);
     const res = await cr.getCaptureJob();
-    expect(res).to.be.deep.equal({
-      captureID: '28913f92-0de4-4fa9-9d64-bc762b694ae5',
-      createdAt: '2022-09-01T11:29:30.927Z',
-      running: false,
-      success: true,
-      errors: [],
-    });
+    expect(res).to.be.deep.equal(responses.captureJob);
   });
 
   it('should automatically update the information', async () => {
