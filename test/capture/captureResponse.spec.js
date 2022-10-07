@@ -102,7 +102,7 @@ describe('Unit tests: Capture response', () => {
     // we mock the capture result to 'running'
     mockCaptureJobIsNotFinished();
     // we mock the capture result to 'success' in 250ms
-    mockCaptureJobIsFinished(250);
+    mockCaptureJobIsFinished(350);
     await cr.pollForTheCaptureToFinish(5, 100);
     expect(cr.getRunningStatus()).to.be.equal(false);
   });
