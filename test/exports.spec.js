@@ -127,7 +127,7 @@ describe('All the functions should be well exported', () => {
   });
   it('CaptureResponse', async () => {
     const captureResponse = { headers: new Map() };
-    captureResponse.headers.set('location', '/epcis/capture/CAPTURE_JOB_ID');
+    captureResponse.headers.set('location', 'capture/CAPTURE_JOB_ID');
     const cr = new sdk.CaptureResponse(captureResponse);
     expect(cr.getLocation()).to.be.equal('capture/CAPTURE_JOB_ID');
   });

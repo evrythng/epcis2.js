@@ -7,7 +7,9 @@
 import { expect } from 'chai';
 import { CaptureResponse } from '../../src';
 import * as sdk from '../../src';
-import { prepare, tearDown } from '../helper/apiMock';
+import {
+  mockCaptureJobIsFinished, mockCaptureJobIsNotFinished, prepare, tearDown,
+} from '../helper/apiMock';
 import setup from '../../src/setup';
 import settings from '../../src/settings';
 import responses from '../helper/responses';
@@ -16,7 +18,7 @@ const initialSettings = { ...settings };
 
 let req;
 
-const locationTestValue = '/epcis/capture/CAPTURE_JOB_ID';
+const locationTestValue = 'capture/CAPTURE_JOB_ID';
 const captureResponse = { headers: new Map() };
 captureResponse.headers.set('location', locationTestValue);
 
@@ -59,11 +61,11 @@ describe('Unit tests: Capture response', () => {
 
   it('should create a valid capture reponse', async () => {
     const cr = new sdk.CaptureResponse(captureResponse);
-    expect(cr.getLocation()).to.be.equal('capture/CAPTURE_JOB_ID');
+    expect(cr.getLocation()).to.be.equal(locationTestValue);
   });
 
   it('should throw when passing a wrong object', async () => {
-    const error = 'A capture response needs to be provided to the constructor';
+    const error = 'A capture response must be provided to the constructor';
     expect(() => new CaptureResponse()).to.throw(error);
   });
 
@@ -89,9 +91,29 @@ describe('Unit tests: Capture response', () => {
     expect(cr.getRunningStatus()).to.be.deep.equal(false);
   });
 
-  it('should wait for the capture job to be complete', async () => {
+  it('should wait for the capture job to be complete (when result is available on the first try)', async () => {
     const cr = new sdk.CaptureResponse(captureResponse);
-    await cr.waitForTheCaptureToFinish(5, 2000);
+    await cr.pollForTheCaptureToFinish(5, 2000);
     expect(cr.getRunningStatus()).to.be.equal(false);
+  });
+
+  it("should wait for the capture job to be complete (when result isn't available on the first try)", async () => {
+    const cr = new sdk.CaptureResponse(captureResponse);
+    // we mock the capture result to 'running'
+    mockCaptureJobIsNotFinished();
+    // we mock the capture result to 'success' in 250ms
+    mockCaptureJobIsFinished(250);
+    await cr.pollForTheCaptureToFinish(5, 100);
+    expect(cr.getRunningStatus()).to.be.equal(false);
+  });
+
+  it("should wait for the capture job to be complete (when result isn't available after all tries)", async () => {
+    const cr = new sdk.CaptureResponse(captureResponse);
+    // we mock the capture result to 'running'
+    mockCaptureJobIsNotFinished();
+    // we mock the capture result to 'success' in 250ms
+    mockCaptureJobIsFinished(600);
+    await cr.pollForTheCaptureToFinish(5, 100);
+    expect(cr.getRunningStatus()).to.be.equal(true);
   });
 });

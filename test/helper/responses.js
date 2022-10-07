@@ -30,4 +30,12 @@ export default {
     success: true,
     errors: [],
   },
+
+  runningCaptureJob: {
+    captureID: null,
+    createdAt: '2022-09-01T11:29:30.927Z',
+    running: true,
+    success: true,
+    errors: [],
+  },
 };

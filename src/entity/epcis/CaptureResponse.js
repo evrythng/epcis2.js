@@ -16,13 +16,13 @@ export default class CaptureResponse {
    */
   constructor(captureResponse) {
     if (!captureResponse) {
-      throw new Error('A capture response needs to be provided to the constructor');
+      throw new Error('A capture response must be provided to the constructor');
     }
     if (!captureResponse.headers) {
-      throw new Error('A capture response needs to have headers');
+      throw new Error('A capture response must have headers');
     }
     if (!captureResponse.headers.get('location')) {
-      throw new Error('A capture response needs to have a location property in the headers');
+      throw new Error('A capture response must have a location property in the headers');
     }
     this.location = captureResponse.headers.get('location');
     this.fetched = null;
@@ -73,7 +73,9 @@ export default class CaptureResponse {
   }
 
   async getCaptureJob(options = {}) {
-    const res = await request(this.location, options);
+    const captureId = this.location.split('/').pop();
+    const endpoint = `capture/${captureId}`;
+    const res = await request(endpoint, options);
     const json = await res.json();
 
     this.success = json.success;
@@ -93,8 +95,8 @@ export default class CaptureResponse {
    * @param {Object} options - the request options
    * @returns {Promise<void>}
    */
-  async waitForTheCaptureToFinish(nbRetry = 5, delay = 2000, options = {}) {
-    const tries = 0;
+  async pollForTheCaptureToFinish(nbRetry = 5, delay = 2000, options = {}) {
+    let tries = 0;
 
     /* eslint-disable no-await-in-loop */
     do {
@@ -103,6 +105,7 @@ export default class CaptureResponse {
       }
 
       await this.getCaptureJob(options);
+      tries += 1;
     } while (tries < nbRetry && this.running);
     /* eslint-enable no-await-in-loop */
   }

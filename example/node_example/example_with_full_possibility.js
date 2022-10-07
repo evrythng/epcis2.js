@@ -512,7 +512,7 @@ const sendACaptureRequestExample = async () => {
     console.log('Capture:')
     let res = await capture(epcisDocument);
     const cr = new CaptureResponse(res);
-    await cr.waitForTheCaptureToFinish();
+    await cr.pollForTheCaptureToFinish();
     console.log(`Running status: ${cr.getRunningStatus()}`);
     console.log(`Success status: ${cr.getSuccessStatus()}`);
     console.log(`errors: ${cr.getErrors()}`);

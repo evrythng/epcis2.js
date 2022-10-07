@@ -521,7 +521,10 @@ To check if the EPCIS document has been digested correctly, you can use the Capt
 ```js
 let res = await capture(epcisDocument);
 const cr = new CaptureResponse(res);
-await cr.waitForTheCaptureToFinish(5, 2000, { timeout: 2000 });
+// this function polls the capture endpoint until the EPCIS document has been handled by the API. The first param is the 
+// number of retry, the second is the delay between each poll and here, we override the timeout of requests to be
+// 2s. In this example, it will poll 5 times, with 2s between each poll.
+await cr.pollForTheCaptureToFinish(5, 2000, { timeout: 2000 });
 console.log(`Running status: ${cr.getRunningStatus()}`);
 console.log(`Success status: ${cr.getSuccessStatus()}`);
 console.log(`errors: ${cr.getErrors()}`);
@@ -529,7 +532,7 @@ console.log(`location: ${cr.getLocation()}`);
 ```
 
 As for the capture function, you can override all the parameters defined in the settings in the 3rd parameters of the
-`waitForTheCaptureToFinish` function.
+`pollForTheCaptureToFinish` function.
 
 ## Contributing
 
