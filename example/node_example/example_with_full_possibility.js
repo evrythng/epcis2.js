@@ -487,7 +487,8 @@ const sendACaptureRequestExample = async () => {
     // epcisDocument
     epcisDocument.setContext(['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',{
       example: 'http://ns.example.com/epcis/',
-      ext1: 'http://example.com/ext1/'
+      ext1: 'http://example.com/ext1/',
+      evt: 'https://evrythng.com/context'
     }])
     .setCreationDate('2013-06-04T14:59:02.099+02:00')
     .setSchemaVersion('2.0')
