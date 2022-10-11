@@ -43,7 +43,7 @@ describe('unit tests for the ObjectEvent class', () => {
       setup({});
       const o = new ObjectEvent();
       expect(o.eventTimeZoneOffset).to.be.equal(
-        getTimeZoneOffset(new Date().getTimezoneOffset() / 60),
+        getTimeZoneOffset(-(new Date().getTimezoneOffset()) / 60),
       );
     });
 

@@ -113,7 +113,7 @@ export default class Event extends Entity {
       this.setEventTimeZoneOffset(settings.eventTimeZoneOffset);
     } else if (!this.eventTimeZoneOffset) {
       const date = new Date();
-      const timeZoneOffset = getTimeZoneOffset(date.getTimezoneOffset() / 60);
+      const timeZoneOffset = getTimeZoneOffset(-(date.getTimezoneOffset()) / 60);
       this.setEventTimeZoneOffset(timeZoneOffset);
     }
 
