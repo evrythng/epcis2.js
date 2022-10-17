@@ -219,4 +219,8 @@ describe('All the functions should be well exported', () => {
   it('vtype.js', async () => {
     expect(sdk.vtype.PartyID).to.be.equal('urn:epcglobal:epcis:vtype:Party');
   });
+  it('epc.js', async () => {
+    expect(sdk.buildDigitalLinkFromEpc('30740086604E20400000007B'))
+      .to.be.equal('https://dlnkd.tn.gg/01/00008600800013/21/123');
+  });
 });

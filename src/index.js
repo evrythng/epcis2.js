@@ -43,3 +43,4 @@ export { default as vtype } from './cbv/vtype';
 export * from './settings';
 export * from './utils/utils';
 export { default as objectToEvent } from './utils/entityUtils';
+export { default as buildDigitalLinkFromEpc } from './utils/epc';

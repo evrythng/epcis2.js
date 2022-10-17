@@ -451,6 +451,34 @@ Similar function are available for `SGLN`, `SSCC`, `GRAI`, `GIAI`, `GSRN`, `GSRN
 
 Each function are based on the fields defined in the [gs1 official documentation](https://www.gs1.org/sites/default/files/docs/epc/GS1_EPC_TDS_i1_11.pdf).
 
+### Building a digital link from an EPC
+
+The SDK allows developers to build easily a GS1 Digital link from an EPC.
+
+```js
+const digitalLink = buildDigitalLinkFromEpc('30740086604E20400000007B');
+// digitalLink = 'https://dlnkd.tn.gg/01/00008600800013/21/123'
+```
+
+You can also provide a domain, as a parameter, to have more control over the output:
+```js
+const digitalLink = buildDigitalLinkFromEpc('30740086604E20400000007B', {
+  digitalLinkDomain: 'https://evrythng.com',
+});
+// digitalLink = 'https://evrythng.com/01/00008600800013/21/123'
+```
+
+Finally, you can provide the domain in the setup function:
+```js
+setup({
+  digitalLinkDomain: 'https://digimarc.com',
+});
+const digitalLink = buildDigitalLinkFromEpc('30740086604E20400000007B');
+// digitalLink = 'https://digimarc.com/01/00008600800013/21/123'
+```
+
+This feature is still experimental, please submit an [issue](https://github.com/evrythng/epcis2.js/issues) if you notice an unexpected behaviour.
+
 ### Generating a hashed ID for an event
 
 You have the possibility to generate a hashed ID for each event you create. The generation algorithm is a pure
