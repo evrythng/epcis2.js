@@ -8,7 +8,7 @@ This project is jointly supported by [EVRYTHNG](https://evrythng.com) and [Zebra
 
 ## Introduction to EPCIS and EPCIS 2.0
 
-EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the work-in-progress major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web.
+EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web.
 
 EPCIS 2.0 brings the following highlights to the table:
 
