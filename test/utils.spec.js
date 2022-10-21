@@ -32,6 +32,8 @@ import TransactionEvent from '../src/entity/events/TransactionEvent';
 import AggregationEvent from '../src/entity/events/AggregationEvent';
 import AssociationEvent from '../src/entity/events/AssociationEvent';
 import ExtendedEvent from '../src/entity/events/ExtendedEvent';
+import buildDigitalLinkFromEpc from '../src/utils/epc';
+import setup from '../src/setup';
 
 describe('unit tests for util functions', () => {
   describe('numberToTwoCharString function', () => {
@@ -199,6 +201,47 @@ describe('unit tests for util functions', () => {
       expect(buildGIDUri('95100000', '12345', '400')).to.be.equal(
         'urn:epc:id:gid:95100000.12345.400',
       );
+    });
+  });
+
+  describe('build Digital link from epc', () => {
+    it('should build a valid digital link from a valid epc', async () => {
+      expect(buildDigitalLinkFromEpc('3074257bf7194e4000001a85'))
+        .to.be.equal('https://dlnkd.tn.gg/01/80614141123458/21/6789');
+      expect(buildDigitalLinkFromEpc('3074257af7194e4000001a81'))
+        .to.be.equal('https://dlnkd.tn.gg/01/80614077123454/21/6785');
+      expect(buildDigitalLinkFromEpc('30740086604E20400000007B'))
+        .to.be.equal('https://dlnkd.tn.gg/01/00008600800013/21/123');
+    });
+
+    it('should throw when passing invalid epc', async () => {
+      expect(() => buildDigitalLinkFromEpc('40740086604E20400000007B')).to.throw();
+      expect(() => buildDigitalLinkFromEpc('00740086604E20400000007B')).to.throw();
+    });
+
+    it('should set up the right domain when passing it as param', async () => {
+      expect(buildDigitalLinkFromEpc('30740086604E20400000007B', {
+        digitalLinkDomain: 'https://evrythng.com',
+      }))
+        .to.be.equal('https://evrythng.com/01/00008600800013/21/123');
+    });
+
+    it('should set up the right domain when calling the setup function', async () => {
+      setup({
+        digitalLinkDomain: 'https://digimarc.com',
+      });
+      expect(buildDigitalLinkFromEpc('30740086604E20400000007B'))
+        .to.be.equal('https://digimarc.com/01/00008600800013/21/123');
+    });
+
+    it('should set up the right domain when overriding it in params', async () => {
+      setup({
+        digitalLinkDomain: 'https://digimarc.com',
+      });
+      expect(buildDigitalLinkFromEpc('30740086604E20400000007B', {
+        digitalLinkDomain: 'https://evrythng.com',
+      }))
+        .to.be.equal('https://evrythng.com/01/00008600800013/21/123');
     });
   });
 });
