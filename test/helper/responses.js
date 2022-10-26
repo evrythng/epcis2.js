@@ -22,4 +22,20 @@ export default {
       errors: ['Generic error'],
     },
   },
+
+  captureJob: {
+    captureID: '28913f92-0de4-4fa9-9d64-bc762b694aea',
+    createdAt: '2022-09-01T11:29:30.927Z',
+    running: false,
+    success: true,
+    errors: [],
+  },
+
+  runningCaptureJob: {
+    captureID: null,
+    createdAt: '2022-09-01T11:29:30.927Z',
+    running: true,
+    success: true,
+    errors: [],
+  },
 };

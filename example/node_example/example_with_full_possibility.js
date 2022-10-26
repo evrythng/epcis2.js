@@ -23,7 +23,8 @@ const {
     setup,
     capture,
     cbv,
-    vtype
+    vtype,
+    CaptureResponse
   } = require('epcis2.js');
 
   // you can override the global parameters with the setup function
@@ -486,7 +487,8 @@ const sendACaptureRequestExample = async () => {
     // epcisDocument
     epcisDocument.setContext(['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',{
       example: 'http://ns.example.com/epcis/',
-      ext1: 'http://example.com/ext1/'
+      ext1: 'http://example.com/ext1/',
+      evt: 'https://evrythng.com/context'
     }])
     .setCreationDate('2013-06-04T14:59:02.099+02:00')
     .setSchemaVersion('2.0')
@@ -510,6 +512,12 @@ const sendACaptureRequestExample = async () => {
     // capture
     console.log('Capture:')
     let res = await capture(epcisDocument);
+    const cr = new CaptureResponse(res);
+    await cr.pollForTheCaptureToFinish();
+    console.log(`Running status: ${cr.getRunningStatus()}`);
+    console.log(`Success status: ${cr.getSuccessStatus()}`);
+    console.log(`errors: ${cr.getErrors()}`);
+    console.log(`location: ${cr.getLocation()}`);
     let text = await res.text();
     console.log(`Request status: ${res.status}`);
     console.log(`Request response: ${text}`);

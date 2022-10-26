@@ -56,7 +56,7 @@ import * as epcis from 'epcis2.js';
 
 Or use a simple script tag to load it from the CDN:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.4.1/dist/epcis2.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.5.0/dist/epcis2.browser.js"></script>
 ```
 
 Then use in a browser `script` tag using the `epcis2` global variable:
@@ -547,6 +547,25 @@ You can override all the parameters defined in the previous section in the secon
 
 If the `documentValidation` field of the settings is set to `true`, and the EPCISDocument hasn't a valid syntax, the
 function throws an error.
+
+### Handling the capture response
+
+To check if the EPCIS document has been digested correctly, you can use the CaptureResponse class.
+```js
+let res = await capture(epcisDocument);
+const cr = new CaptureResponse(res);
+// this function polls the capture endpoint until the EPCIS document has been handled by the API. The first param is the 
+// number of retry, the second is the delay between each poll and here, we override the timeout of requests to be
+// 2s. In this example, it will poll 5 times, with 2s between each poll.
+await cr.pollForTheCaptureToFinish(5, 2000, { timeout: 2000 });
+console.log(`Running status: ${cr.getRunningStatus()}`);
+console.log(`Success status: ${cr.getSuccessStatus()}`);
+console.log(`errors: ${cr.getErrors()}`);
+console.log(`location: ${cr.getLocation()}`);
+```
+
+As for the capture function, you can override all the parameters defined in the settings in the 3rd parameters of the
+`pollForTheCaptureToFinish` function.
 
 ## Contributing
 
