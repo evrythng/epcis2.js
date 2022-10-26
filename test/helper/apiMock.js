@@ -8,23 +8,35 @@
 import fetchMock from 'fetch-mock';
 import responses from './responses';
 import settings from '../../src/settings';
-
-/**
- * Delayed promise.
- *
- * @param {Number} time - Delay time in milliseconds
- */
-const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
+import { timer } from '../../src';
 
 /**
  * Init API mock as a whole.
  */
 export function prepare() {
   // Root - generic requests handles
-  fetchMock.mock(settings.apiUrl, responses.ok);
-  fetchMock.mock('https://evrythng.com', responses.ok);
-  fetchMock.mock('https://google.com', () => delay(1500).then(() => ({ Ack: true })));
-  fetchMock.post('end:/capture', responses.ok);
+  fetchMock.mock(settings.apiUrl, responses.ok, { overwriteRoutes: false });
+  fetchMock.mock('https://evrythng.com', responses.ok, { overwriteRoutes: false });
+  fetchMock.mock('https://google.com', () => timer(1500).then(() => ({ Ack: true })), { overwriteRoutes: false });
+  fetchMock.post('end:/capture', responses.ok, { overwriteRoutes: false });
+  fetchMock.get('end:/capture/CAPTURE_JOB_ID', responses.captureJob, { overwriteRoutes: false });
+}
+
+/**
+ * Mocks API/capture/CAPTURE_JOB_ID to a running capture job
+ */
+export function mockCaptureJobIsNotFinished() {
+  fetchMock.get('end:/capture/CAPTURE_JOB_ID', responses.runningCaptureJob, { overwriteRoutes: true });
+}
+
+/**
+ * Mocks API/capture/CAPTURE_JOB_ID to a success capture job
+ * @param {number} delay - the time to wait, in ms, before mocking the API to the success
+ * capture job
+ */
+export async function mockCaptureJobIsFinished(delay) {
+  await timer(delay);
+  fetchMock.get('end:/capture/CAPTURE_JOB_ID', responses.captureJob, { overwriteRoutes: true });
 }
 
 /**
@@ -34,7 +46,7 @@ export function prepare() {
  * @param {Function} done - Jasmine done callback
  */
 export async function tearDown(done) {
-  await delay(100);
+  await timer(100);
   fetchMock.restore();
   done();
 }

@@ -13,6 +13,8 @@
  * @property {Object} headers - Headers to send with request
  * @property {string} eventTimeZoneOffset - The default eventTimeZoneOffset that will be set in
  * @property {number} timeout - Timeout for request in ms
+ * @property {number} digitalLinkDomain - The digital link domain that should be used in when
+ * building a digital link from an epc
  * @property {boolean} documentValidation - whether the EPCISDocument has to be validated or not
  * before sending it via the capture interface
  * @property {string} EPCISDocumentContext - The default value of the '@context' parameter of an
@@ -46,6 +48,7 @@ export const defaultSettings = {
   documentValidation: true,
   validationMode: 'full',
   checkExtensions: false,
+  digitalLinkDomain: 'https://dlnkd.tn.gg',
 };
 
 // Initialize settings with defaults.

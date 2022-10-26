@@ -2,14 +2,13 @@
 
 EPCIS 2.0 Javascript SDK
 
-`epcis2.js` is a Javascript SDK (client-side & Node.js compatible) to facilitate sending data to GS1 EPCIS 2.0 compliant repositories. It provides plenty of helper function
-to make pushing standard compliant supply chain events as easy a possible.
+`epcis2.js` is a Javascript SDK (client-side & Node.js compatible) to facilitate sending data to [GS1 EPCIS 2.0](https://www.gs1.org/standards/epcis) standard compliant repositories. It provides plenty of helper functions to make pushing standard compliant supply chain events as easy as possible.
 
 This project is jointly supported by [EVRYTHNG](https://evrythng.com) and [Zebra](https://www.zebra.com/).
 
 ## Introduction to EPCIS and EPCIS 2.0
 
-EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the work-in-progress major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web. EPCIS 2.0 is currently being developed by the EPCIS and CBV 2.0 MSWG which EVRYTHNG and Zebra are part of. The standard has not been ratified yet, hence consider everything you see here tentative.
+EPCIS is a GS1 standard for the integration of supply chain information systems. EPCIS is especially valuable to facilitate the seamless exchange of information in supply chains that span multiple actors and organisations. EPCIS 2.0 is the major update to the GS1 EPCIS standard. It was driven by the need to bring EPCIS to the Web.
 
 EPCIS 2.0 brings the following highlights to the table:
 
@@ -57,7 +56,7 @@ import * as epcis from 'epcis2.js';
 
 Or use a simple script tag to load it from the CDN:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.4.1/dist/epcis2.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.5.0/dist/epcis2.browser.js"></script>
 ```
 
 Then use in a browser `script` tag using the `epcis2` global variable:
@@ -452,6 +451,34 @@ Similar function are available for `SGLN`, `SSCC`, `GRAI`, `GIAI`, `GSRN`, `GSRN
 
 Each function are based on the fields defined in the [gs1 official documentation](https://www.gs1.org/sites/default/files/docs/epc/GS1_EPC_TDS_i1_11.pdf).
 
+### Building a digital link from an EPC
+
+The SDK allows developers to build easily a GS1 Digital link from an EPC.
+
+```js
+const digitalLink = buildDigitalLinkFromEpc('30740086604E20400000007B');
+// digitalLink = 'https://dlnkd.tn.gg/01/00008600800013/21/123'
+```
+
+You can also provide a domain, as a parameter, to have more control over the output:
+```js
+const digitalLink = buildDigitalLinkFromEpc('30740086604E20400000007B', {
+  digitalLinkDomain: 'https://evrythng.com',
+});
+// digitalLink = 'https://evrythng.com/01/00008600800013/21/123'
+```
+
+Finally, you can provide the domain in the setup function:
+```js
+setup({
+  digitalLinkDomain: 'https://digimarc.com',
+});
+const digitalLink = buildDigitalLinkFromEpc('30740086604E20400000007B');
+// digitalLink = 'https://digimarc.com/01/00008600800013/21/123'
+```
+
+This feature is still experimental, please submit an [issue](https://github.com/evrythng/epcis2.js/issues) if you notice an unexpected behaviour.
+
 ### Generating a hashed ID for an event
 
 You have the possibility to generate a hashed ID for each event you create. The generation algorithm is a pure
@@ -520,6 +547,25 @@ You can override all the parameters defined in the previous section in the secon
 
 If the `documentValidation` field of the settings is set to `true`, and the EPCISDocument hasn't a valid syntax, the
 function throws an error.
+
+### Handling the capture response
+
+To check if the EPCIS document has been digested correctly, you can use the CaptureResponse class.
+```js
+let res = await capture(epcisDocument);
+const cr = new CaptureResponse(res);
+// this function polls the capture endpoint until the EPCIS document has been handled by the API. The first param is the 
+// number of retry, the second is the delay between each poll and here, we override the timeout of requests to be
+// 2s. In this example, it will poll 5 times, with 2s between each poll.
+await cr.pollForTheCaptureToFinish(5, 2000, { timeout: 2000 });
+console.log(`Running status: ${cr.getRunningStatus()}`);
+console.log(`Success status: ${cr.getSuccessStatus()}`);
+console.log(`errors: ${cr.getErrors()}`);
+console.log(`location: ${cr.getLocation()}`);
+```
+
+As for the capture function, you can override all the parameters defined in the settings in the 3rd parameters of the
+`pollForTheCaptureToFinish` function.
 
 ## Contributing
 

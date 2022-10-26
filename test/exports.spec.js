@@ -125,6 +125,12 @@ describe('All the functions should be well exported', () => {
     sourceElement.setSource('urn:epc:id:sgln:4012345.00225.0');
     expect(sourceElement.getSource()).to.be.equal('urn:epc:id:sgln:4012345.00225.0');
   });
+  it('CaptureResponse', async () => {
+    const captureResponse = { headers: new Map() };
+    captureResponse.headers.set('location', 'capture/CAPTURE_JOB_ID');
+    const cr = new sdk.CaptureResponse(captureResponse);
+    expect(cr.getLocation()).to.be.equal('capture/CAPTURE_JOB_ID');
+  });
   it('Vocabulary', async () => {
     const vocabulary = new sdk.Vocabulary();
     vocabulary.setType('test');
@@ -218,5 +224,9 @@ describe('All the functions should be well exported', () => {
   });
   it('vtype.js', async () => {
     expect(sdk.vtype.PartyID).to.be.equal('urn:epcglobal:epcis:vtype:Party');
+  });
+  it('epc.js', async () => {
+    expect(sdk.buildDigitalLinkFromEpc('30740086604E20400000007B'))
+      .to.be.equal('https://dlnkd.tn.gg/01/00008600800013/21/123');
   });
 });

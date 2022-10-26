@@ -7,6 +7,7 @@
 export { default as EPCISDocument } from './entity/epcis/EPCISDocument';
 export { default as EPCISMasterData } from './entity/epcis/EPCISMasterData';
 export { default as EPCISHeader } from './entity/epcis/EPCISHeader';
+export { default as CaptureResponse } from './entity/epcis/CaptureResponse';
 export { default as ObjectEvent } from './entity/events/ObjectEvent';
 export { default as ExtendedEvent } from './entity/events/ExtendedEvent';
 export { default as TransformationEvent } from './entity/events/TransformationEvent';
@@ -43,3 +44,4 @@ export { default as vtype } from './cbv/vtype';
 export * from './settings';
 export * from './utils/utils';
 export { default as objectToEvent } from './utils/entityUtils';
+export { default as buildDigitalLinkFromEpc } from './utils/epc';
