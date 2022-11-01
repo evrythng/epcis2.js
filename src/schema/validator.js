@@ -18,15 +18,15 @@ import AssociationEvent from './AssociationEvent.schema.json';
 import ExtendedEvent from './ExtendedEvent.schema.json';
 
 const defaultContext = [
-  "epcis",
-  "cbv",
-  "cbvmda",
-  "gs1",
-  "rdfs",
-  "owl",
-  "xsd",
-  "dcterms",
-]
+  'epcis',
+  'cbv',
+  'cbvmda',
+  'gs1',
+  'rdfs',
+  'owl',
+  'xsd',
+  'dcterms',
+];
 
 /**
  * @typedef {object} ValidatorResult

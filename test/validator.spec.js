@@ -1524,7 +1524,7 @@ describe('Unit test: validator.js', () => {
           },
         ],
       },
-      "owl:sameAs": "above"
+      'owl:sameAs': 'above',
     };
     let res = {};
     assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
@@ -1587,7 +1587,7 @@ describe('Unit test: validator.js', () => {
         'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
         {
           ext: 'http://example.com/ext/',
-        }
+        },
       ]);
       const authorizedExtensions = getAuthorizedExtensions(doc);
       expect(checkIfExtensionsAreDefinedInTheContext(['ext', 'cbvmda', 'gs1', 'rdfs', 'owl', 'xsd', 'dcterms'], authorizedExtensions)).to.deep.equal(
