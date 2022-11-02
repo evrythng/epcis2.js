@@ -722,6 +722,29 @@ describe('unit tests for pre-hashing', () => {
     )).to.throw();
   });
 
+  it('should return a valid pre-hash of custom fields', () => {
+    const str = eventToPreHashedString(
+      {
+        'cbvmda:key': 'test',
+      },
+      sampleContext,
+    );
+    expect(str).to.be.equal(
+      '{urn:epcglobal:cbv:mda:}key=test',
+    );
+
+    const str2 = eventToPreHashedString(
+      {
+        'dcterms:term': 'value',
+        action: 'OBSERVE',
+      },
+      sampleContext,
+    );
+    expect(str2).to.be.equal(
+      'action=OBSERVE{http://purl.org/dc/terms/}term=value',
+    );
+  });
+
   it('should automatically add the context from custom fields', () => {
     const str = eventToPreHashedString(
       {

@@ -33,6 +33,17 @@ import cbv from '../cbv/cbv';
 // The rules of the algorithm are defined here :
 // https://github.com/RalphTro/epcis-event-hash-generator#algorithm
 
+const epcisDefaultContext = {
+  epcis: 'https://ref.gs1.org/epcis/',
+  cbv: 'https://ref.gs1.org/cbv/',
+  cbvmda: 'urn:epcglobal:cbv:mda:',
+  gs1: 'https://gs1.org/voc/',
+  rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+  owl: 'http://www.w3.org/2002/07/owl#',
+  xsd: 'http://www.w3.org/2001/XMLSchema#',
+  dcterms: 'http://purl.org/dc/terms/',
+};
+
 /**
  * Return the pre-hashed string corresponding to the field-value passed in parameter
  * @param {string} field
@@ -90,6 +101,9 @@ export const getPreHashStringFromCustomFieldElementList = (prefix, value, throwE
 export const getPreHashStringFromCustomFieldElement = (key, value, context, throwError) => {
   let field = key;
 
+  // comments are excluded from the pre-hash string.
+  if (key === 'rdfs:comment') return '';
+
   const splitKey = key.split(':');
 
   if (splitKey.length > 1) {
@@ -108,7 +122,7 @@ export const getPreHashStringFromCustomFieldElement = (key, value, context, thro
 
     field = key.replace(`${splitKey[0]}:`, `{${context[splitKey[0]]}}`);
   } else if (key.startsWith('#')) {
-    // if the key is '#text' for example, we don't want ot add the
+    // if the key is '#text' for example, we don't want to add the
     // key to the pre-hashed string
     return `=${value}`;
   }
@@ -547,7 +561,7 @@ export const eventToPreHashedString = (event, context, throwError = true) => {
   } else if (context instanceof Object) {
     contextObject = context;
   }
-  const extendedContext = { ...contextObject, ...getEventContexts(event) };
+  const extendedContext = { ...epcisDefaultContext, ...contextObject, ...getEventContexts(event) };
   const res = getOrderedPreHashString(
     event,
     extendedContext,
