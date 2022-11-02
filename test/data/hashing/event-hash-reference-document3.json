@@ -38,7 +38,8 @@
         "example:userExt": {
           "@xmlns:example": "https://ns.example.com/epcis",
           "#text": "CD-34"
-        }
+        },
+        "cbvmda:sst": 201
       }
     ]
   }
