@@ -496,6 +496,7 @@ const sendACaptureRequestExample = async () => {
     .setReceiver('urn:epc:id:sgln:5012345.00001.0')
     .setId('test:documentId' + Math.floor(Math.random() * 9))
     .setInstanceIdentifier('1234567890')
+    .addExtension('owl:sameAs', 'ADD')
     .setEPCISHeader(buildEPCISHeaderExample())
     .addEvent(buildAssociationEvent())
     .addEvent(buildObjectEvent())

@@ -1182,6 +1182,7 @@ describe('Unit test: validator.js', () => {
       assert.throws(() => { te.isValid(); });
     });
   });
+
   describe('schema validation: throwError = false', () => {
     it('should accept a valid EPCISDocument containing ObjectEvent', () => {
       const instance = { ...testData.ObjectEvent };
@@ -1191,6 +1192,7 @@ describe('Unit test: validator.js', () => {
       expect(result.success).to.be.equal(true);
       expect(result.errors).to.deep.equal([]);
     });
+
     it('should reject a valid EPCISDocument containing an invalid AssociationEvent', () => {
       const instance = { ...testData.AssociationEvent };
 
@@ -1202,12 +1204,14 @@ describe('Unit test: validator.js', () => {
       expect(result.success).to.be.equal(false);
       expect(result.errors).to.deep.equal(['EPCISDocument/epcisBody/eventList/0/action should be equal to one of the allowed values']);
     });
+
     it('should reject a null EPCISDocument ', () => {
       let result = {};
       assert.doesNotThrow(() => { result = validateEpcisDocument(null, false); });
       expect(result.success).to.be.equal(false);
       expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
+
     it('should reject an undefined EPCISDocument ', () => {
       let result = {};
       assert.doesNotThrow(() => { result = validateEpcisDocument(undefined, false); });
@@ -1215,6 +1219,7 @@ describe('Unit test: validator.js', () => {
       expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
   });
+
   it('should reject a document with extensions that are not defined in the context (e.g. example:*}'
    + 'if the settings checkExtensions is set to true', () => {
     setup({ checkExtensions: true });
@@ -1295,6 +1300,7 @@ describe('Unit test: validator.js', () => {
     expect(res.success).to.be.equal(false);
     expect(res.errors).to.deep.equal(['Event contains unknown extension: example']);
   });
+
   it('should reject a document with an event containing extensions that are not defined in the context (e.g. notInContext:*}'
    + 'if the settings checkExtensions is set to true', () => {
     setup({ checkExtensions: true });
@@ -1376,6 +1382,7 @@ describe('Unit test: validator.js', () => {
     expect(res.success).to.be.equal(false);
     expect(res.errors).to.deep.equal(['Event contains unknown extension: notInContext']);
   });
+
   it('should accept a document with extensions that are not defined in the context (e.g. example:*}' +
     'if the settings checkExtensions is set to false', () => {
     setup({ checkExtensions: false });
@@ -1455,6 +1462,76 @@ describe('Unit test: validator.js', () => {
     expect(res.success).to.be.equal(true);
     expect(res.errors).to.deep.equal([]);
   });
+
+  it('should accept a document with extensions that are defined in the default EPCIS context', () => {
+    setup({ checkExtensions: true });
+    const epcisDocument = {
+      '@context': [
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
+      ],
+      type: 'EPCISDocument',
+      schemaVersion: '2.0',
+      creationDate: '2005-07-11T11:30:47.0Z',
+      epcisBody: {
+        eventList: [
+          {
+            eventID: 'test:event:id',
+            type: 'ObjectEvent',
+            action: 'OBSERVE',
+            bizStep: cbv.bizSteps.shipping,
+            disposition: cbv.dispositions.in_transit,
+            epcList: [
+              'urn:epc:id:sgtin:0614141.107346.2017',
+              'urn:epc:id:sgtin:0614141.107346.2018',
+            ],
+            eventTime: '2005-04-03T20:33:31.116-06:00',
+            eventTimeZoneOffset: '-06:00',
+            readPoint: {
+              id: 'urn:epc:id:sgln:0614141.07346.1234',
+            },
+            bizLocation: {
+              id: 'urn:epc:id:sgln:9529999.99999.0',
+            },
+            bizTransactionList: [
+              {
+                type: cbv.businessTransactionTypes.po,
+                bizTransaction: 'http://transaction.acme.com/po/12345678',
+              },
+            ],
+            sensorElementList: [
+              {
+                sensorMetadata: { time: '2019-04-02T14:55:00.000+01:00' },
+                sensorReport: [
+                  {
+                    type: cbv.sensorMeasurementTypes.temperature,
+                    value: 26.0,
+                    uom: 'CEL',
+                    deviceID: 'urn:epc:id:giai:4000001.111',
+                    deviceMetadata: 'https://id.gs1.org/giai/4000001111',
+                    rawData: 'https://example.org/giai/401234599999',
+                  },
+                  {
+                    type: cbv.sensorMeasurementTypes.relative_humidity,
+                    value: 12.1,
+                    uom: 'A93',
+                    deviceID: 'urn:epc:id:giai:4000001.222',
+                    deviceMetadata: 'https://id.gs1.org/giai/4000001222',
+                    rawData: 'https://example.org/giai/401234599999',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      'owl:sameAs': 'above',
+    };
+    let res = {};
+    assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
+    expect(res.success).to.be.equal(true);
+    expect(res.errors).to.deep.equal([]);
+  });
+
   describe('getAuthorizedExtensions()', () => {
     it('should return the list of authorized extensions', () => {
       const doc = new EPCISDocument();
@@ -1472,9 +1549,13 @@ describe('Unit test: validator.js', () => {
         },
       ]);
       const authorizedExtensions = getAuthorizedExtensions(doc);
-      expect(authorizedExtensions).to.deep.equal(['ext3', 'ext2', 'ext1', 'cbvmda']);
+      expect(authorizedExtensions).to.include('cbvmda');
+      expect(authorizedExtensions).to.include('ext1');
+      expect(authorizedExtensions).to.include('ext2');
+      expect(authorizedExtensions).to.include('ext3');
     });
   });
+
   describe('checkIfExtensionsAreDefinedInTheContext()', () => {
     it('should return true if all extensions are defined in the context', () => {
       const doc = new EPCISDocument();
@@ -1492,13 +1573,31 @@ describe('Unit test: validator.js', () => {
         },
       ]);
       const authorizedExtensions = getAuthorizedExtensions(doc);
-      expect(checkIfExtensionsAreDefinedInTheContext(['ext1', 'cbvmda', 'ext3', 'ext3'], authorizedExtensions)).to.deep.equal(
+      expect(checkIfExtensionsAreDefinedInTheContext(['ext1', 'cbvmda', 'ext2', 'ext3'], authorizedExtensions)).to.deep.equal(
         {
           success: true,
           errors: [],
         },
       );
     });
+
+    it('should return true if extensions are defined in the default epcis context', () => {
+      const doc = new EPCISDocument();
+      doc.setContext([
+        'https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',
+        {
+          ext: 'http://example.com/ext/',
+        },
+      ]);
+      const authorizedExtensions = getAuthorizedExtensions(doc);
+      expect(checkIfExtensionsAreDefinedInTheContext(['ext', 'cbvmda', 'gs1', 'rdfs', 'owl', 'xsd', 'dcterms'], authorizedExtensions)).to.deep.equal(
+        {
+          success: true,
+          errors: [],
+        },
+      );
+    });
+
     it('should return false if some extensions are not defined in the context', () => {
       const doc = new EPCISDocument();
       doc.setContext([

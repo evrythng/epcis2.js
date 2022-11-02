@@ -17,6 +17,17 @@ import TransactionEvent from './TransactionEvent.schema.json';
 import AssociationEvent from './AssociationEvent.schema.json';
 import ExtendedEvent from './ExtendedEvent.schema.json';
 
+const defaultContext = [
+  'epcis',
+  'cbv',
+  'cbvmda',
+  'gs1',
+  'rdfs',
+  'owl',
+  'xsd',
+  'dcterms',
+];
+
 /**
  * @typedef {object} ValidatorResult
  * @property {boolean} success - true if the validator found no errors.
@@ -50,9 +61,9 @@ export const getAuthorizedExtensions = (epcisDocument) => {
     } else if (epcisDocumentContext instanceof Object) {
       contextObject = epcisDocumentContext;
     }
-    return Object.keys(contextObject);
+    return [...defaultContext, ...Object.keys(contextObject)];
   }
-  return [];
+  return [...defaultContext];
 };
 
 /**
