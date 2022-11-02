@@ -187,13 +187,17 @@ const buildObjectEvent = () => {
 }
 
 const buildAssociationEvent = () => {
+  const context = {
+    example: 'http://ns.example.com/epcis/',
+    ext1: 'http://example.com/ext1/',
+    ext2: 'http://example.com/ext2/',
+    ext3: 'http://example.com/ext3/'
+  };
+
   return new AssociationEvent(
     {
     "type": "AssociationEvent",
-    "@context": {
-      example: 'http://ns.example.com/epcis/',
-      ext1: 'http://example.com/ext1/'
-    },
+    "@context": context,
     "eventTime": "2019-11-01T13:00:00.000Z",
     "recordTime": "2005-04-05T02:33:31.116Z",
     "certificationInfo": "https://accreditation-council.example.org/certificate/ABC12345",
@@ -379,9 +383,9 @@ const buildAssociationEvent = () => {
     },
     "ext1:default": "stringAsDefaultValue",
     "ext1:int": "10",
-    "ext1:string": "string"
-  }
-);
+    "ext1:string": "string",
+    "cbvmda:site": 402
+  }).generateHashID(context);
 }
 
 const buildExtendedEvent = () => {
@@ -511,7 +515,7 @@ const sendACaptureRequestExample = async () => {
     console.log('\nEPCISDocument is valid ? ' + epcisDocument.isValid())
 
     // capture
-    console.log('Capture:')
+    console.log('Capture:');
     let res = await capture(epcisDocument);
     const cr = new CaptureResponse(res);
     await cr.pollForTheCaptureToFinish();
