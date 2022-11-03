@@ -178,10 +178,10 @@ describe('Hashing algorithm utils', () => {
 
   it('Should return a valid Hash string', () => {
     const res = preHashedStringToHashedString(
-      'eventType=ObjectEventeventTime=2020-03-04T10:00:30.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/00614141111114/21/987action=OBSERVEbizStep=https://ns.gs1.org/voc/Bizstep-departingdisposition=https://ns.gs1.org/voc/Disp-in_transitreadPointid=https://id.gs1.org/414/4012345000115bizTransactionListbizTransaction=https://id.gs1.org/253/4012345111118123type=https://ns.gs1.org/voc/BTT-posourceListsource=https://id.gs1.org/417/4012345000009type=https://ns.gs1.org/voc/SDT-owning_partydestinationListdestination=https://id.gs1.org/417/0614141000005type=https://ns.gs1.org/voc/SDT-owning_partyreadPoint{https://ns.example.com/epcis}myField1=AB-12{https://ns.example.com/epcis}userExt=CD-34',
+      'eventType=ObjectEventeventTime=2020-03-04T10:00:30.000ZeventTimeZoneOffset=+01:00epcListepc=https://id.gs1.org/01/00614141111114/21/987action=OBSERVEbizStep=https://ref.gs1.org/cbv/Bizstep-departingdisposition=https://ref.gs1.org/cbv/Disp-in_transitreadPointid=https://id.gs1.org/414/4012345000115bizTransactionListbizTransaction=https://id.gs1.org/253/4012345111118123type=https://ref.gs1.org/cbv/BTT-posourceListsource=https://id.gs1.org/417/4012345000009type=https://ref.gs1.org/cbv/SDT-owning_partydestinationListdestination=https://id.gs1.org/417/0614141000005type=https://ref.gs1.org/cbv/SDT-owning_partyreadPoint{https://ns.example.com/epcis}myField1=AB-12{https://ns.example.com/epcis}userExt=CD-34',
     );
     expect(res).to.be.equal(
-      'ni:///sha-256;b19f1beb88382b7a670c276a699a61c9805174586eaeb1845c4a1dbce8b75aa3?ver=CBV2.0',
+      'ni:///sha-256;d2cc2fecbc58b070b27790b5d357c967d3948525b0a7b3e25d338e8e7ff2c796?ver=CBV2.0',
     );
   });
 });

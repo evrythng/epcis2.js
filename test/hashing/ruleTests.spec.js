@@ -59,7 +59,7 @@ describe('rule tests', () => {
       },
       {},
     );
-    expect(str).to.be.equal('bizStep=https://ns.gs1.org/cbv/BizStep-repairing');
+    expect(str).to.be.equal('bizStep=https://ref.gs1.org/cbv/BizStep-repairing');
     str = eventToPreHashedString(
       {
         bizStep: 'not_a_valid_cbv',
