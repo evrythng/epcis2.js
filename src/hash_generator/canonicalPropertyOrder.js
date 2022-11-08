@@ -13,8 +13,8 @@ export const canonicalPropertyOrder = [
   'type',
   'eventTime',
   'eventTimeZoneOffset',
-  'parentID',
   'epcList',
+  'parentID',
   'inputEPCList',
   'childEPCs',
   'quantityList',
@@ -34,17 +34,6 @@ export const canonicalPropertyOrder = [
   'destinationList',
   'sensorElementList',
   'ilmd',
-];
-
-/**
- * This variable sets the order of Error Declaration fields that a pre-hashed string has to follow
- * in order to comply with the used algorithm
- * @type {string[]}
- */
-export const errorDeclarationCanonicalPropertyOrder = [
-  'declarationTime',
-  'reason',
-  'correctiveEventIDs',
 ];
 
 /**
@@ -73,21 +62,21 @@ export const bizLocationCanonicalPropertyOrder = ['id'];
  * order to comply with the used algorithm
  * @type {string[]}
  */
-export const bizTransactionCanonicalPropertyOrder = ['bizTransaction', 'type'];
+export const bizTransactionCanonicalPropertyOrder = ['type', 'bizTransaction'];
 
 /**
  * This variable sets the order of Source fields that a pre-hashed string has to follow in order to
  * comply with the used algorithm
  * @type {string[]}
  */
-export const sourceCanonicalPropertyOrder = ['source', 'type'];
+export const sourceCanonicalPropertyOrder = ['type', 'source'];
 
 /**
  * This variable sets the order of Destination fields that a pre-hashed string has to follow in
  * order to comply with the used algorithm
  * @type {string[]}
  */
-export const destinationCanonicalPropertyOrder = ['destination', 'type'];
+export const destinationCanonicalPropertyOrder = ['type', 'destination'];
 
 /**
  * This variable sets the order of Sensor Element fields that a pre-hashed string has to follow in
@@ -119,7 +108,6 @@ export const sensorMetadataCanonicalPropertyOrder = [
  */
 export const sensorReportCanonicalPropertyOrder = [
   'type',
-  'exception',
   'deviceID',
   'deviceMetadata',
   'rawData',
