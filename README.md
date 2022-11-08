@@ -482,7 +482,7 @@ This feature is still experimental, please submit an [issue](https://github.com/
 ### Generating a hashed ID for an event
 
 You have the possibility to generate a hashed ID for each event you create. The generation algorithm is a pure
-implementation of the one defined [here](https://github.com/RalphTro/epcis-event-hash-generator).
+implementation of the one defined [here](https://ref.gs1.org/standards/cbv/) (section 8.9.2).
 
 Generating a hashed ID allows developers to uniquely identify an EPCIS event or validate the integrity thereof.
 
