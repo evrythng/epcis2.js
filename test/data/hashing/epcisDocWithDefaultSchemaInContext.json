@@ -8,7 +8,6 @@
   "epcisBody": {
     "eventList": [
       {
-        "id": "_:event1",
         "type": "ObjectEvent",
         "action": "OBSERVE",
         "bizStep": "shipping",
@@ -25,7 +24,6 @@
         ]
       },
       {
-        "id": "_:event2",
         "type": "ObjectEvent",
         "action": "OBSERVE",
         "bizStep": "receiving",

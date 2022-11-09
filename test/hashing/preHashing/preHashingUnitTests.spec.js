@@ -245,7 +245,7 @@ describe('unit tests for pre-hashing', () => {
       );
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'bizTransactionListbizTransaction=urn:epcglobal:cbv:bt:5200001000008:4711type=https://ref.gs1.org/cbv/BTT-desadvbizTransaction=urn:epcglobal:cbv:bt:5200001000008:RE1099type=https://ref.gs1.org/cbv/BTT-inv',
+        'bizTransactionListtype=https://ref.gs1.org/cbv/BTT-desadvbizTransaction=urn:epcglobal:cbv:bt:5200001000008:4711type=https://ref.gs1.org/cbv/BTT-invbizTransaction=urn:epcglobal:cbv:bt:5200001000008:RE1099',
       );
     });
 
@@ -283,7 +283,7 @@ describe('unit tests for pre-hashing', () => {
 
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'sourceListsource=https://id.gs1.org/417/4000001000128type=https://ref.gs1.org/cbv/SDT-owning_partysource=https://id.gs1.org/417/4000001000128type=https://ref.gs1.org/cbv/SDT-possessing_party',
+        'sourceListtype=https://ref.gs1.org/cbv/SDT-owning_partysource=https://id.gs1.org/417/4000001000128type=https://ref.gs1.org/cbv/SDT-possessing_partysource=https://id.gs1.org/417/4000001000128',
       );
     });
 
@@ -328,7 +328,7 @@ describe('unit tests for pre-hashing', () => {
       );
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'destinationListdestination=https://id.gs1.org/414/4012345000122type=https://ref.gs1.org/cbv/SDT-locationdestination=https://id.gs1.org/417/4012345000009type=https://ref.gs1.org/cbv/SDT-owning_partydestination=https://id.gs1.org/417/4012345000009type=https://ref.gs1.org/cbv/SDT-possessing_party',
+        'destinationListtype=https://ref.gs1.org/cbv/SDT-locationdestination=https://id.gs1.org/414/4012345000122type=https://ref.gs1.org/cbv/SDT-owning_partydestination=https://id.gs1.org/417/4012345000009type=https://ref.gs1.org/cbv/SDT-possessing_partydestination=https://id.gs1.org/417/4012345000009',
       );
     });
 
@@ -512,6 +512,7 @@ describe('unit tests for pre-hashing', () => {
               exception: 'ERROR_CONDITION',
               uom: 'CEL',
               component: cbv.components.easting,
+              'ext1:key': 'value',
             },
             {
               type: cbv.sensorMeasurementTypes.absolute_humidity,
@@ -596,17 +597,17 @@ describe('unit tests for pre-hashing', () => {
         {
           sensorElementList: list,
         },
-        {},
+        { ext1: 'https://example.com/ext1' },
       );
       const str2 = eventToPreHashedString(
         {
           sensorElementList: [list[2], list[1], list[0]],
         },
-        {},
+        { ext1: 'https://example.com/ext1' },
       );
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=800uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=160uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperatureexception=https://gs1.org/voc/SensorAlertType-ERROR_CONDITIONvalue=26component=https://ref.gs1.org/cbv/Comp-eastinguom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=801uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=161uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/MeasurementType-AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/MeasurementType-Illuminancevalue=802uom=LUXsensorReporttype=https://gs1.org/voc/MeasurementType-Speedvalue=162uom=KMHsensorReporttype=https://gs1.org/voc/MeasurementType-Temperaturevalue=26.2uom=CEL',
+        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=Illuminancevalue=800uom=LUXsensorReporttype=Speedvalue=160uom=KMHsensorReporttype=Temperaturevalue=26component=https://ref.gs1.org/cbv/Comp-eastinguom=CELsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=Illuminancevalue=801uom=LUXsensorReporttype=Speedvalue=161uom=KMHsensorReporttype=Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=Illuminancevalue=802uom=LUXsensorReporttype=Speedvalue=162uom=KMHsensorReporttype=Temperaturevalue=26.2uom=CELsensorElementsensorReport{https://example.com/ext1}key=value',
       );
     });
   });
@@ -977,7 +978,7 @@ describe('unit tests for pre-hashing', () => {
       {},
     );
     expect(str3).to.be.equal(
-      'bizTransactionListbizTransaction=urn:epcglobal:cbv:bt:5200001000008:4711type=https://ref.gs1.org/cbv/BTT-desadvbizTransaction=urn:epcglobal:cbv:bt:5200001000008:RE1099type=https://ref.gs1.org/cbv/BTT-inv',
+      'bizTransactionListtype=https://ref.gs1.org/cbv/BTT-desadvbizTransaction=urn:epcglobal:cbv:bt:5200001000008:4711type=https://ref.gs1.org/cbv/BTT-invbizTransaction=urn:epcglobal:cbv:bt:5200001000008:RE1099',
     );
     const str4 = eventToPreHashedString(
       {
@@ -999,7 +1000,7 @@ describe('unit tests for pre-hashing', () => {
       {},
     );
     expect(str4).to.be.equal(
-      'destinationListdestination=https://id.gs1.org/414/4012345000122type=https://ref.gs1.org/cbv/SDT-locationdestination=https://id.gs1.org/417/4012345000009type=https://ref.gs1.org/cbv/SDT-owning_partydestination=https://id.gs1.org/417/4012345000009type=https://ref.gs1.org/cbv/SDT-possessing_party',
+      'destinationListtype=https://ref.gs1.org/cbv/SDT-locationdestination=https://id.gs1.org/414/4012345000122type=https://ref.gs1.org/cbv/SDT-owning_partydestination=https://id.gs1.org/417/4012345000009type=https://ref.gs1.org/cbv/SDT-possessing_partydestination=https://id.gs1.org/417/4012345000009',
     );
   });
 });
