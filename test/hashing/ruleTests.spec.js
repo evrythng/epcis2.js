@@ -902,17 +902,17 @@ describe('rule tests', () => {
   it('should follow rule n°18', () => {
     const str = eventToPreHashedString(
       {
-        "ilmd":{
-          "ext1:value": 3,
-          "ext1:boolean":"true",
+        ilmd: {
+          'ext1:value': 3,
+          'ext1:boolean': 'true',
           'ext2:object': {
-            'ext2:sub': 'ok'
+            'ext2:sub': 'ok',
           },
-        }
+        },
       },
       {
-        'ext1': 'ok',
-        'ext2': 'aa'
+        ext1: 'ok',
+        ext2: 'aa',
       },
     );
     expect(str).to.be.equal('ilmd{aa}object{aa}sub=ok{ok}boolean=true{ok}value=3');
@@ -921,16 +921,16 @@ describe('rule tests', () => {
   it('should follow rule n°18', () => {
     const str = eventToPreHashedString(
       {
-        "ext1:value": 3,
-        "ext1:boolean":"true",
-        type: "ObjectEvent",
+        'ext1:value': 3,
+        'ext1:boolean': 'true',
+        type: 'ObjectEvent',
         'ext2:object': {
-          'ext2:sub': 'ok'
+          'ext2:sub': 'ok',
         },
       },
       {
-        'ext1': 'ok',
-        'ext2': 'aa'
+        ext1: 'ok',
+        ext2: 'aa',
       },
     );
     expect(str).to.be.equal('eventType=ObjectEvent{aa}object{aa}sub=ok{ok}boolean=true{ok}value=3');
@@ -939,24 +939,23 @@ describe('rule tests', () => {
   it('should follow rule n°19', () => {
     const str = eventToPreHashedString(
       {
-        "destination": "test",
-        "readPoint": {
-          "id": "abc",
-          "ext1:rp": "val"
+        destination: 'test',
+        readPoint: {
+          id: 'abc',
+          'ext1:rp': 'val',
         },
-        "ext1:value": 3,
-        "ext1:boolean":"true",
-        type: "ObjectEvent",
+        'ext1:value': 3,
+        'ext1:boolean': 'true',
+        type: 'ObjectEvent',
         'ext2:object': {
-          'ext2:sub': 'ok'
+          'ext2:sub': 'ok',
         },
       },
       {
-        'ext1': 'ok',
-        'ext2': 'aa'
+        ext1: 'ok',
+        ext2: 'aa',
       },
     );
     expect(str).to.be.equal('eventType=ObjectEventreadPointid=abcdestination=testreadPoint{ok}rp=val{aa}object{aa}sub=ok{ok}boolean=true{ok}value=3');
   });
-
 });
