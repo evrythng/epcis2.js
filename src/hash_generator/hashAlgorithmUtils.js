@@ -14,7 +14,7 @@ import { normalizeDigitalLinks } from './dlNormalizer';
  * The list of fields that will be ignored in the pre-hashed string
  * @type {string[]}
  */
-export const toBeIgnored = ['recordTime', 'eventID', 'errorDeclaration'];
+export const toBeIgnored = ['recordTime', 'eventID', 'errorDeclaration', '@context'];
 
 /**
  * Check if the parameter is a string

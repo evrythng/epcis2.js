@@ -766,6 +766,31 @@ describe('unit tests for pre-hashing', () => {
     );
   });
 
+  it('should not take into account context at the root of an event', () => {
+    const str = eventToPreHashedString(
+      {
+        '@context': ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',{
+          example: 'https://ns.example.com/epcis/',
+          ext1: 'https://example.com/ext1/',
+          evt: 'https://evrythng.com/context'
+        }],
+        readPoint: {
+          id: 'https://id.gs1.org/414/4012345000115', // urn:epc:id:sgln:4012345.00011.0
+          'example:myField1': 'AB-12',
+        },
+      },
+      ['https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld',{
+        example: 'https://ns.example.com/epcis/',
+        ext1: 'https://example.com/ext1/',
+        evt: 'https://evrythng.com/context'
+      }],
+    );
+    expect(str).to.be.equal(
+      'readPointid=https://id.gs1.org/414/4012345000115readPoint{htt' +
+      'ps://ns.example.com/epcis/}myField1=AB-12',
+    );
+  });
+
   it('should pre-hash the event Type field', () => {
     const str = eventToPreHashedString(
       {
