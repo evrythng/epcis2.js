@@ -736,17 +736,17 @@ describe('rule tests', () => {
         {},
       );
       expect(str).to.be.equal('sensorElementListsensorElement'
-        + 'sensorReporttype=AbsoluteHumidity'
+        + 'sensorReporttype=https://gs1.org/voc/AbsoluteHumidity'
         + 'value=12.1'
         + 'component=https://ref.gs1.org/cbv/Comp-x'
         + 'uom=A93'
-        + 'sensorReporttype=Illuminance'
+        + 'sensorReporttype=https://gs1.org/voc/Illuminance'
         + 'value=800'
         + 'uom=LUX'
-        + 'sensorReporttype=Speed'
+        + 'sensorReporttype=https://gs1.org/voc/Speed'
         + 'value=160'
         + 'uom=KMH'
-        + 'sensorReporttype=Temperature'
+        + 'sensorReporttype=https://gs1.org/voc/Temperature'
         + 'value=26'
         + 'uom=CEL');
     });

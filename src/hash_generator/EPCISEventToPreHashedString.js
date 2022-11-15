@@ -339,13 +339,11 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
     case 'sensorReport':
       string = '';
       for (let i = 0; i < list.length; i += 1) {
-        // this section is commented for now, since measurement type is not part of the CBV, we
-        // don't need to expand it as extended GS1 web uri
         // if, for example, the field is equal to 'Temperature' instead of
-        // 'https://gs1.org/voc/MeasurementType-Temperature' we need to complete it
-        // if (Object.values(cbv.sensorMeasurementTypes).includes(list[i].type)) {
-        //   list[i].type = `https://gs1.org/voc/MeasurementType-${list[i].type}`;
-        // }
+        // 'https://gs1.org/voc/Temperature' we need to complete it
+         if (Object.values(cbv.sensorMeasurementTypes).includes(list[i].type)) {
+           list[i].type = `https://gs1.org/voc/${list[i].type}`;
+         }
 
         // this section is commented for now, since 'exception' is not included in the hash
         // algorithm. Instead, we remove it from the field so that it is not treated as a custom
