@@ -92,7 +92,6 @@ const fieldNames = {
     uom: 'uom',
     exception: 'exception',
     coordinateReferenceSystem: 'coordinateReferenceSystem',
-    bizRules: 'bizRules',
   },
   event: {
     '@context': '@context',

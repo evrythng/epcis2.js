@@ -782,7 +782,6 @@ describe('unit tests for model Objects', () => {
       assert.throws(() => o.setStartTime(new Ilmd()));
       assert.throws(() => o.setEndTime(new Ilmd()));
       assert.throws(() => o.setDataProcessingMethod(new Ilmd()));
-      assert.throws(() => o.setBizRules(new Ilmd()));
     });
     it('setters from SensorReportElement.js', () => {
       const o = new SensorReportElement();

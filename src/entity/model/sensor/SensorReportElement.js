@@ -397,21 +397,4 @@ export default class SensorReportElement extends Entity {
   getCoordinateReferenceSystem() {
     return this.coordinateReferenceSystem;
   }
-
-  /**
-   * Set the bizRules property
-   * @param {string} bizRules
-   * @return {SensorReportElement} - the SensorReportElement instance
-   */
-  setBizRules(bizRules) {
-    return this.generateSetterFunction('bizRules', bizRules, ['string']);
-  }
-
-  /**
-   * Getter for the bizRules property
-   * @return {string} - the bizRules
-   */
-  getBizRules() {
-    return this.bizRules;
-  }
 }

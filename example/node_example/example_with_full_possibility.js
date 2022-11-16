@@ -65,8 +65,7 @@ const buildSensorReportElementExample = () => {
   .setUom('CEL')
   .setSDev(0.1)
   .setDeviceMetadata("https://id.gs1.org/giai/4000001111")
-  .addExtension('example:someFurtherMetadata', 'someText')
-  .setBizRules("https://example.com/gdti/4012345000054987");
+  .addExtension('example:someFurtherMetadata', 'someText');
 }
 
 const buildSensorMetadataExample = () => {

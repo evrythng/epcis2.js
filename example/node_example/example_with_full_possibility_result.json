@@ -458,8 +458,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      },
                      {
                         "type":"Temperature",
@@ -483,8 +482,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      },
                      {
                         "type":"Temperature",
@@ -508,8 +506,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      }
                   ],
                   "example:myField":"my_custom_value"
@@ -549,8 +546,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      },
                      {
                         "type":"Temperature",
@@ -574,8 +570,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      },
                      {
                         "type":"Temperature",
@@ -599,8 +594,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      }
                   ],
                   "example:myField":"my_custom_value"
@@ -640,8 +634,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      },
                      {
                         "type":"Temperature",
@@ -665,8 +658,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      },
                      {
                         "type":"Temperature",
@@ -690,8 +682,7 @@
                         "uom":"CEL",
                         "sDev":0.1,
                         "deviceMetadata":"https://id.gs1.org/giai/4000001111",
-                        "example:someFurtherMetadata":"someText",
-                        "bizRules":"https://example.com/gdti/4012345000054987"
+                        "example:someFurtherMetadata":"someText"
                      }
                   ],
                   "example:myField":"my_custom_value"
