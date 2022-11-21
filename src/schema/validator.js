@@ -104,7 +104,6 @@ const RESULT_NOT_EXPLICIT = { explicit: false, message: '' };
  *   - message: gives more information about the error
  */
 export const errorIsExplicit = (error) => {
-
   if (error.propertyName
     && error.message === 'should be equal to one of the allowed values'
     && error.keyword === 'enum') {
