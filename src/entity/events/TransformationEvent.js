@@ -18,7 +18,7 @@ const invalidFields = [
   'parentID',
   'quantityList',
   'epcList',
-  'persistentDisposition'
+  'persistentDisposition',
 ];
 
 export default class TransformationEvent extends Event {
