@@ -433,7 +433,7 @@ describe('Unit test: validator.js', () => {
 
       assert.throws(() => {
         validateEpcisDocument(epcisDocument);
-      }, 'EPCISDocument/epcisBody/eventList/0 factoryId should be equal to one of the allowed values');
+      }, 'EPCISDocument/epcisBody/eventList/0 factoryId is not part of the allowed keys');
     });
 
     it('should reject incorrect event with with eventId instead of eventID', () => {
@@ -467,7 +467,7 @@ describe('Unit test: validator.js', () => {
 
       assert.throws(() => {
         validateEpcisDocument(epcisDocument);
-      }, 'EPCISDocument/epcisBody/eventList/0 eventId should be equal to one of the allowed values');
+      }, 'EPCISDocument/epcisBody/eventList/0 eventId is not part of the allowed keys');
     });
 
     it('should accept correct sensorElementList with no extensions', () => {
@@ -1710,7 +1710,7 @@ describe('Unit test: validator.js', () => {
       message: 'should be equal to one of the allowed values',
     })).to.deep.equal({
       explicit: true,
-      message: '/epcisBody/eventList/0 persistentDisposition should be equal to one of the allowed values',
+      message: '/epcisBody/eventList/0 persistentDisposition is not part of the allowed keys',
     });
     expect(errorIsExplicit({
       keyword: 'enum',

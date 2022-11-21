@@ -104,6 +104,16 @@ const RESULT_NOT_EXPLICIT = { explicit: false, message: '' };
  *   - message: gives more information about the error
  */
 export const errorIsExplicit = (error) => {
+
+  if (error.propertyName
+    && error.message === 'should be equal to one of the allowed values'
+    && error.keyword === 'enum') {
+    return {
+      explicit: true,
+      message: `${error.dataPath} ${error.propertyName} is not part of the allowed keys`,
+    };
+  }
+
   if (error.propertyName) {
     return {
       explicit: true,
