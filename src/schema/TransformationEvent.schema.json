@@ -37,9 +37,6 @@
               "disposition": {
                 "$ref": "#/definitions/disposition"
               },
-              "persistentDisposition": {
-                "$ref": "#/definitions/persistentDisposition"
-              },
               "readPoint": {
                 "$ref": "#/definitions/readPoint"
               },
@@ -92,7 +89,6 @@
                     "transformationID",
                     "bizStep",
                     "disposition",
-                    "persistentDisposition",
                     "readPoint",
                     "bizLocation",
                     "bizTransactionList",
