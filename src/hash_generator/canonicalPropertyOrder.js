@@ -130,7 +130,7 @@ export const sensorReportCanonicalPropertyOrder = [
   'percRank',
   'percValue',
   'uom',
-  'coordinateReferenceSystem'
+  'coordinateReferenceSystem',
 ];
 
 /**

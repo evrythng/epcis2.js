@@ -341,9 +341,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       for (let i = 0; i < list.length; i += 1) {
         // if, for example, the field is equal to 'Temperature' instead of
         // 'https://gs1.org/voc/Temperature' we need to complete it
-         if (Object.values(cbv.sensorMeasurementTypes).includes(list[i].type)) {
-           list[i].type = `https://gs1.org/voc/${list[i].type}`;
-         }
+        if (Object.values(cbv.sensorMeasurementTypes).includes(list[i].type)) {
+          list[i].type = `https://gs1.org/voc/${list[i].type}`;
+        }
 
         // if, for example, the field is equal to 'ALARM_CONDITION' instead of
         // 'https://gs1.org/voc/SensorAlertType-ALARM_CONDITION' we need to complete it

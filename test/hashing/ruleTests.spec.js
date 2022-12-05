@@ -720,7 +720,7 @@ describe('rule tests', () => {
                   value: 12.1,
                   uom: 'A93',
                   coordinateReferenceSystem: 'abc:ok',
-                  component: 'x'
+                  component: 'x',
                 },
                 {
                   type: 'Speed',
