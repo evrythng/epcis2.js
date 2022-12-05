@@ -390,8 +390,9 @@ describe('unit tests for the TransformationEvent class', () => {
     assert.throws(() => o.addChildQuantityList([new QuantityElement()]));
     assert.throws(() => o.getChildQuantityList());
     assert.throws(() => o.clearChildQuantityList());
-    assert.throws(() => o.setPersistentDisposition(new PersistentDisposition()));
-    assert.throws(() => o.getPersistentDisposition());
+
+    assert.doesNotThrow(() => o.setPersistentDisposition(new PersistentDisposition()));
+    assert.doesNotThrow(() => o.getPersistentDisposition());
 
     assert.doesNotThrow(() => o.addSensorElement(new SensorElement()));
     assert.doesNotThrow(() => o.removeSensorElement(new SensorElement()));
