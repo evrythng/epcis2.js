@@ -36,6 +36,7 @@ describe('rule tests', () => {
         parentID: 'urn:epc:id:grai:4012345.55555.987',
         recordTime: '2005-04-05T02:33:31.116Z',
         eventTimeZoneOffset: '-06:00',
+        certificationInfo: ['abc:val', 'def:test'],
         epcList: ['urn:epc:id:sgtin:0614141.107346.2018'],
         inputEPCList: ['urn:epc:id:sgtin:0614141.107346.2018'],
         outputEPCList: ['urn:epc:id:sgtin:0614141.107346.2018'],
@@ -172,7 +173,6 @@ describe('rule tests', () => {
       // we should not include the fields that are not in the canonical order list
       expect(str.includes('errorDeclaration')).to.be.false;
       expect(str.includes('recordTime')).to.be.false;
-      expect(str.includes('certificationInfo')).to.be.false;
 
       // finally, we append the user extensions
       expect(str.endsWith('rootExtension=thisIsAUserExtension')).to.be.true;
@@ -359,6 +359,7 @@ describe('rule tests', () => {
     it('should order sensorReport fields', () => {
       const object = {
         type: 'Temperature',
+        exception: 'ALARM_CONDITION',
         deviceID: 'urn:epc:id:giai:4000001.111',
         rawData: 'https://example.org/giai/401234599999',
         dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
@@ -378,6 +379,7 @@ describe('rule tests', () => {
         percValue: 12.7,
         uom: 'CEL',
         sDev: 0.1,
+        coordinateReferenceSystem: 'https://id.gs1.org/giai/4000001111',
         deviceMetadata: 'https://id.gs1.org/giai/4000001111',
       };
       const order = sensorReportCanonicalPropertyOrder;
@@ -717,7 +719,8 @@ describe('rule tests', () => {
                   exception: 'ALARM_CONDITION',
                   value: 12.1,
                   uom: 'A93',
-                  component: 'x',
+                  coordinateReferenceSystem: 'abc:ok',
+                  component: 'x'
                 },
                 {
                   type: 'Speed',
@@ -737,9 +740,11 @@ describe('rule tests', () => {
       );
       expect(str).to.be.equal('sensorElementListsensorElement'
         + 'sensorReporttype=https://gs1.org/voc/AbsoluteHumidity'
+        + 'exception=https://gs1.org/voc/SensorAlertType-ALARM_CONDITION'
         + 'value=12.1'
         + 'component=https://ref.gs1.org/cbv/Comp-x'
         + 'uom=A93'
+        + 'coordinateReferenceSystem=abc:ok'
         + 'sensorReporttype=https://gs1.org/voc/Illuminance'
         + 'value=800'
         + 'uom=LUX'

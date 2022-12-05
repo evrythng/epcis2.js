@@ -13,6 +13,7 @@ export const canonicalPropertyOrder = [
   'type',
   'eventTime',
   'eventTimeZoneOffset',
+  'certificationInfo',
   'epcList',
   'parentID',
   'inputEPCList',
@@ -108,6 +109,7 @@ export const sensorMetadataCanonicalPropertyOrder = [
  */
 export const sensorReportCanonicalPropertyOrder = [
   'type',
+  'exception',
   'deviceID',
   'deviceMetadata',
   'rawData',
@@ -128,6 +130,7 @@ export const sensorReportCanonicalPropertyOrder = [
   'percRank',
   'percValue',
   'uom',
+  'coordinateReferenceSystem'
 ];
 
 /**
