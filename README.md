@@ -56,7 +56,7 @@ import * as epcis from 'epcis2.js';
 
 Or use a simple script tag to load it from the CDN:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.6.1/dist/epcis2.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epcis2.js@2.7.0/dist/epcis2.browser.js"></script>
 ```
 
 Then use in a browser `script` tag using the `epcis2` global variable:
@@ -482,7 +482,7 @@ This feature is still experimental, please submit an [issue](https://github.com/
 ### Generating a hashed ID for an event
 
 You have the possibility to generate a hashed ID for each event you create. The generation algorithm is a pure
-implementation of the one defined [here](https://github.com/RalphTro/epcis-event-hash-generator).
+implementation of the one defined [here](https://ref.gs1.org/standards/cbv/) (section 8.9.2).
 
 Generating a hashed ID allows developers to uniquely identify an EPCIS event or validate the integrity thereof.
 

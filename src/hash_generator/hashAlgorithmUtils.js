@@ -14,7 +14,7 @@ import { normalizeDigitalLinks } from './dlNormalizer';
  * The list of fields that will be ignored in the pre-hashed string
  * @type {string[]}
  */
-export const toBeIgnored = ['recordTime', 'eventID', 'errorDeclaration'];
+export const toBeIgnored = ['recordTime', 'eventID', 'errorDeclaration', '@context'];
 
 /**
  * Check if the parameter is a string
@@ -68,7 +68,7 @@ export const isADate = (obj) => isNaN(obj) && !isNaN(Date.parse(obj)) && obj.len
 
 /**
  * If the UTC date passed in param contains a timezone, it removes it
- * It useful for the rule n°8 of the algorithm
+ * It is useful for the rule n°8 of the algorithm
  *
  * @param {string} date - a string representing an UTC date
  * @return {string} - the date without the timezone
