@@ -3,6 +3,7 @@
  * Use of this material is subject to license.
  * Copying and unauthorised use of this material strictly prohibited.
  */
+/* eslint-disable no-useless-escape */
 
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
@@ -72,7 +73,15 @@ export const getAuthorizedExtensions = (epcisDocument) => {
  * @param {object} schema - schema to be loaded.
  * @returns {object} Loaded and enhanced schema.
  */
-export const loadSchema = ((schema) => ({ ...schema, definitions }));
+export const loadSchema = ((schema) => {
+  const obj = {
+    ...schema,
+  };
+
+  obj.definitions = { ...obj.definitions, ...definitions };
+
+  return obj;
+});
 
 /** Available schemas */
 const validators = {
@@ -83,6 +92,48 @@ const validators = {
   TransactionEvent: ajv.compile(loadSchema(TransactionEvent)),
   AssociationEvent: ajv.compile(loadSchema(AssociationEvent)),
   ExtendedEvent: ajv.compile(loadSchema(ExtendedEvent)),
+};
+
+const RESULT_NOT_EXPLICIT = { explicit: false, message: '' };
+
+/**
+ * Check if the error is not explicit enough (e.g if dataPath='/epcisBody/eventList/0') or if it is.
+ * @param {object} error - the error given by ajv
+ * @returns {{explicit: boolean, message: string}}
+ *   - explicit: true if it is explicit - false otherwise.
+ *   - message: gives more information about the error
+ */
+export const errorIsExplicit = (error) => {
+  if (error.propertyName
+    && error.message === 'should be equal to one of the allowed values'
+    && error.keyword === 'enum') {
+    return {
+      explicit: true,
+      message: `${error.dataPath} ${error.propertyName} is not part of the allowed keys`,
+    };
+  }
+
+  if (error.propertyName) {
+    return {
+      explicit: true,
+      message: `${error.dataPath} ${error.propertyName} ${error.message}`,
+    };
+  }
+
+  if (error.keyword === 'propertyNames' || error.keyword === 'additionalProperties') {
+    return {
+      explicit: true,
+      message: `${error.dataPath} ${error.message}`,
+    };
+  }
+
+  if (error.keyword === 'required' || error.keyword === 'if') return RESULT_NOT_EXPLICIT;
+
+  if (error.dataPath && error.dataPath.match('\/epcisBody\/eventList\/[0-9]*$') && error.keyword === 'format') return RESULT_NOT_EXPLICIT;
+
+  if (error.keyword === 'enum' && error.message === 'should be equal to one of the allowed values') return RESULT_NOT_EXPLICIT;
+
+  return RESULT_NOT_EXPLICIT;
 };
 
 /**
@@ -101,8 +152,28 @@ export const validateAgainstSchema = (data, schemaName) => {
   const validator = validators[schemaName];
   if (validator(data)) return successResult;
 
-  const [{ dataPath, message }] = validator.errors;
-  return { success: false, errors: [`${schemaName}${dataPath} ${message}`] };
+  try {
+    let error; let
+      message;
+    let i = 0;
+    do {
+      if (validator.errors.length > i) {
+        error = validator.errors[i];
+      }
+      // eslint-disable-next-line no-plusplus
+    } while ((!errorIsExplicit(error).explicit) && validator.errors.length > i++);
+    const res = errorIsExplicit(error);
+    if (!res.explicit) {
+      [error] = validator.errors;
+      message = `${error.dataPath} ${error.message}`;
+    } else {
+      message = res.message;
+    }
+    return { success: false, errors: [`${schemaName}${message}`] };
+  } catch (e) {
+    const [{ dataPath, message }] = validator.errors;
+    return { success: false, errors: [`${schemaName}${dataPath} ${message}`] };
+  }
 };
 
 /**
@@ -208,7 +279,7 @@ export const checkIfExtensionsAreDefinedInTheContext = (extensions, authorizedEx
  * @param {boolean} throwError - if set to true, it will throw an error if
  * the data is not valid. Otherwise, it won't throw an error and it will still
  * return an object containing a boolean and the errors messages.
- * (e.g { success: false, errors: ["the error message"] })
+ * (e.g { success: false, errors: ['the error message'] })
  * @returns {ValidatorResult} Validation results.
  */
 export const validateEpcisDocument = (epcisDocument, throwError = true) => {

@@ -3,6 +3,7 @@
  * Use of this material is subject to license.
  * Copying and unauthorised use of this material strictly prohibited.
  */
+/* eslint-disable no-unused-expressions */
 
 import { assert, expect } from 'chai';
 import {
@@ -11,6 +12,7 @@ import {
   QuantityElement,
   SensorElement,
   TransformationEvent,
+  ExtendedEvent,
 } from '../src';
 import setup from '../src/setup';
 import EPCISDocumentObjectEvent from './data/EPCISDocument-ObjectEvent.json';
@@ -28,6 +30,7 @@ import {
   validateEpcisDocument,
   getAuthorizedExtensions,
   checkIfExtensionsAreDefinedInTheContext,
+  errorIsExplicit,
 } from '../src/schema/validator';
 
 /** Test documents with different event types inside */
@@ -97,7 +100,7 @@ describe('validation of an EPCIS document', () => {
 
   describe('schema validation: invalid', () => {
     it('should reject an invalid object', () => {
-      assert.throws(() => validateEpcisDocument(testData.invalid));
+      assert.throws(() => validateEpcisDocument(testData.invalid), 'EPCISDocument should have required property \'@context\'');
     });
 
     it('should reject an invalid EPCISDocument', () => {
@@ -106,7 +109,7 @@ describe('validation of an EPCIS document', () => {
       // Omit the events
       const { epcisBody, ...instance } = copy;
 
-      assert.throws(() => validateEpcisDocument(instance));
+      assert.throws(() => validateEpcisDocument(instance), 'EPCISDocument should have required property \'epcisBody\'');
     });
 
     it('should reject a valid EPCISDocument containing an invalid ObjectEvent', () => {
@@ -115,7 +118,7 @@ describe('validation of an EPCIS document', () => {
       // Introduce some error
       instance.epcisBody.eventList[0].action = 'OBSERVED';
 
-      assert.throws(() => validateEpcisDocument(instance));
+      assert.throws(() => validateEpcisDocument(instance), 'EPCISDocument/epcisBody/eventList/0/action should be equal to one of the allowed values');
     });
 
     it('should reject a valid EPCISDocument containing an invalid AggregationEvent', () => {
@@ -124,7 +127,7 @@ describe('validation of an EPCIS document', () => {
       // Introduce some error
       instance.epcisBody.eventList[0].parentID = 'somebadid';
 
-      assert.throws(() => validateEpcisDocument(instance));
+      assert.throws(() => validateEpcisDocument(instance), 'EPCISDocument/epcisBody/eventList/0/parentID should match format "uri"');
     });
 
     it('should reject a valid EPCISDocument containing an invalid TransactionEvent', () => {
@@ -133,7 +136,7 @@ describe('validation of an EPCIS document', () => {
       // Introduce some error
       instance.epcisBody.eventList[0].action = 'NOT_VALID_ACTION_TYPE';
 
-      assert.throws(() => validateEpcisDocument(instance));
+      assert.throws(() => validateEpcisDocument(instance), 'EPCISDocument/epcisBody/eventList/0/action should be equal to one of the allowed values');
     });
 
     it('should reject a valid EPCISDocument containing an invalid TransformationEvent', () => {
@@ -142,7 +145,7 @@ describe('validation of an EPCIS document', () => {
       // Introduce some error
       instance.epcisBody.eventList[0].eventTimeZoneOffset = '19:00';
 
-      assert.throws(() => validateEpcisDocument(instance));
+      assert.throws(() => validateEpcisDocument(instance), 'EPCISDocument/epcisBody/eventList/0/eventTimeZoneOffset should match pattern "^([+]|[-])((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"');
     });
 
     it('should reject a valid EPCISDocument containing an invalid AssociationEvent', () => {
@@ -151,7 +154,7 @@ describe('validation of an EPCIS document', () => {
       // Introduce some error
       instance.epcisBody.eventList[0].action = 'ADDED';
 
-      assert.throws(() => validateEpcisDocument(instance));
+      assert.throws(() => validateEpcisDocument(instance), 'EPCISDocument/epcisBody/eventList/0/action should be equal to one of the allowed values');
     });
 
     it('should reject an invalid EPCISQueryDocument', () => {
@@ -163,8 +166,87 @@ describe('validation of an EPCIS document', () => {
         epcisBody: {},
       };
 
-      assert.throws(() => validateEpcisDocument(instance));
+      assert.throws(() => validateEpcisDocument(instance), 'EPCISDocument/epcisBody should have required property \'queryResults\'');
     });
+  });
+});
+
+describe('validation of an EPCIS event', () => {
+  it('should accept a correct event without extensions', () => {
+    const objectEvent = new ObjectEvent({
+      eventID: 'test:event:id',
+      type: 'ObjectEvent',
+      action: 'OBSERVE',
+      bizStep: cbv.bizSteps.shipping,
+      disposition: cbv.dispositions.in_transit,
+      epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
+      eventTime: '2005-04-03T20:33:31.116000-06:00',
+      eventTimeZoneOffset: '-06:00',
+      readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
+      bizTransactionList: [
+        {
+          type: cbv.businessTransactionTypes.po,
+          bizTransaction: 'http://transaction.acme.com/po/12345678',
+        },
+      ],
+    });
+
+    expect(objectEvent.isValid()).to.be.true;
+  });
+
+  it('should accept a correct event with extensions', () => {
+    const objectEvent = new ObjectEvent({
+      eventID: 'test:event:id',
+      type: 'ObjectEvent',
+      'evt:factoryId': 'foobar',
+      action: 'OBSERVE',
+      bizStep: cbv.bizSteps.shipping,
+      disposition: cbv.dispositions.in_transit,
+      epcList: ['urn:epc:id:sgtin:0614141.107346.2017'],
+      eventTime: '2005-04-03T20:33:31.116000-06:00',
+      eventTimeZoneOffset: '-06:00',
+      readPoint: { id: 'urn:epc:id:sgln:0614141.07346.1234' },
+      bizTransactionList: [
+        {
+          type: cbv.businessTransactionTypes.po,
+          bizTransaction: 'http://transaction.acme.com/po/12345678',
+        },
+      ],
+    });
+
+    expect(objectEvent.isValid()).to.be.true;
+  });
+
+  it('should reject a customEvent without an uri as type', () => {
+    const event = new ExtendedEvent().setType('Mycustomeventtype')
+      .generateHashID()
+      .setEventTime('2005-04-05T02:33:31.116Z')
+      .setRecordTime(new Date().toISOString())
+      .addExtension('ext1:key', 'value')
+      .addExtension('evt:number', 509);
+
+    assert.throws(() => {
+      event.isValid();
+    }, 'ExtendedEvent/type should match format "uri"');
+  });
+
+  it('should reject an event where a required field is not specified', () => {
+    const event = new ObjectEvent();
+
+    assert.throws(() => {
+      event.isValid();
+    }, 'ObjectEvent should have required property \'action\'');
+  });
+
+  it('should reject an event with an extension in an unauthorized field', () => {
+    const event = new ObjectEvent(EPCISDocumentObjectEvent.epcisBody.eventList[0]);
+
+    const obj = event.toObject();
+    obj.quantityList[0]['test:extension'] = 'value';
+
+    expect(validateAgainstSchema(obj, 'ObjectEvent').errors).to.deep.equal([
+      'ObjectEvent/quantityList/0 should NOT have additional properties',
+    ]);
   });
 });
 
@@ -244,7 +326,9 @@ describe('Unit test: validator.js', () => {
         },
       };
 
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument);
+      }, 'EPCISDocument/schemaVersion should be string');
     });
 
     it('should reject correct EPCISDocument with invalid event', () => {
@@ -275,7 +359,9 @@ describe('Unit test: validator.js', () => {
         },
       };
 
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument);
+      }, 'EPCISDocument/epcisBody/eventList/0 should have required property \'action\'');
     });
 
     it('should accept correct event with event extensions', () => {
@@ -345,7 +431,9 @@ describe('Unit test: validator.js', () => {
         },
       };
 
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument);
+      }, 'EPCISDocument/epcisBody/eventList/0 factoryId is not part of the allowed keys');
     });
 
     it('should reject incorrect event with with eventId instead of eventID', () => {
@@ -377,7 +465,9 @@ describe('Unit test: validator.js', () => {
         },
       };
 
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument);
+      }, 'EPCISDocument/epcisBody/eventList/0 eventId is not part of the allowed keys');
     });
 
     it('should accept correct sensorElementList with no extensions', () => {
@@ -587,7 +677,9 @@ describe('Unit test: validator.js', () => {
         },
       };
 
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument);
+      }, 'EPCISDocument/epcisBody/eventList/0/sensorElementList/0 furtherEventData should match format "uri"');
     });
 
     it('should accept AggregationEvent with no extensions', () => {
@@ -704,7 +796,9 @@ describe('Unit test: validator.js', () => {
         },
       };
 
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument);
+      }, 'EPCISDocument/epcisBody/eventList/0/errorDeclaration evtErrorCode should match format "uri"');
     });
 
     it('should accept TransformationEvent with various quantity list types', () => {
@@ -897,14 +991,6 @@ describe('Unit test: validator.js', () => {
                   ],
                 },
               ],
-              persistentDisposition: {
-                set: [
-                  'completeness_verified',
-                ],
-                unset: [
-                  'completeness_inferred',
-                ],
-              },
               'ext1:float': '20',
               'ext1:time': '2013-06-08T14:58:56.591Z',
               'ext1:array': [
@@ -987,7 +1073,9 @@ describe('Unit test: validator.js', () => {
         ),
       ]);
       epcisDocument.addEvent(oe);
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument.toObject());
+      }, 'EPCISDocument/epcisBody/eventList/0/bizTransactionList/0 should NOT have additional properties');
     });
 
     it('should reject correct EPCISDocument with an object event containing a quantity list with a non-valid extension', () => {
@@ -1005,10 +1093,12 @@ describe('Unit test: validator.js', () => {
         ),
       ]);
       epcisDocument.addEvent(oe);
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument.toObject());
+      }, 'EPCISDocument/epcisBody/eventList/0/quantityList/0 should NOT have additional properties');
     });
 
-    it('should reject correct EPCISDocument with a transformation event containing an input quantity list with a non-valid extension', () => {
+    it('should reject correct EPCISDocument with a transformation event containing an input quantity list with an extension', () => {
       const epcisDocument = new EPCISDocument();
       const te = new TransformationEvent();
       te.addInputQuantity(
@@ -1031,7 +1121,9 @@ describe('Unit test: validator.js', () => {
         ),
       );
       epcisDocument.addEvent(te);
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument.toObject());
+      }, 'EPCISDocument/epcisBody/eventList/0/inputQuantityList/0 should NOT have additional properties');
     });
 
     it('should reject correct EPCISDocument with a transformation event containing an output quantity list with a non-valid extension', () => {
@@ -1057,7 +1149,9 @@ describe('Unit test: validator.js', () => {
         ),
       );
       epcisDocument.addEvent(te);
-      assert.throws(() => { validateEpcisDocument(epcisDocument); });
+      assert.throws(() => {
+        validateEpcisDocument(epcisDocument.toObject());
+      }, 'EPCISDocument/epcisBody/eventList/0/outputQuantityList/0 should NOT have additional properties');
     });
 
     it('should reject correct EPCISDocument with an aggregation event containing a child quantity list with a non-valid extension', () => {
@@ -1075,7 +1169,9 @@ describe('Unit test: validator.js', () => {
         ),
       );
       epcisDocument.addEvent(te);
-      assert.throws(() => { epcisDocument.isValid(); });
+      assert.throws(() => {
+        epcisDocument.isValid();
+      }, 'EPCISDocument/epcisBody/eventList/0/childQuantityList/0 should NOT have additional properties');
     });
 
     it('should reject correct EPCISDocument with an aggregation event containing a sensorElement with a non-valid extension', () => {
@@ -1108,7 +1204,9 @@ describe('Unit test: validator.js', () => {
         }),
       );
       epcisDocument.addEvent(te);
-      assert.throws(() => { epcisDocument.isValid(); });
+      assert.throws(() => {
+        epcisDocument.isValid();
+      }, 'EPCISDocument/epcisBody/eventList/0/sensorElementList/0 invalid should match format "uri"');
     });
 
     it('should reject correct EPCISDocument with an aggregation event containing a sensor metadata with a non-valid extension', () => {
@@ -1140,7 +1238,9 @@ describe('Unit test: validator.js', () => {
         }),
       );
       epcisDocument.addEvent(te);
-      assert.throws(() => { epcisDocument.isValid(); });
+      assert.throws(() => {
+        epcisDocument.isValid();
+      }, 'EPCISDocument/epcisBody/eventList/0/sensorElementList/0/sensorMetadata invalid should match format "uri"');
     });
 
     it('should reject correct EPCISDocument with an aggregation event containing a sensor report with a non-valid extension', () => {
@@ -1173,13 +1273,17 @@ describe('Unit test: validator.js', () => {
         }),
       );
       epcisDocument.addEvent(te);
-      assert.throws(() => { epcisDocument.isValid(); });
+      assert.throws(() => {
+        epcisDocument.isValid();
+      }, 'EPCISDocument/epcisBody/eventList/0/sensorElementList/0/sensorReport/0 invalid should match format "uri"');
     });
     it('should reject correct EPCISDocument with an invalid cbv', () => {
       const te = new ObjectEvent();
       te.setAction('ADD');
       te.setBizStep('foobar');
-      assert.throws(() => { te.isValid(); });
+      assert.throws(() => {
+        te.isValid();
+      }, 'ObjectEvent/bizStep should match format "uri"');
     });
   });
 
@@ -1188,7 +1292,9 @@ describe('Unit test: validator.js', () => {
       const instance = { ...testData.ObjectEvent };
       instance.epcisBody.eventList[0].action = 'ADD';
       let result = {};
-      assert.doesNotThrow(() => { result = validateEpcisDocument(instance, false); });
+      assert.doesNotThrow(() => {
+        result = validateEpcisDocument(instance, false);
+      });
       expect(result.success).to.be.equal(true);
       expect(result.errors).to.deep.equal([]);
     });
@@ -1200,28 +1306,35 @@ describe('Unit test: validator.js', () => {
       instance.epcisBody.eventList[0].action = 'ADDED';
 
       let result = {};
-      assert.doesNotThrow(() => { result = validateEpcisDocument(instance, false); });
+      assert.doesNotThrow(() => {
+        result = validateEpcisDocument(instance, false);
+      });
       expect(result.success).to.be.equal(false);
       expect(result.errors).to.deep.equal(['EPCISDocument/epcisBody/eventList/0/action should be equal to one of the allowed values']);
     });
 
     it('should reject a null EPCISDocument ', () => {
       let result = {};
-      assert.doesNotThrow(() => { result = validateEpcisDocument(null, false); });
+      assert.doesNotThrow(() => {
+        result = validateEpcisDocument(null, false);
+      });
       expect(result.success).to.be.equal(false);
       expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
 
     it('should reject an undefined EPCISDocument ', () => {
       let result = {};
-      assert.doesNotThrow(() => { result = validateEpcisDocument(undefined, false); });
+      validateEpcisDocument(undefined, false);
+      assert.doesNotThrow(() => {
+        result = validateEpcisDocument(undefined, false);
+      });
       expect(result.success).to.be.equal(false);
       expect(result.errors).to.deep.equal(['EPCISDocument should be object']);
     });
   });
 
   it('should reject a document with extensions that are not defined in the context (e.g. example:*}'
-   + 'if the settings checkExtensions is set to true', () => {
+    + 'if the settings checkExtensions is set to true', () => {
     setup({ checkExtensions: true });
     const epcisDocument = {
       '@context': [
@@ -1295,14 +1408,18 @@ describe('Unit test: validator.js', () => {
       },
     };
     let res = {};
-    assert.throws(() => { validateEpcisDocument(epcisDocument); });
-    assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
+    assert.throws(() => {
+      validateEpcisDocument(epcisDocument);
+    });
+    assert.doesNotThrow(() => {
+      res = validateEpcisDocument(epcisDocument, false);
+    });
     expect(res.success).to.be.equal(false);
     expect(res.errors).to.deep.equal(['Event contains unknown extension: example']);
   });
 
   it('should reject a document with an event containing extensions that are not defined in the context (e.g. notInContext:*}'
-   + 'if the settings checkExtensions is set to true', () => {
+    + 'if the settings checkExtensions is set to true', () => {
     setup({ checkExtensions: true });
     const epcisDocument = {
       '@context': [
@@ -1377,8 +1494,12 @@ describe('Unit test: validator.js', () => {
       },
     };
     let res = {};
-    assert.throws(() => { validateEpcisDocument(epcisDocument); });
-    assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
+    assert.throws(() => {
+      validateEpcisDocument(epcisDocument);
+    });
+    assert.doesNotThrow(() => {
+      res = validateEpcisDocument(epcisDocument, false);
+    });
     expect(res.success).to.be.equal(false);
     expect(res.errors).to.deep.equal(['Event contains unknown extension: notInContext']);
   });
@@ -1458,7 +1579,9 @@ describe('Unit test: validator.js', () => {
       },
     };
     let res = {};
-    assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
+    assert.doesNotThrow(() => {
+      res = validateEpcisDocument(epcisDocument, false);
+    });
     expect(res.success).to.be.equal(true);
     expect(res.errors).to.deep.equal([]);
   });
@@ -1527,7 +1650,9 @@ describe('Unit test: validator.js', () => {
       'owl:sameAs': 'above',
     };
     let res = {};
-    assert.doesNotThrow(() => { res = validateEpcisDocument(epcisDocument, false); });
+    assert.doesNotThrow(() => {
+      res = validateEpcisDocument(epcisDocument, false);
+    });
     expect(res.success).to.be.equal(true);
     expect(res.errors).to.deep.equal([]);
   });
@@ -1554,6 +1679,92 @@ describe('Unit test: validator.js', () => {
       expect(authorizedExtensions).to.include('ext2');
       expect(authorizedExtensions).to.include('ext3');
     });
+  });
+
+  it('dataPathIsExplicit()', () => {
+    const RESULT_NOT_EXPLICIT = { explicit: false, message: '' };
+
+    expect(errorIsExplicit({
+      keyword: 'enum',
+      dataPath: '/epcisBody/eventList/0',
+      schemaPath: '#/allOf/1/propertyNames/anyOf/1/enum',
+      params: {
+        allowedValues: [
+          'inputEPCList',
+          'inputQuantityList',
+          'outputEPCList',
+          'outputQuantityList',
+          'transformationID',
+          'bizStep',
+          'disposition',
+          'readPoint',
+          'bizLocation',
+          'bizTransactionList',
+          'sourceList',
+          'destinationList',
+          'sensorElementList',
+          'ilmd',
+        ],
+      },
+      propertyName: 'persistentDisposition',
+      message: 'should be equal to one of the allowed values',
+    })).to.deep.equal({
+      explicit: true,
+      message: '/epcisBody/eventList/0 persistentDisposition is not part of the allowed keys',
+    });
+    expect(errorIsExplicit({
+      keyword: 'enum',
+      dataPath: '/epcisBody/eventList/0',
+      schemaPath: '#/anyOf/0/enum',
+      params: {
+        allowedValues: [
+          '@context',
+          'type',
+          'eventTime',
+          'recordTime',
+          'eventTimeZoneOffset',
+          'eventID',
+          'certificationInfo',
+          'errorDeclaration',
+        ],
+      },
+      message: 'should be equal to one of the allowed values',
+    })).to.deep.equal(RESULT_NOT_EXPLICIT);
+    expect(errorIsExplicit({
+      keyword: 'anyOf',
+      dataPath: '/epcisBody/eventList/0',
+      schemaPath: '#/anyOf',
+      params: {},
+      message: 'should match some schema in anyOf',
+    })).to.deep.equal(RESULT_NOT_EXPLICIT);
+    expect(errorIsExplicit({
+      keyword: 'anyOf',
+      dataPath: '/epcisBody/eventList/0',
+      schemaPath: '#/allOf/1/propertyNames/anyOf',
+      params: {},
+      propertyName: 'persistentDisposition',
+      message: 'should match some schema in anyOf',
+    })).to.deep.equal({
+      explicit: true,
+      message: '/epcisBody/eventList/0 persistentDisposition should match some schema in anyOf',
+    });
+    expect(errorIsExplicit({
+      keyword: 'propertyNames',
+      dataPath: '/epcisBody/eventList/0',
+      schemaPath: '#/allOf/1/propertyNames',
+      params: { propertyName: 'persistentDisposition' },
+      message: "property name 'persistentDisposition' is invalid",
+    })).to.deep.equal({
+      explicit: true,
+      message: '/epcisBody/eventList/0 property name \'persistentDisposition\' is invalid',
+    });
+    expect(errorIsExplicit({
+      keyword: 'if',
+      dataPath: '/epcisBody/eventList/0',
+      schemaPath: '#/allOf/3/if',
+      params: { failingKeyword: 'then' },
+      message: 'should match "then" schema',
+    })).to.deep.equal(RESULT_NOT_EXPLICIT);
   });
 
   describe('checkIfExtensionsAreDefinedInTheContext()', () => {

@@ -92,7 +92,6 @@
                     "transformationID",
                     "bizStep",
                     "disposition",
-                    "persistentDisposition",
                     "readPoint",
                     "bizLocation",
                     "bizTransactionList",

@@ -47,7 +47,6 @@ export const exampleSensorReportElement = {
   'ext1:someFurtherReportData': 'someText',
   deviceMetadata: 'https://id.gs1.org/giai/4000001111',
   coordinateReferenceSystem: 'coordinate:reference:system',
-  bizRules: 'https://example.com/gdti/4012345000054987',
 };
 
 /**
@@ -147,7 +146,6 @@ export const exampleSensorElementList = [
         deviceMetadata: 'https://id.gs1.org/giai/4000001111',
         rawData: 'https://example.org/giai/401234599999',
         dataProcessingMethod: 'https://example.com/gdti/4012345000054987',
-        bizRules: 'https://example.org/gdti/4012345000054987',
       },
       { type: 'example:someSensorProperty', stringValue: 'someSensorOutput' },
     ],
