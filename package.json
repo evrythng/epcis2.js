@@ -7,8 +7,8 @@
   "scripts": {
     "lint": "eslint --fix --max-warnings 0 --ext .js .",
     "format": "./node_modules/.bin/prettier --write '**/*.{js,json,md,yaml,yml}'",
-    "build": "rm dist/*; tsc; webpack --config webpack.config.js --mode production",
-    "build:dev": "rm dist/*; tsc; webpack --config webpack.config.js --mode development",
+    "build": "rm -r dist/*; tsc; webpack --config webpack.config.js --mode production",
+    "build:dev": "rm -r dist/*; tsc; webpack --config webpack.config.js --mode development",
     "test": "nyc ./node_modules/mocha/bin/mocha --require @babel/polyfill --require @babel/register './test/**/*.spec.js'",
     "prepublishOnly": "npm run build && npm test"
   },
@@ -78,6 +78,7 @@
     "wnpm-ci": "^7.0.100"
   },
   "dependencies": {
+    "@types/node": "^18.11.18",
     "ajv": "^7.1.0",
     "ajv-formats": "^1.5.1",
     "cross-fetch": "^3.1.4",
