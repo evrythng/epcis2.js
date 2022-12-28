@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "example_with_creation_from_setters.js",
   "license": "Apache-2.0",
+  "scripts": {
+    "typescriptExample": "cd typescript; tsc; node dist/typescript_example.js"
+  },
   "dependencies": {
     "epcis2.js": "file:../../"
   }
