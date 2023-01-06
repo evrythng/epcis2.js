@@ -378,7 +378,7 @@ export default class Event extends Entity {
 
   /**
    * Add the epc to the "epcList" field
-   * @throws an error if the epc to add is already in the epc list
+   * It throws an error if the epc to add is already in the epc list
    * @param {string} epc - the epc to add (e.g urn:epc:id:sgtin:xxxxxx.xxxxx.xxx)
    * @return {Event} - the event instance
    */
@@ -393,7 +393,7 @@ export default class Event extends Entity {
    * Add each epc to the "epcList" field
    * @param {Array<string>} epcList - the epcs to add
    * (e.g [urn:epc:id:sgtin:xxxxxx.xxxxx.xxx, urn:epc:id:sgtin:xxxxxx.xxxxx.xxy])
-   * @throws  an error if at least one item is already in the epc list
+   * It throws  an error if at least one item is already in the epc list
    * @return {Event} - the event instance
    */
   addEPCList(epcList) {
@@ -1010,7 +1010,7 @@ export default class Event extends Entity {
    * Check if the EPCIS Event respects the rules of the standard defined in
    * src/schema/${EventType}.schema.json
    * @return {boolean} - true if the Event is valid
-   * @throws {Error} - if the schema isn't valid
+   * It throws {Error} - if the schema isn't valid
    */
   isValid() {
     const result = validateAgainstSchema(this.toObject(), this.getType().toString());

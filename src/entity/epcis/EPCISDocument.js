@@ -289,8 +289,9 @@ export default class EPCISDocument extends Entity {
   /**
    * Check if the EPCISDocument respects the rules of the standard defined in
    * src/schema/EPCISDocument.schema.json
+   * It throws if the schema isn't valid
+   *
    * @return {boolean} - true if the EPCIS document is valid
-   * @throws {Error} - if the schema isn't valid
    */
   isValid() {
     const result = validateEpcisDocument(this.toObject());
