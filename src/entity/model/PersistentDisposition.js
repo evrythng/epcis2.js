@@ -33,7 +33,7 @@ export default class PersistentDisposition extends Entity {
 
   /**
     * Add the set to the "set" field
-    * @throws an error if the set to add is already in the set list
+    * It throws an error if the set to add is already in the set list
     * @param {string} set - the set to add
     * @return {PersistentDisposition} - the persistentDisposition instance
     */
@@ -46,7 +46,7 @@ export default class PersistentDisposition extends Entity {
 
   /**
     * Add each set to the "set" field
-    * @throws an error if at least one item is already in the set list
+    * It throws an error if at least one item is already in the set list
     * @param {Array<string>} setList - the sets to add
     * @return {PersistentDisposition} - the persistentDisposition instance
     */
@@ -102,7 +102,7 @@ export default class PersistentDisposition extends Entity {
 
   /**
     * Add the unset to the "unset" field
-    * @throws an error if the unset to add is already in the unset list
+    * It throws an error if the unset to add is already in the unset list
     * @param {string} unset - the unset to add
     * @return {PersistentDisposition} - the persistentDisposition instance
     */
@@ -115,7 +115,7 @@ export default class PersistentDisposition extends Entity {
 
   /**
     * Add each unset to the "unset" field
-    * @throws an error if at least one item is already in the unset list
+    * It throws an error if at least one item is already in the unset list
     * @param {Array<string>} unsetList - the unsets to add
     * @return {PersistentDisposition} - the persistentDisposition instance
     */
