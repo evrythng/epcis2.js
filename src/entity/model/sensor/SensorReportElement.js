@@ -391,9 +391,9 @@ export default class SensorReportElement extends Entity {
   }
 
   /**
-     * Getter for the coordinate Reference System property
-     * @return {string} - the uom
-     */
+   * Getter for the coordinate Reference System property
+   * @return {string} - the uom
+   */
   getCoordinateReferenceSystem() {
     return this.coordinateReferenceSystem;
   }
