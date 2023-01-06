@@ -279,9 +279,9 @@ export default class EPCISDocument extends Entity {
   }
 
   /**
-     * Getter for the id property
-     * @return {string} - the id
-     */
+   * Getter for the id property
+   * @return {string} - the id
+   */
   getId() {
     return this.id;
   }
