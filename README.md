@@ -66,6 +66,17 @@ Then use in a browser `script` tag using the `epcis2` global variable:
 </script>
 ```
 
+## Typescript
+
+You can use this package with typescript. The types are available here:
+https://www.npmjs.com/package/@types/epcis2.js
+
+You just need to install them as well:
+```shell
+npm install --save-dev @types/epcis2.js
+```
+
+Examples are available at [./example/node_example/typescript](./example/node_example/typescript)
 
 ## Getting started example
 
