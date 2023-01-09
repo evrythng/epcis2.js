@@ -1,0 +1,35 @@
+{
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "commonjs", 
+    "allowJs": true,
+    "declaration": true,
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    // * To bundle typescript defs w/javascript files:
+    // *
+    // * Set outDir to ./dist folder. This will place the .d.ts definition 
+    // * files alongside the .js files in the ./dist folder.
+    // *
+    // * Then publish the contents of the ./dist folder as your NPM module.
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    //"outDir": "./dist"
+
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    // * To publish typescript defs separately from the javascript code files:
+    // *
+    // * Set outDir to ./@types/epcis2.js folder and set emitDeclarationsOnly
+    // * to true. This will put the .d.ts definitionfiles in a separate 
+    // * folder for publication to the @types organization on NPM 
+    // * (https://www.npmjs.com/~types).
+    // * 
+    // * This approach will allow you to publish the source javascript files, 
+    // * (from the ./src folder), as your NPM module as you currently do while
+    // * providing the type definitions for TS developers if they need them.
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    "emitDeclarationOnly": true,
+    "outDir": "./@types/epcis2.js"
+  }
+}
