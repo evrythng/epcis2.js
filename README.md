@@ -601,3 +601,10 @@ Finally run `node example_with_creation_from_setters.js`.
 
 When contributing, please make sure to update the version of the library in the `package.json` file. You'll also need to
 update the CDN links in the `README` as well as the `example/web-example/index.html`'s CDN link.
+
+### Updating the types
+
+If you added or updated a class, make sure to update the 
+[typescript types](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/epcis2.js) as well. Most of the 
+code can be generated automatically using `npm run build`, but you'll probably need to make some changes to have the 
+linter work. Please copy only the modified files.
