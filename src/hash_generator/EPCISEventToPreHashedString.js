@@ -181,7 +181,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
   let string = fieldName;
   const strings = [];
   const customFields = [];
+  let localCustomFields = [];
   let res;
+  let s;
 
   if (list.length === 0) return ''; // rule n°4
 
@@ -325,6 +327,7 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
       }
       break;
     case 'sensorElementList':
+      localCustomFields = [];
       for (let i = 0; i < list.length; i += 1) {
         res = getOrderedPreHashString(
           list[i],
@@ -333,7 +336,14 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
           throwError,
         );
         strings.push(`sensorElement${res.preHashed}`);
-        customFields.push(...res.customFields.map((j) => `sensorElement${j}`));
+        if (res.customFields.length) {
+          s = listOfStringToPreHashLexicalOrderedString(res.customFields);
+          localCustomFields.push(`sensorElement${s}`);
+        }
+      }
+      if (localCustomFields.length) {
+        s = listOfStringToPreHashLexicalOrderedString(localCustomFields);
+        customFields.push(`sensorElementList${s}`);
       }
       break;
     case 'sensorReport':
@@ -364,7 +374,10 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
           throwError,
         );
         strings.push(`sensorReport${res.preHashed}`);
-        customFields.push(...res.customFields.map((j) => `sensorReport${j}`));
+        if (res.customFields.length) {
+          s = listOfStringToPreHashLexicalOrderedString(res.customFields);
+          customFields.push(`sensorReport${s}`);
+        }
       }
       break;
     default:
@@ -408,6 +421,7 @@ export const getOrderedPreHashString = (
   let string = '';
   const strings = [];
   let res;
+  let s;
 
   // First, we add the fields that are defined in the order list
   for (let i = 0; i < orderList.length; i += 1) {
@@ -436,7 +450,10 @@ export const getOrderedPreHashString = (
               throwError,
             );
             string += res.preHashed;
-            strings.push(...res.customFields.map((j) => `readPoint${j}`));
+            if (res.customFields.length) {
+              s = listOfStringToPreHashLexicalOrderedString(res.customFields);
+              strings.push(`readPoint${s}`);
+            }
             break;
           case 'bizLocation':
             string += 'bizLocation';
@@ -447,7 +464,10 @@ export const getOrderedPreHashString = (
               throwError,
             );
             string += res.preHashed;
-            strings.push(...res.customFields.map((j) => `bizLocation${j}`));
+            if (res.customFields.length) {
+              s = listOfStringToPreHashLexicalOrderedString(res.customFields);
+              strings.push(`bizLocation${s}`);
+            }
             break;
           case 'sensorMetadata':
             string += 'sensorMetadata';
@@ -458,7 +478,10 @@ export const getOrderedPreHashString = (
               throwError,
             );
             string += res.preHashed;
-            strings.push(...res.customFields.map((j) => `sensorMetadata${j}`));
+            if (res.customFields.length) {
+              s = listOfStringToPreHashLexicalOrderedString(res.customFields);
+              strings.push(`sensorMetadata${s}`);
+            }
             break;
           case 'persistentDisposition':
             string += 'persistentDisposition';
@@ -469,7 +492,6 @@ export const getOrderedPreHashString = (
               throwError,
             );
             string += res.preHashed;
-            strings.push(...res.customFields.map((j) => `persistentDisposition${j}`));
             break;
           case 'ilmd':
             string += `ilmd${getPreHashStringOfElementWithChildren(

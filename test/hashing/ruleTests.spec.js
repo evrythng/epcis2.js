@@ -963,4 +963,37 @@ describe('rule tests', () => {
     );
     expect(str).to.be.equal('eventType=ObjectEventreadPointid=abcdestination=testreadPoint{ok}rp=val{aa}object{aa}sub=ok{ok}boolean=true{ok}value=3');
   });
+
+  it('should follow rule n°20', () => {
+    let str = eventToPreHashedString(
+      {
+        readPoint: {
+          id: 'abc',
+          'ext1:rp': 'val',
+          'ext1:rt': 'val',
+        },
+        'ext1:value': 3,
+        type: 'ObjectEvent',
+      },
+      {
+        ext1: 'ok',
+      },
+    );
+    expect(str).to.be.equal('eventType=ObjectEventreadPointid=abcreadPoint{ok}rp=val{ok}rt=val{ok}value=3');
+    str = eventToPreHashedString(
+      {
+        bizLocation: {
+          id: 'abc',
+          'ext1:rp': 'val',
+          'ext1:rt': 'val',
+        },
+        'ext1:value': 3,
+        type: 'ObjectEvent',
+      },
+      {
+        ext1: 'ok',
+      },
+    );
+    expect(str).to.be.equal('eventType=ObjectEventbizLocationid=abcbizLocation{ok}rp=val{ok}rt=val{ok}value=3');
+  });
 });
