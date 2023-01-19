@@ -28,5 +28,6 @@ export const preHashedStringToHashedString = (preHash) => `ni:///sha-256;${Hex.s
  */
 export const eventToHashedId = (event, context, throwError = true) => {
   const preHash = eventToPreHashedString(event, context, throwError);
+  console.log(preHash);
   return preHashedStringToHashedString(preHash);
 };
