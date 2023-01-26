@@ -356,9 +356,9 @@ export const preHashStringTheList = (list, context, fieldName, throwError) => {
         }
 
         // if, for example, the field is equal to 'ALARM_CONDITION' instead of
-        // 'https://gs1.org/voc/SensorAlertType-ALARM_CONDITION' we need to complete it
+        // 'https://gs1.org/voc/ALARM_CONDITION' we need to complete it
         if (Object.values(cbv.alarmTypes).includes(list[i].exception)) {
-          list[i].exception = `https://gs1.org/voc/SensorAlertType-${list[i].exception}`;
+          list[i].exception = `https://gs1.org/voc/${list[i].exception}`;
         }
 
         // if, for example, the field is equal to 'x' instead of
