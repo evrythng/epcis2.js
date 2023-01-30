@@ -712,6 +712,49 @@ describe('unit tests for pre-hashing', () => {
       'action=OBSERVE{http://ns.example.com/epcis/}test=1{http://ns.example.com/epcis/}test=3',
     );
 
+    const str5 = eventToPreHashedString(
+      {
+        "ext1:array": [
+          "12",
+          "22",
+          "2013-06-08T14:58:56.591Z",
+          "true",
+          "stringInArray",
+          {
+            "ext1:object": {
+              "ext2:keyA": "value",
+              "ext2:keyB": "value"
+            }
+          }
+        ],
+        "ext1:boolean": "true",
+        "ext1:object": {
+          "ext2:array": [
+            "11",
+            "21",
+            "stringInArrayInObject"
+          ],
+          "ext2:object": {
+            "ext2:object": {
+              "ext3:string": "stringInObjectInObject"
+            }
+          },
+          "ext2:string": "stringInObject"
+        },
+      },
+      {
+        "example": "http://ns.example.com/epcis/",
+        "ext1": "http://example.com/ext1/",
+        "evt": "https://evrythng.com/context",
+        "ext2": "http://example.com/ext2/",
+        "ext3": "http://example.com/ext3/"
+      },
+      false,
+    );
+    expect(str5).to.be.equal(
+      '{http://example.com/ext1/}array=12{http://example.com/ext1/}array=2013-06-08T14:58:56.591Z{http://example.com/ext1/}array=22{http://example.com/ext1/}array=stringInArray{http://example.com/ext1/}array=true{http://example.com/ext1/}array{http://example.com/ext1/}object{http://example.com/ext2/}keyA=value{http://example.com/ext2/}keyB=value{http://example.com/ext1/}boolean=true{http://example.com/ext1/}object{http://example.com/ext2/}array=11{http://example.com/ext2/}array=21{http://example.com/ext2/}array=stringInArrayInObject{http://example.com/ext2/}object{http://example.com/ext2/}object{http://example.com/ext3/}string=stringInObjectInObject{http://example.com/ext2/}string=stringInObject',
+    );
+
     // throw an error
     expect(() => eventToPreHashedString(
       {
