@@ -740,7 +740,7 @@ describe('rule tests', () => {
       );
       expect(str).to.be.equal('sensorElementListsensorElement'
         + 'sensorReporttype=https://gs1.org/voc/AbsoluteHumidity'
-        + 'exception=https://gs1.org/voc/SensorAlertType-ALARM_CONDITION'
+        + 'exception=https://gs1.org/voc/ALARM_CONDITION'
         + 'value=12.1'
         + 'component=https://ref.gs1.org/cbv/Comp-x'
         + 'uom=A93'
