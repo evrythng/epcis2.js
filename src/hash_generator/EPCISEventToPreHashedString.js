@@ -74,14 +74,23 @@ export const getPreHashStringOfField = (field, value, throwError) => {
  * {https://ns.example.com/epcis}mySubField3=1{https://ns.example.com/epcis}mySubField3=3
  *
  * @param {*} value
+ * @param {{}} context - the list of context (e.g {
+ *    "example": "http://ns.example.com/epcis/",
+ *    "example2": "http://ns.example2.com/epcis/",
+ * })
  * @param {boolean} throwError - if set to true, it will throw an error if the event misses some
  * fields for example. Otherwise, it won't throw an error and it will still return the generated id
  * @returns {string} - the pre-hashed string
  */
-export const getPreHashStringFromCustomFieldElementList = (prefix, value, throwError) => {
+export const getPreHashStringFromCustomFieldElementList = (prefix, value, context, throwError) => {
   const strings = [];
   for (let i = 0; i < value.length; i += 1) {
-    strings.push(getPreHashStringOfField(prefix, value[i], throwError));
+    // if the object has children
+    if (value[i].toString() === '[object Object]') {
+      strings.push(`${prefix}${getPreHashStringOfElementWithChildren(value[i], context, throwError)}`);
+    } else {
+      strings.push(getPreHashStringOfField(prefix, value[i], throwError));
+    }
   }
   return listOfStringToPreHashLexicalOrderedString(strings);
 };
@@ -134,7 +143,7 @@ export const getPreHashStringFromCustomFieldElement = (key, value, context, thro
 
   // If the object is an Array
   if (Array.isArray(value)) {
-    return getPreHashStringFromCustomFieldElementList(field, value, throwError);
+    return getPreHashStringFromCustomFieldElementList(field, value, context, throwError);
   }
 
   return getPreHashStringOfField(field, value, throwError);
