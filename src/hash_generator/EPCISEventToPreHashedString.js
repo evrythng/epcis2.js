@@ -27,6 +27,7 @@ import {
   getEventContexts,
   removeWhiteSpaceAtTheBeginningOrEndOfString,
   toBeIgnored,
+  truncateTrailingZeros,
 } from './hashAlgorithmUtils';
 import cbv from '../cbv/cbv';
 
@@ -56,6 +57,7 @@ export const getPreHashStringOfField = (field, value, throwError) => {
   value = removeWhiteSpaceAtTheBeginningOrEndOfString(value); // rule n°5
   value = formatTheDate(value); // rule n°8 and rule n°9
   value = convertEpcUriToDlUri(value, throwError); // rule n°15
+  value = truncateTrailingZeros(value);
   return `${field}=${value}`;
 };
 
