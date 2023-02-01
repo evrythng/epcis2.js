@@ -41,24 +41,23 @@ export const removeWhiteSpaceAtTheBeginningOrEndOfString = (obj) => {
 };
 
 export const truncateTrailingZeros = (obj) => {
+  let objCopy = obj;
+  if (!isAString(objCopy)) return objCopy;
 
-  if (!isAString(obj))
-    return obj;
-
-  if (/^[\d.]+$/.test(obj)) {
-    while (obj.startsWith('0') && obj.length > 2) {
-      obj = obj.substring(1, obj.length);
+  if (/^[\d.]+$/.test(objCopy)) {
+    while (objCopy.startsWith('0') && objCopy.length > 2) {
+      objCopy = objCopy.substring(1, objCopy.length);
     }
-    while (obj.endsWith('0') && obj.includes('.') && obj.length > 3) {
-      obj = obj.substring(0, obj.length - 1);
+    while (objCopy.endsWith('0') && objCopy.includes('.') && objCopy.length > 3) {
+      objCopy = objCopy.substring(0, objCopy.length - 1);
     }
-    if (obj.endsWith('.')) {
-      obj = obj.substring(0, obj.length - 1);
+    if (objCopy.endsWith('.')) {
+      objCopy = objCopy.substring(0, objCopy.length - 1);
     }
   }
 
-  return obj;
-}
+  return objCopy;
+};
 
 /**
  * if present, EPC URIs (starting with ‘urn:epc:id’), EPC Class URIs (starting with ‘urn:epc:class’)

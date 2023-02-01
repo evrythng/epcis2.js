@@ -714,40 +714,40 @@ describe('unit tests for pre-hashing', () => {
 
     const str5 = eventToPreHashedString(
       {
-        "ext1:array": [
-          "12",
-          "22",
-          "2013-06-08T14:58:56.591Z",
-          "true",
-          "stringInArray",
+        'ext1:array': [
+          '12',
+          '22',
+          '2013-06-08T14:58:56.591Z',
+          'true',
+          'stringInArray',
           {
-            "ext1:object": {
-              "ext2:keyA": "value",
-              "ext2:keyB": "value"
-            }
-          }
-        ],
-        "ext1:boolean": "true",
-        "ext1:object": {
-          "ext2:array": [
-            "11",
-            "21",
-            "stringInArrayInObject"
-          ],
-          "ext2:object": {
-            "ext2:object": {
-              "ext3:string": "stringInObjectInObject"
-            }
+            'ext1:object': {
+              'ext2:keyA': 'value',
+              'ext2:keyB': 'value',
+            },
           },
-          "ext2:string": "stringInObject"
+        ],
+        'ext1:boolean': 'true',
+        'ext1:object': {
+          'ext2:array': [
+            '11',
+            '21',
+            'stringInArrayInObject',
+          ],
+          'ext2:object': {
+            'ext2:object': {
+              'ext3:string': 'stringInObjectInObject',
+            },
+          },
+          'ext2:string': 'stringInObject',
         },
       },
       {
-        "example": "http://ns.example.com/epcis/",
-        "ext1": "http://example.com/ext1/",
-        "evt": "https://evrythng.com/context",
-        "ext2": "http://example.com/ext2/",
-        "ext3": "http://example.com/ext3/"
+        example: 'http://ns.example.com/epcis/',
+        ext1: 'http://example.com/ext1/',
+        evt: 'https://evrythng.com/context',
+        ext2: 'http://example.com/ext2/',
+        ext3: 'http://example.com/ext3/',
       },
       false,
     );
