@@ -459,6 +459,18 @@ describe('rule tests', () => {
     expect(str).to.be.equal('field=10.3434');
     str = getPreHashStringOfField('field', 10.34340, true);
     expect(str).to.be.equal('field=10.3434');
+    str = getPreHashStringOfField('field', '10.0', true);
+    expect(str).to.be.equal('field=10');
+    str = getPreHashStringOfField('field', '10.1', true);
+    expect(str).to.be.equal('field=10.1');
+    str = getPreHashStringOfField('field', '10.3434', true);
+    expect(str).to.be.equal('field=10.3434');
+    str = getPreHashStringOfField('field', '10.34340', true);
+    expect(str).to.be.equal('field=10.3434');
+    str = eventToPreHashedString({
+      'ext1:array': ['12.0', '22', '2013-06-08T14:58:56.591Z', 'true', 'stringInArray'],
+    }, { ext1: 'http://example.com/ext1/' }, true);
+    expect(str).to.be.equal('{http://example.com/ext1/}array=12{http://example.com/ext1/}array=2013-06-08T14:58:56.591Z{http://example.com/ext1/}array=22{http://example.com/ext1/}array=stringInArray{http://example.com/ext1/}array=true');
   });
 
   it('should follow rule n°8', () => {
@@ -740,7 +752,7 @@ describe('rule tests', () => {
       );
       expect(str).to.be.equal('sensorElementListsensorElement'
         + 'sensorReporttype=https://gs1.org/voc/AbsoluteHumidity'
-        + 'exception=https://gs1.org/voc/SensorAlertType-ALARM_CONDITION'
+        + 'exception=https://gs1.org/voc/ALARM_CONDITION'
         + 'value=12.1'
         + 'component=https://ref.gs1.org/cbv/Comp-x'
         + 'uom=A93'
@@ -962,5 +974,38 @@ describe('rule tests', () => {
       },
     );
     expect(str).to.be.equal('eventType=ObjectEventreadPointid=abcdestination=testreadPoint{ok}rp=val{aa}object{aa}sub=ok{ok}boolean=true{ok}value=3');
+  });
+
+  it('should follow rule n°20', () => {
+    let str = eventToPreHashedString(
+      {
+        readPoint: {
+          id: 'abc',
+          'ext1:rp': 'val',
+          'ext1:rt': 'val',
+        },
+        'ext1:value': 3,
+        type: 'ObjectEvent',
+      },
+      {
+        ext1: 'ok',
+      },
+    );
+    expect(str).to.be.equal('eventType=ObjectEventreadPointid=abcreadPoint{ok}rp=val{ok}rt=val{ok}value=3');
+    str = eventToPreHashedString(
+      {
+        bizLocation: {
+          id: 'abc',
+          'ext1:rp': 'val',
+          'ext1:rt': 'val',
+        },
+        'ext1:value': 3,
+        type: 'ObjectEvent',
+      },
+      {
+        ext1: 'ok',
+      },
+    );
+    expect(str).to.be.equal('eventType=ObjectEventbizLocationid=abcbizLocation{ok}rp=val{ok}rt=val{ok}value=3');
   });
 });

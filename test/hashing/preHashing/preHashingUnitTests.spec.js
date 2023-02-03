@@ -608,7 +608,7 @@ describe('unit tests for pre-hashing', () => {
       );
       expect(str).to.be.equal(str2);
       expect(str).to.be.equal(
-        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://gs1.org/voc/Illuminancevalue=800uom=LUXsensorReporttype=https://gs1.org/voc/Speedvalue=160uom=KMHsensorReporttype=https://gs1.org/voc/Temperatureexception=https://gs1.org/voc/SensorAlertType-ERROR_CONDITIONvalue=26component=https://ref.gs1.org/cbv/Comp-eastinguom=CELcoordinateReferenceSystem=value:abcsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/Illuminancevalue=801uom=LUXsensorReporttype=https://gs1.org/voc/Speedvalue=161uom=KMHsensorReporttype=https://gs1.org/voc/Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/Illuminancevalue=802uom=LUXsensorReporttype=https://gs1.org/voc/Speedvalue=162uom=KMHsensorReporttype=https://gs1.org/voc/Temperaturevalue=26.2uom=CELsensorElementsensorReport{https://example.com/ext1}key=value',
+        'sensorElementListsensorElementsensorMetadatatime=2019-04-02T13:05:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/AbsoluteHumidityvalue=12.1uom=A93sensorReporttype=https://gs1.org/voc/Illuminancevalue=800uom=LUXsensorReporttype=https://gs1.org/voc/Speedvalue=160uom=KMHsensorReporttype=https://gs1.org/voc/Temperatureexception=https://gs1.org/voc/ERROR_CONDITIONvalue=26component=https://ref.gs1.org/cbv/Comp-eastinguom=CELcoordinateReferenceSystem=value:abcsensorElementsensorMetadatatime=2019-04-02T13:35:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/Illuminancevalue=801uom=LUXsensorReporttype=https://gs1.org/voc/Speedvalue=161uom=KMHsensorReporttype=https://gs1.org/voc/Temperaturevalue=26.1uom=CELsensorElementsensorMetadatatime=2019-04-02T13:55:00.000ZdeviceID=https://id.gs1.org/8004/4000001111deviceMetadata=https://id.gs1.org/8004/4000001111rawData=https://id.gs1.org/8004/401234599999sensorReporttype=https://gs1.org/voc/AbsoluteHumidityvalue=12.2uom=A93sensorReporttype=https://gs1.org/voc/Illuminancevalue=802uom=LUXsensorReporttype=https://gs1.org/voc/Speedvalue=162uom=KMHsensorReporttype=https://gs1.org/voc/Temperaturevalue=26.2uom=CELsensorElementListsensorElementsensorReport{https://example.com/ext1}key=value',
       );
     });
   });
@@ -710,6 +710,49 @@ describe('unit tests for pre-hashing', () => {
     );
     expect(str4).to.be.equal(
       'action=OBSERVE{http://ns.example.com/epcis/}test=1{http://ns.example.com/epcis/}test=3',
+    );
+
+    const str5 = eventToPreHashedString(
+      {
+        'ext1:array': [
+          '12',
+          '22',
+          '2013-06-08T14:58:56.591Z',
+          'true',
+          'stringInArray',
+          {
+            'ext1:object': {
+              'ext2:keyA': 'value',
+              'ext2:keyB': 'value',
+            },
+          },
+        ],
+        'ext1:boolean': 'true',
+        'ext1:object': {
+          'ext2:array': [
+            '11',
+            '21',
+            'stringInArrayInObject',
+          ],
+          'ext2:object': {
+            'ext2:object': {
+              'ext3:string': 'stringInObjectInObject',
+            },
+          },
+          'ext2:string': 'stringInObject',
+        },
+      },
+      {
+        example: 'http://ns.example.com/epcis/',
+        ext1: 'http://example.com/ext1/',
+        evt: 'https://evrythng.com/context',
+        ext2: 'http://example.com/ext2/',
+        ext3: 'http://example.com/ext3/',
+      },
+      false,
+    );
+    expect(str5).to.be.equal(
+      '{http://example.com/ext1/}array=12{http://example.com/ext1/}array=2013-06-08T14:58:56.591Z{http://example.com/ext1/}array=22{http://example.com/ext1/}array=stringInArray{http://example.com/ext1/}array=true{http://example.com/ext1/}array{http://example.com/ext1/}object{http://example.com/ext2/}keyA=value{http://example.com/ext2/}keyB=value{http://example.com/ext1/}boolean=true{http://example.com/ext1/}object{http://example.com/ext2/}array=11{http://example.com/ext2/}array=21{http://example.com/ext2/}array=stringInArrayInObject{http://example.com/ext2/}object{http://example.com/ext2/}object{http://example.com/ext3/}string=stringInObjectInObject{http://example.com/ext2/}string=stringInObject',
     );
 
     // throw an error

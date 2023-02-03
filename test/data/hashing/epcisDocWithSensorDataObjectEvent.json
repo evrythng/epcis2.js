@@ -1,5 +1,11 @@
 {
-  "@context": ["https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld", { "gs1": "https://gs1.org/voc/" }],
+  "@context": ["https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld", {
+    "gs1": "https://gs1.org/voc/",
+    "cbv": "https://ref.gs1.org/cbv/",
+    "example": "https://ns.example.com/epcis/",
+    "example2": "https://ns.example2.com/epcis/",
+    "example3": "https://cont/"
+  }],
   "type": "EPCISDocument",
   "creationDate": "2005-07-11T11:30:47+00:00",
   "schemaVersion": "1.2",
@@ -104,6 +110,62 @@
                 "type": "Illuminance",
                 "value": 802,
                 "uom": "LUX"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2022-04-07T10:00:00.000Z",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "https://id.example.com/8003/040123450007718765"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "sensor_reporting",
+        "readPoint": {
+          "id": "https://id.example.com/414/4012345000054"
+        },
+        "sensorElementList": [
+          {
+            "sensorMetadata": {
+              "deviceID": "https://id.example.com/8004/4012345Sensor1",
+              "example:someFurtherMetadata": "someMetaDataText"
+            },
+            "sensorReport": [
+              {
+                "type": "Altitude",
+                "value": 12,
+                "uom": "MTR"
+              },
+              {
+                "type": "Temperature",
+                "value": 12.1,
+                "uom": "CEL",
+                "example:someFurtherMetadata": "someText",
+                "example2:someFurtherMetadata": "someText2"
+              }
+            ]
+          },
+          {
+            "sensorMetadata": {
+              "deviceID": "https://id.example.com/8004/4012345Sensor1",
+              "example3:test": "1",
+              "example3:test2": "2"
+            },
+            "sensorReport": [
+              {
+                "type": "Altitude",
+                "value": 12,
+                "uom": "MTR"
+              },
+              {
+                "type": "Temperature",
+                "value": 12.1,
+                "uom": "CEL",
+                "example3:tets": "1",
+                "example3:test": "1"
               }
             ]
           }

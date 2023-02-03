@@ -40,6 +40,25 @@ export const removeWhiteSpaceAtTheBeginningOrEndOfString = (obj) => {
   return obj.trim();
 };
 
+export const truncateTrailingZeros = (obj) => {
+  let objCopy = obj;
+  if (!isAString(objCopy)) return objCopy;
+
+  if (/^[\d.]+$/.test(objCopy)) {
+    while (objCopy.startsWith('0') && objCopy.length > 2) {
+      objCopy = objCopy.substring(1, objCopy.length);
+    }
+    while (objCopy.endsWith('0') && objCopy.includes('.') && objCopy.length > 3) {
+      objCopy = objCopy.substring(0, objCopy.length - 1);
+    }
+    if (objCopy.endsWith('.')) {
+      objCopy = objCopy.substring(0, objCopy.length - 1);
+    }
+  }
+
+  return objCopy;
+};
+
 /**
  * if present, EPC URIs (starting with ‘urn:epc:id’), EPC Class URIs (starting with ‘urn:epc:class’)
  * or EPC Pattern URIs (starting with ‘urn:epc:idpat’) SHALL be converted into the corresponding
