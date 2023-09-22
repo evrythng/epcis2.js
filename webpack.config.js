@@ -30,6 +30,16 @@ const getCommonConfig = (outputFileName) => ({
   },
 });
 
+const varProfile = {
+  ...getCommonConfig('epcis2.var.js'),
+  output: {
+    path,
+    library: 'epcis2',
+    filename: 'epcis2.var.js',
+    libraryTarget: 'var',
+  }
+}
+
 const browserConfig = {
   ...getCommonConfig('epcis2.browser.js'),
   target: 'web',
@@ -40,4 +50,4 @@ const nodeConfig = {
   target: 'node',
 };
 
-module.exports = [browserConfig, nodeConfig];
+module.exports = [browserConfig, nodeConfig, varProfile];
